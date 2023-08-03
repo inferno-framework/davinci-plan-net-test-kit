@@ -146,7 +146,11 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def chain_expectations
-        chain_extensions.map { |extension| support_expectation(extension) }
+        if chain_extensions.present?
+          chain_extensions.map { |extension| support_expectation(extension) }
+        else
+          []
+        end
       end
 
       def chain
@@ -158,7 +162,11 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def multiple_or_expectation
-        param_hash['_multipleOr']['extension'].first['valueCode']
+        if param_hash['_multipleOr'].present?
+          param_hash['_multipleOr']['extension'].first['valueCode']
+        else
+          ''
+        end
       end
 
       def values
