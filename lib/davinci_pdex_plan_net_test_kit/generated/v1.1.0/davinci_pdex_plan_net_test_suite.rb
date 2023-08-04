@@ -4,6 +4,7 @@ require_relative '../../custom_groups/v1.1.0/capability_statement_group'
 require_relative 'endpoint_group'
 require_relative 'healthcare_service_group'
 require_relative 'insurance_plan_group'
+require_relative 'location_group'
 require_relative 'organization_group'
 require_relative 'organization_group'
 require_relative 'organization_affiliation_group'
@@ -79,6 +80,7 @@ module DaVinciPDEXPlanNetTestKit
       group from: :davinci_pdex_plan_net_v110_endpoint
       group from: :davinci_pdex_plan_net_v110_healthcare_service
       group from: :davinci_pdex_plan_net_v110_insurance_plan
+      group from: :davinci_pdex_plan_net_v110_location
       group from: :davinci_pdex_plan_net_v110_organization
       group from: :davinci_pdex_plan_net_v110_organization
       group from: :davinci_pdex_plan_net_v110_organization_affiliation
