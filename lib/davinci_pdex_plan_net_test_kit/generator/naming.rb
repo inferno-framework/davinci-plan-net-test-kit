@@ -30,7 +30,7 @@ module DaVinciPDEXPlanNetTestKit
 
       class << self
         def resources_with_multiple_profiles
-          ['Condition', 'DiagnosticReport', 'Observation']
+          ['Organization']
         end
 
         def resource_has_multiple_profiles?(resource)

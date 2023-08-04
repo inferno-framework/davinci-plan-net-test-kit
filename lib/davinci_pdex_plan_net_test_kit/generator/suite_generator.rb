@@ -73,11 +73,13 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def groups
+        binding.pry
         ig_metadata.ordered_groups
           .reject { |group| SpecialCases.exclude_group? group }
       end
 
       def group_id_list
+        binding.pry
         @group_id_list ||=
           groups.map(&:id)
       end
