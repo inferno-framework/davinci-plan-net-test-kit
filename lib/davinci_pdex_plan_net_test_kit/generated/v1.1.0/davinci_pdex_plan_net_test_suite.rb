@@ -1,9 +1,6 @@
 require 'inferno/dsl/oauth_credentials'
 require_relative '../../version'
 require_relative '../../custom_groups/v1.1.0/capability_statement_group'
-require_relative '../../custom_groups/v4.0.0/clinical_notes_guidance_group'
-require_relative '../../custom_groups/data_absent_reason_group'
-require_relative '../../provenance_validator'
 require_relative 'endpoint_group'
 require_relative 'healthcare_service_group'
 require_relative 'insurance_plan_group'
@@ -13,9 +10,9 @@ require_relative 'organization_affiliation_group'
 require_relative 'practitioner_group'
 
 module DaVinciPDEXPlanNetTestKit
-  module USCoreV110
-    class USCoreTestSuite < Inferno::TestSuite
-      title 'US Core v1.1.0'
+  module DaVinciPDEXPlanNetV110
+    class DaVinciPDEXPlanNetTestSuite < Inferno::TestSuite
+      title 'DaVinci PDEX Plan Net v1.1.0'
       description %(
         The US Core Test Kit tests systems for their conformance to the [US Core
         Implementation Guide]().
@@ -62,7 +59,7 @@ module DaVinciPDEXPlanNetTestKit
         end
       end
 
-      id :us_core_v110
+      id :davincin_pdex_plan_net_v110
 
       input :url,
         title: 'FHIR Endpoint',
@@ -86,8 +83,6 @@ module DaVinciPDEXPlanNetTestKit
       group from: :us_core_v110_organization
       group from: :us_core_v110_organization_affiliation
       group from: :us_core_v110_practitioner
-      group from: :us_core_v400_clinical_notes_guidance
-      group from: :us_core_311_data_absent_reason
     end
   end
 end

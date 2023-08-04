@@ -30,15 +30,15 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def base_output_file_name
-        "us_core_test_suite.rb"
+        "davinci_pdex_plan_net_test_suite.rb"
       end
 
       def class_name
-        "USCoreTestSuite"
+        "DaVinciPDEXPlanNetTestSuite"
       end
 
       def module_name
-        "USCore#{ig_metadata.reformatted_version.upcase}"
+        "DaVinciPDEXPlanNet#{ig_metadata.reformatted_version.upcase}"
       end
 
       def output_file_name
@@ -46,11 +46,11 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def suite_id
-        "us_core_#{ig_metadata.reformatted_version}"
+        "davincin_pdex_plan_net_#{ig_metadata.reformatted_version}"
       end
 
       def title
-        "US Core #{ig_metadata.ig_version}"
+        "DaVinci PDEX Plan Net #{ig_metadata.ig_version}"
       end
 
       def validator_env_name

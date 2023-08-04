@@ -3,12 +3,11 @@ require_relative '../capability_statement/conformance_support_test'
 require_relative '../capability_statement/fhir_version_test'
 require_relative '../capability_statement/json_support_test'
 require_relative '../capability_statement/profile_support_test'
-require_relative '../capability_statement/instantiate_test'
 
 module DaVinciPDEXPlanNetTestKit
-  module USCoreV501
+  module USCoreV311
     class CapabilityStatementGroup < Inferno::TestGroup
-      id :us_core_v501_capability_statement
+      id :us_core_v110_capability_statement
       title 'Capability Statement'
       short_description 'Retrieve information about supported server functionality using the FHIR capabilties interaction.'
       description %(
@@ -52,10 +51,7 @@ module DaVinciPDEXPlanNetTestKit
         'AllergyIntolerance' => ['http://hl7.org/fhir/us/core/StructureDefinition/us-core-allergyintolerance'].freeze,
         'CarePlan' => ['http://hl7.org/fhir/us/core/StructureDefinition/us-core-careplan'].freeze,
         'CareTeam' => ['http://hl7.org/fhir/us/core/StructureDefinition/us-core-careteam'].freeze,
-        'Condition' => [
-          'http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition-encounter-diagnosis',
-          'http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition-problems-health-concerns'
-        ].freeze,
+        'Condition' => ['http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition'].freeze,
         'Device' => ['http://hl7.org/fhir/us/core/StructureDefinition/us-core-implantable-device'].freeze,
         'DiagnosticReport' => [
           'http://hl7.org/fhir/us/core/StructureDefinition/us-core-diagnosticreport-lab',
@@ -70,36 +66,24 @@ module DaVinciPDEXPlanNetTestKit
         'MedicationRequest' => ['http://hl7.org/fhir/us/core/StructureDefinition/us-core-medicationrequest'].freeze,
         'Observation' => [
           'http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-lab',
-          'http://hl7.org/fhir/us/core/StructureDefinition/us-core-vital-signs',
-          'http://hl7.org/fhir/us/core/StructureDefinition/us-core-blood-pressure',
-          'http://hl7.org/fhir/us/core/StructureDefinition/us-core-bmi',
-          'http://hl7.org/fhir/us/core/StructureDefinition/us-core-head-circumference',
-          'http://hl7.org/fhir/us/core/StructureDefinition/us-core-body-height',
-          'http://hl7.org/fhir/us/core/StructureDefinition/us-core-body-weight',
-          'http://hl7.org/fhir/us/core/StructureDefinition/us-core-body-temperature',
-          'http://hl7.org/fhir/us/core/StructureDefinition/us-core-heart-rate',
           'http://hl7.org/fhir/us/core/StructureDefinition/pediatric-bmi-for-age',
-          'http://hl7.org/fhir/us/core/StructureDefinition/head-occipital-frontal-circumference-percentile',
           'http://hl7.org/fhir/us/core/StructureDefinition/pediatric-weight-for-height',
           'http://hl7.org/fhir/us/core/StructureDefinition/us-core-pulse-oximetry',
-          'http://hl7.org/fhir/us/core/StructureDefinition/us-core-respiratory-rate',
           'http://hl7.org/fhir/us/core/StructureDefinition/us-core-smokingstatus',
-          'http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-clinical-test',
-          'http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-imaging',
-          'http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-sexual-orientation',
-          'http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-social-history',
-          'http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-survey',
-          'http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-sdoh-assessment'
+          'http://hl7.org/fhir/StructureDefinition/bp',
+          'http://hl7.org/fhir/StructureDefinition/bodyheight',
+          'http://hl7.org/fhir/StructureDefinition/bodyweight',
+          'http://hl7.org/fhir/StructureDefinition/heartrate',
+          'http://hl7.org/fhir/StructureDefinition/resprate',
+          'http://hl7.org/fhir/StructureDefinition/bodytemp',
+          'http://hl7.org/fhir/us/core/StructureDefinition/head-occipital-frontal-circumference-percentile'
         ].freeze,
         'Organization' => ['http://hl7.org/fhir/us/core/StructureDefinition/us-core-organization'].freeze,
         'Patient' => ['http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient'].freeze,
         'Practitioner' => ['http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitioner'].freeze,
         'PractitionerRole' => ['http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitionerrole'].freeze,
         'Procedure' => ['http://hl7.org/fhir/us/core/StructureDefinition/us-core-procedure'].freeze,
-        'Provenance' => ['http://hl7.org/fhir/us/core/StructureDefinition/us-core-provenance'].freeze,
-        'QuestionnaireResponse' => ['http://hl7.org/fhir/us/core/StructureDefinition/us-core-questionnaireresponse'].freeze,
-        'RelatedPerson' => ['http://hl7.org/fhir/us/core/StructureDefinition/us-core-relatedperson'].freeze,
-        'ServiceRequest' => ['http://hl7.org/fhir/us/core/StructureDefinition/us-core-servicerequest'].freeze
+        'Provenance' => ['http://hl7.org/fhir/us/core/StructureDefinition/us-core-provenance'].freeze
       }.freeze
 
       test from: :tls_version_test,
@@ -121,8 +105,6 @@ module DaVinciPDEXPlanNetTestKit
           options: { us_core_resources: PROFILES.keys }
         )
       end
-
-      test from: :us_core_instantiate
     end
   end
 end

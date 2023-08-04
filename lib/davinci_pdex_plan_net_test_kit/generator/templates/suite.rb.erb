@@ -1,9 +1,6 @@
 require 'inferno/dsl/oauth_credentials'
 require_relative '../../version'
 require_relative '<%= capability_statement_file_name %>'
-require_relative '<%= clinical_notes_guidance_file_name %>'
-require_relative '../../custom_groups/data_absent_reason_group'
-require_relative '../../provenance_validator'
 <% group_file_list.each do |file_name| %>require_relative '<%= file_name %>'
 <% end %>
 module DaVinciPDEXPlanNetTestKit
@@ -74,8 +71,6 @@ module DaVinciPDEXPlanNetTestKit
       group from: :<%= capability_statement_group_id %>
   <% group_id_list.each do |id| %>
       group from: :<%= id %><% end %>
-      group from: :<%= clinical_notes_guidance_group_id %>
-      group from: :us_core_311_data_absent_reason
     end
   end
 end
