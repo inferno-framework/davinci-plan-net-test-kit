@@ -1,5 +1,5 @@
 module DaVinciPDEXPlanNetTestKit
-  module USCoreV110
+  module DaVinciPDEXPlanNetV110
     module ResourceList
       RESOURCE_LIST = [
         'Endpoint',

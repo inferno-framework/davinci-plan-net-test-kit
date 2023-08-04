@@ -1,11 +1,11 @@
 require_relative '../../../validation_test'
 
 module DaVinciPDEXPlanNetTestKit
-  module USCoreV110
+  module DaVinciPDEXPlanNetV110
     class OrganizationValidationTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::ValidationTest
 
-      id :us_core_v110_organization_validation_test
+      id :davinci_pdex_plan_net_v110_organization_validation_test
       title 'Organization resources returned during previous tests conform to the Plan-Net Organization'
       description %(
 This test verifies resources returned from the first search conform to

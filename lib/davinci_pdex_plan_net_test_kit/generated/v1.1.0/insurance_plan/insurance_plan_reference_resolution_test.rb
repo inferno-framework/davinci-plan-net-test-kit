@@ -2,7 +2,7 @@ require_relative '../../../reference_resolution_test'
 require_relative '../resource_list'
 
 module DaVinciPDEXPlanNetTestKit
-  module USCoreV110
+  module DaVinciPDEXPlanNetV110
     class InsurancePlanReferenceResolutionTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::ReferenceResolutionTest
       include ResourceList
@@ -26,7 +26,7 @@ module DaVinciPDEXPlanNetTestKit
         * InsurancePlan.plan.coverageArea
       )
 
-      id :us_core_v110_insurance_plan_reference_resolution_test
+      id :davinci_pdex_plan_net_v110_insurance_plan_reference_resolution_test
 
       def resource_type
         'InsurancePlan'

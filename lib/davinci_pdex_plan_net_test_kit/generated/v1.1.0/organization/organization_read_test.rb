@@ -1,14 +1,14 @@
 require_relative '../../../read_test'
 
 module DaVinciPDEXPlanNetTestKit
-  module USCoreV110
+  module DaVinciPDEXPlanNetV110
     class OrganizationReadTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::ReadTest
 
       title 'Server returns correct Organization resource from Organization read interaction'
       description 'A server SHALL support the Organization read interaction.'
 
-      id :us_core_v110_organization_read_test
+      id :davinci_pdex_plan_net_v110_organization_read_test
 
       def resource_type
         'Organization'

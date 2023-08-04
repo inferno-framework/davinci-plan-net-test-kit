@@ -40,7 +40,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def module_name
-        "USCore#{group_metadata.reformatted_version.upcase}"
+        "DaVinciPDEXPlanNet#{group_metadata.reformatted_version.upcase}"
       end
 
       def title
@@ -64,7 +64,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def group_id
-        "us_core_#{group_metadata.reformatted_version}_#{profile_identifier}"
+        "davinci_pdex_plan_net_#{group_metadata.reformatted_version}_#{profile_identifier}"
       end
 
       def resource_type

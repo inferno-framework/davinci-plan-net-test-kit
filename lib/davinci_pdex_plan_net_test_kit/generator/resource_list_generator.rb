@@ -18,7 +18,7 @@ module DaVinciPDEXPlanNetTestKit
         end
 
         def module_name
-          "USCore#{@ig_metadata.reformatted_version.upcase}"
+          "DaVinciPDEXPlanNet#{@ig_metadata.reformatted_version.upcase}"
         end
 
         def read_interaction(group_metadata)

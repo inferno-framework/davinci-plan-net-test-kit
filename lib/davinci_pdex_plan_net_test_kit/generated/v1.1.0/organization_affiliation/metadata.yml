@@ -1202,35 +1202,35 @@
   :profiles:
   - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Endpoint
 :tests:
-- :id: us_core_v110_organization_affiliation_read_test
+- :id: davinci_pdex_plan_net_v110_organization_affiliation_read_test
   :file_name: organization_affiliation_read_test.rb
-- :id: us_core_v110_organization_affiliation_primary_organization_search_test
+- :id: davinci_pdex_plan_net_v110_organization_affiliation_primary_organization_search_test
   :file_name: organization_affiliation_primary_organization_search_test.rb
-- :id: us_core_v110_organization_affiliation_participating_organization_search_test
+- :id: davinci_pdex_plan_net_v110_organization_affiliation_participating_organization_search_test
   :file_name: organization_affiliation_participating_organization_search_test.rb
-- :id: us_core_v110_organization_affiliation_location_search_test
+- :id: davinci_pdex_plan_net_v110_organization_affiliation_location_search_test
   :file_name: organization_affiliation_location_search_test.rb
-- :id: us_core_v110_organization_affiliation_service_search_test
+- :id: davinci_pdex_plan_net_v110_organization_affiliation_service_search_test
   :file_name: organization_affiliation_service_search_test.rb
-- :id: us_core_v110_organization_affiliation_network_search_test
+- :id: davinci_pdex_plan_net_v110_organization_affiliation_network_search_test
   :file_name: organization_affiliation_network_search_test.rb
-- :id: us_core_v110_organization_affiliation_endpoint_search_test
+- :id: davinci_pdex_plan_net_v110_organization_affiliation_endpoint_search_test
   :file_name: organization_affiliation_endpoint_search_test.rb
-- :id: us_core_v110_organization_affiliation_role_search_test
+- :id: davinci_pdex_plan_net_v110_organization_affiliation_role_search_test
   :file_name: organization_affiliation_role_search_test.rb
-- :id: us_core_v110_organization_affiliation_specialty_search_test
+- :id: davinci_pdex_plan_net_v110_organization_affiliation_specialty_search_test
   :file_name: organization_affiliation_specialty_search_test.rb
-- :id: us_core_v110_organization_affiliation__id_search_test
+- :id: davinci_pdex_plan_net_v110_organization_affiliation__id_search_test
   :file_name: organization_affiliation_id_search_test.rb
-- :id: us_core_v110_organization_affiliation__lastUpdated_search_test
+- :id: davinci_pdex_plan_net_v110_organization_affiliation__lastUpdated_search_test
   :file_name: organization_affiliation_lastupdated_search_test.rb
-- :id: us_core_v110_organization_affiliation_validation_test
+- :id: davinci_pdex_plan_net_v110_organization_affiliation_validation_test
   :file_name: organization_affiliation_validation_test.rb
-- :id: us_core_v110_organization_affiliation_must_support_test
+- :id: davinci_pdex_plan_net_v110_organization_affiliation_must_support_test
   :file_name: organization_affiliation_must_support_test.rb
-- :id: us_core_v110_organization_affiliation_reference_resolution_test
+- :id: davinci_pdex_plan_net_v110_organization_affiliation_reference_resolution_test
   :file_name: organization_affiliation_reference_resolution_test.rb
-:id: us_core_v110_organization_affiliation
+:id: davinci_pdex_plan_net_v110_organization_affiliation
 :file_name: organization_affiliation_group.rb
 :delayed_references:
 - :path: organization

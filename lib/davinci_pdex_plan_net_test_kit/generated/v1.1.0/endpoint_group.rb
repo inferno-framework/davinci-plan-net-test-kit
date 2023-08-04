@@ -7,7 +7,7 @@ require_relative 'endpoint/endpoint_must_support_test'
 require_relative 'endpoint/endpoint_reference_resolution_test'
 
 module DaVinciPDEXPlanNetTestKit
-  module USCoreV110
+  module DaVinciPDEXPlanNetV110
     class EndpointGroup < Inferno::TestGroup
       title 'Plan-Net Endpoint Tests'
       short_description 'Verify support for the server capabilities required by the Plan-Net Endpoint.'
@@ -71,20 +71,20 @@ read succeeds.
 
       )
 
-      id :us_core_v110_endpoint
+      id :davinci_pdex_plan_net_v110_endpoint
       run_as_group
 
       def self.metadata
         @metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, 'endpoint', 'metadata.yml'), aliases: true))
       end
   
-      test from: :us_core_v110_endpoint_read_test
-      test from: :us_core_v110_endpoint_organization_search_test
-      test from: :us_core_v110_endpoint__id_search_test
-      test from: :us_core_v110_endpoint__lastUpdated_search_test
-      test from: :us_core_v110_endpoint_validation_test
-      test from: :us_core_v110_endpoint_must_support_test
-      test from: :us_core_v110_endpoint_reference_resolution_test
+      test from: :davinci_pdex_plan_net_v110_endpoint_read_test
+      test from: :davinci_pdex_plan_net_v110_endpoint_organization_search_test
+      test from: :davinci_pdex_plan_net_v110_endpoint__id_search_test
+      test from: :davinci_pdex_plan_net_v110_endpoint__lastUpdated_search_test
+      test from: :davinci_pdex_plan_net_v110_endpoint_validation_test
+      test from: :davinci_pdex_plan_net_v110_endpoint_must_support_test
+      test from: :davinci_pdex_plan_net_v110_endpoint_reference_resolution_test
     end
   end
 end

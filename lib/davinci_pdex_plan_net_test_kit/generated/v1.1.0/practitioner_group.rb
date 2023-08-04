@@ -9,7 +9,7 @@ require_relative 'practitioner/practitioner_must_support_test'
 require_relative 'practitioner/practitioner_reference_resolution_test'
 
 module DaVinciPDEXPlanNetTestKit
-  module USCoreV110
+  module DaVinciPDEXPlanNetV110
     class PractitionerGroup < Inferno::TestGroup
       title 'Plan-Net Practitioner Tests'
       short_description 'Verify support for the server capabilities required by the Plan-Net Practitioner.'
@@ -75,22 +75,22 @@ read succeeds.
 
       )
 
-      id :us_core_v110_practitioner
+      id :davinci_pdex_plan_net_v110_practitioner
       run_as_group
 
       def self.metadata
         @metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, 'practitioner', 'metadata.yml'), aliases: true))
       end
   
-      test from: :us_core_v110_practitioner_read_test
-      test from: :us_core_v110_practitioner_name_search_test
-      test from: :us_core_v110_practitioner__id_search_test
-      test from: :us_core_v110_practitioner__lastUpdated_search_test
-      test from: :us_core_v110_practitioner_family_search_test
-      test from: :us_core_v110_practitioner_given_search_test
-      test from: :us_core_v110_practitioner_validation_test
-      test from: :us_core_v110_practitioner_must_support_test
-      test from: :us_core_v110_practitioner_reference_resolution_test
+      test from: :davinci_pdex_plan_net_v110_practitioner_read_test
+      test from: :davinci_pdex_plan_net_v110_practitioner_name_search_test
+      test from: :davinci_pdex_plan_net_v110_practitioner__id_search_test
+      test from: :davinci_pdex_plan_net_v110_practitioner__lastUpdated_search_test
+      test from: :davinci_pdex_plan_net_v110_practitioner_family_search_test
+      test from: :davinci_pdex_plan_net_v110_practitioner_given_search_test
+      test from: :davinci_pdex_plan_net_v110_practitioner_validation_test
+      test from: :davinci_pdex_plan_net_v110_practitioner_must_support_test
+      test from: :davinci_pdex_plan_net_v110_practitioner_reference_resolution_test
     end
   end
 end

@@ -1,14 +1,14 @@
 require_relative '../../../read_test'
 
 module DaVinciPDEXPlanNetTestKit
-  module USCoreV110
+  module DaVinciPDEXPlanNetV110
     class InsurancePlanReadTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::ReadTest
 
       title 'Server returns correct InsurancePlan resource from InsurancePlan read interaction'
       description 'A server SHALL support the InsurancePlan read interaction.'
 
-      id :us_core_v110_insurance_plan_read_test
+      id :davinci_pdex_plan_net_v110_insurance_plan_read_test
 
       def resource_type
         'InsurancePlan'

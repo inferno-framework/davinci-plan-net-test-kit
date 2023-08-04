@@ -7,7 +7,7 @@ require_relative '../capability_statement/profile_support_test'
 module DaVinciPDEXPlanNetTestKit
   module USCoreV311
     class CapabilityStatementGroup < Inferno::TestGroup
-      id :us_core_v110_capability_statement
+      id :davinci_pdex_plan_net_v110_capability_statement
       title 'Capability Statement'
       short_description 'Retrieve information about supported server functionality using the FHIR capabilties interaction.'
       description %(

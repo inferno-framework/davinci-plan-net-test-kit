@@ -92,7 +92,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def capability_statement_group_id
-        "us_core_#{ig_metadata.reformatted_version}_capability_statement"
+        "davinci_pdex_plan_net_#{ig_metadata.reformatted_version}_capability_statement"
       end
 
       def clinical_notes_guidance_file_name

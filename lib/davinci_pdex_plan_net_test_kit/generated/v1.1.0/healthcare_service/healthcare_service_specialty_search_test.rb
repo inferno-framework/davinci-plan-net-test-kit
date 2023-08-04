@@ -2,7 +2,7 @@ require_relative '../../../search_test'
 require_relative '../../../generator/group_metadata'
 
 module DaVinciPDEXPlanNetTestKit
-  module USCoreV110
+  module DaVinciPDEXPlanNetV110
     class HealthcareServiceSpecialtySearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
@@ -17,7 +17,7 @@ none are returned, the test is skipped.
 
       )
 
-      id :us_core_v110_healthcare_service_specialty_search_test
+      id :davinci_pdex_plan_net_v110_healthcare_service_specialty_search_test
       def self.properties
         @properties ||= SearchTestProperties.new(
           resource_type: 'HealthcareService',

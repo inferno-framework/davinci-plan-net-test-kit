@@ -13,7 +13,7 @@ require_relative 'insurance_plan/insurance_plan_must_support_test'
 require_relative 'insurance_plan/insurance_plan_reference_resolution_test'
 
 module DaVinciPDEXPlanNetTestKit
-  module USCoreV110
+  module DaVinciPDEXPlanNetV110
     class InsurancePlanGroup < Inferno::TestGroup
       title 'Plan-Net InsurancePlan Tests'
       short_description 'Verify support for the server capabilities required by the Plan-Net InsurancePlan.'
@@ -83,26 +83,26 @@ read succeeds.
 
       )
 
-      id :us_core_v110_insurance_plan
+      id :davinci_pdex_plan_net_v110_insurance_plan
       run_as_group
 
       def self.metadata
         @metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, 'insurance_plan', 'metadata.yml'), aliases: true))
       end
   
-      test from: :us_core_v110_insurance_plan_read_test
-      test from: :us_core_v110_insurance_plan_administered_by_search_test
-      test from: :us_core_v110_insurance_plan_owned_by_search_test
-      test from: :us_core_v110_insurance_plan_coverage_area_search_test
-      test from: :us_core_v110_insurance_plan_name_search_test
-      test from: :us_core_v110_insurance_plan_plan_type_search_test
-      test from: :us_core_v110_insurance_plan_identifier_search_test
-      test from: :us_core_v110_insurance_plan__id_search_test
-      test from: :us_core_v110_insurance_plan__lastUpdated_search_test
-      test from: :us_core_v110_insurance_plan_type_search_test
-      test from: :us_core_v110_insurance_plan_validation_test
-      test from: :us_core_v110_insurance_plan_must_support_test
-      test from: :us_core_v110_insurance_plan_reference_resolution_test
+      test from: :davinci_pdex_plan_net_v110_insurance_plan_read_test
+      test from: :davinci_pdex_plan_net_v110_insurance_plan_administered_by_search_test
+      test from: :davinci_pdex_plan_net_v110_insurance_plan_owned_by_search_test
+      test from: :davinci_pdex_plan_net_v110_insurance_plan_coverage_area_search_test
+      test from: :davinci_pdex_plan_net_v110_insurance_plan_name_search_test
+      test from: :davinci_pdex_plan_net_v110_insurance_plan_plan_type_search_test
+      test from: :davinci_pdex_plan_net_v110_insurance_plan_identifier_search_test
+      test from: :davinci_pdex_plan_net_v110_insurance_plan__id_search_test
+      test from: :davinci_pdex_plan_net_v110_insurance_plan__lastUpdated_search_test
+      test from: :davinci_pdex_plan_net_v110_insurance_plan_type_search_test
+      test from: :davinci_pdex_plan_net_v110_insurance_plan_validation_test
+      test from: :davinci_pdex_plan_net_v110_insurance_plan_must_support_test
+      test from: :davinci_pdex_plan_net_v110_insurance_plan_reference_resolution_test
     end
   end
 end

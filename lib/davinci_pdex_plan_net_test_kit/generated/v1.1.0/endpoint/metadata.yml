@@ -138,21 +138,21 @@
   :profiles:
   - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Organization
 :tests:
-- :id: us_core_v110_endpoint_read_test
+- :id: davinci_pdex_plan_net_v110_endpoint_read_test
   :file_name: endpoint_read_test.rb
-- :id: us_core_v110_endpoint_organization_search_test
+- :id: davinci_pdex_plan_net_v110_endpoint_organization_search_test
   :file_name: endpoint_organization_search_test.rb
-- :id: us_core_v110_endpoint__id_search_test
+- :id: davinci_pdex_plan_net_v110_endpoint__id_search_test
   :file_name: endpoint_id_search_test.rb
-- :id: us_core_v110_endpoint__lastUpdated_search_test
+- :id: davinci_pdex_plan_net_v110_endpoint__lastUpdated_search_test
   :file_name: endpoint_lastupdated_search_test.rb
-- :id: us_core_v110_endpoint_validation_test
+- :id: davinci_pdex_plan_net_v110_endpoint_validation_test
   :file_name: endpoint_validation_test.rb
-- :id: us_core_v110_endpoint_must_support_test
+- :id: davinci_pdex_plan_net_v110_endpoint_must_support_test
   :file_name: endpoint_must_support_test.rb
-- :id: us_core_v110_endpoint_reference_resolution_test
+- :id: davinci_pdex_plan_net_v110_endpoint_reference_resolution_test
   :file_name: endpoint_reference_resolution_test.rb
-:id: us_core_v110_endpoint
+:id: davinci_pdex_plan_net_v110_endpoint
 :file_name: endpoint_group.rb
 :delayed_references:
 - :path: managingOrganization

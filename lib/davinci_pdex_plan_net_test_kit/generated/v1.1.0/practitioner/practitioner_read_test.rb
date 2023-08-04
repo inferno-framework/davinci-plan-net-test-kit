@@ -1,14 +1,14 @@
 require_relative '../../../read_test'
 
 module DaVinciPDEXPlanNetTestKit
-  module USCoreV110
+  module DaVinciPDEXPlanNetV110
     class PractitionerReadTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::ReadTest
 
       title 'Server returns correct Practitioner resource from Practitioner read interaction'
       description 'A server SHALL support the Practitioner read interaction.'
 
-      id :us_core_v110_practitioner_read_test
+      id :davinci_pdex_plan_net_v110_practitioner_read_test
 
       def resource_type
         'Practitioner'

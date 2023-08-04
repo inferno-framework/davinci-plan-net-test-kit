@@ -74,15 +74,15 @@ module DaVinciPDEXPlanNetTestKit
         oauth_credentials :smart_credentials
       end
 
-      group from: :us_core_v110_capability_statement
+      group from: :davinci_pdex_plan_net_v110_capability_statement
   
-      group from: :us_core_v110_endpoint
-      group from: :us_core_v110_healthcare_service
-      group from: :us_core_v110_insurance_plan
-      group from: :us_core_v110_organization
-      group from: :us_core_v110_organization
-      group from: :us_core_v110_organization_affiliation
-      group from: :us_core_v110_practitioner
+      group from: :davinci_pdex_plan_net_v110_endpoint
+      group from: :davinci_pdex_plan_net_v110_healthcare_service
+      group from: :davinci_pdex_plan_net_v110_insurance_plan
+      group from: :davinci_pdex_plan_net_v110_organization
+      group from: :davinci_pdex_plan_net_v110_organization
+      group from: :davinci_pdex_plan_net_v110_organization_affiliation
+      group from: :davinci_pdex_plan_net_v110_practitioner
     end
   end
 end

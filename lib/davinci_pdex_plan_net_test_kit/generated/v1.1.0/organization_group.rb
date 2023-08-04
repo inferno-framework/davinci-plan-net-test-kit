@@ -12,7 +12,7 @@ require_relative 'organization/organization_must_support_test'
 require_relative 'organization/organization_reference_resolution_test'
 
 module DaVinciPDEXPlanNetTestKit
-  module USCoreV110
+  module DaVinciPDEXPlanNetV110
     class OrganizationGroup < Inferno::TestGroup
       title 'Plan-Net Organization Tests'
       short_description 'Verify support for the server capabilities required by the Plan-Net Organization.'
@@ -81,25 +81,25 @@ read succeeds.
 
       )
 
-      id :us_core_v110_organization
+      id :davinci_pdex_plan_net_v110_organization
       run_as_group
 
       def self.metadata
         @metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, 'organization', 'metadata.yml'), aliases: true))
       end
   
-      test from: :us_core_v110_organization_read_test
-      test from: :us_core_v110_organization_partof_search_test
-      test from: :us_core_v110_organization_endpoint_search_test
-      test from: :us_core_v110_organization_address_search_test
-      test from: :us_core_v110_organization_name_search_test
-      test from: :us_core_v110_organization__id_search_test
-      test from: :us_core_v110_organization__lastUpdated_search_test
-      test from: :us_core_v110_organization_type_search_test
-      test from: :us_core_v110_organization_coverage_area_search_test
-      test from: :us_core_v110_organization_validation_test
-      test from: :us_core_v110_organization_must_support_test
-      test from: :us_core_v110_organization_reference_resolution_test
+      test from: :davinci_pdex_plan_net_v110_organization_read_test
+      test from: :davinci_pdex_plan_net_v110_organization_partof_search_test
+      test from: :davinci_pdex_plan_net_v110_organization_endpoint_search_test
+      test from: :davinci_pdex_plan_net_v110_organization_address_search_test
+      test from: :davinci_pdex_plan_net_v110_organization_name_search_test
+      test from: :davinci_pdex_plan_net_v110_organization__id_search_test
+      test from: :davinci_pdex_plan_net_v110_organization__lastUpdated_search_test
+      test from: :davinci_pdex_plan_net_v110_organization_type_search_test
+      test from: :davinci_pdex_plan_net_v110_organization_coverage_area_search_test
+      test from: :davinci_pdex_plan_net_v110_organization_validation_test
+      test from: :davinci_pdex_plan_net_v110_organization_must_support_test
+      test from: :davinci_pdex_plan_net_v110_organization_reference_resolution_test
     end
   end
 end

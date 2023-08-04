@@ -14,7 +14,7 @@ require_relative 'organization_affiliation/organization_affiliation_must_support
 require_relative 'organization_affiliation/organization_affiliation_reference_resolution_test'
 
 module DaVinciPDEXPlanNetTestKit
-  module USCoreV110
+  module DaVinciPDEXPlanNetV110
     class OrganizationAffiliationGroup < Inferno::TestGroup
       title 'Plan-Net OrganizationAffiliation Tests'
       short_description 'Verify support for the server capabilities required by the Plan-Net OrganizationAffiliation.'
@@ -85,27 +85,27 @@ read succeeds.
 
       )
 
-      id :us_core_v110_organization_affiliation
+      id :davinci_pdex_plan_net_v110_organization_affiliation
       run_as_group
 
       def self.metadata
         @metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, 'organization_affiliation', 'metadata.yml'), aliases: true))
       end
   
-      test from: :us_core_v110_organization_affiliation_read_test
-      test from: :us_core_v110_organization_affiliation_primary_organization_search_test
-      test from: :us_core_v110_organization_affiliation_participating_organization_search_test
-      test from: :us_core_v110_organization_affiliation_location_search_test
-      test from: :us_core_v110_organization_affiliation_service_search_test
-      test from: :us_core_v110_organization_affiliation_network_search_test
-      test from: :us_core_v110_organization_affiliation_endpoint_search_test
-      test from: :us_core_v110_organization_affiliation_role_search_test
-      test from: :us_core_v110_organization_affiliation_specialty_search_test
-      test from: :us_core_v110_organization_affiliation__id_search_test
-      test from: :us_core_v110_organization_affiliation__lastUpdated_search_test
-      test from: :us_core_v110_organization_affiliation_validation_test
-      test from: :us_core_v110_organization_affiliation_must_support_test
-      test from: :us_core_v110_organization_affiliation_reference_resolution_test
+      test from: :davinci_pdex_plan_net_v110_organization_affiliation_read_test
+      test from: :davinci_pdex_plan_net_v110_organization_affiliation_primary_organization_search_test
+      test from: :davinci_pdex_plan_net_v110_organization_affiliation_participating_organization_search_test
+      test from: :davinci_pdex_plan_net_v110_organization_affiliation_location_search_test
+      test from: :davinci_pdex_plan_net_v110_organization_affiliation_service_search_test
+      test from: :davinci_pdex_plan_net_v110_organization_affiliation_network_search_test
+      test from: :davinci_pdex_plan_net_v110_organization_affiliation_endpoint_search_test
+      test from: :davinci_pdex_plan_net_v110_organization_affiliation_role_search_test
+      test from: :davinci_pdex_plan_net_v110_organization_affiliation_specialty_search_test
+      test from: :davinci_pdex_plan_net_v110_organization_affiliation__id_search_test
+      test from: :davinci_pdex_plan_net_v110_organization_affiliation__lastUpdated_search_test
+      test from: :davinci_pdex_plan_net_v110_organization_affiliation_validation_test
+      test from: :davinci_pdex_plan_net_v110_organization_affiliation_must_support_test
+      test from: :davinci_pdex_plan_net_v110_organization_affiliation_reference_resolution_test
     end
   end
 end

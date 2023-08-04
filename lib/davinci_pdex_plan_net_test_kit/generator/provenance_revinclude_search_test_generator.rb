@@ -62,7 +62,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def module_name
-        "USCore#{group_metadata.reformatted_version.upcase}"
+        "DaVinciPDEXPlanNet#{group_metadata.reformatted_version.upcase}"
       end
 
       def resource_type

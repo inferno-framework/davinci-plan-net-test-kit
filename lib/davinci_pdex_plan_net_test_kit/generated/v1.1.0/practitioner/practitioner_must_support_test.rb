@@ -1,7 +1,7 @@
 require_relative '../../../must_support_test'
 
 module DaVinciPDEXPlanNetTestKit
-  module USCoreV110
+  module DaVinciPDEXPlanNetV110
     class PractitionerMustSupportTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::MustSupportTest
 
@@ -35,7 +35,7 @@ module DaVinciPDEXPlanNetTestKit
         * Practitioner.telecom
       )
 
-      id :us_core_v110_practitioner_must_support_test
+      id :davinci_pdex_plan_net_v110_practitioner_must_support_test
 
       def resource_type
         'Practitioner'

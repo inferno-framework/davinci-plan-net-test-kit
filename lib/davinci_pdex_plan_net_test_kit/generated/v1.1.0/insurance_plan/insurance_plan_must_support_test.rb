@@ -1,7 +1,7 @@
 require_relative '../../../must_support_test'
 
 module DaVinciPDEXPlanNetTestKit
-  module USCoreV110
+  module DaVinciPDEXPlanNetV110
     class InsurancePlanMustSupportTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::MustSupportTest
 
@@ -35,7 +35,7 @@ module DaVinciPDEXPlanNetTestKit
         * InsurancePlan.type
       )
 
-      id :us_core_v110_insurance_plan_must_support_test
+      id :davinci_pdex_plan_net_v110_insurance_plan_must_support_test
 
       def resource_type
         'InsurancePlan'

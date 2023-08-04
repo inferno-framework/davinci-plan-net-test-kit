@@ -69,7 +69,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def test_id
-        "us_core_#{group_metadata.reformatted_version}_#{profile_identifier}_validation_test"
+        "davinci_pdex_plan_net_#{group_metadata.reformatted_version}_#{profile_identifier}_validation_test"
       end
 
       def class_name
@@ -77,7 +77,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def module_name
-        "USCore#{group_metadata.reformatted_version.upcase}"
+        "DaVinciPDEXPlanNet#{group_metadata.reformatted_version.upcase}"
       end
 
       def resource_type
