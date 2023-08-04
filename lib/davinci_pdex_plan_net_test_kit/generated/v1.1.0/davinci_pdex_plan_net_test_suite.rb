@@ -1,15 +1,21 @@
 require 'inferno/dsl/oauth_credentials'
 require_relative '../../version'
-require_relative '<%= capability_statement_file_name %>'
-<% group_file_list.each do |file_name| %>require_relative '<%= file_name %>'
-<% end %>
+require_relative '../../custom_groups/v1.1.0/capability_statement_group'
+require_relative 'endpoint_group'
+require_relative 'healthcare_service_group'
+require_relative 'insurance_plan_group'
+require_relative 'organization_group'
+require_relative 'organization_group'
+require_relative 'organization_affiliation_group'
+require_relative 'practitioner_group'
+
 module DaVinciPDEXPlanNetTestKit
-  module <%= module_name %>
-    class <%= class_name %> < Inferno::TestSuite
-      title '<%= title %>'
+  module DaVinciPDEXPlanNetV110
+    class DaVinciPDEXPlanNetTestSuite < Inferno::TestSuite
+      title 'DaVinci PDEX Plan Net v1.1.0'
       description %(
         The US Core Test Kit tests systems for their conformance to the [US Core
-        Implementation Guide](<%=ig_link %>).
+        Implementation Guide]().
 
         HL7® FHIR® resources are validated with the Java validator using
         `tx.fhir.org` as the terminology server. Users should note that the
@@ -31,7 +37,7 @@ module DaVinciPDEXPlanNetTestKit
         /Provenance.agent\[\d*\]: Rule provenance-1/ #Invalid invariant in US Core v5.0.1
       ].freeze
 
-      VERSION_SPECIFIC_MESSAGE_FILTERS = <%=version_specific_message_filters%>.freeze
+      VERSION_SPECIFIC_MESSAGE_FILTERS = [].freeze
 
       def self.metadata
         @metadata ||= YAML.load_file(File.join(__dir__, 'metadata.yml'), aliases: true)[:groups].map do |raw_metadata|
@@ -40,7 +46,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       validator do
-        url ENV.fetch('<%= validator_env_name %>', 'http://validator_service:4567')
+        url ENV.fetch('V110_VALIDATOR_URL', 'http://validator_service:4567')
         message_filters = VALIDATION_MESSAGE_FILTERS + VERSION_SPECIFIC_MESSAGE_FILTERS
 
         exclude_message do |message|
@@ -53,7 +59,7 @@ module DaVinciPDEXPlanNetTestKit
         end
       end
 
-      id :<%= suite_id %>
+      id :davincin_pdex_plan_net_v110
 
       input :url,
         title: 'FHIR Endpoint',
@@ -68,9 +74,15 @@ module DaVinciPDEXPlanNetTestKit
         oauth_credentials :smart_credentials
       end
 
-      group from: :<%= capability_statement_group_id %>
-  <% group_id_list.each do |id| %>
-      group from: :<%= id %><% end %>
+      group from: :us_core_v110_capability_statement
+  
+      group from: :us_core_v110_endpoint
+      group from: :us_core_v110_healthcare_service
+      group from: :us_core_v110_insurance_plan
+      group from: :us_core_v110_organization
+      group from: :us_core_v110_organization
+      group from: :us_core_v110_organization_affiliation
+      group from: :us_core_v110_practitioner
     end
   end
 end

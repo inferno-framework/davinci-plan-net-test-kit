@@ -39,8 +39,19 @@ module DaVinciPDEXPlanNetTestKit
         # remove '_' from search parameter name, such as _id or _tag
         normalized_name = normalized_name = name.to_s.delete_prefix('_')
 
-        resources_by_type['SearchParameter']
-          .find { |param| param.id == "us-core-#{resource.downcase}-#{normalized_name}" }
+        if ['family', 'given'].include?(normalized_name) && resource == 'Practitioner'
+          normalized_name += '-name'
+        end
+
+        param = resources_by_type['SearchParameter']
+          .find { |param| param.id == "#{resource.downcase}-#{normalized_name}" }
+
+        if param.nil?
+          param = resources_by_type['SearchParameter']
+            .find { |param| param.id == "Resource-#{normalized_name}" }
+        end
+
+        return param
       end
 
       private

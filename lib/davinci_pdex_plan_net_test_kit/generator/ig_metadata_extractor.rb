@@ -9,7 +9,7 @@ module DaVinciPDEXPlanNetTestKit
       def initialize(ig_resources)
         self.ig_resources = ig_resources
         add_missing_supported_profiles
-        remove_extra_supported_profiles
+        #remove_extra_supported_profiles
         self.metadata = IGMetadata.new
       end
 
@@ -53,7 +53,6 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def remove_extra_supported_profiles
-        binding.pry
         ig_resources.capability_statement.rest.first.resource
             .find { |resource| resource.type == 'Observation' }
             .supportedProfile.delete_if do |profile_url|

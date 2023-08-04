@@ -1,0 +1,370 @@
+---
+:name: plannet_InsurancePlan
+:class_name: PlannetInsuranceplanSequence
+:version: v1.1.0
+:reformatted_version: v110
+:resource: InsurancePlan
+:profile_url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-InsurancePlan
+:profile_name: Plan-Net InsurancePlan
+:profile_version: 1.1.0
+:title: Plan-Net InsurancePlan
+:short_description: Verify support for the server capabilities required by the Plan-Net
+  InsurancePlan.
+:interactions:
+- :code: search-type
+  :expectation: SHALL
+- :code: read
+  :expectation: SHALL
+- :code: vread
+  :expectation: SHOULD
+:operations: []
+:searches:
+- :names:
+  - administered-by
+  :expectation: SHALL
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
+- :names:
+  - owned-by
+  :expectation: SHALL
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
+- :names:
+  - coverage-area
+  :expectation: SHALL
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
+- :names:
+  - name
+  :expectation: SHALL
+  :names_not_must_support_or_mandatory:
+  - name
+  :must_support_or_mandatory: false
+- :names:
+  - plan-type
+  :expectation: SHALL
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
+- :names:
+  - identifier
+  :expectation: SHALL
+  :names_not_must_support_or_mandatory:
+  - identifier
+  :must_support_or_mandatory: false
+- :names:
+  - _id
+  :expectation: SHALL
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
+- :names:
+  - _lastUpdated
+  :expectation: SHALL
+  :names_not_must_support_or_mandatory:
+  - _lastUpdated
+  :must_support_or_mandatory: false
+- :names:
+  - type
+  :expectation: SHALL
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
+:search_definitions:
+  :administered-by:
+    :paths:
+    - administeredBy
+    :full_paths:
+    - InsurancePlan.administeredBy
+    :comparators: {}
+    :values: []
+    :type: Reference
+    :contains_multiple: false
+    :multiple_or: ''
+    :chain:
+    - :chain: name
+      :expectation:
+    - :chain: partof
+      :expectation:
+  :owned-by:
+    :paths:
+    - ownedBy
+    :full_paths:
+    - InsurancePlan.ownedBy
+    :comparators: {}
+    :values: []
+    :type: Reference
+    :contains_multiple: false
+    :multiple_or: ''
+    :chain:
+    - :chain: name
+      :expectation:
+    - :chain: partof
+      :expectation:
+  :coverage-area:
+    :paths:
+    - coverageArea
+    :full_paths:
+    - InsurancePlan.coverageArea
+    :comparators: {}
+    :values: []
+    :type: Reference
+    :contains_multiple: true
+    :multiple_or: ''
+  :name:
+    :paths:
+    - 'name '
+    - " alias"
+    :full_paths:
+    - 'name '
+    - " alias"
+    :comparators: {}
+    :values: []
+    :type: string
+    :contains_multiple: false
+    :multiple_or: ''
+  :plan-type:
+    :paths:
+    - plan.type
+    :full_paths:
+    - InsurancePlan.plan.type
+    :comparators: {}
+    :values:
+    - platinum
+    - gold
+    - silver
+    - bronze
+    - catastrophic
+    - lowdeductible
+    - highdeductible
+    - catastrophicplan
+    :type: CodeableConcept
+    :contains_multiple: false
+    :multiple_or: ''
+  :identifier:
+    :paths:
+    - identifier
+    :full_paths:
+    - InsurancePlan.identifier
+    :comparators: {}
+    :values: []
+    :type: Identifier
+    :contains_multiple: true
+    :multiple_or: ''
+  :_id:
+    :paths:
+    - Resource.id
+    :full_paths:
+    - Resource.id
+    :comparators: {}
+    :values: []
+    :type: token
+    :contains_multiple: false
+    :multiple_or: ''
+  :_lastUpdated:
+    :paths:
+    - Resource.meta.lastUpdated
+    :full_paths:
+    - Resource.meta.lastUpdated
+    :comparators:
+      :eq: MAY
+      :ne: MAY
+      :gt: MAY
+      :ge: MAY
+      :lt: MAY
+      :le: MAY
+      :sa: MAY
+      :eb: MAY
+      :ap: MAY
+    :values: []
+    :type: date
+    :contains_multiple: false
+    :multiple_or: ''
+  :type:
+    :paths:
+    - type
+    :full_paths:
+    - InsurancePlan.type
+    :comparators: {}
+    :values:
+    - commppo
+    - commhdhp
+    - commpos
+    - commhmo
+    - commepo
+    - medi
+    - medihmo
+    - mediadv
+    - mediadvhmo
+    - media
+    - medib
+    - medid
+    - mediab
+    - qhp
+    - ihs
+    - fep
+    - tri
+    - va
+    - dent
+    - denthmo
+    - vis
+    - vishmo
+    :type: CodeableConcept
+    :contains_multiple: false
+    :multiple_or: ''
+:include_params:
+- InsurancePlan:administered-by
+- InsurancePlan:owned-by
+- InsurancePlan:coverage-area
+:revincludes: []
+:required_concepts:
+- plan.specificCost.benefit.cost.applicability
+:must_supports:
+  :extensions: []
+  :slices: []
+  :elements:
+  - :path: identifier.type
+  - :path: identifier.value
+  - :path: identifier.assigner
+    :types:
+    - Reference
+  - :path: status
+    :fixed_value: active
+  - :path: type
+  - :path: name
+  - :path: alias
+  - :path: period
+  - :path: ownedBy
+    :types:
+    - Reference
+  - :path: administeredBy
+    :types:
+    - Reference
+  - :path: coverageArea
+    :types:
+    - Reference
+  - :path: contact
+  - :path: contact.name
+  - :path: contact.name.text
+  - :path: contact.telecom
+  - :path: contact.telecom.system
+  - :path: contact.telecom.value
+  - :path: endpoint
+    :types:
+    - Reference
+  - :path: network
+    :types:
+    - Reference
+  - :path: plan.type
+  - :path: plan.coverageArea
+    :types:
+    - Reference
+:mandatory_elements:
+- InsurancePlan.meta.lastUpdated
+- InsurancePlan.status
+- InsurancePlan.type
+- InsurancePlan.ownedBy
+- InsurancePlan.administeredBy
+- InsurancePlan.coverage.type
+- InsurancePlan.coverage.benefit
+- InsurancePlan.coverage.benefit.type
+- InsurancePlan.plan.specificCost.category
+- InsurancePlan.plan.specificCost.benefit.type
+- InsurancePlan.plan.specificCost.benefit.cost.type
+:bindings:
+- :type: code
+  :strength: required
+  :system: http://hl7.org/fhir/ValueSet/identifier-use
+  :path: identifier.use
+- :type: code
+  :strength: required
+  :system: http://hl7.org/fhir/ValueSet/name-use
+  :path: contact.name.use
+- :type: code
+  :strength: required
+  :system: http://hl7.org/fhir/ValueSet/contact-point-system
+  :path: contact.telecom.system
+- :type: code
+  :strength: required
+  :system: http://hl7.org/fhir/ValueSet/contact-point-use
+  :path: contact.telecom.use
+- :type: CodeableConcept
+  :strength: required
+  :system: http://hl7.org/fhir/ValueSet/insuranceplan-applicability
+  :path: plan.specificCost.benefit.cost.applicability
+:references:
+- :path: InsurancePlan.identifier.assigner
+  :profiles:
+  - http://hl7.org/fhir/StructureDefinition/Organization
+- :path: InsurancePlan.ownedBy
+  :profiles:
+  - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Organization
+- :path: InsurancePlan.administeredBy
+  :profiles:
+  - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Organization
+- :path: InsurancePlan.coverageArea
+  :profiles:
+  - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Location
+- :path: InsurancePlan.endpoint
+  :profiles:
+  - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Endpoint
+- :path: InsurancePlan.network
+  :profiles:
+  - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Network
+- :path: InsurancePlan.coverage.network
+  :profiles:
+  - http://hl7.org/fhir/StructureDefinition/Organization
+- :path: InsurancePlan.plan.coverageArea
+  :profiles:
+  - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Location
+- :path: InsurancePlan.plan.network
+  :profiles:
+  - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Network
+:tests:
+- :id: us_core_v110_insurance_plan_read_test
+  :file_name: insurance_plan_read_test.rb
+- :id: us_core_v110_insurance_plan_administered_by_search_test
+  :file_name: insurance_plan_administered_by_search_test.rb
+- :id: us_core_v110_insurance_plan_owned_by_search_test
+  :file_name: insurance_plan_owned_by_search_test.rb
+- :id: us_core_v110_insurance_plan_coverage_area_search_test
+  :file_name: insurance_plan_coverage_area_search_test.rb
+- :id: us_core_v110_insurance_plan_name_search_test
+  :file_name: insurance_plan_name_search_test.rb
+- :id: us_core_v110_insurance_plan_plan_type_search_test
+  :file_name: insurance_plan_plan_type_search_test.rb
+- :id: us_core_v110_insurance_plan_identifier_search_test
+  :file_name: insurance_plan_identifier_search_test.rb
+- :id: us_core_v110_insurance_plan__id_search_test
+  :file_name: insurance_plan_id_search_test.rb
+- :id: us_core_v110_insurance_plan__lastUpdated_search_test
+  :file_name: insurance_plan_lastupdated_search_test.rb
+- :id: us_core_v110_insurance_plan_type_search_test
+  :file_name: insurance_plan_type_search_test.rb
+- :id: us_core_v110_insurance_plan_validation_test
+  :file_name: insurance_plan_validation_test.rb
+- :id: us_core_v110_insurance_plan_must_support_test
+  :file_name: insurance_plan_must_support_test.rb
+- :id: us_core_v110_insurance_plan_reference_resolution_test
+  :file_name: insurance_plan_reference_resolution_test.rb
+:id: us_core_v110_insurance_plan
+:file_name: insurance_plan_group.rb
+:delayed_references:
+- :path: ownedBy
+  :resources:
+  - Organization
+- :path: administeredBy
+  :resources:
+  - Organization
+- :path: coverageArea
+  :resources:
+  - Location
+- :path: endpoint
+  :resources:
+  - Endpoint
+- :path: network
+  :resources:
+  - Organization
+- :path: plan.coverageArea
+  :resources:
+  - Location
+- :path: plan.network
+  :resources:
+  - Organization

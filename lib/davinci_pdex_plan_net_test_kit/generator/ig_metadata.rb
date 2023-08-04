@@ -9,7 +9,7 @@ module DaVinciPDEXPlanNetTestKit
 
       def ordered_groups
         @ordered_groups ||=
-          [patient_group] + non_delayed_groups + delayed_groups
+          non_delayed_groups + delayed_groups
       end
 
       def patient_group
