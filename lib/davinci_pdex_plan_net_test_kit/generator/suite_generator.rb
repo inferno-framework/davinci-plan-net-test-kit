@@ -46,7 +46,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def suite_id
-        "davincin_pdex_plan_net_#{ig_metadata.reformatted_version}"
+        "davinci_pdex_plan_net_#{ig_metadata.reformatted_version}"
       end
 
       def title
