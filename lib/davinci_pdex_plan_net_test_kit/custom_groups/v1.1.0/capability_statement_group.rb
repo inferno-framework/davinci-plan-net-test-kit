@@ -5,7 +5,7 @@ require_relative '../capability_statement/json_support_test'
 require_relative '../capability_statement/profile_support_test'
 
 module DaVinciPDEXPlanNetTestKit
-  module USCoreV311
+  module DaVinciPDEXPlanNetV110
     class CapabilityStatementGroup < Inferno::TestGroup
       id :davinci_pdex_plan_net_v110_capability_statement
       title 'Capability Statement'
@@ -16,8 +16,19 @@ module DaVinciPDEXPlanNetTestKit
         features supported by the API by using the [Capability
         Statement](https://www.hl7.org/fhir/capabilitystatement.html) resource.
         The features described in the Capability Statement must be consistent with
+<<<<<<< HEAD
         the required capabilities of a Plan Net server.  This test also expects
         that APIs state support for all resources types applicable to PDEX v1.1.0.
+=======
+        the required capabilities of a DaVinci PDEX Plan Net server.
+
+        The Capability Statement resource allows clients to determine which
+        resources are supported by a FHIR Server. Not all servers are expected to
+        implement all possible queries and data elements described in the Plan Net
+        API. For example, the US Core Implementation Guide requires that the
+        Patient resource and only one additional resource profile from the US Core
+        Profiles.
+>>>>>>> 90a66b4 (correct profile list + typo)
 
         # Test Methodology
 
@@ -40,42 +51,16 @@ module DaVinciPDEXPlanNetTestKit
       run_as_group
 
       PROFILES = {
-        'AllergyIntolerance' => ['http://hl7.org/fhir/us/core/StructureDefinition/us-core-allergyintolerance'].freeze,
-        'CarePlan' => ['http://hl7.org/fhir/us/core/StructureDefinition/us-core-careplan'].freeze,
-        'CareTeam' => ['http://hl7.org/fhir/us/core/StructureDefinition/us-core-careteam'].freeze,
-        'Condition' => ['http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition'].freeze,
-        'Device' => ['http://hl7.org/fhir/us/core/StructureDefinition/us-core-implantable-device'].freeze,
-        'DiagnosticReport' => [
-          'http://hl7.org/fhir/us/core/StructureDefinition/us-core-diagnosticreport-lab',
-          'http://hl7.org/fhir/us/core/StructureDefinition/us-core-diagnosticreport-note'
+        'Endpoint' => ['http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Endpoint'].freeze,
+        'HealthcareService' => ['http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-HealthcareService'].freeze,
+        'Location' => ['http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Location'].freeze,
+        'Organization' => [
+          'http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Network',
+          'http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Organization'
         ].freeze,
-        'DocumentReference' => ['http://hl7.org/fhir/us/core/StructureDefinition/us-core-documentreference'].freeze,
-        'Encounter' => ['http://hl7.org/fhir/us/core/StructureDefinition/us-core-encounter'].freeze,
-        'Goal' => ['http://hl7.org/fhir/us/core/StructureDefinition/us-core-goal'].freeze,
-        'Immunization' => ['http://hl7.org/fhir/us/core/StructureDefinition/us-core-immunization'].freeze,
-        'Location' => ['http://hl7.org/fhir/us/core/StructureDefinition/us-core-location'].freeze,
-        'Medication' => ['http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication'].freeze,
-        'MedicationRequest' => ['http://hl7.org/fhir/us/core/StructureDefinition/us-core-medicationrequest'].freeze,
-        'Observation' => [
-          'http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-lab',
-          'http://hl7.org/fhir/us/core/StructureDefinition/pediatric-bmi-for-age',
-          'http://hl7.org/fhir/us/core/StructureDefinition/pediatric-weight-for-height',
-          'http://hl7.org/fhir/us/core/StructureDefinition/us-core-pulse-oximetry',
-          'http://hl7.org/fhir/us/core/StructureDefinition/us-core-smokingstatus',
-          'http://hl7.org/fhir/StructureDefinition/bp',
-          'http://hl7.org/fhir/StructureDefinition/bodyheight',
-          'http://hl7.org/fhir/StructureDefinition/bodyweight',
-          'http://hl7.org/fhir/StructureDefinition/heartrate',
-          'http://hl7.org/fhir/StructureDefinition/resprate',
-          'http://hl7.org/fhir/StructureDefinition/bodytemp',
-          'http://hl7.org/fhir/us/core/StructureDefinition/head-occipital-frontal-circumference-percentile'
-        ].freeze,
-        'Organization' => ['http://hl7.org/fhir/us/core/StructureDefinition/us-core-organization'].freeze,
-        'Patient' => ['http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient'].freeze,
-        'Practitioner' => ['http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitioner'].freeze,
-        'PractitionerRole' => ['http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitionerrole'].freeze,
-        'Procedure' => ['http://hl7.org/fhir/us/core/StructureDefinition/us-core-procedure'].freeze,
-        'Provenance' => ['http://hl7.org/fhir/us/core/StructureDefinition/us-core-provenance'].freeze
+        'OrganizationAffiliation' => ['http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-OrganizationAffiliation'].freeze,
+        'Practitioner' => ['http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Practitioner'].freeze,
+        'PractitionerRole' => ['http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-PractitionerRole'].freeze
       }.freeze
 
       test from: :tls_version_test,
