@@ -503,7 +503,7 @@ module DaVinciPDEXPlanNetTestKit
         paths[0] = 'local_class'
       end
 
-      paths
+      paths.map { |path| path.delete_prefix("Resource.") }  
     end
 
     def all_search_params_present?(params)
