@@ -1,3 +1,4 @@
+require_relative 'plannet_organization/plannet_organization_no_params_search_test'
 require_relative 'plannet_organization/plannet_organization_read_test'
 require_relative 'plannet_organization/plannet_organization_partof_search_test'
 require_relative 'plannet_organization/plannet_organization_endpoint_search_test'
@@ -88,6 +89,7 @@ read succeeds.
         @metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, 'plannet_organization', 'metadata.yml'), aliases: true))
       end
   
+      test from: :davinci_pdex_plan_net_v110_plannet_organization_no_params_search_test
       test from: :davinci_pdex_plan_net_v110_plannet_organization_read_test
       test from: :davinci_pdex_plan_net_v110_plannet_organization_partof_search_test
       test from: :davinci_pdex_plan_net_v110_plannet_organization_endpoint_search_test

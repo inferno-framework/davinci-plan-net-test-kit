@@ -60,7 +60,7 @@ module DaVinciPDEXPlanNetTestKit
         end
       end
 
-      id :davincin_pdex_plan_net_v110
+      id :davinci_pdex_plan_net_v110
 
       input :url,
         title: 'FHIR Endpoint',

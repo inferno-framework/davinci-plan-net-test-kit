@@ -1,3 +1,4 @@
+require_relative 'healthcare_service/healthcare_service_no_params_search_test'
 require_relative 'healthcare_service/healthcare_service_read_test'
 require_relative 'healthcare_service/healthcare_service_location_search_test'
 require_relative 'healthcare_service/healthcare_service_coverage_area_search_test'
@@ -92,6 +93,7 @@ read succeeds.
         @metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, 'healthcare_service', 'metadata.yml'), aliases: true))
       end
   
+      test from: :davinci_pdex_plan_net_v110_healthcare_service_no_params_search_test
       test from: :davinci_pdex_plan_net_v110_healthcare_service_read_test
       test from: :davinci_pdex_plan_net_v110_healthcare_service_location_search_test
       test from: :davinci_pdex_plan_net_v110_healthcare_service_coverage_area_search_test

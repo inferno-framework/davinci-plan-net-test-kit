@@ -1,3 +1,4 @@
+require_relative 'organization_affiliation/organization_affiliation_no_params_search_test'
 require_relative 'organization_affiliation/organization_affiliation_read_test'
 require_relative 'organization_affiliation/organization_affiliation_primary_organization_search_test'
 require_relative 'organization_affiliation/organization_affiliation_participating_organization_search_test'
@@ -92,6 +93,7 @@ read succeeds.
         @metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, 'organization_affiliation', 'metadata.yml'), aliases: true))
       end
   
+      test from: :davinci_pdex_plan_net_v110_organization_affiliation_no_params_search_test
       test from: :davinci_pdex_plan_net_v110_organization_affiliation_read_test
       test from: :davinci_pdex_plan_net_v110_organization_affiliation_primary_organization_search_test
       test from: :davinci_pdex_plan_net_v110_organization_affiliation_participating_organization_search_test
