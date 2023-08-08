@@ -1,3 +1,4 @@
+require_relative 'location/location_no_params_search_test'
 require_relative 'location/location_read_test'
 require_relative 'location/location_partof_search_test'
 require_relative 'location/location_organization_search_test'
@@ -92,6 +93,7 @@ read succeeds.
         @metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, 'location', 'metadata.yml'), aliases: true))
       end
   
+      test from: :davinci_pdex_plan_net_v110_location_no_params_search_test
       test from: :davinci_pdex_plan_net_v110_location_read_test
       test from: :davinci_pdex_plan_net_v110_location_partof_search_test
       test from: :davinci_pdex_plan_net_v110_location_organization_search_test

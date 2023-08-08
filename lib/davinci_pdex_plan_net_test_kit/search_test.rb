@@ -92,6 +92,22 @@ module DaVinciPDEXPlanNetTestKit
       perform_multiple_or_search_test if multiple_or_search_params.present?
     end
 
+    def run_search_no_params_test
+      fhir_search resource_type
+      
+      check_search_response
+
+      resources_returned =
+        fetch_all_bundled_resources.select { |resource| resource.resourceType == resource_type }
+
+      skip_if resources_returned.empty?, no_resources_skip_message
+
+      if first_search?
+        all_scratch_resources.concat(resources_returned).uniq!
+      end
+
+    end
+
     def perform_search(params, patient_id)
       fhir_search resource_type, params: params
 

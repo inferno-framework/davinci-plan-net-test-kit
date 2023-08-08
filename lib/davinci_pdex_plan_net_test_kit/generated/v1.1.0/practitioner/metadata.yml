@@ -217,6 +217,8 @@
   :profiles:
   - http://hl7.org/fhir/StructureDefinition/Organization
 :tests:
+- :id: davinci_pdex_plan_net_v110_practitioner_no_params_search_test
+  :file_name: practitioner_no_params_search_test.rb
 - :id: davinci_pdex_plan_net_v110_practitioner_read_test
   :file_name: practitioner_read_test.rb
 - :id: davinci_pdex_plan_net_v110_practitioner_name_search_test
