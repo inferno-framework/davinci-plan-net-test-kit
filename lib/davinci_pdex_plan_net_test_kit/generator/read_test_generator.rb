@@ -68,14 +68,6 @@ module DaVinciPDEXPlanNetTestKit
         group_metadata.resource
       end
 
-      def resource_collection_string
-        if group_metadata.delayed? && resource_type != 'Provenance'
-          "scratch.dig(:references, '#{resource_type}')"
-        else
-          'all_scratch_resources'
-        end
-      end
-
       def conformance_expectation
         read_interaction[:expectation]
       end

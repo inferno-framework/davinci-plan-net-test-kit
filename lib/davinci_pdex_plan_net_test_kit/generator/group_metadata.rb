@@ -72,12 +72,7 @@ module DaVinciPDEXPlanNetTestKit
           id: id,
           file_name: file_name
         }
-
-        # if delayed? && id.include?('read')
-        #  self.tests.unshift(test_metadata)
-        # else
-          self.tests << test_metadata
-        # end
+        self.tests << test_metadata
       end
 
       def to_hash
