@@ -83,11 +83,11 @@
     :multiple_or: ''
     :chain:
     - :chain: type
-      :expectation:
+      :expectation: 
     - :chain: address
-      :expectation:
+      :expectation: 
     - :chain: organization
-      :expectation:
+      :expectation: 
   :organization:
     :paths:
     - managingOrganization
@@ -100,13 +100,13 @@
     :multiple_or: ''
     :chain:
     - :chain: name
-      :expectation:
+      :expectation: 
     - :chain: address
-      :expectation:
+      :expectation: 
     - :chain: partof
-      :expectation:
+      :expectation: 
     - :chain: type
-      :expectation:
+      :expectation: 
   :endpoint:
     :paths:
     - endpoint
@@ -119,7 +119,7 @@
     :multiple_or: ''
     :chain:
     - :chain: organization
-      :expectation:
+      :expectation: 
   :address-city:
     :paths:
     - address.city
@@ -348,6 +348,14 @@
   :file_name: location_id_search_test.rb
 - :id: davinci_pdex_plan_net_v110_location__lastUpdated_search_test
   :file_name: location_lastupdated_search_test.rb
+- :id: us_core_v110_location_revinclude_HealthcareService_location_search_test
+  :file_name: location_revinclude_healthcareservice_location_search_test.rb
+- :id: us_core_v110_location_revinclude_InsurancePlan_coverage_area_search_test
+  :file_name: location_revinclude_insuranceplan_coverage_area_search_test.rb
+- :id: us_core_v110_location_revinclude_OrganizationAffiliation_location_search_test
+  :file_name: location_revinclude_organizationaffiliation_location_search_test.rb
+- :id: us_core_v110_location_revinclude_PractitionerRole_location_search_test
+  :file_name: location_revinclude_practitionerrole_location_search_test.rb
 - :id: davinci_pdex_plan_net_v110_location_validation_test
   :file_name: location_validation_test.rb
 - :id: davinci_pdex_plan_net_v110_location_must_support_test

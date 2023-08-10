@@ -6,13 +6,13 @@ module DaVinciPDEXPlanNetTestKit
     class <%= class_name %> < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns Provenance resources from <%= resource_type %> search by <%= search_param_name_string %>'
+      title 'Server returns <%= search_param_resource_string %> resources from <%= resource_type %> search by <%= search_param_name_string %>'
       description %(
-        A server SHALL be capable of supporting _revIncludes:Provenance:target.
+        A server SHALL be capable of supporting _revIncludes for <%= revinclude_param %>.
 
         This test will perform a search by <%= search_param_name_string %> and
-        will pass if a Provenance resource is found in the response.
-      %)
+        will pass if a <%= search_param_resource_string %> resource is found in the response.
+      )
 
       id :<%= test_id %>
   <% if needs_patient_id? %>
@@ -30,20 +30,20 @@ module DaVinciPDEXPlanNetTestKit
         @metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, 'metadata.yml')))
       end
 
-      def self.provenance_metadata
-        @provenance_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', 'provenance', 'metadata.yml'), aliases: true))
+      def self.revinclude_metadata
+        @revinclude_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', '<%= search_param_resource_string %>', 'metadata.yml'), aliases: true))
       end
 
       def scratch_resources
         scratch[:<%= profile_identifier %>_resources] ||= {}
       end
 
-      def scratch_provenance_resources
-        scratch[:provenance_resources] ||= {}
+      def scratch_revinclude_resources
+        scratch[:revinclude_resources] ||= {}
       end
 
       run do
-        run_provenance_revinclude_search_test
+        run_revinclude_search_test
       end
     end
   end

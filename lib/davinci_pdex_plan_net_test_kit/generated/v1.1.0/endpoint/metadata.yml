@@ -48,13 +48,13 @@
     :multiple_or: ''
     :chain:
     - :chain: name
-      :expectation:
+      :expectation: 
     - :chain: address
-      :expectation:
+      :expectation: 
     - :chain: partof
-      :expectation:
+      :expectation: 
     - :chain: type
-      :expectation:
+      :expectation: 
   :_id:
     :paths:
     - Resource.id

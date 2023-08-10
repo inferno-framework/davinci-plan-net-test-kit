@@ -75,11 +75,11 @@
     :multiple_or: ''
     :chain:
     - :chain: name
-      :expectation:
+      :expectation: 
     - :chain: address
-      :expectation:
+      :expectation: 
     - :chain: type
-      :expectation:
+      :expectation: 
   :endpoint:
     :paths:
     - endpoint
@@ -92,7 +92,7 @@
     :multiple_or: ''
     :chain:
     - :chain: organization
-      :expectation:
+      :expectation: 
   :address:
     :paths:
     - address
@@ -335,6 +335,22 @@
   :file_name: plannet_organization_type_search_test.rb
 - :id: davinci_pdex_plan_net_v110_plannet_organization_coverage_area_search_test
   :file_name: plannet_organization_coverage_area_search_test.rb
+- :id: us_core_v110_plannet_organization_revinclude_Endpoint_organization_search_test
+  :file_name: plannet_organization_revinclude_endpoint_organization_search_test.rb
+- :id: us_core_v110_plannet_organization_revinclude_HealthcareService_organization_search_test
+  :file_name: plannet_organization_revinclude_healthcareservice_organization_search_test.rb
+- :id: us_core_v110_plannet_organization_revinclude_InsurancePlan_administered_by_search_test
+  :file_name: plannet_organization_revinclude_insuranceplan_administered_by_search_test.rb
+- :id: us_core_v110_plannet_organization_revinclude_InsurancePlan_owned_by_search_test
+  :file_name: plannet_organization_revinclude_insuranceplan_owned_by_search_test.rb
+- :id: us_core_v110_plannet_organization_revinclude_OrganizationAffiliation_primary_organization_search_test
+  :file_name: plannet_organization_revinclude_organizationaffiliation_primary_organization_search_test.rb
+- :id: us_core_v110_plannet_organization_revinclude_PractitionerRole_organization_search_test
+  :file_name: plannet_organization_revinclude_practitionerrole_organization_search_test.rb
+- :id: us_core_v110_plannet_organization_revinclude_PractitionerRole_network_search_test
+  :file_name: plannet_organization_revinclude_practitionerrole_network_search_test.rb
+- :id: us_core_v110_plannet_organization_revinclude_OrganizationAffiliation_participating_organization_search_test
+  :file_name: plannet_organization_revinclude_organizationaffiliation_participating_organization_search_test.rb
 - :id: davinci_pdex_plan_net_v110_plannet_organization_validation_test
   :file_name: plannet_organization_validation_test.rb
 - :id: davinci_pdex_plan_net_v110_plannet_organization_must_support_test

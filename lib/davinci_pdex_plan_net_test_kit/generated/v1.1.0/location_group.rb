@@ -10,6 +10,10 @@ require_relative 'location/location_address_search_test'
 require_relative 'location/location_type_search_test'
 require_relative 'location/location_id_search_test'
 require_relative 'location/location_lastupdated_search_test'
+require_relative 'location/location_revinclude_healthcareservice_location_search_test'
+require_relative 'location/location_revinclude_insuranceplan_coverage_area_search_test'
+require_relative 'location/location_revinclude_organizationaffiliation_location_search_test'
+require_relative 'location/location_revinclude_practitionerrole_location_search_test'
 require_relative 'location/location_validation_test'
 require_relative 'location/location_must_support_test'
 require_relative 'location/location_reference_resolution_test'
@@ -105,6 +109,10 @@ read succeeds.
       test from: :davinci_pdex_plan_net_v110_location_type_search_test
       test from: :davinci_pdex_plan_net_v110_location__id_search_test
       test from: :davinci_pdex_plan_net_v110_location__lastUpdated_search_test
+      test from: :us_core_v110_location_revinclude_HealthcareService_location_search_test
+      test from: :us_core_v110_location_revinclude_InsurancePlan_coverage_area_search_test
+      test from: :us_core_v110_location_revinclude_OrganizationAffiliation_location_search_test
+      test from: :us_core_v110_location_revinclude_PractitionerRole_location_search_test
       test from: :davinci_pdex_plan_net_v110_location_validation_test
       test from: :davinci_pdex_plan_net_v110_location_must_support_test
       test from: :davinci_pdex_plan_net_v110_location_reference_resolution_test
