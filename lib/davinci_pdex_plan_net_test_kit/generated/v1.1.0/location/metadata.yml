@@ -348,6 +348,14 @@
   :file_name: location_id_search_test.rb
 - :id: davinci_pdex_plan_net_v110_location__lastUpdated_search_test
   :file_name: location_lastupdated_search_test.rb
+- :id: us_core_v110_location_revinclude_HealthcareService_location_search_test
+  :file_name: location_revinclude_healthcareservice_location_search_test.rb
+- :id: us_core_v110_location_revinclude_InsurancePlan_coverage_area_search_test
+  :file_name: location_revinclude_insuranceplan_coverage_area_search_test.rb
+- :id: us_core_v110_location_revinclude_OrganizationAffiliation_location_search_test
+  :file_name: location_revinclude_organizationaffiliation_location_search_test.rb
+- :id: us_core_v110_location_revinclude_PractitionerRole_location_search_test
+  :file_name: location_revinclude_practitionerrole_location_search_test.rb
 - :id: davinci_pdex_plan_net_v110_location_validation_test
   :file_name: location_validation_test.rb
 - :id: davinci_pdex_plan_net_v110_location_must_support_test

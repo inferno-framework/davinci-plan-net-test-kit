@@ -3,6 +3,7 @@ module DaVinciPDEXPlanNetTestKit
     ATTRIBUTES = [
       :resource_type,
       :search_param_names,
+      :revinclude_param,
       :first_search,
       :fixed_value_search,
       :saves_delayed_references,

@@ -3,26 +3,29 @@ require_relative 'special_cases'
 
 module DaVinciPDEXPlanNetTestKit
   class Generator
-    class ProvenanceRevincludeSearchTestGenerator
+    class RevincludeSearchTestGenerator
       class << self
         def generate(ig_metadata, base_output_dir)
           ig_metadata.groups
             .reject { |group| SpecialCases.exclude_group? group }
-            .select { |group| group.revincludes.include? 'Provenance:target' }
-            .each { |group| new(group, group.searches.first, base_output_dir).generate }
+            .select { |group| !group.revincludes.empty? }
+            .each do |group|
+              group.revincludes.each { |revinclude| new(group, group.searches.second, base_output_dir, revinclude).generate } # Want to not have to use previous searches? Either way, switched first to second here
+            end
         end
       end
 
-      attr_accessor :group_metadata, :search_metadata, :base_output_dir
+      attr_accessor :group_metadata, :search_metadata, :base_output_dir, :revinclude_param
 
-      def initialize(group_metadata, search_metadata, base_output_dir)
+      def initialize(group_metadata, search_metadata, base_output_dir, revinclude_param)
         self.group_metadata = group_metadata
         self.search_metadata = search_metadata
         self.base_output_dir = base_output_dir
+        self.revinclude_param = revinclude_param
       end
 
       def template
-        @template ||= File.read(File.join(__dir__, 'templates', 'provenance_revinclude_search.rb.erb'))
+        @template ||= File.read(File.join(__dir__, 'templates', '_revinclude_search.rb.erb'))
       end
 
       def output
@@ -50,7 +53,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def search_identifier
-        'provenance_revinclude'
+        "revinclude_#{revinclude_param.gsub(/[-:]/, '_')}"
       end
 
       def search_title
@@ -93,8 +96,13 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def search_param_name_string
-        search_metadata[:names].join(' + ') + ' + revInclude:Provenance:target'
+        "_revinclude=#{revinclude_param}"
       end
+
+      def search_param_resource_string
+        revinclude_param.split(/:/)[0]
+      end
+
 
       def needs_patient_id?
         search_metadata[:names].include?('patient') ||
@@ -166,14 +174,15 @@ module DaVinciPDEXPlanNetTestKit
         {}.tap do |properties|
           properties[:fixed_value_search] = 'true' if fixed_value_search?
           properties[:resource_type] = "'#{resource_type}'"
-          properties[:search_param_names] = search_param_names_array
+          properties[:search_param_names] = [] #search_param_names_array
           properties[:possible_status_search] = 'true' if possible_status_search?
+          properties[:revinclude_param] = "'#{revinclude_param}'"
         end
       end
 
       def search_test_properties_string
         search_properties
-          .map { |key, value| "#{' ' * 8}#{key}: #{value}" }
+          .map { |key, value| "#{' ' * 10}#{key}: #{value}" }
           .join(",\n")
       end
 

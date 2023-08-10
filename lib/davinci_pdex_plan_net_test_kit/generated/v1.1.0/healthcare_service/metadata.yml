@@ -1325,6 +1325,10 @@
   :file_name: healthcare_service_id_search_test.rb
 - :id: davinci_pdex_plan_net_v110_healthcare_service__lastUpdated_search_test
   :file_name: healthcare_service_lastupdated_search_test.rb
+- :id: us_core_v110_healthcare_service_revinclude_PractitionerRole_service_search_test
+  :file_name: healthcare_service_revinclude_practitionerrole_service_search_test.rb
+- :id: us_core_v110_healthcare_service_revinclude_OrganizationAffiliation_service_search_test
+  :file_name: healthcare_service_revinclude_organizationaffiliation_service_search_test.rb
 - :id: davinci_pdex_plan_net_v110_healthcare_service_validation_test
   :file_name: healthcare_service_validation_test.rb
 - :id: davinci_pdex_plan_net_v110_healthcare_service_must_support_test
