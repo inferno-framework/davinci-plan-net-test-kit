@@ -3,24 +3,24 @@ require_relative '../../../generator/group_metadata'
 
 module DaVinciPDEXPlanNetTestKit
   module DaVinciPDEXPlanNetV110
-    class LocationRevincludePractitionerroleLocationSearchTest < Inferno::Test
+    class PlannetNetworkPractitionerroleOrganizationSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns PractitionerRole resources from Location search by _revinclude=PractitionerRole:location'
+      title 'Server returns PractitionerRole resources from Organization search by _revinclude=PractitionerRole:organization'
       description %(
-        A server SHALL be capable of supporting _revIncludes for PractitionerRole:location.
+        A server SHALL be capable of supporting _revIncludes for PractitionerRole:organization.
 
-        This test will perform a search by _revinclude=PractitionerRole:location and
+        This test will perform a search by _revinclude=PractitionerRole:organization and
         will pass if a PractitionerRole resource is found in the response.
       )
 
-      id :us_core_v110_location_revinclude_PractitionerRole_location_search_test
+      id :davinci_plan_net_v110_v110_plannet_network_practitionerrole_organization_revinclude_search_test
   
       def properties
         @properties ||= SearchTestProperties.new(
-            resource_type: 'Location',
-          search_param_names: [],
-          revinclude_param: 'PractitionerRole:location'
+            resource_type: 'Organization',
+          search_param_names: ["_id"],
+          revinclude_param: 'PractitionerRole:organization'
         )
       end
 
@@ -33,11 +33,11 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_resources
-        scratch[:location_resources] ||= {}
+        scratch[:plannet_network_resources] ||= {}
       end
 
       def scratch_revinclude_resources
-        scratch[:revinclude_resources] ||= {}
+        scratch[:PractitionerRole_resources] ||= {}
       end
 
       run do

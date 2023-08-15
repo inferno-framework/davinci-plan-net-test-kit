@@ -5,7 +5,7 @@ require_relative 'practitioner/practitioner_id_search_test'
 require_relative 'practitioner/practitioner_lastupdated_search_test'
 require_relative 'practitioner/practitioner_family_search_test'
 require_relative 'practitioner/practitioner_given_search_test'
-require_relative 'practitioner/practitioner_revinclude_practitionerrole_practitioner_search_test'
+require_relative 'practitioner/practitioner_practitionerrole_practitioner_search_test'
 require_relative 'practitioner/practitioner_validation_test'
 require_relative 'practitioner/practitioner_must_support_test'
 require_relative 'practitioner/practitioner_reference_resolution_test'
@@ -91,7 +91,7 @@ read succeeds.
       test from: :davinci_pdex_plan_net_v110_practitioner__lastUpdated_search_test
       test from: :davinci_pdex_plan_net_v110_practitioner_family_search_test
       test from: :davinci_pdex_plan_net_v110_practitioner_given_search_test
-      test from: :us_core_v110_practitioner_revinclude_PractitionerRole_practitioner_search_test
+      test from: :davinci_plan_net_v110_v110_practitioner_practitionerrole_practitioner_revinclude_search_test
       test from: :davinci_pdex_plan_net_v110_practitioner_validation_test
       test from: :davinci_pdex_plan_net_v110_practitioner_must_support_test
       test from: :davinci_pdex_plan_net_v110_practitioner_reference_resolution_test

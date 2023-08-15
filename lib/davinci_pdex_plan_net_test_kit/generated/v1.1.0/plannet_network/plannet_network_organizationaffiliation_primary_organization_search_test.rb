@@ -3,24 +3,24 @@ require_relative '../../../generator/group_metadata'
 
 module DaVinciPDEXPlanNetTestKit
   module DaVinciPDEXPlanNetV110
-    class PlannetOrganizationRevincludeOrganizationaffiliationParticipatingOrganizationSearchTest < Inferno::Test
+    class PlannetNetworkOrganizationaffiliationPrimaryOrganizationSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns OrganizationAffiliation resources from Organization search by _revinclude=OrganizationAffiliation:participating-organization'
+      title 'Server returns OrganizationAffiliation resources from Organization search by _revinclude=OrganizationAffiliation:primary-organization'
       description %(
-        A server SHALL be capable of supporting _revIncludes for OrganizationAffiliation:participating-organization.
+        A server SHALL be capable of supporting _revIncludes for OrganizationAffiliation:primary-organization.
 
-        This test will perform a search by _revinclude=OrganizationAffiliation:participating-organization and
+        This test will perform a search by _revinclude=OrganizationAffiliation:primary-organization and
         will pass if a OrganizationAffiliation resource is found in the response.
       )
 
-      id :us_core_v110_plannet_organization_revinclude_OrganizationAffiliation_participating_organization_search_test
+      id :davinci_plan_net_v110_v110_plannet_network_organizationaffiliation_primary_organization_revinclude_search_test
   
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'Organization',
-          search_param_names: [],
-          revinclude_param: 'OrganizationAffiliation:participating-organization'
+          search_param_names: ["_id"],
+          revinclude_param: 'OrganizationAffiliation:primary-organization'
         )
       end
 
@@ -33,11 +33,11 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_resources
-        scratch[:plannet_organization_resources] ||= {}
+        scratch[:plannet_network_resources] ||= {}
       end
 
       def scratch_revinclude_resources
-        scratch[:revinclude_resources] ||= {}
+        scratch[:OrganizationAffiliation_resources] ||= {}
       end
 
       run do

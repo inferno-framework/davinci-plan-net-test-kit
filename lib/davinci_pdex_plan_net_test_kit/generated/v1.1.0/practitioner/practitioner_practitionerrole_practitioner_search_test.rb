@@ -3,24 +3,24 @@ require_relative '../../../generator/group_metadata'
 
 module DaVinciPDEXPlanNetTestKit
   module DaVinciPDEXPlanNetV110
-    class PlannetOrganizationRevincludePractitionerroleOrganizationSearchTest < Inferno::Test
+    class PractitionerPractitionerrolePractitionerSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns PractitionerRole resources from Organization search by _revinclude=PractitionerRole:organization'
+      title 'Server returns PractitionerRole resources from Practitioner search by _revinclude=PractitionerRole:practitioner'
       description %(
-        A server SHALL be capable of supporting _revIncludes for PractitionerRole:organization.
+        A server SHALL be capable of supporting _revIncludes for PractitionerRole:practitioner.
 
-        This test will perform a search by _revinclude=PractitionerRole:organization and
+        This test will perform a search by _revinclude=PractitionerRole:practitioner and
         will pass if a PractitionerRole resource is found in the response.
       )
 
-      id :us_core_v110_plannet_organization_revinclude_PractitionerRole_organization_search_test
+      id :davinci_plan_net_v110_v110_practitioner_practitionerrole_practitioner_revinclude_search_test
   
       def properties
         @properties ||= SearchTestProperties.new(
-            resource_type: 'Organization',
-          search_param_names: [],
-          revinclude_param: 'PractitionerRole:organization'
+            resource_type: 'Practitioner',
+          search_param_names: ["_id"],
+          revinclude_param: 'PractitionerRole:practitioner'
         )
       end
 
@@ -33,11 +33,11 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_resources
-        scratch[:plannet_organization_resources] ||= {}
+        scratch[:practitioner_resources] ||= {}
       end
 
       def scratch_revinclude_resources
-        scratch[:revinclude_resources] ||= {}
+        scratch[:PractitionerRole_resources] ||= {}
       end
 
       run do
