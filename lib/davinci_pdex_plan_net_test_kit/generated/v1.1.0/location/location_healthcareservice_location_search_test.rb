@@ -3,7 +3,7 @@ require_relative '../../../generator/group_metadata'
 
 module DaVinciPDEXPlanNetTestKit
   module DaVinciPDEXPlanNetV110
-    class LocationRevincludeHealthcareserviceLocationSearchTest < Inferno::Test
+    class LocationHealthcareserviceLocationSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
       title 'Server returns HealthcareService resources from Location search by _revinclude=HealthcareService:location'
@@ -14,12 +14,12 @@ module DaVinciPDEXPlanNetTestKit
         will pass if a HealthcareService resource is found in the response.
       )
 
-      id :us_core_v110_location_revinclude_HealthcareService_location_search_test
+      id :davinci_plan_net_v110_v110_location_healthcareservice_location_revinclude_search_test
   
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'Location',
-          search_param_names: [],
+          search_param_names: ["_id"],
           revinclude_param: 'HealthcareService:location'
         )
       end
@@ -37,7 +37,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_revinclude_resources
-        scratch[:revinclude_resources] ||= {}
+        scratch[:HealthcareService_resources] ||= {}
       end
 
       run do

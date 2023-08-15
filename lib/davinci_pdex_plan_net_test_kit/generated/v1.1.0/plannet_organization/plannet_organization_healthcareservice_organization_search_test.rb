@@ -3,7 +3,7 @@ require_relative '../../../generator/group_metadata'
 
 module DaVinciPDEXPlanNetTestKit
   module DaVinciPDEXPlanNetV110
-    class PlannetNetworkRevincludeHealthcareserviceOrganizationSearchTest < Inferno::Test
+    class PlannetOrganizationHealthcareserviceOrganizationSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
       title 'Server returns HealthcareService resources from Organization search by _revinclude=HealthcareService:organization'
@@ -14,12 +14,12 @@ module DaVinciPDEXPlanNetTestKit
         will pass if a HealthcareService resource is found in the response.
       )
 
-      id :us_core_v110_plannet_network_revinclude_HealthcareService_organization_search_test
+      id :davinci_plan_net_v110_v110_plannet_organization_healthcareservice_organization_revinclude_search_test
   
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'Organization',
-          search_param_names: [],
+          search_param_names: ["_id"],
           revinclude_param: 'HealthcareService:organization'
         )
       end
@@ -33,11 +33,11 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_resources
-        scratch[:plannet_network_resources] ||= {}
+        scratch[:plannet_organization_resources] ||= {}
       end
 
       def scratch_revinclude_resources
-        scratch[:revinclude_resources] ||= {}
+        scratch[:HealthcareService_resources] ||= {}
       end
 
       run do

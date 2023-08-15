@@ -3,7 +3,7 @@ require_relative '../../../generator/group_metadata'
 
 module DaVinciPDEXPlanNetTestKit
   module DaVinciPDEXPlanNetV110
-    class PlannetNetworkRevincludeOrganizationaffiliationParticipatingOrganizationSearchTest < Inferno::Test
+    class PlannetNetworkOrganizationaffiliationParticipatingOrganizationSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
       title 'Server returns OrganizationAffiliation resources from Organization search by _revinclude=OrganizationAffiliation:participating-organization'
@@ -14,12 +14,12 @@ module DaVinciPDEXPlanNetTestKit
         will pass if a OrganizationAffiliation resource is found in the response.
       )
 
-      id :us_core_v110_plannet_network_revinclude_OrganizationAffiliation_participating_organization_search_test
+      id :davinci_plan_net_v110_v110_plannet_network_organizationaffiliation_participating_organization_revinclude_search_test
   
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'Organization',
-          search_param_names: [],
+          search_param_names: ["_id"],
           revinclude_param: 'OrganizationAffiliation:participating-organization'
         )
       end
@@ -37,7 +37,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_revinclude_resources
-        scratch[:revinclude_resources] ||= {}
+        scratch[:OrganizationAffiliation_resources] ||= {}
       end
 
       run do

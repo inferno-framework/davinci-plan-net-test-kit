@@ -10,7 +10,7 @@ module DaVinciPDEXPlanNetTestKit
             .reject { |group| SpecialCases.exclude_group? group }
             .select { |group| !group.revincludes.empty? }
             .each do |group|
-              group.revincludes.each { |revinclude| new(group, group.searches.second, base_output_dir, revinclude).generate } # Want to not have to use previous searches? Either way, switched first to second here
+              group.revincludes.each { |revinclude| new(group, group.searches.second, base_output_dir, revinclude).generate }
             end
         end
       end
@@ -25,7 +25,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def template
-        @template ||= File.read(File.join(__dir__, 'templates', '_revinclude_search.rb.erb'))
+        @template ||= File.read(File.join(__dir__, 'templates', 'revinclude_search.rb.erb'))
       end
 
       def output
@@ -37,7 +37,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def output_file_directory
-        File.join(base_output_dir, profile_identifier)
+        File.join(base_output_dir, profile_identifier.downcase)
       end
 
       def output_file_name
@@ -49,11 +49,11 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def test_id
-        "us_core_#{group_metadata.reformatted_version}_#{profile_identifier}_#{search_identifier}_search_test"
+        "davinci_plan_net_v110_#{group_metadata.reformatted_version}_#{profile_identifier}_#{search_identifier}_revinclude_search_test"
       end
 
       def search_identifier
-        "revinclude_#{revinclude_param.gsub(/[-:]/, '_')}"
+        "#{revinclude_param.gsub(/[-:]/, '_').downcase}"
       end
 
       def search_title
@@ -102,7 +102,6 @@ module DaVinciPDEXPlanNetTestKit
       def search_param_resource_string
         revinclude_param.split(/:/)[0]
       end
-
 
       def needs_patient_id?
         search_metadata[:names].include?('patient') ||
@@ -174,7 +173,7 @@ module DaVinciPDEXPlanNetTestKit
         {}.tap do |properties|
           properties[:fixed_value_search] = 'true' if fixed_value_search?
           properties[:resource_type] = "'#{resource_type}'"
-          properties[:search_param_names] = [] #search_param_names_array
+          properties[:search_param_names] = ["_id"]
           properties[:possible_status_search] = 'true' if possible_status_search?
           properties[:revinclude_param] = "'#{revinclude_param}'"
         end

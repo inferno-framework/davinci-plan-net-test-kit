@@ -3,24 +3,24 @@ require_relative '../../../generator/group_metadata'
 
 module DaVinciPDEXPlanNetTestKit
   module DaVinciPDEXPlanNetV110
-    class LocationRevincludeInsuranceplanCoverageAreaSearchTest < Inferno::Test
+    class PlannetNetworkInsuranceplanOwnedBySearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns InsurancePlan resources from Location search by _revinclude=InsurancePlan:coverage-area'
+      title 'Server returns InsurancePlan resources from Organization search by _revinclude=InsurancePlan:owned-by'
       description %(
-        A server SHALL be capable of supporting _revIncludes for InsurancePlan:coverage-area.
+        A server SHALL be capable of supporting _revIncludes for InsurancePlan:owned-by.
 
-        This test will perform a search by _revinclude=InsurancePlan:coverage-area and
+        This test will perform a search by _revinclude=InsurancePlan:owned-by and
         will pass if a InsurancePlan resource is found in the response.
       )
 
-      id :us_core_v110_location_revinclude_InsurancePlan_coverage_area_search_test
+      id :davinci_plan_net_v110_v110_plannet_network_insuranceplan_owned_by_revinclude_search_test
   
       def properties
         @properties ||= SearchTestProperties.new(
-            resource_type: 'Location',
-          search_param_names: [],
-          revinclude_param: 'InsurancePlan:coverage-area'
+            resource_type: 'Organization',
+          search_param_names: ["_id"],
+          revinclude_param: 'InsurancePlan:owned-by'
         )
       end
 
@@ -33,11 +33,11 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_resources
-        scratch[:location_resources] ||= {}
+        scratch[:plannet_network_resources] ||= {}
       end
 
       def scratch_revinclude_resources
-        scratch[:revinclude_resources] ||= {}
+        scratch[:InsurancePlan_resources] ||= {}
       end
 
       run do
