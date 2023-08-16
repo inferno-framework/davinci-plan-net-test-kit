@@ -3,7 +3,7 @@ require_relative '../../../generator/group_metadata'
 
 module DaVinciPDEXPlanNetTestKit
   module DaVinciPDEXPlanNetV110
-    class HealthcareServiceOrganizationaffiliationServiceSearchTest < Inferno::Test
+    class HealthcareServiceOrganizationaffiliationServiceRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
       title 'Server returns OrganizationAffiliation resources from HealthcareService search by _revinclude=OrganizationAffiliation:service'
@@ -15,11 +15,15 @@ module DaVinciPDEXPlanNetTestKit
       )
 
       id :davinci_plan_net_v110_v110_healthcare_service_organizationaffiliation_service_revinclude_search_test
-  
+      input :organizationaffiliation_service_input,
+        title: 'OrganizationAffiliation referenced HealthcareService IDs',
+        description: 'Comma separated list of HealthcareService  IDs that are referenced by a OrganizationAffiliation'
+
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'HealthcareService',
-          search_param_names: ["_id"],
+          search_param_names: [],
+          input_name: 'organizationaffiliation_service_input',
           revinclude_param: 'OrganizationAffiliation:service'
         )
       end

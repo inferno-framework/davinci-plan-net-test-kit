@@ -10,7 +10,7 @@ module DaVinciPDEXPlanNetTestKit
             .reject { |group| SpecialCases.exclude_group? group }
             .select { |group| !group.revincludes.empty? }
             .each do |group|
-              group.revincludes.each { |revinclude| new(group, group.searches.second, base_output_dir, revinclude).generate }
+              group.revincludes.each { |revinclude| new(group, group.searches.first, base_output_dir, revinclude).generate }
             end
         end
       end
@@ -61,7 +61,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def class_name
-        "#{Naming.upper_camel_case_for_profile(group_metadata)}#{search_title}SearchTest"
+        "#{Naming.upper_camel_case_for_profile(group_metadata)}#{search_title}RevincludeSearchTest"
       end
 
       def module_name
@@ -101,11 +101,6 @@ module DaVinciPDEXPlanNetTestKit
 
       def search_param_resource_string
         revinclude_param.split(/:/)[0]
-      end
-
-      def needs_patient_id?
-        search_metadata[:names].include?('patient') ||
-          (resource_type == 'Patient' && search_metadata[:names].include?('_id'))
       end
 
       def search_param_names
@@ -169,11 +164,16 @@ module DaVinciPDEXPlanNetTestKit
         "[#{quoted_strings.join(', ')}]"
       end
 
+      def input_name
+        "#{search_identifier.downcase}_input"
+      end
+
       def search_properties
         {}.tap do |properties|
           properties[:fixed_value_search] = 'true' if fixed_value_search?
           properties[:resource_type] = "'#{resource_type}'"
-          properties[:search_param_names] = ["_id"]
+          properties[:search_param_names] = []
+          properties[:input_name] = "'#{input_name}'"
           properties[:possible_status_search] = 'true' if possible_status_search?
           properties[:revinclude_param] = "'#{revinclude_param}'"
         end

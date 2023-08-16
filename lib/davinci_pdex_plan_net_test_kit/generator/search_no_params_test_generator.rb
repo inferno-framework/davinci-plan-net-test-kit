@@ -88,7 +88,6 @@ module DaVinciPDEXPlanNetTestKit
           properties[:resource_type] = "'#{resource_type}'"
           properties[:saves_delayed_references] = 'true' if saves_delayed_references?
           properties[:test_post_search] = 'false'
-          properties[:revinclude_list] = group_metadata.revincludes
         end
       end
 

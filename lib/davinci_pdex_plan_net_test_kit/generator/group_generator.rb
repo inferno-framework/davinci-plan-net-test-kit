@@ -93,7 +93,6 @@ module DaVinciPDEXPlanNetTestKit
         group_metadata.profile_url
       end
 
-
       def optional?
         resource_type == 'QuestionnaireResponse' ||
         profile_url == 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-simple-observation'
@@ -134,6 +133,10 @@ module DaVinciPDEXPlanNetTestKit
 
       def required_searches
         group_metadata.searches.select { |search| search[:expectation] == 'SHALL' }
+      end
+
+      def revinclude_list
+        group_metadata.revincludes
       end
 
       def search_param_name_string

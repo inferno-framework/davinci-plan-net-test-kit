@@ -26,8 +26,7 @@ response will be used for subsequent tests.
           first_search: true,
         resource_type: 'Location',
         saves_delayed_references: true,
-        test_post_search: false,
-        revinclude_list: ["HealthcareService:location", "InsurancePlan:coverage-area", "OrganizationAffiliation:location", "PractitionerRole:location"]
+        test_post_search: false
         )
       end
 

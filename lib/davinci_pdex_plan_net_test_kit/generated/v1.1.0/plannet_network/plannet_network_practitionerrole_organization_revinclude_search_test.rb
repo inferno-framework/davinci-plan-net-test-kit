@@ -3,24 +3,28 @@ require_relative '../../../generator/group_metadata'
 
 module DaVinciPDEXPlanNetTestKit
   module DaVinciPDEXPlanNetV110
-    class PlannetNetworkPractitionerroleNetworkSearchTest < Inferno::Test
+    class PlannetNetworkPractitionerroleOrganizationRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns PractitionerRole resources from Organization search by _revinclude=PractitionerRole:network'
+      title 'Server returns PractitionerRole resources from Organization search by _revinclude=PractitionerRole:organization'
       description %(
-        A server SHALL be capable of supporting _revIncludes for PractitionerRole:network.
+        A server SHALL be capable of supporting _revIncludes for PractitionerRole:organization.
 
-        This test will perform a search by _revinclude=PractitionerRole:network and
+        This test will perform a search by _revinclude=PractitionerRole:organization and
         will pass if a PractitionerRole resource is found in the response.
       )
 
-      id :davinci_plan_net_v110_v110_plannet_network_practitionerrole_network_revinclude_search_test
-  
+      id :davinci_plan_net_v110_v110_plannet_network_practitionerrole_organization_revinclude_search_test
+      input :practitionerrole_organization_input,
+        title: 'PractitionerRole referenced Organization IDs',
+        description: 'Comma separated list of Organization  IDs that are referenced by a PractitionerRole'
+
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'Organization',
-          search_param_names: ["_id"],
-          revinclude_param: 'PractitionerRole:network'
+          search_param_names: [],
+          input_name: 'practitionerrole_organization_input',
+          revinclude_param: 'PractitionerRole:organization'
         )
       end
 

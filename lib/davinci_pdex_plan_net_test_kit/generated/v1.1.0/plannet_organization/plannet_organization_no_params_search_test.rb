@@ -26,8 +26,7 @@ response will be used for subsequent tests.
           first_search: true,
         resource_type: 'Organization',
         saves_delayed_references: true,
-        test_post_search: false,
-        revinclude_list: ["Endpoint:organization", "HealthcareService:organization", "InsurancePlan:administered-by", "InsurancePlan:owned-by", "OrganizationAffiliation:primary-organization", "PractitionerRole:organization", "PractitionerRole:network", "OrganizationAffiliation:participating-organization"]
+        test_post_search: false
         )
       end
 
