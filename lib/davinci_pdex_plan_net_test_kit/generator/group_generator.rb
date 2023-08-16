@@ -135,10 +135,6 @@ module DaVinciPDEXPlanNetTestKit
         group_metadata.searches.select { |search| search[:expectation] == 'SHALL' }
       end
 
-      def revinclude_list
-        group_metadata.revincludes
-      end
-
       def search_param_name_string
         required_searches
           .map { |search| search[:names].join(' + ') }
