@@ -26,8 +26,7 @@ response will be used for subsequent tests.
           first_search: true,
         resource_type: 'HealthcareService',
         saves_delayed_references: true,
-        test_post_search: false,
-        revinclude_list: ["PractitionerRole:service", "OrganizationAffiliation:service"]
+        test_post_search: false
         )
       end
 

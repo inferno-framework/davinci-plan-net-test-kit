@@ -3,7 +3,7 @@ require_relative '../../../generator/group_metadata'
 
 module DaVinciPDEXPlanNetTestKit
   module DaVinciPDEXPlanNetV110
-    class PractitionerPractitionerrolePractitionerSearchTest < Inferno::Test
+    class PractitionerPractitionerrolePractitionerRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
       title 'Server returns PractitionerRole resources from Practitioner search by _revinclude=PractitionerRole:practitioner'
@@ -15,11 +15,15 @@ module DaVinciPDEXPlanNetTestKit
       )
 
       id :davinci_plan_net_v110_v110_practitioner_practitionerrole_practitioner_revinclude_search_test
-  
+      input :practitionerrole_practitioner_input,
+        title: 'PractitionerRole referenced Practitioner IDs',
+        description: 'Comma separated list of Practitioner  IDs that are referenced by a PractitionerRole'
+
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'Practitioner',
-          search_param_names: ["_id"],
+          search_param_names: [],
+          input_name: 'practitionerrole_practitioner_input',
           revinclude_param: 'PractitionerRole:practitioner'
         )
       end

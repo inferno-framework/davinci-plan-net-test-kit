@@ -3,7 +3,7 @@ require_relative '../../../generator/group_metadata'
 
 module DaVinciPDEXPlanNetTestKit
   module DaVinciPDEXPlanNetV110
-    class PlannetOrganizationInsuranceplanAdministeredBySearchTest < Inferno::Test
+    class PlannetOrganizationInsuranceplanAdministeredByRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
       title 'Server returns InsurancePlan resources from Organization search by _revinclude=InsurancePlan:administered-by'
@@ -15,11 +15,15 @@ module DaVinciPDEXPlanNetTestKit
       )
 
       id :davinci_plan_net_v110_v110_plannet_organization_insuranceplan_administered_by_revinclude_search_test
-  
+      input :insuranceplan_administered_by_input,
+        title: 'InsurancePlan referenced Organization IDs',
+        description: 'Comma separated list of Organization  IDs that are referenced by a InsurancePlan'
+
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'Organization',
-          search_param_names: ["_id"],
+          search_param_names: [],
+          input_name: 'insuranceplan_administered_by_input',
           revinclude_param: 'InsurancePlan:administered-by'
         )
       end

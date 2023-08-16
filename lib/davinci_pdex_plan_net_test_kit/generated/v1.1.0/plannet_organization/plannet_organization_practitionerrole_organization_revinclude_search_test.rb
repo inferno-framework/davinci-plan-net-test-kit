@@ -3,7 +3,7 @@ require_relative '../../../generator/group_metadata'
 
 module DaVinciPDEXPlanNetTestKit
   module DaVinciPDEXPlanNetV110
-    class PlannetOrganizationPractitionerroleOrganizationSearchTest < Inferno::Test
+    class PlannetOrganizationPractitionerroleOrganizationRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
       title 'Server returns PractitionerRole resources from Organization search by _revinclude=PractitionerRole:organization'
@@ -15,11 +15,15 @@ module DaVinciPDEXPlanNetTestKit
       )
 
       id :davinci_plan_net_v110_v110_plannet_organization_practitionerrole_organization_revinclude_search_test
-  
+      input :practitionerrole_organization_input,
+        title: 'PractitionerRole referenced Organization IDs',
+        description: 'Comma separated list of Organization  IDs that are referenced by a PractitionerRole'
+
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'Organization',
-          search_param_names: ["_id"],
+          search_param_names: [],
+          input_name: 'practitionerrole_organization_input',
           revinclude_param: 'PractitionerRole:organization'
         )
       end

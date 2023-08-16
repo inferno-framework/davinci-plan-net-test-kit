@@ -3,7 +3,7 @@ require_relative '../../../generator/group_metadata'
 
 module DaVinciPDEXPlanNetTestKit
   module DaVinciPDEXPlanNetV110
-    class LocationInsuranceplanCoverageAreaSearchTest < Inferno::Test
+    class LocationInsuranceplanCoverageAreaRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
       title 'Server returns InsurancePlan resources from Location search by _revinclude=InsurancePlan:coverage-area'
@@ -15,11 +15,15 @@ module DaVinciPDEXPlanNetTestKit
       )
 
       id :davinci_plan_net_v110_v110_location_insuranceplan_coverage_area_revinclude_search_test
-  
+      input :insuranceplan_coverage_area_input,
+        title: 'InsurancePlan referenced Location IDs',
+        description: 'Comma separated list of Location  IDs that are referenced by a InsurancePlan'
+
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'Location',
-          search_param_names: ["_id"],
+          search_param_names: [],
+          input_name: 'insuranceplan_coverage_area_input',
           revinclude_param: 'InsurancePlan:coverage-area'
         )
       end

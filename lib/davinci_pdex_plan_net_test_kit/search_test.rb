@@ -13,7 +13,7 @@ module DaVinciPDEXPlanNetTestKit
                    :resource_type,
                    :search_param_names,
                    :revinclude_param,
-                   :revinclude_list,
+                   :input_name,
                    :saves_delayed_references?,
                    :first_search?,
                    :fixed_value_search?,
@@ -38,7 +38,6 @@ module DaVinciPDEXPlanNetTestKit
           new_params.reject! do |params|
             params.any? { |_key, value| value.blank? }
           end
-
           params[patient_id].concat(new_params)
         end
     end
@@ -46,7 +45,7 @@ module DaVinciPDEXPlanNetTestKit
     def all_revinclude_search_params
       @all_revinclude_search_params ||=
         all_search_params.transform_values! do |params_list|
-          params_list.map { |params| {_id: scratch[:"#{resource_type}_revincludes"][:"#{revinclude_param.split(/:/)[0]}"]}.merge(_revinclude: revinclude_param) }
+          params_list.map { |params| {_id: "#{self.send(input_name)}"}.merge(_revinclude: revinclude_param) }
         end
     end
 
@@ -96,25 +95,6 @@ module DaVinciPDEXPlanNetTestKit
       perform_multiple_or_search_test if multiple_or_search_params.present?
     end
 
-    def collect_revinclude_bases (returned_resources)
-      base_names = returned_resources.map { |res| res.id }
-      dup_list = revinclude_list.dup
-      base_names.each do |bname| 
-        dup_list.delete_if do |revinclude| 
-          fhir_search revinclude.split(/:/)[0], params: {"#{revinclude.split(/:/)[1]}": bname}
-          unless resource.entry.nil? || resource.entry.empty?
-            potential_resources = resource&.entry&.map {|entry| entry&.resource}
-            assert potential_resources[0].respond_to?("#{param_to_method(revinclude.split(/:/)[1])}"), "Potential is #{potential_resources} Resource is #{potential_resources[0]} and it does not respond to #{("#{param_to_method(revinclude.split(/:/)[1])}")} and resource is #{resource} ++++ #{resource.entry}"
-            scratch[:"#{resource_type}_revincludes"].merge!({"#{revinclude.split(/:/)[0]}": potential_resources[0].send("#{param_to_method(revinclude.split(/:/)[1])}")[0].send(:reference).split(/\//)[1]})
-            true
-          else
-            false
-          end
-        end
-        break if dup_list.empty?
-      end
-    end
-
     def run_search_no_params_test
       fhir_search resource_type
       
@@ -127,8 +107,6 @@ module DaVinciPDEXPlanNetTestKit
 
       if first_search?
         all_scratch_resources.concat(resources_returned).uniq!
-        scratch[:"#{resource_type}_revincludes"] ||= {}
-        collect_revinclude_bases(resources_returned)
       end
     end
 

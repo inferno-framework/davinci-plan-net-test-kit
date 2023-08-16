@@ -3,7 +3,7 @@ require_relative '../../../generator/group_metadata'
 
 module DaVinciPDEXPlanNetTestKit
   module DaVinciPDEXPlanNetV110
-    class LocationHealthcareserviceLocationSearchTest < Inferno::Test
+    class LocationHealthcareserviceLocationRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
       title 'Server returns HealthcareService resources from Location search by _revinclude=HealthcareService:location'
@@ -15,11 +15,15 @@ module DaVinciPDEXPlanNetTestKit
       )
 
       id :davinci_plan_net_v110_v110_location_healthcareservice_location_revinclude_search_test
-  
+      input :healthcareservice_location_input,
+        title: 'HealthcareService referenced Location IDs',
+        description: 'Comma separated list of Location  IDs that are referenced by a HealthcareService'
+
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'Location',
-          search_param_names: ["_id"],
+          search_param_names: [],
+          input_name: 'healthcareservice_location_input',
           revinclude_param: 'HealthcareService:location'
         )
       end

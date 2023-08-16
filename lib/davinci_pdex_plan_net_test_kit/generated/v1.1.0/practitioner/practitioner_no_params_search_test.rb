@@ -25,8 +25,7 @@ response will be used for subsequent tests.
         @properties ||= SearchTestProperties.new(
           first_search: true,
         resource_type: 'Practitioner',
-        test_post_search: false,
-        revinclude_list: ["PractitionerRole:practitioner"]
+        test_post_search: false
         )
       end
 

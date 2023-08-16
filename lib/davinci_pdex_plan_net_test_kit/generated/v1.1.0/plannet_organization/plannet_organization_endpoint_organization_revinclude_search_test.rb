@@ -3,7 +3,7 @@ require_relative '../../../generator/group_metadata'
 
 module DaVinciPDEXPlanNetTestKit
   module DaVinciPDEXPlanNetV110
-    class PlannetNetworkEndpointOrganizationSearchTest < Inferno::Test
+    class PlannetOrganizationEndpointOrganizationRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
       title 'Server returns Endpoint resources from Organization search by _revinclude=Endpoint:organization'
@@ -14,12 +14,16 @@ module DaVinciPDEXPlanNetTestKit
         will pass if a Endpoint resource is found in the response.
       )
 
-      id :davinci_plan_net_v110_v110_plannet_network_endpoint_organization_revinclude_search_test
-  
+      id :davinci_plan_net_v110_v110_plannet_organization_endpoint_organization_revinclude_search_test
+      input :endpoint_organization_input,
+        title: 'Endpoint referenced Organization IDs',
+        description: 'Comma separated list of Organization  IDs that are referenced by a Endpoint'
+
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'Organization',
-          search_param_names: ["_id"],
+          search_param_names: [],
+          input_name: 'endpoint_organization_input',
           revinclude_param: 'Endpoint:organization'
         )
       end
@@ -33,7 +37,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_resources
-        scratch[:plannet_network_resources] ||= {}
+        scratch[:plannet_organization_resources] ||= {}
       end
 
       def scratch_revinclude_resources

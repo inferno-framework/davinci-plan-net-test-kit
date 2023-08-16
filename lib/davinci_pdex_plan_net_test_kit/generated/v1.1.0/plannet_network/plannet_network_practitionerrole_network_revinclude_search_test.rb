@@ -3,24 +3,28 @@ require_relative '../../../generator/group_metadata'
 
 module DaVinciPDEXPlanNetTestKit
   module DaVinciPDEXPlanNetV110
-    class HealthcareServicePractitionerroleServiceSearchTest < Inferno::Test
+    class PlannetNetworkPractitionerroleNetworkRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns PractitionerRole resources from HealthcareService search by _revinclude=PractitionerRole:service'
+      title 'Server returns PractitionerRole resources from Organization search by _revinclude=PractitionerRole:network'
       description %(
-        A server SHALL be capable of supporting _revIncludes for PractitionerRole:service.
+        A server SHALL be capable of supporting _revIncludes for PractitionerRole:network.
 
-        This test will perform a search by _revinclude=PractitionerRole:service and
+        This test will perform a search by _revinclude=PractitionerRole:network and
         will pass if a PractitionerRole resource is found in the response.
       )
 
-      id :davinci_plan_net_v110_v110_healthcare_service_practitionerrole_service_revinclude_search_test
-  
+      id :davinci_plan_net_v110_v110_plannet_network_practitionerrole_network_revinclude_search_test
+      input :practitionerrole_network_input,
+        title: 'PractitionerRole referenced Organization IDs',
+        description: 'Comma separated list of Organization  IDs that are referenced by a PractitionerRole'
+
       def properties
         @properties ||= SearchTestProperties.new(
-            resource_type: 'HealthcareService',
-          search_param_names: ["_id"],
-          revinclude_param: 'PractitionerRole:service'
+            resource_type: 'Organization',
+          search_param_names: [],
+          input_name: 'practitionerrole_network_input',
+          revinclude_param: 'PractitionerRole:network'
         )
       end
 
@@ -33,7 +37,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_resources
-        scratch[:healthcare_service_resources] ||= {}
+        scratch[:plannet_network_resources] ||= {}
       end
 
       def scratch_revinclude_resources

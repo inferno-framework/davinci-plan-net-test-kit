@@ -3,24 +3,28 @@ require_relative '../../../generator/group_metadata'
 
 module DaVinciPDEXPlanNetTestKit
   module DaVinciPDEXPlanNetV110
-    class PlannetOrganizationPractitionerroleNetworkSearchTest < Inferno::Test
+    class LocationPractitionerroleLocationRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns PractitionerRole resources from Organization search by _revinclude=PractitionerRole:network'
+      title 'Server returns PractitionerRole resources from Location search by _revinclude=PractitionerRole:location'
       description %(
-        A server SHALL be capable of supporting _revIncludes for PractitionerRole:network.
+        A server SHALL be capable of supporting _revIncludes for PractitionerRole:location.
 
-        This test will perform a search by _revinclude=PractitionerRole:network and
+        This test will perform a search by _revinclude=PractitionerRole:location and
         will pass if a PractitionerRole resource is found in the response.
       )
 
-      id :davinci_plan_net_v110_v110_plannet_organization_practitionerrole_network_revinclude_search_test
-  
+      id :davinci_plan_net_v110_v110_location_practitionerrole_location_revinclude_search_test
+      input :practitionerrole_location_input,
+        title: 'PractitionerRole referenced Location IDs',
+        description: 'Comma separated list of Location  IDs that are referenced by a PractitionerRole'
+
       def properties
         @properties ||= SearchTestProperties.new(
-            resource_type: 'Organization',
-          search_param_names: ["_id"],
-          revinclude_param: 'PractitionerRole:network'
+            resource_type: 'Location',
+          search_param_names: [],
+          input_name: 'practitionerrole_location_input',
+          revinclude_param: 'PractitionerRole:location'
         )
       end
 
@@ -33,7 +37,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_resources
-        scratch[:plannet_organization_resources] ||= {}
+        scratch[:location_resources] ||= {}
       end
 
       def scratch_revinclude_resources

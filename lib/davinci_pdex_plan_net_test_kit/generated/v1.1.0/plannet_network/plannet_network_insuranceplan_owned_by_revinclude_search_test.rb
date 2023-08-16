@@ -3,7 +3,7 @@ require_relative '../../../generator/group_metadata'
 
 module DaVinciPDEXPlanNetTestKit
   module DaVinciPDEXPlanNetV110
-    class PlannetOrganizationInsuranceplanOwnedBySearchTest < Inferno::Test
+    class PlannetNetworkInsuranceplanOwnedByRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
       title 'Server returns InsurancePlan resources from Organization search by _revinclude=InsurancePlan:owned-by'
@@ -14,12 +14,16 @@ module DaVinciPDEXPlanNetTestKit
         will pass if a InsurancePlan resource is found in the response.
       )
 
-      id :davinci_plan_net_v110_v110_plannet_organization_insuranceplan_owned_by_revinclude_search_test
-  
+      id :davinci_plan_net_v110_v110_plannet_network_insuranceplan_owned_by_revinclude_search_test
+      input :insuranceplan_owned_by_input,
+        title: 'InsurancePlan referenced Organization IDs',
+        description: 'Comma separated list of Organization  IDs that are referenced by a InsurancePlan'
+
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'Organization',
-          search_param_names: ["_id"],
+          search_param_names: [],
+          input_name: 'insuranceplan_owned_by_input',
           revinclude_param: 'InsurancePlan:owned-by'
         )
       end
@@ -33,7 +37,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_resources
-        scratch[:plannet_organization_resources] ||= {}
+        scratch[:plannet_network_resources] ||= {}
       end
 
       def scratch_revinclude_resources
