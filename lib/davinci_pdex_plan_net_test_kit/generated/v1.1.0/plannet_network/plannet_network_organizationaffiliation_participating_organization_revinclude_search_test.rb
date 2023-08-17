@@ -41,7 +41,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_revinclude_resources
-        scratch[:OrganizationAffiliation_resources] ||= {}
+        scratch[:organizationaffiliation_resources] ||= {}
       end
 
       run do

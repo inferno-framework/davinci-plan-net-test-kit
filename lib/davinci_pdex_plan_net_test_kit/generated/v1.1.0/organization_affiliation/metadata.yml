@@ -79,6 +79,7 @@
     :comparators: {}
     :values: []
     :type: Reference
+    :target: Organization
     :contains_multiple: false
     :multiple_or: ''
     :chain:
@@ -98,6 +99,7 @@
     :comparators: {}
     :values: []
     :type: Reference
+    :target: Organization
     :contains_multiple: false
     :multiple_or: ''
     :chain:
@@ -117,6 +119,7 @@
     :comparators: {}
     :values: []
     :type: Reference
+    :target: Location
     :contains_multiple: true
     :multiple_or: ''
     :chain:
@@ -140,6 +143,7 @@
     :comparators: {}
     :values: []
     :type: Reference
+    :target: HealthcareService
     :contains_multiple: true
     :multiple_or: ''
     :chain:
@@ -157,6 +161,7 @@
     :comparators: {}
     :values: []
     :type: Reference
+    :target: Organization
     :contains_multiple: true
     :multiple_or: ''
     :chain:
@@ -172,6 +177,7 @@
     :comparators: {}
     :values: []
     :type: Reference
+    :target: Endpoint
     :contains_multiple: true
     :multiple_or: ''
     :chain:
@@ -1226,6 +1232,18 @@
   :file_name: organization_affiliation_id_search_test.rb
 - :id: davinci_pdex_plan_net_v110_organization_affiliation__lastUpdated_search_test
   :file_name: organization_affiliation_lastupdated_search_test.rb
+- :id: davinci_plan_net_v110_v110_organization_affiliation_organizationaffiliation_primary_organization_include_search_test
+  :file_name: organization_affiliation_organizationaffiliation_primary_organization_include_search_test.rb
+- :id: davinci_plan_net_v110_v110_organization_affiliation_organizationaffiliation_participating_organization_include_search_test
+  :file_name: organization_affiliation_organizationaffiliation_participating_organization_include_search_test.rb
+- :id: davinci_plan_net_v110_v110_organization_affiliation_organizationaffiliation_location_include_search_test
+  :file_name: organization_affiliation_organizationaffiliation_location_include_search_test.rb
+- :id: davinci_plan_net_v110_v110_organization_affiliation_organizationaffiliation_service_include_search_test
+  :file_name: organization_affiliation_organizationaffiliation_service_include_search_test.rb
+- :id: davinci_plan_net_v110_v110_organization_affiliation_organizationaffiliation_endpoint_include_search_test
+  :file_name: organization_affiliation_organizationaffiliation_endpoint_include_search_test.rb
+- :id: davinci_plan_net_v110_v110_organization_affiliation_organizationaffiliation_network_include_search_test
+  :file_name: organization_affiliation_organizationaffiliation_network_include_search_test.rb
 - :id: davinci_pdex_plan_net_v110_organization_affiliation_validation_test
   :file_name: organization_affiliation_validation_test.rb
 - :id: davinci_pdex_plan_net_v110_organization_affiliation_must_support_test

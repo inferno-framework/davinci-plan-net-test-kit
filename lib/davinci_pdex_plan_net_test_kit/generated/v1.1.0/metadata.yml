@@ -46,6 +46,7 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: Organization
       :contains_multiple: false
       :multiple_or: ''
       :chain:
@@ -223,6 +224,7 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: Location
       :contains_multiple: true
       :multiple_or: ''
       :chain:
@@ -246,6 +248,7 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: Location
       :contains_multiple: true
       :multiple_or: ''
     :organization:
@@ -256,6 +259,7 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: Organization
       :contains_multiple: false
       :multiple_or: ''
       :chain:
@@ -275,6 +279,7 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: Endpoint
       :contains_multiple: true
       :multiple_or: ''
       :chain:
@@ -1534,6 +1539,7 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: Organization
       :contains_multiple: false
       :multiple_or: ''
       :chain:
@@ -1549,6 +1555,7 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: Organization
       :contains_multiple: false
       :multiple_or: ''
       :chain:
@@ -1564,6 +1571,7 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: Location
       :contains_multiple: true
       :multiple_or: ''
     :name:
@@ -1877,6 +1885,7 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: Location
       :contains_multiple: false
       :multiple_or: ''
       :chain:
@@ -1894,6 +1903,7 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: Organization
       :contains_multiple: false
       :multiple_or: ''
       :chain:
@@ -1913,6 +1923,7 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: Endpoint
       :contains_multiple: true
       :multiple_or: ''
       :chain:
@@ -2203,6 +2214,7 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: Organization
       :contains_multiple: false
       :multiple_or: ''
       :chain:
@@ -2220,6 +2232,7 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: Endpoint
       :contains_multiple: true
       :multiple_or: ''
       :chain:
@@ -2295,6 +2308,7 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: Location
       :contains_multiple: true
       :multiple_or: ''
   :include_params: &1
@@ -2476,6 +2490,7 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: Organization
       :contains_multiple: false
       :multiple_or: ''
       :chain:
@@ -2493,6 +2508,7 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: Endpoint
       :contains_multiple: true
       :multiple_or: ''
       :chain:
@@ -2573,6 +2589,7 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: Location
       :contains_multiple: false
       :multiple_or: ''
   :include_params: *1
@@ -2792,6 +2809,7 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: Organization
       :contains_multiple: false
       :multiple_or: ''
       :chain:
@@ -2811,6 +2829,7 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: Organization
       :contains_multiple: false
       :multiple_or: ''
       :chain:
@@ -2830,6 +2849,7 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: Location
       :contains_multiple: true
       :multiple_or: ''
       :chain:
@@ -2853,6 +2873,7 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: HealthcareService
       :contains_multiple: true
       :multiple_or: ''
       :chain:
@@ -2870,6 +2891,7 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: Organization
       :contains_multiple: true
       :multiple_or: ''
       :chain:
@@ -2885,6 +2907,7 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: Endpoint
       :contains_multiple: true
       :multiple_or: ''
       :chain:
@@ -4232,6 +4255,7 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: Practitioner
       :contains_multiple: false
       :multiple_or: ''
       :chain:
@@ -4245,6 +4269,7 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: Organization
       :contains_multiple: false
       :multiple_or: ''
       :chain:
@@ -4264,6 +4289,7 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: Location
       :contains_multiple: true
       :multiple_or: ''
       :chain:
@@ -4287,6 +4313,7 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: HealthcareService
       :contains_multiple: true
       :multiple_or: ''
       :chain:
@@ -4304,6 +4331,7 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: Organization
       :contains_multiple: false
       :multiple_or: ''
       :chain:
@@ -4323,6 +4351,7 @@
       :comparators: {}
       :values: []
       :type: Reference
+      :target: Endpoint
       :contains_multiple: true
       :multiple_or: ''
       :chain:

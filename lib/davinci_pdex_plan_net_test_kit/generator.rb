@@ -6,6 +6,7 @@ require_relative 'generator/ig_metadata_extractor'
 require_relative 'generator/group_generator'
 require_relative 'generator/must_support_test_generator'
 require_relative 'generator/revinclude_search_test_generator'
+require_relative 'generator/include_search_test_generator'
 require_relative 'generator/read_test_generator'
 require_relative 'generator/reference_resolution_test_generator'
 require_relative 'generator/resource_list_generator'
@@ -40,6 +41,7 @@ module DaVinciPDEXPlanNetTestKit
       generate_search_tests
       # TODO: generate_vread_tests
       # TODO: generate_history_tests
+      generate_include_search_tests
       generate_revinclude_search_tests
       generate_validation_tests
       generate_must_support_tests
@@ -94,6 +96,10 @@ module DaVinciPDEXPlanNetTestKit
 
     def generate_search_no_params_tests
       SearchNoParamsTestGenerator.generate(ig_metadata, base_output_dir)
+    end
+
+    def generate_include_search_tests
+      IncludeSearchTestGenerator.generate(ig_metadata, base_output_dir)
     end
 
     def generate_revinclude_search_tests

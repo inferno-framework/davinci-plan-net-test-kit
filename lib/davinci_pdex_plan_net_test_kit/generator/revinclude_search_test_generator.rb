@@ -99,8 +99,8 @@ module DaVinciPDEXPlanNetTestKit
         "_revinclude=#{revinclude_param}"
       end
 
-      def search_param_resource_string
-        revinclude_param.split(/:/)[0]
+      def revinclude_param_resource
+        "#{revinclude_param.split(/:/)[0]}"
       end
 
       def search_param_names

@@ -3,6 +3,7 @@ require_relative 'endpoint/endpoint_read_test'
 require_relative 'endpoint/endpoint_organization_search_test'
 require_relative 'endpoint/endpoint_id_search_test'
 require_relative 'endpoint/endpoint_lastupdated_search_test'
+require_relative 'endpoint/endpoint_endpoint_organization_include_search_test'
 require_relative 'endpoint/endpoint_validation_test'
 require_relative 'endpoint/endpoint_must_support_test'
 require_relative 'endpoint/endpoint_reference_resolution_test'
@@ -84,6 +85,7 @@ read succeeds.
       test from: :davinci_pdex_plan_net_v110_endpoint_organization_search_test
       test from: :davinci_pdex_plan_net_v110_endpoint__id_search_test
       test from: :davinci_pdex_plan_net_v110_endpoint__lastUpdated_search_test
+      test from: :davinci_plan_net_v110_v110_endpoint_endpoint_organization_include_search_test
       test from: :davinci_pdex_plan_net_v110_endpoint_validation_test
       test from: :davinci_pdex_plan_net_v110_endpoint_must_support_test
       test from: :davinci_pdex_plan_net_v110_endpoint_reference_resolution_test

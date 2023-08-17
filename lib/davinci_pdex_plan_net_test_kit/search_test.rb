@@ -13,6 +13,8 @@ module DaVinciPDEXPlanNetTestKit
                    :resource_type,
                    :search_param_names,
                    :revinclude_param,
+                   :include_param,
+                   :additional_resource_type,
                    :input_name,
                    :saves_delayed_references?,
                    :first_search?,
@@ -49,6 +51,13 @@ module DaVinciPDEXPlanNetTestKit
         end
     end
 
+    def all_include_search_params
+      @all_revinclude_search_params ||=
+        all_search_params.transform_values! do |params_list|
+          params_list.map { |params| {_id: "#{self.send(input_name)}"}.merge(_include: include_param) }
+        end
+    end
+
     def any_valid_search_params?(search_params)
       search_params.any? { |_patient_id, params| params.present? }
     end
@@ -57,8 +66,34 @@ module DaVinciPDEXPlanNetTestKit
       revinclude_param.split(/:/)[0]
     end
 
+    def include_resource
+      #TODO: This depends on which implementation to go with, modular vs. readable
+    end
+
+    def run_include_search_test
+      skip_if !any_valid_search_params?(all_include_search_params), "Invalid Params"
+      resources =
+        all_include_search_params.flat_map do |_patient_id, params_list|
+          params_list.flat_map do |params|
+            fhir_search resource_type, params: params
+            perform_search_with_status(params, patient_id) if response[:status] == 400 && possible_status_search?
+        
+            check_search_response
+      
+            fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
+              .select { |resource| resource.resourceType == additional_resource_type }
+          end
+        end
+
+      scratch_resources[:all] ||= []
+      scratch_resources[:all].concat(resources)
+
+      save_delayed_references(resources, include_resource)
+
+      skip_if resources.empty?, no_resources_skip_message(include_resource)
+    end
+
     def run_revinclude_search_test
-      # TODO: skip if not supported?
       skip_if !any_valid_search_params?(all_revinclude_search_params), "Invalid Params"
       resources =
         all_revinclude_search_params.flat_map do |_patient_id, params_list|

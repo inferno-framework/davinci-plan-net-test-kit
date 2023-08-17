@@ -71,6 +71,7 @@
     :comparators: {}
     :values: []
     :type: Reference
+    :target: Organization
     :contains_multiple: false
     :multiple_or: ''
     :chain:
@@ -88,6 +89,7 @@
     :comparators: {}
     :values: []
     :type: Reference
+    :target: Endpoint
     :contains_multiple: true
     :multiple_or: ''
     :chain:
@@ -168,6 +170,7 @@
     :comparators: {}
     :values: []
     :type: Reference
+    :target: Location
     :contains_multiple: false
     :multiple_or: ''
 :include_params:
@@ -335,6 +338,12 @@
   :file_name: plannet_organization_type_search_test.rb
 - :id: davinci_pdex_plan_net_v110_plannet_organization_coverage_area_search_test
   :file_name: plannet_organization_coverage_area_search_test.rb
+- :id: davinci_plan_net_v110_v110_plannet_organization_organization_partof_include_search_test
+  :file_name: plannet_organization_organization_partof_include_search_test.rb
+- :id: davinci_plan_net_v110_v110_plannet_organization_organization_endpoint_include_search_test
+  :file_name: plannet_organization_organization_endpoint_include_search_test.rb
+- :id: davinci_plan_net_v110_v110_plannet_organization_organization_coverage_area_include_search_test
+  :file_name: plannet_organization_organization_coverage_area_include_search_test.rb
 - :id: davinci_plan_net_v110_v110_plannet_organization_endpoint_organization_revinclude_search_test
   :file_name: plannet_organization_endpoint_organization_revinclude_search_test.rb
 - :id: davinci_plan_net_v110_v110_plannet_organization_healthcareservice_organization_revinclude_search_test

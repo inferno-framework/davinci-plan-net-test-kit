@@ -79,6 +79,7 @@
     :comparators: {}
     :values: []
     :type: Reference
+    :target: Location
     :contains_multiple: false
     :multiple_or: ''
     :chain:
@@ -96,6 +97,7 @@
     :comparators: {}
     :values: []
     :type: Reference
+    :target: Organization
     :contains_multiple: false
     :multiple_or: ''
     :chain:
@@ -115,6 +117,7 @@
     :comparators: {}
     :values: []
     :type: Reference
+    :target: Endpoint
     :contains_multiple: true
     :multiple_or: ''
     :chain:
@@ -348,6 +351,12 @@
   :file_name: location_id_search_test.rb
 - :id: davinci_pdex_plan_net_v110_location__lastUpdated_search_test
   :file_name: location_lastupdated_search_test.rb
+- :id: davinci_plan_net_v110_v110_location_location_endpoint_include_search_test
+  :file_name: location_location_endpoint_include_search_test.rb
+- :id: davinci_plan_net_v110_v110_location_location_organization_include_search_test
+  :file_name: location_location_organization_include_search_test.rb
+- :id: davinci_plan_net_v110_v110_location_location_partof_include_search_test
+  :file_name: location_location_partof_include_search_test.rb
 - :id: davinci_plan_net_v110_v110_location_healthcareservice_location_revinclude_search_test
   :file_name: location_healthcareservice_location_revinclude_search_test.rb
 - :id: davinci_plan_net_v110_v110_location_insuranceplan_coverage_area_revinclude_search_test

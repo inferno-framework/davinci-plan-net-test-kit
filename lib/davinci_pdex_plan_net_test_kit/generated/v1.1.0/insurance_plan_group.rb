@@ -9,6 +9,9 @@ require_relative 'insurance_plan/insurance_plan_identifier_search_test'
 require_relative 'insurance_plan/insurance_plan_id_search_test'
 require_relative 'insurance_plan/insurance_plan_lastupdated_search_test'
 require_relative 'insurance_plan/insurance_plan_type_search_test'
+require_relative 'insurance_plan/insurance_plan_insuranceplan_administered_by_include_search_test'
+require_relative 'insurance_plan/insurance_plan_insuranceplan_owned_by_include_search_test'
+require_relative 'insurance_plan/insurance_plan_insuranceplan_coverage_area_include_search_test'
 require_relative 'insurance_plan/insurance_plan_validation_test'
 require_relative 'insurance_plan/insurance_plan_must_support_test'
 require_relative 'insurance_plan/insurance_plan_reference_resolution_test'
@@ -102,6 +105,9 @@ read succeeds.
       test from: :davinci_pdex_plan_net_v110_insurance_plan__id_search_test
       test from: :davinci_pdex_plan_net_v110_insurance_plan__lastUpdated_search_test
       test from: :davinci_pdex_plan_net_v110_insurance_plan_type_search_test
+      test from: :davinci_plan_net_v110_v110_insurance_plan_insuranceplan_administered_by_include_search_test
+      test from: :davinci_plan_net_v110_v110_insurance_plan_insuranceplan_owned_by_include_search_test
+      test from: :davinci_plan_net_v110_v110_insurance_plan_insuranceplan_coverage_area_include_search_test
       test from: :davinci_pdex_plan_net_v110_insurance_plan_validation_test
       test from: :davinci_pdex_plan_net_v110_insurance_plan_must_support_test
       test from: :davinci_pdex_plan_net_v110_insurance_plan_reference_resolution_test

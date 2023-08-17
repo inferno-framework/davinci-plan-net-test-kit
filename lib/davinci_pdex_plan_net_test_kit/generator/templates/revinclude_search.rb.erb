@@ -6,18 +6,18 @@ module DaVinciPDEXPlanNetTestKit
     class <%= class_name %> < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns <%= search_param_resource_string %> resources from <%= resource_type %> search by <%= search_param_name_string %>'
+      title 'Server returns <%= revinclude_param_resource %> resources from <%= resource_type %> search by <%= search_param_name_string %>'
       description %(
         A server SHALL be capable of supporting _revIncludes for <%= revinclude_param %>.
 
         This test will perform a search by <%= search_param_name_string %> and
-        will pass if a <%= search_param_resource_string %> resource is found in the response.
+        will pass if a <%= revinclude_param_resource %> resource is found in the response.
       )
 
       id :<%= test_id %>
       input :<%= input_name %>,
-        title: '<%= search_param_resource_string %> referenced <%= resource_type %> IDs',
-        description: 'Comma separated list of <%= resource_type %>  IDs that are referenced by a <%= search_param_resource_string %>'
+        title: '<%= revinclude_param_resource %> referenced <%= resource_type %> IDs',
+        description: 'Comma separated list of <%= resource_type %>  IDs that are referenced by a <%= revinclude_param_resource %>'
 
       def properties
         @properties ||= SearchTestProperties.new(
@@ -30,7 +30,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def self.revinclude_metadata
-        @revinclude_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', '<%= search_param_resource_string %>', 'metadata.yml'), aliases: true))
+        @revinclude_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', '<%= revinclude_param_resource %>', 'metadata.yml'), aliases: true))
       end
 
       def scratch_resources
@@ -38,7 +38,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_revinclude_resources
-        scratch[:<%= search_param_resource_string %>_resources] ||= {}
+        scratch[:<%= revinclude_param_resource.downcase %>_resources] ||= {}
       end
 
       run do

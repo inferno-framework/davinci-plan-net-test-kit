@@ -41,7 +41,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_revinclude_resources
-        scratch[:PractitionerRole_resources] ||= {}
+        scratch[:practitionerrole_resources] ||= {}
       end
 
       run do

@@ -41,7 +41,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_revinclude_resources
-        scratch[:Endpoint_resources] ||= {}
+        scratch[:endpoint_resources] ||= {}
       end
 
       run do
