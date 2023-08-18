@@ -1,6 +1,6 @@
 module DaVinciPDEXPlanNetTestKit
   class FHIRVersionTest < Inferno::Test
-    id :us_core_fhir_version
+    id :davinci_pdex_plan_net_fhir_version
     title 'Server is using FHIR R4'
     description %(
         This test inspects the CapabilityStatement returned by the server to

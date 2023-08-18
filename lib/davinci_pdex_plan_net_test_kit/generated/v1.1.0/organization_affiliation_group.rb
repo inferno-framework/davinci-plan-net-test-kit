@@ -21,10 +21,10 @@ module DaVinciPDEXPlanNetTestKit
       description %(
   # Background
 
-The US Core Plan-Net OrganizationAffiliation sequence verifies that the system under test is
+The Plan-Net OrganizationAffiliation sequence verifies that the system under test is
 able to provide correct responses for OrganizationAffiliation queries. These queries
 must contain resources conforming to the Plan-Net OrganizationAffiliation as
-specified in the US Core v1.1.0 Implementation Guide.
+specified in the Plan Net v1.1.0 Implementation Guide.
 
 # Testing Methodology
 ## Searching

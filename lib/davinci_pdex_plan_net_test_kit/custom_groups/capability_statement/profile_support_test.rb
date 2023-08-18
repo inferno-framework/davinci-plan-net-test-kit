@@ -1,13 +1,13 @@
 module DaVinciPDEXPlanNetTestKit
   class ProfileSupportTest < Inferno::Test
-    id :us_core_profile_support
-    title 'Capability Statement lists support for required US Core Profiles'
+    id :davinci_pdex_plan_net_profile_support
+    title 'Capability Statement lists support for required Plan Net Profiles'
     description %(
-      The US Core Implementation Guide states:
+      The Plan Net Implementation Guide states:
 
       ```
-      The US Core Server SHALL:
-      1. Support the US Core Patient resource profile.
+      The Plan Net Server SHALL:
+      1. Support the Plan Net Patient resource profile.
       2. Support at least one additional resource profile from the list of US
          Core Profiles.
 
@@ -28,9 +28,9 @@ module DaVinciPDEXPlanNetTestKit
 
       assert supported_resources.include?('Patient'), 'US Core Patient profile not supported'
 
-      us_core_resources = config.options[:us_core_resources]
+      davinci_pdex_plan_net_resources = config.options[:davinci_pdex_plan_net_resources]
 
-      other_resources = us_core_resources.reject { |resource_type| resource_type == 'Patient' }
+      other_resources = davinci_pdex_plan_net_resources.reject { |resource_type| resource_type == 'Patient' }
       other_resources_supported = other_resources.any? { |resource| supported_resources.include? resource }
       assert other_resources_supported, 'No US Core resources other than Patient are supported'
 

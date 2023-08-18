@@ -286,7 +286,7 @@ module DaVinciPDEXPlanNetTestKit
         #{first_search_description}
         #{post_search_description}
 
-        [US Core Server CapabilityStatement](http://hl7.org/fhir/us/core/#{url_version}/CapabilityStatement-us-core-server.html)
+        [Plan Net Server CapabilityStatement](http://hl7.org/fhir/us/davinci-pdex-plan-net/CapabilityStatement/plan-net)
         DESCRIPTION
       end
     end

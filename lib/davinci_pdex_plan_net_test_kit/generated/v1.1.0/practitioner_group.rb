@@ -16,10 +16,10 @@ module DaVinciPDEXPlanNetTestKit
       description %(
   # Background
 
-The US Core Plan-Net Practitioner sequence verifies that the system under test is
+The Plan-Net Practitioner sequence verifies that the system under test is
 able to provide correct responses for Practitioner queries. These queries
 must contain resources conforming to the Plan-Net Practitioner as
-specified in the US Core v1.1.0 Implementation Guide.
+specified in the Plan Net v1.1.0 Implementation Guide.
 
 # Testing Methodology
 ## Searching

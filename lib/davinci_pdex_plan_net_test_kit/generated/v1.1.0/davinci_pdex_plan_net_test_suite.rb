@@ -15,7 +15,7 @@ module DaVinciPDEXPlanNetTestKit
     class DaVinciPDEXPlanNetTestSuite < Inferno::TestSuite
       title 'DaVinci PDEX Plan Net v1.1.0'
       description %(
-        The US Core Test Kit tests systems for their conformance to the [US Core
+        The Plan Net Test Kit tests systems for their conformance to the [Plan Net
         Implementation Guide]().
 
         HL7® FHIR® resources are validated with the Java validator using
@@ -25,7 +25,7 @@ module DaVinciPDEXPlanNetTestKit
         terminology
         validation](https://github.com/onc-healthit/onc-certification-g10-test-kit/wiki/FAQ#q-why-do-some-resources-fail-in-us-core-test-kit-with-terminology-validation-errors).
         As a result, resource validation results may not be consistent between
-        the US Core Test Suite and the ONC Certification (g)(10) Standardized
+        the Plan Net Test Suite and the ONC Certification (g)(10) Standardized
         API Test Suite.
       )
       version VERSION
