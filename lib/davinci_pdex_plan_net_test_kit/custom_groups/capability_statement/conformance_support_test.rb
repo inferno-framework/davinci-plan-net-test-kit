@@ -1,6 +1,6 @@
 module DaVinciPDEXPlanNetTestKit
   class ConformanceSupportTest < Inferno::Test
-    id :us_core_conformance_support
+    id :davinci_pdex_plan_net_conformance_support
     title 'FHIR Server supports the conformance interaction'
     description %(
       The conformance 'whole system' interaction provides a method to get the

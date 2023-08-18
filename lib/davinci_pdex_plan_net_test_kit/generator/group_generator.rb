@@ -177,10 +177,10 @@ module DaVinciPDEXPlanNetTestKit
         <<~DESCRIPTION
         # Background
 
-        The US Core #{title} sequence verifies that the system under test is
+        The #{title} sequence verifies that the system under test is
         able to provide correct responses for #{resource_type} queries. These queries
         must contain resources conforming to the #{profile_name} as
-        specified in the US Core #{group_metadata.version} Implementation Guide.
+        specified in the Plan Net #{group_metadata.version} Implementation Guide.
 
         # Testing Methodology
         #{search_description}

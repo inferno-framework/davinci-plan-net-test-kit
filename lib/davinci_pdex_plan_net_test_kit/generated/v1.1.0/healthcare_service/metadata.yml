@@ -83,17 +83,17 @@
     :multiple_or: ''
     :chain:
     - :chain: address
-      :expectation:
+      :expectation: 
     - :chain: address-postalcode
-      :expectation:
+      :expectation: 
     - :chain: address-city
-      :expectation:
+      :expectation: 
     - :chain: address-state
-      :expectation:
+      :expectation: 
     - :chain: organization
-      :expectation:
+      :expectation: 
     - :chain: type
-      :expectation:
+      :expectation: 
   :coverage-area:
     :paths:
     - coverageArea
@@ -116,13 +116,13 @@
     :multiple_or: ''
     :chain:
     - :chain: name
-      :expectation:
+      :expectation: 
     - :chain: address
-      :expectation:
+      :expectation: 
     - :chain: partof
-      :expectation:
+      :expectation: 
     - :chain: type
-      :expectation:
+      :expectation: 
   :endpoint:
     :paths:
     - endpoint
@@ -135,7 +135,7 @@
     :multiple_or: ''
     :chain:
     - :chain: organization
-      :expectation:
+      :expectation: 
   :name:
     :paths:
     - name

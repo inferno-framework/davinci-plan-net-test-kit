@@ -7,8 +7,8 @@ module DaVinciPDEXPlanNetTestKit
 
       title 'All must support elements are provided in the Location resources returned'
       description %(
-        US Core Responders SHALL be capable of populating all data elements as
-        part of the query results as specified by the US Core Server Capability
+        Plan Net Responders SHALL be capable of populating all data elements as
+        part of the query results as specified by the Plan Net Server Capability
         Statement. This test will look through the Location resources
         found previously for the following must support elements:
 

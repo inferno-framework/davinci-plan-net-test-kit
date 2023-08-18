@@ -16,16 +16,8 @@ module DaVinciPDEXPlanNetTestKit
         features supported by the API by using the [Capability
         Statement](https://www.hl7.org/fhir/capabilitystatement.html) resource.
         The features described in the Capability Statement must be consistent with
-        the required capabilities of a US Core server. The Capability Statement
-        must also advertise the location of the required SMART on FHIR endpoints
-        that enable authenticated access to the FHIR server resources.
-
-        The Capability Statement resource allows clients to determine which
-        resources are supported by a FHIR Server. Not all servers are expected to
-        implement all possible queries and data elements described in the US Core
-        API. For example, the US Core Implementation Guide requires that the
-        Patient resource and only one additional resource profile from the US Core
-        Profiles.
+        the required capabilities of a Plan Net server.  This test also expects
+        that APIs state support for all resources types applicable to PDEX v1.1.0.
 
         # Test Methodology
 
@@ -96,13 +88,13 @@ module DaVinciPDEXPlanNetTestKit
           config: {
             options: {  minimum_allowed_version: OpenSSL::SSL::TLS1_2_VERSION }
           }
-      test from: :us_core_conformance_support
-      test from: :us_core_fhir_version
-      test from: :us_core_json_support
+      test from: :davinci_pdex_plan_net_conformance_support
+      test from: :davinci_pdex_plan_net_fhir_version
+      test from: :davinci_pdex_plan_net_json_support
 
-      test from: :us_core_profile_support do
+      test from: :davinci_pdex_plan_net_profile_support do
         config(
-          options: { us_core_resources: PROFILES.keys }
+          options: { davinci_pdex_plan_net_resources: PROFILES.keys }
         )
       end
     end
