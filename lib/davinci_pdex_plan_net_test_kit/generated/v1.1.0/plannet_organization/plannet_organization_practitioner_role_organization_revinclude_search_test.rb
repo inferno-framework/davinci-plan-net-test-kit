@@ -3,19 +3,19 @@ require_relative '../../../generator/group_metadata'
 
 module DaVinciPDEXPlanNetTestKit
   module DaVinciPDEXPlanNetV110
-    class PlannetNetworkPractitionerroleNetworkRevincludeSearchTest < Inferno::Test
+    class PlannetOrganizationPractitionerRoleOrganizationRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns PractitionerRole resources from Organization search by _revinclude=PractitionerRole:network'
+      title 'Server returns PractitionerRole resources from Organization search by _revinclude=PractitionerRole:organization'
       description %(
-        A server SHALL be capable of supporting _revIncludes for PractitionerRole:network.
+        A server SHALL be capable of supporting _revIncludes for PractitionerRole:organization.
 
-        This test will perform a search by _revinclude=PractitionerRole:network and
+        This test will perform a search by _revinclude=PractitionerRole:organization and
         will pass if a PractitionerRole resource is found in the response.
       )
 
-      id :davinci_plan_net_v110_v110_plannet_network_practitionerrole_network_revinclude_search_test
-      input :practitionerrole_network_input,
+      id :davinci_plan_net_v110_plannet_organization_practitioner_role_organization_revinclude_search_test
+      input :practitioner_role_organization_input,
         title: 'PractitionerRole referenced Organization IDs',
         description: 'Comma separated list of Organization  IDs that are referenced by a PractitionerRole'
 
@@ -23,8 +23,8 @@ module DaVinciPDEXPlanNetTestKit
         @properties ||= SearchTestProperties.new(
             resource_type: 'Organization',
           search_param_names: [],
-          input_name: 'practitionerrole_network_input',
-          revinclude_param: 'PractitionerRole:network'
+          input_name: 'practitioner_role_organization_input',
+          revinclude_param: 'PractitionerRole:organization'
         )
       end
 
@@ -37,7 +37,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_resources
-        scratch[:plannet_network_resources] ||= {}
+        scratch[:plannet_organization_resources] ||= {}
       end
 
       def scratch_revinclude_resources

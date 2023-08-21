@@ -3,28 +3,28 @@ require_relative '../../../generator/group_metadata'
 
 module DaVinciPDEXPlanNetTestKit
   module DaVinciPDEXPlanNetV110
-    class LocationPractitionerroleLocationRevincludeSearchTest < Inferno::Test
+    class PlannetOrganizationPractitionerRoleNetworkRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns PractitionerRole resources from Location search by _revinclude=PractitionerRole:location'
+      title 'Server returns PractitionerRole resources from Organization search by _revinclude=PractitionerRole:network'
       description %(
-        A server SHALL be capable of supporting _revIncludes for PractitionerRole:location.
+        A server SHALL be capable of supporting _revIncludes for PractitionerRole:network.
 
-        This test will perform a search by _revinclude=PractitionerRole:location and
+        This test will perform a search by _revinclude=PractitionerRole:network and
         will pass if a PractitionerRole resource is found in the response.
       )
 
-      id :davinci_plan_net_v110_v110_location_practitionerrole_location_revinclude_search_test
-      input :practitionerrole_location_input,
-        title: 'PractitionerRole referenced Location IDs',
-        description: 'Comma separated list of Location  IDs that are referenced by a PractitionerRole'
+      id :davinci_plan_net_v110_plannet_organization_practitioner_role_network_revinclude_search_test
+      input :practitioner_role_network_input,
+        title: 'PractitionerRole referenced Organization IDs',
+        description: 'Comma separated list of Organization  IDs that are referenced by a PractitionerRole'
 
       def properties
         @properties ||= SearchTestProperties.new(
-            resource_type: 'Location',
+            resource_type: 'Organization',
           search_param_names: [],
-          input_name: 'practitionerrole_location_input',
-          revinclude_param: 'PractitionerRole:location'
+          input_name: 'practitioner_role_network_input',
+          revinclude_param: 'PractitionerRole:network'
         )
       end
 
@@ -37,7 +37,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_resources
-        scratch[:location_resources] ||= {}
+        scratch[:plannet_organization_resources] ||= {}
       end
 
       def scratch_revinclude_resources

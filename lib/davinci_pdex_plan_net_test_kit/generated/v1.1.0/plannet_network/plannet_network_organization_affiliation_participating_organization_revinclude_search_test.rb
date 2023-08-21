@@ -3,7 +3,7 @@ require_relative '../../../generator/group_metadata'
 
 module DaVinciPDEXPlanNetTestKit
   module DaVinciPDEXPlanNetV110
-    class PlannetOrganizationOrganizationaffiliationParticipatingOrganizationRevincludeSearchTest < Inferno::Test
+    class PlannetNetworkOrganizationAffiliationParticipatingOrganizationRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
       title 'Server returns OrganizationAffiliation resources from Organization search by _revinclude=OrganizationAffiliation:participating-organization'
@@ -14,8 +14,8 @@ module DaVinciPDEXPlanNetTestKit
         will pass if a OrganizationAffiliation resource is found in the response.
       )
 
-      id :davinci_plan_net_v110_v110_plannet_organization_organizationaffiliation_participating_organization_revinclude_search_test
-      input :organizationaffiliation_participating_organization_input,
+      id :davinci_plan_net_v110_plannet_network_organization_affiliation_participating_organization_revinclude_search_test
+      input :organization_affiliation_participating_organization_input,
         title: 'OrganizationAffiliation referenced Organization IDs',
         description: 'Comma separated list of Organization  IDs that are referenced by a OrganizationAffiliation'
 
@@ -23,7 +23,7 @@ module DaVinciPDEXPlanNetTestKit
         @properties ||= SearchTestProperties.new(
             resource_type: 'Organization',
           search_param_names: [],
-          input_name: 'organizationaffiliation_participating_organization_input',
+          input_name: 'organization_affiliation_participating_organization_input',
           revinclude_param: 'OrganizationAffiliation:participating-organization'
         )
       end
@@ -37,7 +37,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_resources
-        scratch[:plannet_organization_resources] ||= {}
+        scratch[:plannet_network_resources] ||= {}
       end
 
       def scratch_revinclude_resources

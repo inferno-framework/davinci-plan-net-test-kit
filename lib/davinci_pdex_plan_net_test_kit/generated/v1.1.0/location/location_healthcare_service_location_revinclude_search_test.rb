@@ -3,28 +3,28 @@ require_relative '../../../generator/group_metadata'
 
 module DaVinciPDEXPlanNetTestKit
   module DaVinciPDEXPlanNetV110
-    class PlannetNetworkHealthcareserviceOrganizationRevincludeSearchTest < Inferno::Test
+    class LocationHealthcareServiceLocationRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns HealthcareService resources from Organization search by _revinclude=HealthcareService:organization'
+      title 'Server returns HealthcareService resources from Location search by _revinclude=HealthcareService:location'
       description %(
-        A server SHALL be capable of supporting _revIncludes for HealthcareService:organization.
+        A server SHALL be capable of supporting _revIncludes for HealthcareService:location.
 
-        This test will perform a search by _revinclude=HealthcareService:organization and
+        This test will perform a search by _revinclude=HealthcareService:location and
         will pass if a HealthcareService resource is found in the response.
       )
 
-      id :davinci_plan_net_v110_v110_plannet_network_healthcareservice_organization_revinclude_search_test
-      input :healthcareservice_organization_input,
-        title: 'HealthcareService referenced Organization IDs',
-        description: 'Comma separated list of Organization  IDs that are referenced by a HealthcareService'
+      id :davinci_plan_net_v110_location_healthcare_service_location_revinclude_search_test
+      input :healthcare_service_location_input,
+        title: 'HealthcareService referenced Location IDs',
+        description: 'Comma separated list of Location  IDs that are referenced by a HealthcareService'
 
       def properties
         @properties ||= SearchTestProperties.new(
-            resource_type: 'Organization',
+            resource_type: 'Location',
           search_param_names: [],
-          input_name: 'healthcareservice_organization_input',
-          revinclude_param: 'HealthcareService:organization'
+          input_name: 'healthcare_service_location_input',
+          revinclude_param: 'HealthcareService:location'
         )
       end
 
@@ -37,7 +37,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_resources
-        scratch[:plannet_network_resources] ||= {}
+        scratch[:location_resources] ||= {}
       end
 
       def scratch_revinclude_resources

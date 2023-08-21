@@ -3,28 +3,28 @@ require_relative '../../../generator/group_metadata'
 
 module DaVinciPDEXPlanNetTestKit
   module DaVinciPDEXPlanNetV110
-    class LocationInsuranceplanCoverageAreaRevincludeSearchTest < Inferno::Test
+    class PlannetNetworkInsurancePlanOwnedByRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns InsurancePlan resources from Location search by _revinclude=InsurancePlan:coverage-area'
+      title 'Server returns InsurancePlan resources from Organization search by _revinclude=InsurancePlan:owned-by'
       description %(
-        A server SHALL be capable of supporting _revIncludes for InsurancePlan:coverage-area.
+        A server SHALL be capable of supporting _revIncludes for InsurancePlan:owned-by.
 
-        This test will perform a search by _revinclude=InsurancePlan:coverage-area and
+        This test will perform a search by _revinclude=InsurancePlan:owned-by and
         will pass if a InsurancePlan resource is found in the response.
       )
 
-      id :davinci_plan_net_v110_v110_location_insuranceplan_coverage_area_revinclude_search_test
-      input :insuranceplan_coverage_area_input,
-        title: 'InsurancePlan referenced Location IDs',
-        description: 'Comma separated list of Location  IDs that are referenced by a InsurancePlan'
+      id :davinci_plan_net_v110_plannet_network_insurance_plan_owned_by_revinclude_search_test
+      input :insurance_plan_owned_by_input,
+        title: 'InsurancePlan referenced Organization IDs',
+        description: 'Comma separated list of Organization  IDs that are referenced by a InsurancePlan'
 
       def properties
         @properties ||= SearchTestProperties.new(
-            resource_type: 'Location',
+            resource_type: 'Organization',
           search_param_names: [],
-          input_name: 'insuranceplan_coverage_area_input',
-          revinclude_param: 'InsurancePlan:coverage-area'
+          input_name: 'insurance_plan_owned_by_input',
+          revinclude_param: 'InsurancePlan:owned-by'
         )
       end
 
@@ -37,7 +37,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_resources
-        scratch[:location_resources] ||= {}
+        scratch[:plannet_network_resources] ||= {}
       end
 
       def scratch_revinclude_resources

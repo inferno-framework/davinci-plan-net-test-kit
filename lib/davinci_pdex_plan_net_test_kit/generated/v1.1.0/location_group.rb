@@ -10,10 +10,10 @@ require_relative 'location/location_address_search_test'
 require_relative 'location/location_type_search_test'
 require_relative 'location/location_id_search_test'
 require_relative 'location/location_lastupdated_search_test'
-require_relative 'location/location_healthcareservice_location_revinclude_search_test'
-require_relative 'location/location_insuranceplan_coverage_area_revinclude_search_test'
-require_relative 'location/location_organizationaffiliation_location_revinclude_search_test'
-require_relative 'location/location_practitionerrole_location_revinclude_search_test'
+require_relative 'location/location_healthcare_service_location_revinclude_search_test'
+require_relative 'location/location_insurance_plan_coverage_area_revinclude_search_test'
+require_relative 'location/location_organization_affiliation_location_revinclude_search_test'
+require_relative 'location/location_practitioner_role_location_revinclude_search_test'
 require_relative 'location/location_validation_test'
 require_relative 'location/location_must_support_test'
 require_relative 'location/location_reference_resolution_test'
@@ -109,10 +109,10 @@ read succeeds.
       test from: :davinci_pdex_plan_net_v110_location_type_search_test
       test from: :davinci_pdex_plan_net_v110_location__id_search_test
       test from: :davinci_pdex_plan_net_v110_location__lastUpdated_search_test
-      test from: :davinci_plan_net_v110_v110_location_healthcareservice_location_revinclude_search_test
-      test from: :davinci_plan_net_v110_v110_location_insuranceplan_coverage_area_revinclude_search_test
-      test from: :davinci_plan_net_v110_v110_location_organizationaffiliation_location_revinclude_search_test
-      test from: :davinci_plan_net_v110_v110_location_practitionerrole_location_revinclude_search_test
+      test from: :davinci_plan_net_v110_location_healthcare_service_location_revinclude_search_test
+      test from: :davinci_plan_net_v110_location_insurance_plan_coverage_area_revinclude_search_test
+      test from: :davinci_plan_net_v110_location_organization_affiliation_location_revinclude_search_test
+      test from: :davinci_plan_net_v110_location_practitioner_role_location_revinclude_search_test
       test from: :davinci_pdex_plan_net_v110_location_validation_test
       test from: :davinci_pdex_plan_net_v110_location_must_support_test
       test from: :davinci_pdex_plan_net_v110_location_reference_resolution_test

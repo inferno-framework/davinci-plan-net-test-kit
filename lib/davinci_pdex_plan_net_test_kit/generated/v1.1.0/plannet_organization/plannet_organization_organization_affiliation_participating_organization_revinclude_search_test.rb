@@ -3,19 +3,19 @@ require_relative '../../../generator/group_metadata'
 
 module DaVinciPDEXPlanNetTestKit
   module DaVinciPDEXPlanNetV110
-    class PlannetOrganizationOrganizationaffiliationPrimaryOrganizationRevincludeSearchTest < Inferno::Test
+    class PlannetOrganizationOrganizationAffiliationParticipatingOrganizationRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns OrganizationAffiliation resources from Organization search by _revinclude=OrganizationAffiliation:primary-organization'
+      title 'Server returns OrganizationAffiliation resources from Organization search by _revinclude=OrganizationAffiliation:participating-organization'
       description %(
-        A server SHALL be capable of supporting _revIncludes for OrganizationAffiliation:primary-organization.
+        A server SHALL be capable of supporting _revIncludes for OrganizationAffiliation:participating-organization.
 
-        This test will perform a search by _revinclude=OrganizationAffiliation:primary-organization and
+        This test will perform a search by _revinclude=OrganizationAffiliation:participating-organization and
         will pass if a OrganizationAffiliation resource is found in the response.
       )
 
-      id :davinci_plan_net_v110_v110_plannet_organization_organizationaffiliation_primary_organization_revinclude_search_test
-      input :organizationaffiliation_primary_organization_input,
+      id :davinci_plan_net_v110_plannet_organization_organization_affiliation_participating_organization_revinclude_search_test
+      input :organization_affiliation_participating_organization_input,
         title: 'OrganizationAffiliation referenced Organization IDs',
         description: 'Comma separated list of Organization  IDs that are referenced by a OrganizationAffiliation'
 
@@ -23,8 +23,8 @@ module DaVinciPDEXPlanNetTestKit
         @properties ||= SearchTestProperties.new(
             resource_type: 'Organization',
           search_param_names: [],
-          input_name: 'organizationaffiliation_primary_organization_input',
-          revinclude_param: 'OrganizationAffiliation:primary-organization'
+          input_name: 'organization_affiliation_participating_organization_input',
+          revinclude_param: 'OrganizationAffiliation:participating-organization'
         )
       end
 

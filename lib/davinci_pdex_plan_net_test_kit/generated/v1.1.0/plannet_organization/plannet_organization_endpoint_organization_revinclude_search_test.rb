@@ -14,7 +14,7 @@ module DaVinciPDEXPlanNetTestKit
         will pass if a Endpoint resource is found in the response.
       )
 
-      id :davinci_plan_net_v110_v110_plannet_organization_endpoint_organization_revinclude_search_test
+      id :davinci_plan_net_v110_plannet_organization_endpoint_organization_revinclude_search_test
       input :endpoint_organization_input,
         title: 'Endpoint referenced Organization IDs',
         description: 'Comma separated list of Organization  IDs that are referenced by a Endpoint'

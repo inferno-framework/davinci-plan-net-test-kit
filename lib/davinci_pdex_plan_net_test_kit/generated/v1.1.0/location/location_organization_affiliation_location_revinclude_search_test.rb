@@ -3,7 +3,7 @@ require_relative '../../../generator/group_metadata'
 
 module DaVinciPDEXPlanNetTestKit
   module DaVinciPDEXPlanNetV110
-    class LocationOrganizationaffiliationLocationRevincludeSearchTest < Inferno::Test
+    class LocationOrganizationAffiliationLocationRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
       title 'Server returns OrganizationAffiliation resources from Location search by _revinclude=OrganizationAffiliation:location'
@@ -14,8 +14,8 @@ module DaVinciPDEXPlanNetTestKit
         will pass if a OrganizationAffiliation resource is found in the response.
       )
 
-      id :davinci_plan_net_v110_v110_location_organizationaffiliation_location_revinclude_search_test
-      input :organizationaffiliation_location_input,
+      id :davinci_plan_net_v110_location_organization_affiliation_location_revinclude_search_test
+      input :organization_affiliation_location_input,
         title: 'OrganizationAffiliation referenced Location IDs',
         description: 'Comma separated list of Location  IDs that are referenced by a OrganizationAffiliation'
 
@@ -23,7 +23,7 @@ module DaVinciPDEXPlanNetTestKit
         @properties ||= SearchTestProperties.new(
             resource_type: 'Location',
           search_param_names: [],
-          input_name: 'organizationaffiliation_location_input',
+          input_name: 'organization_affiliation_location_input',
           revinclude_param: 'OrganizationAffiliation:location'
         )
       end
