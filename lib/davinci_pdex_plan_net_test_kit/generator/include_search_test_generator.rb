@@ -49,11 +49,11 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def test_id
-        "davinci_plan_net_v110_#{group_metadata.reformatted_version}_#{profile_identifier}_#{search_identifier}_include_search_test"
+        "davinci_plan_net_#{group_metadata.reformatted_version}_#{profile_identifier}_#{search_identifier}_include_search_test"
       end
 
       def search_identifier
-        "#{include_param.gsub(/[-:]/, '_').downcase}"
+        "#{include_param.gsub(/[-:]/, '_').underscore}"
       end
 
       def search_title
@@ -99,7 +99,7 @@ module DaVinciPDEXPlanNetTestKit
         "_include=#{include_param}"
       end
 
-      def search_param_resource
+      def include_param_resource
         res_type = group_metadata.search_definitions[:"#{include_param.split(/:/)[1]}"][:type]
         res_type = group_metadata.search_definitions[:"#{include_param.split(/:/)[1]}"][:target] if res_type == "Reference"
         res_type
@@ -178,7 +178,7 @@ module DaVinciPDEXPlanNetTestKit
           properties[:input_name] = "'#{input_name}'"
           properties[:possible_status_search] = 'true' if possible_status_search?
           properties[:include_param] = "'#{include_param}'"
-          properties[:additional_resource_type] = "'#{search_param_resource}'"
+          properties[:additional_resource_type] = "'#{include_param_resource}'"
         end
       end
 

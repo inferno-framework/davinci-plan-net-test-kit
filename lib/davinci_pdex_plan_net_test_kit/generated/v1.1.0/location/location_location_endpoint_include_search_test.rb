@@ -14,7 +14,7 @@ module DaVinciPDEXPlanNetTestKit
         will pass if a Endpoint resource is found in the response.
       )
 
-      id :davinci_plan_net_v110_v110_location_location_endpoint_include_search_test
+      id :davinci_plan_net_v110_location_location_endpoint_include_search_test
       input :location_endpoint_input,
         title: 'IDs of Location that have Endpoint reference(s)',
         description: 'Comma separated list of Location IDs that reference by a Endpoint'

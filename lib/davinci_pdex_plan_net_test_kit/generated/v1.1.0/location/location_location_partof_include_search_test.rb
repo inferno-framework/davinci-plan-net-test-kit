@@ -14,7 +14,7 @@ module DaVinciPDEXPlanNetTestKit
         will pass if a Location resource is found in the response.
       )
 
-      id :davinci_plan_net_v110_v110_location_location_partof_include_search_test
+      id :davinci_plan_net_v110_location_location_partof_include_search_test
       input :location_partof_input,
         title: 'IDs of Location that have Location reference(s)',
         description: 'Comma separated list of Location IDs that reference by a Location'

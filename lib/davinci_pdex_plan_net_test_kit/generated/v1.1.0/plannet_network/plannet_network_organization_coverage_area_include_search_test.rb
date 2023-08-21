@@ -14,7 +14,7 @@ module DaVinciPDEXPlanNetTestKit
         will pass if a Location resource is found in the response.
       )
 
-      id :davinci_plan_net_v110_v110_plannet_network_organization_coverage_area_include_search_test
+      id :davinci_plan_net_v110_plannet_network_organization_coverage_area_include_search_test
       input :organization_coverage_area_input,
         title: 'IDs of Organization that have Location reference(s)',
         description: 'Comma separated list of Organization IDs that reference by a Location'

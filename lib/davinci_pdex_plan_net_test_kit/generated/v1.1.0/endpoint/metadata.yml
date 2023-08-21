@@ -149,7 +149,7 @@
   :file_name: endpoint_id_search_test.rb
 - :id: davinci_pdex_plan_net_v110_endpoint__lastUpdated_search_test
   :file_name: endpoint_lastupdated_search_test.rb
-- :id: davinci_plan_net_v110_v110_endpoint_endpoint_organization_include_search_test
+- :id: davinci_plan_net_v110_endpoint_endpoint_organization_include_search_test
   :file_name: endpoint_endpoint_organization_include_search_test.rb
 - :id: davinci_pdex_plan_net_v110_endpoint_validation_test
   :file_name: endpoint_validation_test.rb

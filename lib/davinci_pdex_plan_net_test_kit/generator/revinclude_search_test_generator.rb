@@ -49,11 +49,11 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def test_id
-        "davinci_plan_net_v110_#{group_metadata.reformatted_version}_#{profile_identifier}_#{search_identifier}_revinclude_search_test"
+        "davinci_plan_net_#{group_metadata.reformatted_version}_#{profile_identifier}_#{search_identifier}_revinclude_search_test"
       end
 
       def search_identifier
-        "#{revinclude_param.gsub(/[-:]/, '_').downcase}"
+        "#{revinclude_param.gsub(/[-:]/, '_').underscore}"
       end
 
       def search_title
@@ -95,7 +95,7 @@ module DaVinciPDEXPlanNetTestKit
         (search_metadata[:names] - [:patient]).first
       end
 
-      def search_param_name_string
+      def revinclude_param_string
         "_revinclude=#{revinclude_param}"
       end
 
@@ -176,6 +176,7 @@ module DaVinciPDEXPlanNetTestKit
           properties[:input_name] = "'#{input_name}'"
           properties[:possible_status_search] = 'true' if possible_status_search?
           properties[:revinclude_param] = "'#{revinclude_param}'"
+          properties[:additional_resource_type] = "'#{revinclude_param_resource}'"
         end
       end
 
