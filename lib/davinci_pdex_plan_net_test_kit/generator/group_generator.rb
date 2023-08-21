@@ -93,7 +93,6 @@ module DaVinciPDEXPlanNetTestKit
         group_metadata.profile_url
       end
 
-
       def optional?
         resource_type == 'QuestionnaireResponse' ||
         profile_url == 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-simple-observation'

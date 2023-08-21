@@ -1,9 +1,11 @@
+require_relative 'practitioner/practitioner_no_params_search_test'
 require_relative 'practitioner/practitioner_read_test'
 require_relative 'practitioner/practitioner_name_search_test'
 require_relative 'practitioner/practitioner_id_search_test'
 require_relative 'practitioner/practitioner_lastupdated_search_test'
 require_relative 'practitioner/practitioner_family_search_test'
 require_relative 'practitioner/practitioner_given_search_test'
+require_relative 'practitioner/practitioner_practitioner_role_practitioner_revinclude_search_test'
 require_relative 'practitioner/practitioner_validation_test'
 require_relative 'practitioner/practitioner_must_support_test'
 require_relative 'practitioner/practitioner_reference_resolution_test'
@@ -82,12 +84,14 @@ read succeeds.
         @metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, 'practitioner', 'metadata.yml'), aliases: true))
       end
   
+      test from: :davinci_pdex_plan_net_v110_practitioner_no_params_search_test
       test from: :davinci_pdex_plan_net_v110_practitioner_read_test
       test from: :davinci_pdex_plan_net_v110_practitioner_name_search_test
       test from: :davinci_pdex_plan_net_v110_practitioner__id_search_test
       test from: :davinci_pdex_plan_net_v110_practitioner__lastUpdated_search_test
       test from: :davinci_pdex_plan_net_v110_practitioner_family_search_test
       test from: :davinci_pdex_plan_net_v110_practitioner_given_search_test
+      test from: :davinci_plan_net_v110_practitioner_practitioner_role_practitioner_revinclude_search_test
       test from: :davinci_pdex_plan_net_v110_practitioner_validation_test
       test from: :davinci_pdex_plan_net_v110_practitioner_must_support_test
       test from: :davinci_pdex_plan_net_v110_practitioner_reference_resolution_test

@@ -3,26 +3,29 @@ require_relative 'special_cases'
 
 module DaVinciPDEXPlanNetTestKit
   class Generator
-    class ProvenanceRevincludeSearchTestGenerator
+    class RevincludeSearchTestGenerator
       class << self
         def generate(ig_metadata, base_output_dir)
           ig_metadata.groups
             .reject { |group| SpecialCases.exclude_group? group }
-            .select { |group| group.revincludes.include? 'Provenance:target' }
-            .each { |group| new(group, group.searches.first, base_output_dir).generate }
+            .select { |group| !group.revincludes.empty? }
+            .each do |group|
+              group.revincludes.each { |revinclude| new(group, group.searches.first, base_output_dir, revinclude).generate }
+            end
         end
       end
 
-      attr_accessor :group_metadata, :search_metadata, :base_output_dir
+      attr_accessor :group_metadata, :search_metadata, :base_output_dir, :revinclude_param
 
-      def initialize(group_metadata, search_metadata, base_output_dir)
+      def initialize(group_metadata, search_metadata, base_output_dir, revinclude_param)
         self.group_metadata = group_metadata
         self.search_metadata = search_metadata
         self.base_output_dir = base_output_dir
+        self.revinclude_param = revinclude_param
       end
 
       def template
-        @template ||= File.read(File.join(__dir__, 'templates', 'provenance_revinclude_search.rb.erb'))
+        @template ||= File.read(File.join(__dir__, 'templates', 'revinclude_search.rb.erb'))
       end
 
       def output
@@ -34,7 +37,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def output_file_directory
-        File.join(base_output_dir, profile_identifier)
+        File.join(base_output_dir, profile_identifier.downcase)
       end
 
       def output_file_name
@@ -46,11 +49,11 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def test_id
-        "us_core_#{group_metadata.reformatted_version}_#{profile_identifier}_#{search_identifier}_search_test"
+        "davinci_plan_net_#{group_metadata.reformatted_version}_#{profile_identifier}_#{search_identifier}_revinclude_search_test"
       end
 
       def search_identifier
-        'provenance_revinclude'
+        "#{revinclude_param.gsub(/[-:]/, '_').underscore}"
       end
 
       def search_title
@@ -58,7 +61,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def class_name
-        "#{Naming.upper_camel_case_for_profile(group_metadata)}#{search_title}SearchTest"
+        "#{Naming.upper_camel_case_for_profile(group_metadata)}#{search_title}RevincludeSearchTest"
       end
 
       def module_name
@@ -93,12 +96,11 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def search_param_name_string
-        search_metadata[:names].join(' + ') + ' + revInclude:Provenance:target'
+        "_revinclude=#{revinclude_param}"
       end
 
-      def needs_patient_id?
-        search_metadata[:names].include?('patient') ||
-          (resource_type == 'Patient' && search_metadata[:names].include?('_id'))
+      def search_param_resource_string
+        revinclude_param.split(/:/)[0]
       end
 
       def search_param_names
@@ -162,18 +164,24 @@ module DaVinciPDEXPlanNetTestKit
         "[#{quoted_strings.join(', ')}]"
       end
 
+      def input_name
+        "#{search_identifier}_input"
+      end
+
       def search_properties
         {}.tap do |properties|
           properties[:fixed_value_search] = 'true' if fixed_value_search?
           properties[:resource_type] = "'#{resource_type}'"
-          properties[:search_param_names] = search_param_names_array
+          properties[:search_param_names] = []
+          properties[:input_name] = "'#{input_name}'"
           properties[:possible_status_search] = 'true' if possible_status_search?
+          properties[:revinclude_param] = "'#{revinclude_param}'"
         end
       end
 
       def search_test_properties_string
         search_properties
-          .map { |key, value| "#{' ' * 8}#{key}: #{value}" }
+          .map { |key, value| "#{' ' * 10}#{key}: #{value}" }
           .join(",\n")
       end
 

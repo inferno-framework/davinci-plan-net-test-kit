@@ -1,3 +1,4 @@
+require_relative 'plannet_organization/plannet_organization_no_params_search_test'
 require_relative 'plannet_organization/plannet_organization_read_test'
 require_relative 'plannet_organization/plannet_organization_partof_search_test'
 require_relative 'plannet_organization/plannet_organization_endpoint_search_test'
@@ -7,6 +8,14 @@ require_relative 'plannet_organization/plannet_organization_id_search_test'
 require_relative 'plannet_organization/plannet_organization_lastupdated_search_test'
 require_relative 'plannet_organization/plannet_organization_type_search_test'
 require_relative 'plannet_organization/plannet_organization_coverage_area_search_test'
+require_relative 'plannet_organization/plannet_organization_endpoint_organization_revinclude_search_test'
+require_relative 'plannet_organization/plannet_organization_healthcare_service_organization_revinclude_search_test'
+require_relative 'plannet_organization/plannet_organization_insurance_plan_administered_by_revinclude_search_test'
+require_relative 'plannet_organization/plannet_organization_insurance_plan_owned_by_revinclude_search_test'
+require_relative 'plannet_organization/plannet_organization_organization_affiliation_primary_organization_revinclude_search_test'
+require_relative 'plannet_organization/plannet_organization_practitioner_role_organization_revinclude_search_test'
+require_relative 'plannet_organization/plannet_organization_practitioner_role_network_revinclude_search_test'
+require_relative 'plannet_organization/plannet_organization_organization_affiliation_participating_organization_revinclude_search_test'
 require_relative 'plannet_organization/plannet_organization_validation_test'
 require_relative 'plannet_organization/plannet_organization_must_support_test'
 require_relative 'plannet_organization/plannet_organization_reference_resolution_test'
@@ -88,6 +97,7 @@ read succeeds.
         @metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, 'plannet_organization', 'metadata.yml'), aliases: true))
       end
   
+      test from: :davinci_pdex_plan_net_v110_plannet_organization_no_params_search_test
       test from: :davinci_pdex_plan_net_v110_plannet_organization_read_test
       test from: :davinci_pdex_plan_net_v110_plannet_organization_partof_search_test
       test from: :davinci_pdex_plan_net_v110_plannet_organization_endpoint_search_test
@@ -97,6 +107,14 @@ read succeeds.
       test from: :davinci_pdex_plan_net_v110_plannet_organization__lastUpdated_search_test
       test from: :davinci_pdex_plan_net_v110_plannet_organization_type_search_test
       test from: :davinci_pdex_plan_net_v110_plannet_organization_coverage_area_search_test
+      test from: :davinci_plan_net_v110_plannet_organization_endpoint_organization_revinclude_search_test
+      test from: :davinci_plan_net_v110_plannet_organization_healthcare_service_organization_revinclude_search_test
+      test from: :davinci_plan_net_v110_plannet_organization_insurance_plan_administered_by_revinclude_search_test
+      test from: :davinci_plan_net_v110_plannet_organization_insurance_plan_owned_by_revinclude_search_test
+      test from: :davinci_plan_net_v110_plannet_organization_organization_affiliation_primary_organization_revinclude_search_test
+      test from: :davinci_plan_net_v110_plannet_organization_practitioner_role_organization_revinclude_search_test
+      test from: :davinci_plan_net_v110_plannet_organization_practitioner_role_network_revinclude_search_test
+      test from: :davinci_plan_net_v110_plannet_organization_organization_affiliation_participating_organization_revinclude_search_test
       test from: :davinci_pdex_plan_net_v110_plannet_organization_validation_test
       test from: :davinci_pdex_plan_net_v110_plannet_organization_must_support_test
       test from: :davinci_pdex_plan_net_v110_plannet_organization_reference_resolution_test

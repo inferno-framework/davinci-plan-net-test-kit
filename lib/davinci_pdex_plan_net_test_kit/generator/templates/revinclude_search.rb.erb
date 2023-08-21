@@ -1,0 +1,49 @@
+require_relative '../../../search_test'
+require_relative '../../../generator/group_metadata'
+
+module DaVinciPDEXPlanNetTestKit
+  module <%= module_name %>
+    class <%= class_name %> < Inferno::Test
+      include DaVinciPDEXPlanNetTestKit::SearchTest
+
+      title 'Server returns <%= search_param_resource_string %> resources from <%= resource_type %> search by <%= search_param_name_string %>'
+      description %(
+        A server SHALL be capable of supporting _revIncludes for <%= revinclude_param %>.
+
+        This test will perform a search by <%= search_param_name_string %> and
+        will pass if a <%= search_param_resource_string %> resource is found in the response.
+      )
+
+      id :<%= test_id %>
+      input :<%= input_name %>,
+        title: '<%= search_param_resource_string %> referenced <%= resource_type %> IDs',
+        description: 'Comma separated list of <%= resource_type %>  IDs that are referenced by a <%= search_param_resource_string %>'
+
+      def properties
+        @properties ||= SearchTestProperties.new(
+  <%= search_test_properties_string %>
+        )
+      end
+
+      def self.metadata
+        @metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, 'metadata.yml')))
+      end
+
+      def self.revinclude_metadata
+        @revinclude_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', '<%= search_param_resource_string %>', 'metadata.yml'), aliases: true))
+      end
+
+      def scratch_resources
+        scratch[:<%= profile_identifier %>_resources] ||= {}
+      end
+
+      def scratch_revinclude_resources
+        scratch[:<%= search_param_resource_string %>_resources] ||= {}
+      end
+
+      run do
+        run_revinclude_search_test
+      end
+    end
+  end
+end

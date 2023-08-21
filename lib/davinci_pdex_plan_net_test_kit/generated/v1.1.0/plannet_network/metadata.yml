@@ -266,6 +266,8 @@
   :profiles:
   - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Endpoint
 :tests:
+- :id: davinci_pdex_plan_net_v110_plannet_network_no_params_search_test
+  :file_name: plannet_network_no_params_search_test.rb
 - :id: davinci_pdex_plan_net_v110_plannet_network_read_test
   :file_name: plannet_network_read_test.rb
 - :id: davinci_pdex_plan_net_v110_plannet_network_partof_search_test
@@ -284,6 +286,22 @@
   :file_name: plannet_network_type_search_test.rb
 - :id: davinci_pdex_plan_net_v110_plannet_network_coverage_area_search_test
   :file_name: plannet_network_coverage_area_search_test.rb
+- :id: davinci_plan_net_v110_plannet_network_endpoint_organization_revinclude_search_test
+  :file_name: plannet_network_endpoint_organization_revinclude_search_test.rb
+- :id: davinci_plan_net_v110_plannet_network_healthcare_service_organization_revinclude_search_test
+  :file_name: plannet_network_healthcare_service_organization_revinclude_search_test.rb
+- :id: davinci_plan_net_v110_plannet_network_insurance_plan_administered_by_revinclude_search_test
+  :file_name: plannet_network_insurance_plan_administered_by_revinclude_search_test.rb
+- :id: davinci_plan_net_v110_plannet_network_insurance_plan_owned_by_revinclude_search_test
+  :file_name: plannet_network_insurance_plan_owned_by_revinclude_search_test.rb
+- :id: davinci_plan_net_v110_plannet_network_organization_affiliation_primary_organization_revinclude_search_test
+  :file_name: plannet_network_organization_affiliation_primary_organization_revinclude_search_test.rb
+- :id: davinci_plan_net_v110_plannet_network_practitioner_role_organization_revinclude_search_test
+  :file_name: plannet_network_practitioner_role_organization_revinclude_search_test.rb
+- :id: davinci_plan_net_v110_plannet_network_practitioner_role_network_revinclude_search_test
+  :file_name: plannet_network_practitioner_role_network_revinclude_search_test.rb
+- :id: davinci_plan_net_v110_plannet_network_organization_affiliation_participating_organization_revinclude_search_test
+  :file_name: plannet_network_organization_affiliation_participating_organization_revinclude_search_test.rb
 - :id: davinci_pdex_plan_net_v110_plannet_network_validation_test
   :file_name: plannet_network_validation_test.rb
 - :id: davinci_pdex_plan_net_v110_plannet_network_must_support_test

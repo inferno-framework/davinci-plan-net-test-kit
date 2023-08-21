@@ -8,10 +8,12 @@ module DaVinciPDEXPlanNetTestKit
     include DateSearchValidation
     include FHIRResourceNavigation
 
-    def_delegators 'self.class', :metadata, :provenance_metadata, :properties
+    def_delegators 'self.class', :metadata, :revinclude_metadata, :properties
     def_delegators 'properties',
                    :resource_type,
                    :search_param_names,
+                   :revinclude_param,
+                   :input_name,
                    :saves_delayed_references?,
                    :first_search?,
                    :fixed_value_search?,
@@ -36,15 +38,14 @@ module DaVinciPDEXPlanNetTestKit
           new_params.reject! do |params|
             params.any? { |_key, value| value.blank? }
           end
-
           params[patient_id].concat(new_params)
         end
     end
 
-    def all_provenance_revinclude_search_params
-      @all_provenance_revinclude_search_params ||=
+    def all_revinclude_search_params
+      @all_revinclude_search_params ||=
         all_search_params.transform_values! do |params_list|
-          params_list.map { |params| params.merge(_revinclude: 'Provenance:target') }
+          params_list.map { |params| {_id: "#{self.send(input_name)}"}.merge(_revinclude: revinclude_param) }
         end
     end
 
@@ -52,30 +53,32 @@ module DaVinciPDEXPlanNetTestKit
       search_params.any? { |_patient_id, params| params.present? }
     end
 
-    def run_provenance_revinclude_search_test
-      # TODO: skip if not supported?
-      skip_if !any_valid_search_params?(all_provenance_revinclude_search_params), unable_to_resolve_params_message
+    def revinclude_resource
+      revinclude_param.split(/:/)[0]
+    end
 
-      provenance_resources =
-        all_provenance_revinclude_search_params.flat_map do |_patient_id, params_list|
+    def run_revinclude_search_test
+      # TODO: skip if not supported?
+      skip_if !any_valid_search_params?(all_revinclude_search_params), "Invalid Params"
+      resources =
+        all_revinclude_search_params.flat_map do |_patient_id, params_list|
           params_list.flat_map do |params|
             fhir_search resource_type, params: params
-
             perform_search_with_status(params, patient_id) if response[:status] == 400 && possible_status_search?
 
             check_search_response
 
-            fetch_all_bundled_resources(additional_resource_types: ['Provenance'])
-              .select { |resource| resource.resourceType == 'Provenance' }
+            fetch_all_bundled_resources(additional_resource_types: [revinclude_resource])
+              .select { |resource| resource.resourceType == revinclude_resource }
           end
         end
 
-      scratch_provenance_resources[:all] ||= []
-      scratch_provenance_resources[:all].concat(provenance_resources)
+      scratch_resources[:all] ||= []
+      scratch_resources[:all].concat(resources)
 
-      save_delayed_references(provenance_resources, 'Provenance')
+      save_delayed_references(resources, revinclude_resource)
 
-      skip_if provenance_resources.empty?, no_resources_skip_message('Provenance')
+      skip_if resources.empty?, no_resources_skip_message(revinclude_resource)
     end
 
     def run_search_test
@@ -90,6 +93,21 @@ module DaVinciPDEXPlanNetTestKit
       skip_if resources_returned.empty?, no_resources_skip_message
 
       perform_multiple_or_search_test if multiple_or_search_params.present?
+    end
+
+    def run_search_no_params_test
+      fhir_search resource_type
+      
+      check_search_response
+
+      resources_returned =
+        fetch_all_bundled_resources.select { |resource| resource.resourceType == resource_type }
+
+      skip_if resources_returned.empty?, no_resources_skip_message
+
+      if first_search?
+        all_scratch_resources.concat(resources_returned).uniq!
+      end
     end
 
     def perform_search(params, patient_id)
@@ -424,7 +442,7 @@ module DaVinciPDEXPlanNetTestKit
     end
 
     def references_to_save(resource_type = nil)
-      reference_metadata = resource_type == 'Provenance' ? provenance_metadata : metadata
+      reference_metadata = resource_type == 'Provenance' ? revinclude_metadata : metadata
       reference_metadata.delayed_references
     end
 
@@ -469,7 +487,6 @@ module DaVinciPDEXPlanNetTestKit
 
     def patient_id_list
       return [nil] unless respond_to? :patient_ids
-
       patient_ids.split(',').map(&:strip)
     end
 
@@ -487,7 +504,7 @@ module DaVinciPDEXPlanNetTestKit
         paths[0] = 'local_class'
       end
 
-      paths
+      paths.map { |path| path.delete_prefix("Resource.") }  
     end
 
     def all_search_params_present?(params)
@@ -776,6 +793,12 @@ module DaVinciPDEXPlanNetTestKit
                "* Expected: #{search_value}\n" \
                "* Found: #{values_found.map(&:inspect).join(', ')}"
       end
+    end
+    ### PARSING (Remove if methods exist elsewhere already)
+    def param_to_method(param)
+      param = param.split('-').collect(&:capitalize).join
+      param = "healthcareService" if param == "Service"
+      param[0].downcase + param[1..]
     end
   end
 end
