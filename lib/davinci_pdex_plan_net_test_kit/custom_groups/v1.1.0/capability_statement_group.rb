@@ -16,19 +16,8 @@ module DaVinciPDEXPlanNetTestKit
         features supported by the API by using the [Capability
         Statement](https://www.hl7.org/fhir/capabilitystatement.html) resource.
         The features described in the Capability Statement must be consistent with
-<<<<<<< HEAD
         the required capabilities of a Plan Net server.  This test also expects
         that APIs state support for all resources types applicable to PDEX v1.1.0.
-=======
-        the required capabilities of a DaVinci PDEX Plan Net server.
-
-        The Capability Statement resource allows clients to determine which
-        resources are supported by a FHIR Server. Not all servers are expected to
-        implement all possible queries and data elements described in the Plan Net
-        API. For example, the US Core Implementation Guide requires that the
-        Patient resource and only one additional resource profile from the US Core
-        Profiles.
->>>>>>> 90a66b4 (correct profile list + typo)
 
         # Test Methodology
 
