@@ -41,10 +41,7 @@ module DaVinciPDEXPlanNetTestKit
       generate_search_tests
       # TODO: generate_vread_tests
       # TODO: generate_history_tests
-<<<<<<< HEAD
-=======
       generate_include_search_tests
->>>>>>> FI-2092-include-input
       generate_revinclude_search_tests
       generate_validation_tests
       generate_must_support_tests
@@ -101,13 +98,10 @@ module DaVinciPDEXPlanNetTestKit
       SearchNoParamsTestGenerator.generate(ig_metadata, base_output_dir)
     end
 
-<<<<<<< HEAD
-=======
     def generate_include_search_tests
       IncludeSearchTestGenerator.generate(ig_metadata, base_output_dir)
     end
 
->>>>>>> FI-2092-include-input
     def generate_revinclude_search_tests
       RevincludeSearchTestGenerator.generate(ig_metadata, base_output_dir)
     end
