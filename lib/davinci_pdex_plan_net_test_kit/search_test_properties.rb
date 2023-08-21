@@ -4,6 +4,11 @@ module DaVinciPDEXPlanNetTestKit
       :resource_type,
       :search_param_names,
       :revinclude_param,
+<<<<<<< HEAD
+=======
+      :include_param,
+      :additional_resource_type,
+>>>>>>> FI-2092-include-input
       :input_name,
       :first_search,
       :fixed_value_search,

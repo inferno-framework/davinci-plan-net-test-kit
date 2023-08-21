@@ -3,29 +3,29 @@ require_relative 'special_cases'
 
 module DaVinciPDEXPlanNetTestKit
   class Generator
-    class RevincludeSearchTestGenerator
+    class IncludeSearchTestGenerator
       class << self
         def generate(ig_metadata, base_output_dir)
           ig_metadata.groups
             .reject { |group| SpecialCases.exclude_group? group }
-            .select { |group| !group.revincludes.empty? }
+            .select { |group| !group.include_params.empty? }
             .each do |group|
-              group.revincludes.each { |revinclude| new(group, group.searches.first, base_output_dir, revinclude).generate }
+              group.include_params.each { |include_param| new(group, group.searches.first, base_output_dir, include_param).generate }
             end
         end
       end
 
-      attr_accessor :group_metadata, :search_metadata, :base_output_dir, :revinclude_param
+      attr_accessor :group_metadata, :search_metadata, :base_output_dir, :include_param
 
-      def initialize(group_metadata, search_metadata, base_output_dir, revinclude_param)
+      def initialize(group_metadata, search_metadata, base_output_dir, include_param)
         self.group_metadata = group_metadata
         self.search_metadata = search_metadata
         self.base_output_dir = base_output_dir
-        self.revinclude_param = revinclude_param
+        self.include_param = include_param
       end
 
       def template
-        @template ||= File.read(File.join(__dir__, 'templates', 'revinclude_search.rb.erb'))
+        @template ||= File.read(File.join(__dir__, 'templates', 'include_search.rb.erb'))
       end
 
       def output
@@ -49,11 +49,11 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def test_id
-        "davinci_plan_net_#{group_metadata.reformatted_version}_#{profile_identifier}_#{search_identifier}_revinclude_search_test"
+        "davinci_plan_net_#{group_metadata.reformatted_version}_#{profile_identifier}_#{search_identifier}_include_search_test"
       end
 
       def search_identifier
-        "#{revinclude_param.gsub(/[-:]/, '_').underscore}"
+        "#{include_param.gsub(/[-:]/, '_').underscore}"
       end
 
       def search_title
@@ -61,7 +61,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def class_name
-        "#{Naming.upper_camel_case_for_profile(group_metadata)}#{search_title}RevincludeSearchTest"
+        "#{Naming.upper_camel_case_for_profile(group_metadata)}#{search_title}IncludeSearchTest"
       end
 
       def module_name
@@ -95,12 +95,14 @@ module DaVinciPDEXPlanNetTestKit
         (search_metadata[:names] - [:patient]).first
       end
 
-      def revinclude_param_string
-        "_revinclude=#{revinclude_param}"
+      def include_param_string
+        "_include=#{include_param}"
       end
 
-      def revinclude_param_resource
-        "#{revinclude_param.split(/:/)[0]}"
+      def include_param_resource
+        res_type = group_metadata.search_definitions[:"#{include_param.split(/:/)[1]}"][:type]
+        res_type = group_metadata.search_definitions[:"#{include_param.split(/:/)[1]}"][:target] if res_type == "Reference"
+        res_type
       end
 
       def search_param_names
@@ -165,7 +167,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def input_name
-        "#{search_identifier}_input"
+        "#{search_identifier.downcase}_input"
       end
 
       def search_properties
@@ -175,8 +177,8 @@ module DaVinciPDEXPlanNetTestKit
           properties[:search_param_names] = []
           properties[:input_name] = "'#{input_name}'"
           properties[:possible_status_search] = 'true' if possible_status_search?
-          properties[:revinclude_param] = "'#{revinclude_param}'"
-          properties[:additional_resource_type] = "'#{revinclude_param_resource}'"
+          properties[:include_param] = "'#{include_param}'"
+          properties[:additional_resource_type] = "'#{include_param_resource}'"
         end
       end
 

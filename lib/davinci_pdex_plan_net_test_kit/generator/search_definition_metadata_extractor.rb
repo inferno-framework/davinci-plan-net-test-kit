@@ -20,6 +20,7 @@ module DaVinciPDEXPlanNetTestKit
             comparators: comparators,
             values: values,
             type: type,
+            target: target,
             contains_multiple: contains_multiple?,
             multiple_or: multiple_or_expectation,
             chain: chain
@@ -123,6 +124,10 @@ module DaVinciPDEXPlanNetTestKit
           # in profile def is Condition.onset[x]
           param.type
         end
+      end
+
+      def target
+        param.target.first
       end
 
       def contains_multiple?
