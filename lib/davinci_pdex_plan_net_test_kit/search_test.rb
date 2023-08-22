@@ -559,6 +559,10 @@ module DaVinciPDEXPlanNetTestKit
         msg.concat(" with the following Device Type Code filter: #{implantable_device_codes}")
       end
 
+      if ((self.resource_type == additional_resource_type) && (!revinclude_param.nil? || !include_param.nil?))
+        msg.concat(" other than #{self.send(input_name)}, which was used as the base")
+      end
+
       msg + ". Please use patients with more information"
     end
 
