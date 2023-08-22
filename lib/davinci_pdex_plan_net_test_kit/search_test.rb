@@ -62,14 +62,6 @@ module DaVinciPDEXPlanNetTestKit
       search_params.any? { |_patient_id, params| params.present? }
     end
 
-    def revinclude_resource
-      revinclude_param.split(/:/)[0]
-    end
-
-    def include_resource
-      #TODO: This depends on which implementation to go with, modular vs. readable
-    end
-
     def run_include_search_test
       skip_if !any_valid_search_params?(all_include_search_params), "Invalid Params"
       resources =
@@ -79,18 +71,19 @@ module DaVinciPDEXPlanNetTestKit
             perform_search_with_status(params, patient_id) if response[:status] == 400 && possible_status_search?
         
             check_search_response
-      
+
             fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
               .select { |resource| resource.resourceType == additional_resource_type }
+              .reject { |resource| resource.id == "#{self.send(input_name)}"} 
           end
         end
 
       scratch_resources[:all] ||= []
       scratch_resources[:all].concat(resources)
 
-      save_delayed_references(resources, include_resource)
+      save_delayed_references(resources, additional_resource_type)
 
-      skip_if resources.empty?, no_resources_skip_message(include_resource)
+      skip_if resources.empty?, no_resources_skip_message(additional_resource_type)
     end
 
     def run_revinclude_search_test
@@ -103,17 +96,18 @@ module DaVinciPDEXPlanNetTestKit
 
             check_search_response
 
-            fetch_all_bundled_resources(additional_resource_types: [revinclude_resource])
-              .select { |resource| resource.resourceType == revinclude_resource }
+            fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
+              .select { |resource| resource.resourceType == additional_resource_type }
+              .reject { |resource| resource.id == "#{self.send(input_name)}" }
           end
         end
 
       scratch_resources[:all] ||= []
       scratch_resources[:all].concat(resources)
 
-      save_delayed_references(resources, revinclude_resource)
+      save_delayed_references(resources, additional_resource_type)
 
-      skip_if resources.empty?, no_resources_skip_message(revinclude_resource)
+      skip_if resources.empty?, no_resources_skip_message(additional_resource_type)
     end
 
     def run_search_test
