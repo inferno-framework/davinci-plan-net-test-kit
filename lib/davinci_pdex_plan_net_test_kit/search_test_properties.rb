@@ -4,6 +4,8 @@ module DaVinciPDEXPlanNetTestKit
       :resource_type,
       :search_param_names,
       :revinclude_param,
+      :include_param,
+      :additional_resource_type,
       :input_name,
       :first_search,
       :fixed_value_search,

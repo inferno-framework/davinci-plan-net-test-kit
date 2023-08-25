@@ -24,7 +24,8 @@ module DaVinciPDEXPlanNetTestKit
             resource_type: 'Location',
           search_param_names: [],
           input_name: 'insurance_plan_coverage_area_input',
-          revinclude_param: 'InsurancePlan:coverage-area'
+          revinclude_param: 'InsurancePlan:coverage-area',
+          additional_resource_type: 'InsurancePlan'
         )
       end
 
@@ -41,7 +42,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_revinclude_resources
-        scratch[:InsurancePlan_resources] ||= {}
+        scratch[:insuranceplan_resources] ||= {}
       end
 
       run do

@@ -13,6 +13,8 @@ module DaVinciPDEXPlanNetTestKit
                    :resource_type,
                    :search_param_names,
                    :revinclude_param,
+                   :include_param,
+                   :additional_resource_type,
                    :input_name,
                    :saves_delayed_references?,
                    :first_search?,
@@ -49,16 +51,42 @@ module DaVinciPDEXPlanNetTestKit
         end
     end
 
+    def all_include_search_params
+      @all_revinclude_search_params ||=
+        all_search_params.transform_values! do |params_list|
+          params_list.map { |params| {_id: "#{self.send(input_name)}"}.merge(_include: include_param) }
+        end
+    end
+
     def any_valid_search_params?(search_params)
       search_params.any? { |_patient_id, params| params.present? }
     end
 
-    def revinclude_resource
-      revinclude_param.split(/:/)[0]
+    def run_include_search_test
+      skip_if !any_valid_search_params?(all_include_search_params), "Invalid Params"
+      resources =
+        all_include_search_params.flat_map do |_patient_id, params_list|
+          params_list.flat_map do |params|
+            fhir_search resource_type, params: params
+            perform_search_with_status(params, patient_id) if response[:status] == 400 && possible_status_search?
+        
+            check_search_response
+
+            fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
+              .select { |resource| resource.resourceType == additional_resource_type }
+              .reject { |resource| resource.id == "#{self.send(input_name)}"} 
+          end
+        end
+
+      scratch_resources[:all] ||= []
+      scratch_resources[:all].concat(resources)
+
+      save_delayed_references(resources, additional_resource_type)
+
+      skip_if resources.empty?, no_resources_skip_message(additional_resource_type)
     end
 
     def run_revinclude_search_test
-      # TODO: skip if not supported?
       skip_if !any_valid_search_params?(all_revinclude_search_params), "Invalid Params"
       resources =
         all_revinclude_search_params.flat_map do |_patient_id, params_list|
@@ -68,17 +96,18 @@ module DaVinciPDEXPlanNetTestKit
 
             check_search_response
 
-            fetch_all_bundled_resources(additional_resource_types: [revinclude_resource])
-              .select { |resource| resource.resourceType == revinclude_resource }
+            fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
+              .select { |resource| resource.resourceType == additional_resource_type }
+              .reject { |resource| resource.id == "#{self.send(input_name)}" }
           end
         end
 
       scratch_resources[:all] ||= []
       scratch_resources[:all].concat(resources)
 
-      save_delayed_references(resources, revinclude_resource)
+      save_delayed_references(resources, additional_resource_type)
 
-      skip_if resources.empty?, no_resources_skip_message(revinclude_resource)
+      skip_if resources.empty?, no_resources_skip_message(additional_resource_type)
     end
 
     def run_search_test
@@ -528,6 +557,10 @@ module DaVinciPDEXPlanNetTestKit
 
       if (resource_type == 'Device' && implantable_device_codes.present?)
         msg.concat(" with the following Device Type Code filter: #{implantable_device_codes}")
+      end
+
+      if ((self.resource_type == additional_resource_type) && (!revinclude_param.nil? || !include_param.nil?))
+        msg.concat(" other than #{self.send(input_name)}, which was used as the base")
       end
 
       msg + ". Please use patients with more information"

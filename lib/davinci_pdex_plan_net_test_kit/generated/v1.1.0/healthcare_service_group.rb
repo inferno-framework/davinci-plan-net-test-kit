@@ -10,6 +10,10 @@ require_relative 'healthcare_service/healthcare_service_service_type_search_test
 require_relative 'healthcare_service/healthcare_service_specialty_search_test'
 require_relative 'healthcare_service/healthcare_service_id_search_test'
 require_relative 'healthcare_service/healthcare_service_lastupdated_search_test'
+require_relative 'healthcare_service/healthcare_service_healthcare_service_location_include_search_test'
+require_relative 'healthcare_service/healthcare_service_healthcare_service_coverage_area_include_search_test'
+require_relative 'healthcare_service/healthcare_service_healthcare_service_organization_include_search_test'
+require_relative 'healthcare_service/healthcare_service_healthcare_service_endpoint_include_search_test'
 require_relative 'healthcare_service/healthcare_service_practitioner_role_service_revinclude_search_test'
 require_relative 'healthcare_service/healthcare_service_organization_affiliation_service_revinclude_search_test'
 require_relative 'healthcare_service/healthcare_service_validation_test'
@@ -107,6 +111,10 @@ read succeeds.
       test from: :davinci_pdex_plan_net_v110_healthcare_service_specialty_search_test
       test from: :davinci_pdex_plan_net_v110_healthcare_service__id_search_test
       test from: :davinci_pdex_plan_net_v110_healthcare_service__lastUpdated_search_test
+      test from: :davinci_plan_net_v110_healthcare_service_healthcare_service_location_include_search_test
+      test from: :davinci_plan_net_v110_healthcare_service_healthcare_service_coverage_area_include_search_test
+      test from: :davinci_plan_net_v110_healthcare_service_healthcare_service_organization_include_search_test
+      test from: :davinci_plan_net_v110_healthcare_service_healthcare_service_endpoint_include_search_test
       test from: :davinci_plan_net_v110_healthcare_service_practitioner_role_service_revinclude_search_test
       test from: :davinci_plan_net_v110_healthcare_service_organization_affiliation_service_revinclude_search_test
       test from: :davinci_pdex_plan_net_v110_healthcare_service_validation_test

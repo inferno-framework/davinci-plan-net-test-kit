@@ -79,6 +79,7 @@
     :comparators: {}
     :values: []
     :type: Reference
+    :target: Location
     :contains_multiple: true
     :multiple_or: ''
     :chain:
@@ -102,6 +103,7 @@
     :comparators: {}
     :values: []
     :type: Reference
+    :target: Location
     :contains_multiple: true
     :multiple_or: ''
   :organization:
@@ -112,6 +114,7 @@
     :comparators: {}
     :values: []
     :type: Reference
+    :target: Organization
     :contains_multiple: false
     :multiple_or: ''
     :chain:
@@ -131,6 +134,7 @@
     :comparators: {}
     :values: []
     :type: Reference
+    :target: Endpoint
     :contains_multiple: true
     :multiple_or: ''
     :chain:
@@ -1325,6 +1329,14 @@
   :file_name: healthcare_service_id_search_test.rb
 - :id: davinci_pdex_plan_net_v110_healthcare_service__lastUpdated_search_test
   :file_name: healthcare_service_lastupdated_search_test.rb
+- :id: davinci_plan_net_v110_healthcare_service_healthcare_service_location_include_search_test
+  :file_name: healthcare_service_healthcare_service_location_include_search_test.rb
+- :id: davinci_plan_net_v110_healthcare_service_healthcare_service_coverage_area_include_search_test
+  :file_name: healthcare_service_healthcare_service_coverage_area_include_search_test.rb
+- :id: davinci_plan_net_v110_healthcare_service_healthcare_service_organization_include_search_test
+  :file_name: healthcare_service_healthcare_service_organization_include_search_test.rb
+- :id: davinci_plan_net_v110_healthcare_service_healthcare_service_endpoint_include_search_test
+  :file_name: healthcare_service_healthcare_service_endpoint_include_search_test.rb
 - :id: davinci_plan_net_v110_healthcare_service_practitioner_role_service_revinclude_search_test
   :file_name: healthcare_service_practitioner_role_service_revinclude_search_test.rb
 - :id: davinci_plan_net_v110_healthcare_service_organization_affiliation_service_revinclude_search_test

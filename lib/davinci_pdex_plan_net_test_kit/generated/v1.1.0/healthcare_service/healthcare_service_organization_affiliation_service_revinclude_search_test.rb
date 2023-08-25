@@ -24,7 +24,8 @@ module DaVinciPDEXPlanNetTestKit
             resource_type: 'HealthcareService',
           search_param_names: [],
           input_name: 'organization_affiliation_service_input',
-          revinclude_param: 'OrganizationAffiliation:service'
+          revinclude_param: 'OrganizationAffiliation:service',
+          additional_resource_type: 'OrganizationAffiliation'
         )
       end
 
@@ -41,7 +42,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_revinclude_resources
-        scratch[:OrganizationAffiliation_resources] ||= {}
+        scratch[:organizationaffiliation_resources] ||= {}
       end
 
       run do

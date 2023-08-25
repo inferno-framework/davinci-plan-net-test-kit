@@ -1,0 +1,49 @@
+require_relative '../../../search_test'
+require_relative '../../../generator/group_metadata'
+
+module DaVinciPDEXPlanNetTestKit
+  module <%= module_name %>
+    class <%= class_name %> < Inferno::Test
+      include DaVinciPDEXPlanNetTestKit::SearchTest
+
+      title 'Server returns <%= include_param_resource %> resources from <%= resource_type %> search by <%= include_param_string %>'
+      description %(
+        A server SHALL be capable of supporting _includes for <%= include_param %>.
+
+        This test will perform a search by <%= include_param_string %> and
+        will pass if a <%= include_param_resource %> resource is found in the response.
+      )
+
+      id :<%= test_id %>
+      input :<%= input_name %>,
+        title: 'IDs of <%= resource_type %> that have <%= include_param_resource %> reference(s)',
+        description: 'Comma separated list of <%= resource_type %> IDs that reference by a <%= include_param_resource %>'
+
+      def properties
+        @properties ||= SearchTestProperties.new(
+  <%= search_test_properties_string %>
+        )
+      end
+
+      def self.metadata
+        @metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, 'metadata.yml')))
+      end
+
+      def self.include_metadata
+        @revinclude_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', '<%= include_param_resource %>', 'metadata.yml'), aliases: true))
+      end
+
+      def scratch_resources
+        scratch[:<%= profile_identifier %>_resources] ||= {}
+      end
+
+      def scratch_include_resources
+        scratch[:<%= include_param_resource.downcase %>_resources] ||= {}
+      end
+
+      run do
+        run_include_search_test
+      end
+    end
+  end
+end

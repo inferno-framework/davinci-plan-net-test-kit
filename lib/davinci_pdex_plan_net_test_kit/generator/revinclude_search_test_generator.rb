@@ -53,7 +53,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def search_identifier
-        "#{revinclude_param.gsub(/[-:]/, '_').underscore}"
+        revinclude_param.gsub(/[-:]/, '_').underscore
       end
 
       def search_title
@@ -95,11 +95,11 @@ module DaVinciPDEXPlanNetTestKit
         (search_metadata[:names] - [:patient]).first
       end
 
-      def search_param_name_string
+      def revinclude_param_string
         "_revinclude=#{revinclude_param}"
       end
 
-      def search_param_resource_string
+      def revinclude_param_resource
         revinclude_param.split(/:/)[0]
       end
 
@@ -176,6 +176,7 @@ module DaVinciPDEXPlanNetTestKit
           properties[:input_name] = "'#{input_name}'"
           properties[:possible_status_search] = 'true' if possible_status_search?
           properties[:revinclude_param] = "'#{revinclude_param}'"
+          properties[:additional_resource_type] = "'#{revinclude_param_resource}'"
         end
       end
 
