@@ -47,14 +47,14 @@ module DaVinciPDEXPlanNetTestKit
     def all_revinclude_search_params
       @all_revinclude_search_params ||=
         all_search_params.transform_values! do |params_list|
-          params_list.map { |params| {_id: "#{self.send(input_name)}"}.merge(_revinclude: revinclude_param) }
+          params_list.map { |params| {_id: self.send(input_name)}.merge(_revinclude: revinclude_param) }
         end
     end
 
     def all_include_search_params
       @all_revinclude_search_params ||=
         all_search_params.transform_values! do |params_list|
-          params_list.map { |params| {_id: "#{self.send(input_name)}"}.merge(_include: include_param) }
+          params_list.map { |params| {_id: self.send(input_name)}.merge(_include: include_param) }
         end
     end
 
