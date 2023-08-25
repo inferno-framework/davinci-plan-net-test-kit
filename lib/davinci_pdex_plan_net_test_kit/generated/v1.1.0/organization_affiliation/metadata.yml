@@ -67,9 +67,8 @@
 - :names:
   - _lastUpdated
   :expectation: SHALL
-  :names_not_must_support_or_mandatory:
-  - _lastUpdated
-  :must_support_or_mandatory: false
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 :search_definitions:
   :primary-organization:
     :paths:
@@ -207,6 +206,7 @@
     - residential
     - respite
     - retail
+    :type: CodeableConcept
     :contains_multiple: true
     :multiple_or: ''
   :specialty:
@@ -1069,6 +1069,7 @@
     - 347C00000X
     - 347D00000X
     - 347E00000X
+    :type: CodeableConcept
     :contains_multiple: true
     :multiple_or: ''
   :_id:

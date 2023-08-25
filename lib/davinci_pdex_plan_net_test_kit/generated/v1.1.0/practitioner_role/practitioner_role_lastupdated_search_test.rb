@@ -18,8 +18,6 @@ none are returned, the test is skipped.
       )
 
       id :davinci_pdex_plan_net_v110_practitioner_role__lastUpdated_search_test
-      optional
-  
       def self.properties
         @properties ||= SearchTestProperties.new(
           resource_type: 'PractitionerRole',

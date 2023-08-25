@@ -47,9 +47,8 @@
 - :names:
   - _lastUpdated
   :expectation: SHALL
-  :names_not_must_support_or_mandatory:
-  - _lastUpdated
-  :must_support_or_mandatory: false
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 - :names:
   - type
   :expectation: SHALL
@@ -101,6 +100,7 @@
     - Organization.address
     :comparators: {}
     :values: []
+    :type: Address
     :contains_multiple: true
     :multiple_or: ''
   :name:
@@ -112,6 +112,7 @@
     - Organization.alias
     :comparators: {}
     :values: []
+    :type: string
     :contains_multiple: false
     :multiple_or: ''
   :_id:
@@ -151,13 +152,14 @@
     :comparators: {}
     :values:
     - ntwk
+    :type: CodeableConcept
     :contains_multiple: false
     :multiple_or: ''
   :coverage-area:
     :paths:
-    - extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/location-reference')
+    - extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/location-reference').valueReference.reference
     :full_paths:
-    - Organization.extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/location-reference')
+    - Organization.extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/location-reference').valueReference.reference
     :comparators: {}
     :values: []
     :type: Reference

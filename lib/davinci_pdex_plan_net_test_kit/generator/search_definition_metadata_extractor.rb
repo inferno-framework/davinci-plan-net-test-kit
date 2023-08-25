@@ -10,6 +10,7 @@ module DaVinciPDEXPlanNetTestKit
         self.ig_resources = ig_resources
         self.resource = resource
         self.profile_elements = profile_elements
+        puts "Here are the profile elemtents: #{profile_elements} for #{name}"
       end
 
       def search_definition
@@ -38,7 +39,7 @@ module DaVinciPDEXPlanNetTestKit
       def full_paths
         @full_paths ||=
           begin
-            path = param.expression.gsub(/url = '/, 'url=\'')
+            path = param.expression.gsub(/\.where\(url=(.*)\)/, '.where(url=\1).valueReference.reference')
             path = path[1..-2] if path.start_with?('(') && path.end_with?(')')
             path.scan(/[. ]as[( ]([^)]*)[)]?/).flatten.map do |as_type|
               path.gsub!(/[. ]as[( ](#{as_type}[^)]*)[)]?/, as_type.upcase_first) if as_type.present?
@@ -120,7 +121,6 @@ module DaVinciPDEXPlanNetTestKit
 
       def type
         if profile_element.present?
-          puts "Found element for #{profile_element.id}" if 
           profile_element.type.first.code
         else
           # search is a variable type, eg. Condition.onsetDateTime - element

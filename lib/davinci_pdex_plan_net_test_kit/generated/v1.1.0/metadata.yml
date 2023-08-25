@@ -34,9 +34,8 @@
   - :names:
     - _lastUpdated
     :expectation: SHALL
-    :names_not_must_support_or_mandatory:
-    - _lastUpdated
-    :must_support_or_mandatory: false
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   :search_definitions:
     :organization:
       :paths:
@@ -212,9 +211,8 @@
   - :names:
     - _lastUpdated
     :expectation: SHALL
-    :names_not_must_support_or_mandatory:
-    - _lastUpdated
-    :must_support_or_mandatory: false
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   :search_definitions:
     :location:
       :paths:
@@ -292,6 +290,7 @@
       - HealthcareService.name
       :comparators: {}
       :values: []
+      :type: string
       :contains_multiple: false
       :multiple_or: ''
     :service-category:
@@ -316,6 +315,7 @@
       - trans
       - urg
       - vis
+      :type: CodeableConcept
       :contains_multiple: false
       :multiple_or: ''
     :service-type:
@@ -427,6 +427,7 @@
       - '571'
       - '614'
       - '628'
+      :type: CodeableConcept
       :contains_multiple: true
       :multiple_or: ''
     :specialty:
@@ -1289,6 +1290,7 @@
       - 347C00000X
       - 347D00000X
       - 347E00000X
+      :type: CodeableConcept
       :contains_multiple: true
       :multiple_or: ''
     :_id:
@@ -1517,9 +1519,8 @@
   - :names:
     - _lastUpdated
     :expectation: SHALL
-    :names_not_must_support_or_mandatory:
-    - _lastUpdated
-    :must_support_or_mandatory: false
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - type
     :expectation: SHALL
@@ -1578,6 +1579,7 @@
       - InsurancePlan.alias
       :comparators: {}
       :values: []
+      :type: string
       :contains_multiple: false
       :multiple_or: ''
     :plan-type:
@@ -1595,6 +1597,7 @@
       - lowdeductible
       - highdeductible
       - catastrophicplan
+      :type: CodeableConcept
       :contains_multiple: false
       :multiple_or: ''
     :identifier:
@@ -1604,6 +1607,7 @@
       - InsurancePlan.identifier
       :comparators: {}
       :values: []
+      :type: Identifier
       :contains_multiple: true
       :multiple_or: ''
     :_id:
@@ -1664,6 +1668,7 @@
       - denthmo
       - vis
       - vishmo
+      :type: CodeableConcept
       :contains_multiple: false
       :multiple_or: ''
   :include_params:
@@ -1864,9 +1869,8 @@
   - :names:
     - _lastUpdated
     :expectation: SHALL
-    :names_not_must_support_or_mandatory:
-    - _lastUpdated
-    :must_support_or_mandatory: false
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   :search_definitions:
     :partof:
       :paths:
@@ -1927,6 +1931,7 @@
       - Location.address.city
       :comparators: {}
       :values: []
+      :type: string
       :contains_multiple: false
       :multiple_or: ''
     :address-state:
@@ -1936,6 +1941,7 @@
       - Location.address.state
       :comparators: {}
       :values: []
+      :type: string
       :contains_multiple: false
       :multiple_or: ''
     :address-postalcode:
@@ -1945,6 +1951,7 @@
       - Location.address.postalCode
       :comparators: {}
       :values: []
+      :type: string
       :contains_multiple: false
       :multiple_or: ''
     :address:
@@ -1954,6 +1961,7 @@
       - Location.address
       :comparators: {}
       :values: []
+      :type: Address
       :contains_multiple: false
       :multiple_or: ''
     :type:
@@ -1963,6 +1971,7 @@
       - Location.type
       :comparators: {}
       :values: []
+      :type: CodeableConcept
       :contains_multiple: true
       :multiple_or: ''
     :_id:
@@ -2176,9 +2185,8 @@
   - :names:
     - _lastUpdated
     :expectation: SHALL
-    :names_not_must_support_or_mandatory:
-    - _lastUpdated
-    :must_support_or_mandatory: false
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - type
     :expectation: SHALL
@@ -2230,6 +2238,7 @@
       - Organization.address
       :comparators: {}
       :values: []
+      :type: Address
       :contains_multiple: true
       :multiple_or: ''
     :name:
@@ -2241,6 +2250,7 @@
       - Organization.alias
       :comparators: {}
       :values: []
+      :type: string
       :contains_multiple: false
       :multiple_or: ''
     :_id:
@@ -2280,13 +2290,14 @@
       :comparators: {}
       :values:
       - ntwk
+      :type: CodeableConcept
       :contains_multiple: false
       :multiple_or: ''
     :coverage-area:
       :paths:
-      - extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/location-reference')
+      - extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/location-reference').valueReference.reference
       :full_paths:
-      - Organization.extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/location-reference')
+      - Organization.extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/location-reference').valueReference.reference
       :comparators: {}
       :values: []
       :type: Reference
@@ -2448,9 +2459,8 @@
   - :names:
     - _lastUpdated
     :expectation: SHALL
-    :names_not_must_support_or_mandatory:
-    - _lastUpdated
-    :must_support_or_mandatory: false
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - type
     :expectation: SHALL
@@ -2502,6 +2512,7 @@
       - Organization.address
       :comparators: {}
       :values: []
+      :type: Address
       :contains_multiple: true
       :multiple_or: ''
     :name:
@@ -2513,6 +2524,7 @@
       - Organization.alias
       :comparators: {}
       :values: []
+      :type: string
       :contains_multiple: false
       :multiple_or: ''
     :_id:
@@ -2557,13 +2569,14 @@
       - atyprv
       - bus
       - ntwk
+      :type: CodeableConcept
       :contains_multiple: true
       :multiple_or: ''
     :coverage-area:
       :paths:
-      - extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/location-reference')
+      - extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/location-reference').valueReference.reference
       :full_paths:
-      - Organization.extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/location-reference')
+      - Organization.extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/location-reference').valueReference.reference
       :comparators: {}
       :values: []
       :type: Reference
@@ -2775,9 +2788,8 @@
   - :names:
     - _lastUpdated
     :expectation: SHALL
-    :names_not_must_support_or_mandatory:
-    - _lastUpdated
-    :must_support_or_mandatory: false
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   :search_definitions:
     :primary-organization:
       :paths:
@@ -2915,6 +2927,7 @@
       - residential
       - respite
       - retail
+      :type: CodeableConcept
       :contains_multiple: true
       :multiple_or: ''
     :specialty:
@@ -3777,6 +3790,7 @@
       - 347C00000X
       - 347D00000X
       - 347E00000X
+      :type: CodeableConcept
       :contains_multiple: true
       :multiple_or: ''
     :_id:
@@ -3965,9 +3979,8 @@
   - :names:
     - _lastUpdated
     :expectation: SHALL
-    :names_not_must_support_or_mandatory:
-    - _lastUpdated
-    :must_support_or_mandatory: false
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - family
     :expectation: SHALL
@@ -3986,6 +3999,7 @@
       - Practitioner.name
       :comparators: {}
       :values: []
+      :type: HumanName
       :contains_multiple: true
       :multiple_or: ''
     :_id:
@@ -4024,6 +4038,7 @@
       - Practitioner.name.family
       :comparators: {}
       :values: []
+      :type: string
       :contains_multiple: false
       :multiple_or: ''
     :given:
@@ -4033,6 +4048,7 @@
       - Practitioner.name.given
       :comparators: {}
       :values: []
+      :type: string
       :contains_multiple: true
       :multiple_or: ''
   :include_params: []
@@ -4216,9 +4232,8 @@
   - :names:
     - _lastUpdated
     :expectation: SHALL
-    :names_not_must_support_or_mandatory:
-    - _lastUpdated
-    :must_support_or_mandatory: false
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   :search_definitions:
     :practitioner:
       :paths:
@@ -4298,9 +4313,9 @@
         :expectation: 
     :network:
       :paths:
-      - extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/network-reference')
+      - extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/network-reference').valueReference.reference
       :full_paths:
-      - PractitionerRole.extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/network-reference')
+      - PractitionerRole.extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/network-reference').valueReference.reference
       :comparators: {}
       :values: []
       :type: Reference
@@ -4378,6 +4393,7 @@
       - sp
       - sh
       - te
+      :type: CodeableConcept
       :contains_multiple: true
       :multiple_or: ''
     :specialty:
@@ -5058,6 +5074,7 @@
       - 376J00000X
       - 376K00000X
       - 405300000X
+      :type: CodeableConcept
       :contains_multiple: true
       :multiple_or: ''
     :_id:

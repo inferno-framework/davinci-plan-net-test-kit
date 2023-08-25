@@ -32,9 +32,8 @@
 - :names:
   - _lastUpdated
   :expectation: SHALL
-  :names_not_must_support_or_mandatory:
-  - _lastUpdated
-  :must_support_or_mandatory: false
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 - :names:
   - family
   :expectation: SHALL
@@ -53,6 +52,7 @@
     - Practitioner.name
     :comparators: {}
     :values: []
+    :type: HumanName
     :contains_multiple: true
     :multiple_or: ''
   :_id:
@@ -91,6 +91,7 @@
     - Practitioner.name.family
     :comparators: {}
     :values: []
+    :type: string
     :contains_multiple: false
     :multiple_or: ''
   :given:
@@ -100,6 +101,7 @@
     - Practitioner.name.given
     :comparators: {}
     :values: []
+    :type: string
     :contains_multiple: true
     :multiple_or: ''
 :include_params: []

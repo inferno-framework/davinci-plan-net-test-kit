@@ -67,9 +67,8 @@
 - :names:
   - _lastUpdated
   :expectation: SHALL
-  :names_not_must_support_or_mandatory:
-  - _lastUpdated
-  :must_support_or_mandatory: false
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 :search_definitions:
   :location:
     :paths:
@@ -133,10 +132,7 @@
     - HealthcareService.endpoint
     :comparators: {}
     :values: []
-<<<<<<< HEAD
     :type: Reference
-=======
->>>>>>> a3eb3d9 (mismatch test fixes)
     :target: Endpoint
     :contains_multiple: true
     :multiple_or: ''
@@ -150,6 +146,7 @@
     - HealthcareService.name
     :comparators: {}
     :values: []
+    :type: string
     :contains_multiple: false
     :multiple_or: ''
   :service-category:
@@ -174,6 +171,7 @@
     - trans
     - urg
     - vis
+    :type: CodeableConcept
     :contains_multiple: false
     :multiple_or: ''
   :service-type:
@@ -285,6 +283,7 @@
     - '571'
     - '614'
     - '628'
+    :type: CodeableConcept
     :contains_multiple: true
     :multiple_or: ''
   :specialty:
@@ -1147,6 +1146,7 @@
     - 347C00000X
     - 347D00000X
     - 347E00000X
+    :type: CodeableConcept
     :contains_multiple: true
     :multiple_or: ''
   :_id:

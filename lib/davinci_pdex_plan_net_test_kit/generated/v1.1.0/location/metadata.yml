@@ -67,9 +67,8 @@
 - :names:
   - _lastUpdated
   :expectation: SHALL
-  :names_not_must_support_or_mandatory:
-  - _lastUpdated
-  :must_support_or_mandatory: false
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 :search_definitions:
   :partof:
     :paths:
@@ -130,6 +129,7 @@
     - Location.address.city
     :comparators: {}
     :values: []
+    :type: string
     :contains_multiple: false
     :multiple_or: ''
   :address-state:
@@ -139,6 +139,7 @@
     - Location.address.state
     :comparators: {}
     :values: []
+    :type: string
     :contains_multiple: false
     :multiple_or: ''
   :address-postalcode:
@@ -148,6 +149,7 @@
     - Location.address.postalCode
     :comparators: {}
     :values: []
+    :type: string
     :contains_multiple: false
     :multiple_or: ''
   :address:
@@ -157,6 +159,7 @@
     - Location.address
     :comparators: {}
     :values: []
+    :type: Address
     :contains_multiple: false
     :multiple_or: ''
   :type:
@@ -166,6 +169,7 @@
     - Location.type
     :comparators: {}
     :values: []
+    :type: CodeableConcept
     :contains_multiple: true
     :multiple_or: ''
   :_id:

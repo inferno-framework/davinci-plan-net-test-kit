@@ -68,9 +68,8 @@
 - :names:
   - _lastUpdated
   :expectation: SHALL
-  :names_not_must_support_or_mandatory:
-  - _lastUpdated
-  :must_support_or_mandatory: false
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 :search_definitions:
   :practitioner:
     :paths:
@@ -79,6 +78,7 @@
     - PractitionerRole.practitioner
     :comparators: {}
     :values: []
+    :type: Reference
     :target: Practitioner
     :contains_multiple: false
     :multiple_or: ''
@@ -92,6 +92,7 @@
     - PractitionerRole.organization
     :comparators: {}
     :values: []
+    :type: Reference
     :target: Organization
     :contains_multiple: false
     :multiple_or: ''
@@ -111,6 +112,7 @@
     - PractitionerRole.location
     :comparators: {}
     :values: []
+    :type: Reference
     :target: Location
     :contains_multiple: true
     :multiple_or: ''
@@ -134,6 +136,7 @@
     - PractitionerRole.healthcareService
     :comparators: {}
     :values: []
+    :type: Reference
     :target: HealthcareService
     :contains_multiple: true
     :multiple_or: ''
@@ -146,11 +149,12 @@
       :expectation: 
   :network:
     :paths:
-    - extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/network-reference')
+    - extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/network-reference').valueReference.reference
     :full_paths:
-    - PractitionerRole.extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/network-reference')
+    - PractitionerRole.extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/network-reference').valueReference.reference
     :comparators: {}
     :values: []
+    :type: Reference
     :target: Organization
     :contains_multiple: false
     :multiple_or: ''
@@ -170,6 +174,7 @@
     - PractitionerRole.endpoint
     :comparators: {}
     :values: []
+    :type: Reference
     :target: Endpoint
     :contains_multiple: true
     :multiple_or: ''
@@ -224,6 +229,7 @@
     - sp
     - sh
     - te
+    :type: CodeableConcept
     :contains_multiple: true
     :multiple_or: ''
   :specialty:
@@ -904,6 +910,7 @@
     - 376J00000X
     - 376K00000X
     - 405300000X
+    :type: CodeableConcept
     :contains_multiple: true
     :multiple_or: ''
   :_id:

@@ -21,7 +21,8 @@ none are returned, the test is skipped.
       def self.properties
         @properties ||= SearchTestProperties.new(
           resource_type: 'InsurancePlan',
-        search_param_names: ['type']
+        search_param_names: ['type'],
+        token_search_params: ['type']
         )
       end
 
