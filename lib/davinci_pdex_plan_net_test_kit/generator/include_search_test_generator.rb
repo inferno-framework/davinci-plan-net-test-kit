@@ -53,7 +53,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def search_identifier
-        "#{include_param.gsub(/[-:]/, '_').underscore}"
+        include_param.gsub(/[-:]/, '_').underscore
       end
 
       def search_title

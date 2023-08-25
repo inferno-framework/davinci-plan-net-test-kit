@@ -53,7 +53,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def search_identifier
-        "#{revinclude_param.gsub(/[-:]/, '_').underscore}"
+        revinclude_param.gsub(/[-:]/, '_').underscore
       end
 
       def search_title
@@ -100,7 +100,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def revinclude_param_resource
-        "#{revinclude_param.split(/:/)[0]}"
+        revinclude_param.split(/:/)[0]
       end
 
       def search_param_names
