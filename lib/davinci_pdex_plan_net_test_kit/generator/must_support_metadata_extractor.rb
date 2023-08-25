@@ -300,7 +300,7 @@ module DaVinciPDEXPlanNetTestKit
               current_metadata[:types] = supported_types if supported_types.present?
 
               handle_type_must_support_target_profiles(current_element.type.first, current_metadata) if current_element.type.first&.code == 'Reference'
-
+              puts "Just handled the one" if current_element.type.first&.targetProfile == "http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Location"
               handle_fixed_values(current_metadata, current_element)
 
               must_support_elements_metadata.delete_if do |metadata|

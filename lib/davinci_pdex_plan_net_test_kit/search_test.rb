@@ -622,7 +622,7 @@ module DaVinciPDEXPlanNetTestKit
       search_value = nil
       paths.each do |path|
         element = find_a_value_at(resource, path) { |element| element_has_valid_value?(element, include_system) }
-
+        #assert 1 == 0, "#{element}"
         search_value =
           case element
           when FHIR::Period

@@ -9,6 +9,7 @@ require_relative 'plannet_network_group'
 require_relative 'plannet_organization_group'
 require_relative 'organization_affiliation_group'
 require_relative 'practitioner_group'
+require_relative 'practitioner_role_group'
 
 module DaVinciPDEXPlanNetTestKit
   module DaVinciPDEXPlanNetV110
@@ -78,6 +79,7 @@ module DaVinciPDEXPlanNetTestKit
       group from: :davinci_pdex_plan_net_v110_plannet_organization
       group from: :davinci_pdex_plan_net_v110_organization_affiliation
       group from: :davinci_pdex_plan_net_v110_practitioner
+      group from: :davinci_pdex_plan_net_v110_practitioner_role
     end
   end
 end

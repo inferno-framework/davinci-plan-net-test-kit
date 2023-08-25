@@ -1,15 +1,15 @@
 ---
-:name: plannet_OrganizationAffiliation
-:class_name: PlannetOrganizationaffiliationSequence
+:name: plannet_PractitionerRole
+:class_name: PlannetPractitionerroleSequence
 :version: v1.1.0
 :reformatted_version: v110
-:resource: OrganizationAffiliation
-:profile_url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-OrganizationAffiliation
-:profile_name: Plan-Net OrganizationAffiliation
+:resource: PractitionerRole
+:profile_url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-PractitionerRole
+:profile_name: Plan-Net PractitionerRole
 :profile_version: 1.1.0
-:title: Plan-Net OrganizationAffiliation
+:title: Plan-Net PractitionerRole
 :short_description: Verify support for the server capabilities required by the Plan-Net
-  OrganizationAffiliation.
+  PractitionerRole.
 :interactions:
 - :code: search-type
   :expectation: SHALL
@@ -20,12 +20,12 @@
 :operations: []
 :searches:
 - :names:
-  - primary-organization
+  - practitioner
   :expectation: SHALL
   :names_not_must_support_or_mandatory: []
   :must_support_or_mandatory: true
 - :names:
-  - participating-organization
+  - organization
   :expectation: SHALL
   :names_not_must_support_or_mandatory: []
   :must_support_or_mandatory: true
@@ -42,8 +42,9 @@
 - :names:
   - network
   :expectation: SHALL
-  :names_not_must_support_or_mandatory: []
-  :must_support_or_mandatory: true
+  :names_not_must_support_or_mandatory:
+  - network
+  :must_support_or_mandatory: false
 - :names:
   - endpoint
   :expectation: SHALL
@@ -71,54 +72,45 @@
   - _lastUpdated
   :must_support_or_mandatory: false
 :search_definitions:
-  :primary-organization:
+  :practitioner:
+    :paths:
+    - practitioner
+    :full_paths:
+    - PractitionerRole.practitioner
+    :comparators: {}
+    :values: []
+    :target: Practitioner
+    :contains_multiple: false
+    :multiple_or: ''
+    :chain:
+    - :chain: name
+      :expectation: 
+  :organization:
     :paths:
     - organization
     :full_paths:
-    - OrganizationAffiliation.organization
+    - PractitionerRole.organization
     :comparators: {}
     :values: []
-    :type: Reference
     :target: Organization
     :contains_multiple: false
     :multiple_or: ''
     :chain:
-    - :chain: type
+    - :chain: name
       :expectation: 
     - :chain: address
       :expectation: 
-    - :chain: name
-      :expectation: 
     - :chain: partof
       :expectation: 
-  :participating-organization:
-    :paths:
-    - participatingOrganization
-    :full_paths:
-    - OrganizationAffiliation.participatingOrganization
-    :comparators: {}
-    :values: []
-    :type: Reference
-    :target: Organization
-    :contains_multiple: false
-    :multiple_or: ''
-    :chain:
     - :chain: type
-      :expectation: 
-    - :chain: address
-      :expectation: 
-    - :chain: name
-      :expectation: 
-    - :chain: partof
       :expectation: 
   :location:
     :paths:
     - location
     :full_paths:
-    - OrganizationAffiliation.location
+    - PractitionerRole.location
     :comparators: {}
     :values: []
-    :type: Reference
     :target: Location
     :contains_multiple: true
     :multiple_or: ''
@@ -139,10 +131,9 @@
     :paths:
     - healthcareService
     :full_paths:
-    - OrganizationAffiliation.healthcareService
+    - PractitionerRole.healthcareService
     :comparators: {}
     :values: []
-    :type: Reference
     :target: HealthcareService
     :contains_multiple: true
     :multiple_or: ''
@@ -155,28 +146,30 @@
       :expectation: 
   :network:
     :paths:
-    - network
+    - extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/network-reference')
     :full_paths:
-    - OrganizationAffiliation.network
+    - PractitionerRole.extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/network-reference')
     :comparators: {}
     :values: []
-    :type: Reference
     :target: Organization
-    :contains_multiple: true
+    :contains_multiple: false
     :multiple_or: ''
     :chain:
     - :chain: name
       :expectation: 
+    - :chain: address
+      :expectation: 
     - :chain: partof
+      :expectation: 
+    - :chain: type
       :expectation: 
   :endpoint:
     :paths:
     - endpoint
     :full_paths:
-    - OrganizationAffiliation.endpoint
+    - PractitionerRole.endpoint
     :comparators: {}
     :values: []
-    :type: Reference
     :target: Endpoint
     :contains_multiple: true
     :multiple_or: ''
@@ -187,33 +180,57 @@
     :paths:
     - code
     :full_paths:
-    - OrganizationAffiliation.code
+    - PractitionerRole.code
     :comparators: {}
     :values:
-    - behavioral
+    - ap
+    - apn
+    - at
+    - au
+    - bh
+    - ba
     - bt
-    - dme
-    - group
-    - home
-    - hospital
-    - laboratory
-    - other
-    - outpatient
-    - pharmacy
-    - transport
-    - urgent
-    - hospice
-    - nurseCustodial
-    - residential
-    - respite
-    - retail
+    - cnw
+    - crnp
+    - ch
+    - cs
+    - co
+    - dp
+    - de
+    - drr
+    - dn
+    - om
+    - em
+    - ho
+    - lpn
+    - mt
+    - ma
+    - nh
+    - na
+    - nu
+    - ot
+    - op
+    - oo
+    - os
+    - rx
+    - pt
+    - ph
+    - pa
+    - po
+    - py
+    - rn
+    - rt
+    - sw
+    - sp
+    - sh
+    - te
     :contains_multiple: true
     :multiple_or: ''
   :specialty:
     :paths:
     - specialty
     :full_paths:
-    - OrganizationAffiliation.specialty
+    - PractitionerRole.specialty
     :comparators: {}
     :values:
     - 101200000X
@@ -887,188 +904,6 @@
     - 376J00000X
     - 376K00000X
     - 405300000X
-    - 251300000X
-    - 251B00000X
-    - 251C00000X
-    - 251E00000X
-    - 251F00000X
-    - 251G00000X
-    - 251J00000X
-    - 251K00000X
-    - 251S00000X
-    - 251T00000X
-    - 251V00000X
-    - 251X00000X
-    - 252Y00000X
-    - 253J00000X
-    - 253Z00000X
-    - 261Q00000X
-    - 261QA0005X
-    - 261QA0006X
-    - 261QA0600X
-    - 261QA0900X
-    - 261QA1903X
-    - 261QA3000X
-    - 261QB0400X
-    - 261QC0050X
-    - 261QC1500X
-    - 261QC1800X
-    - 261QD0000X
-    - 261QD1600X
-    - 261QE0002X
-    - 261QE0700X
-    - 261QE0800X
-    - 261QF0050X
-    - 261QF0400X
-    - 261QG0250X
-    - 261QH0100X
-    - 261QH0700X
-    - 261QI0500X
-    - 261QL0400X
-    - 261QM0801X
-    - 261QM0850X
-    - 261QM0855X
-    - 261QM1000X
-    - 261QM1100X
-    - 261QM1101X
-    - 261QM1102X
-    - 261QM1103X
-    - 261QM1200X
-    - 261QM1300X
-    - 261QM2500X
-    - 261QM2800X
-    - 261QM3000X
-    - 261QP0904X
-    - 261QP0905X
-    - 261QP1100X
-    - 261QP2000X
-    - 261QP2300X
-    - 261QP2400X
-    - 261QP3300X
-    - 261QR0200X
-    - 261QR0206X
-    - 261QR0207X
-    - 261QR0208X
-    - 261QR0400X
-    - 261QR0401X
-    - 261QR0404X
-    - 261QR0405X
-    - 261QR0800X
-    - 261QR1100X
-    - 261QR1300X
-    - 261QS0112X
-    - 261QS0132X
-    - 261QS1000X
-    - 261QS1200X
-    - 261QU0200X
-    - 261QV0200X
-    - 261QX0100X
-    - 261QX0200X
-    - 261QX0203X
-    - 273100000X
-    - 273R00000X
-    - 273Y00000X
-    - 275N00000X
-    - 276400000X
-    - 281P00000X
-    - 281PC2000X
-    - 282E00000X
-    - 282J00000X
-    - 282N00000X
-    - 282NC0060X
-    - 282NC2000X
-    - 282NR1301X
-    - 282NW0100X
-    - 283Q00000X
-    - 283X00000X
-    - 283XC2000X
-    - 284300000X
-    - 286500000X
-    - 2865M2000X
-    - 2865X1600X
-    - 291900000X
-    - 291U00000X
-    - 292200000X
-    - 293D00000X
-    - 302F00000X
-    - 302R00000X
-    - 305R00000X
-    - 305S00000X
-    - 310400000X
-    - 3104A0625X
-    - 3104A0630X
-    - 310500000X
-    - 311500000X
-    - 311Z00000X
-    - 311ZA0620X
-    - 313M00000X
-    - 314000000X
-    - 3140N1450X
-    - 315D00000X
-    - 315P00000X
-    - 174200000X
-    - 177F00000X
-    - 320600000X
-    - 320700000X
-    - 320800000X
-    - 320900000X
-    - 322D00000X
-    - 323P00000X
-    - 324500000X
-    - 3245S0500X
-    - 385H00000X
-    - 385HR2050X
-    - 385HR2055X
-    - 385HR2060X
-    - 385HR2065X
-    - 331L00000X
-    - 332000000X
-    - 332100000X
-    - 332800000X
-    - 332900000X
-    - 332B00000X
-    - 332BC3200X
-    - 332BD1200X
-    - 332BN1400X
-    - 332BP3500X
-    - 332BX2000X
-    - 332G00000X
-    - 332H00000X
-    - 332S00000X
-    - 332U00000X
-    - 333300000X
-    - 333600000X
-    - 3336C0002X
-    - 3336C0003X
-    - 3336C0004X
-    - 3336H0001X
-    - 3336I0012X
-    - 3336L0003X
-    - 3336M0002X
-    - 3336M0003X
-    - 3336N0007X
-    - 3336S0011X
-    - 335E00000X
-    - 335G00000X
-    - 335U00000X
-    - 335V00000X
-    - 341600000X
-    - 3416A0800X
-    - 3416L0300X
-    - 3416S0300X
-    - 341800000X
-    - 3418M1110X
-    - 3418M1120X
-    - 3418M1130X
-    - 342000000X
-    - 343800000X
-    - 343900000X
-    - 344600000X
-    - 344800000X
-    - 347B00000X
-    - 347C00000X
-    - 347D00000X
-    - 347E00000X
     :contains_multiple: true
     :multiple_or: ''
   :_id:
@@ -1101,30 +936,51 @@
     :contains_multiple: false
     :multiple_or: ''
 :include_params:
-- OrganizationAffiliation:primary-organization
-- OrganizationAffiliation:participating-organization
-- OrganizationAffiliation:location
-- OrganizationAffiliation:service
-- OrganizationAffiliation:endpoint
-- OrganizationAffiliation:network
+- PractitionerRole:practitioner
+- PractitionerRole:organization
+- PractitionerRole:location
+- PractitionerRole:service
+- PractitionerRole:network
+- PractitionerRole:endpoint
 :revincludes: []
 :required_concepts:
+- extension.extension.valueCodeableConcept
+- code
 - specialty
 :must_supports:
-  :extensions: []
+  :extensions:
+  - :id: PractitionerRole.extension:newpatients
+    :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/newpatients
+  - :id: PractitionerRole.extension:network-reference
+    :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/network-reference
+  - :id: PractitionerRole.extension:qualification
+    :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/qualification
+  - :id: PractitionerRole.extension:qualification.extension:identifier
+    :url: 
+  - :id: PractitionerRole.extension:qualification.extension:code
+    :url: 
+  - :id: PractitionerRole.extension:qualification.extension:issuer
+    :url: 
+  - :id: PractitionerRole.extension:qualification.extension:status
+    :url: 
+  - :id: PractitionerRole.extension:qualification.extension:period
+    :url: 
+  - :id: PractitionerRole.extension:qualification.extension:whereValid
+    :url: 
+  - :id: PractitionerRole.telecom.extension:contactpoint-availabletime
+    :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/contactpoint-availabletime
+  - :id: PractitionerRole.telecom.extension:via-intermediary
+    :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/via-intermediary
   :slices: []
   :elements:
   - :path: identifier.type
   - :path: identifier.value
   - :path: active
   - :path: period
+  - :path: practitioner
+    :types:
+    - Reference
   - :path: organization
-    :types:
-    - Reference
-  - :path: participatingOrganization
-    :types:
-    - Reference
-  - :path: network
     :types:
     - Reference
   - :path: code
@@ -1139,20 +995,43 @@
   - :path: telecom.system
   - :path: telecom.value
   - :path: telecom.rank
+  - :path: availableTime
+  - :path: availableTime.daysOfWeek
+  - :path: availableTime.allDay
+  - :path: availableTime.availableStartTime
+  - :path: availableTime.availableEndTime
+  - :path: notAvailable
+  - :path: notAvailable.description
+  - :path: notAvailable.during
   - :path: endpoint
     :types:
     - Reference
 :mandatory_elements:
-- OrganizationAffiliation.meta.lastUpdated
-- OrganizationAffiliation.active
+- PractitionerRole.meta.lastUpdated
+- PractitionerRole.extension.extension
+- PractitionerRole.extension.extension.url
+- PractitionerRole.extension.extension.value[x]
+- PractitionerRole.extension.url
+- PractitionerRole.active
+- PractitionerRole.telecom.system
+- PractitionerRole.telecom.value
+- PractitionerRole.notAvailable.description
 :bindings:
+- :type: CodeableConcept
+  :strength: required
+  :system: http://hl7.org/fhir/us/core/ValueSet/us-core-usps-state
+  :path: extension.extension.value
 - :type: code
   :strength: required
   :system: http://hl7.org/fhir/ValueSet/identifier-use
   :path: identifier.use
 - :type: CodeableConcept
   :strength: required
-  :system: http://hl7.org/fhir/us/davinci-pdex-plan-net/ValueSet/SpecialtiesVS
+  :system: http://hl7.org/fhir/us/davinci-pdex-plan-net/ValueSet/PractitionerRoleVS
+  :path: code
+- :type: CodeableConcept
+  :strength: required
+  :system: http://hl7.org/fhir/us/davinci-pdex-plan-net/ValueSet/IndividualAndGroupSpecialtiesVS
   :path: specialty
 - :type: code
   :strength: required
@@ -1162,6 +1041,17 @@
   :strength: required
   :system: http://hl7.org/fhir/ValueSet/contact-point-use
   :path: telecom.use
+- :type: code
+  :strength: required
+  :system: http://hl7.org/fhir/ValueSet/days-of-week
+  :path: availableTime.daysOfWeek
+- :type: CodeableConcept
+  :strength: required
+  :system: http://hl7.org/fhir/us/davinci-pdex-plan-net/ValueSet/AcceptingPatientsVS
+  :path: value
+  :extensions:
+  - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/newpatients
+  - acceptingPatients
 - :type: CodeableConcept
   :strength: extensible
   :system: http://hl7.org/fhir/us/davinci-pdex-plan-net/ValueSet/SpecialtyAndDegreeLicenseCertificateVS
@@ -1183,81 +1073,76 @@
   :extensions:
   - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/qualification
   - whereValid
+- :type: code
+  :strength: required
+  :system: http://hl7.org/fhir/ValueSet/days-of-week
+  :path: value
+  :extensions:
+  - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/contactpoint-availabletime
+  - daysOfWeek
 :references:
-- :path: OrganizationAffiliation.identifier.assigner
+- :path: PractitionerRole.extension.extension.value[x]
+  :profiles:
+  - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Organization
+- :path: PractitionerRole.identifier.assigner
   :profiles:
   - http://hl7.org/fhir/StructureDefinition/Organization
-- :path: OrganizationAffiliation.organization
+- :path: PractitionerRole.practitioner
+  :profiles:
+  - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Practitioner
+- :path: PractitionerRole.organization
   :profiles:
   - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Organization
-- :path: OrganizationAffiliation.participatingOrganization
-  :profiles:
-  - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Organization
-- :path: OrganizationAffiliation.network
-  :profiles:
-  - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Network
-- :path: OrganizationAffiliation.location
+- :path: PractitionerRole.location
   :profiles:
   - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Location
-- :path: OrganizationAffiliation.healthcareService
+- :path: PractitionerRole.healthcareService
   :profiles:
   - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-HealthcareService
-- :path: OrganizationAffiliation.endpoint
+- :path: PractitionerRole.endpoint
   :profiles:
   - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Endpoint
 :tests:
-- :id: davinci_pdex_plan_net_v110_organization_affiliation_no_params_search_test
-  :file_name: organization_affiliation_no_params_search_test.rb
-- :id: davinci_pdex_plan_net_v110_organization_affiliation_read_test
-  :file_name: organization_affiliation_read_test.rb
-- :id: davinci_pdex_plan_net_v110_organization_affiliation_primary_organization_search_test
-  :file_name: organization_affiliation_primary_organization_search_test.rb
-- :id: davinci_pdex_plan_net_v110_organization_affiliation_participating_organization_search_test
-  :file_name: organization_affiliation_participating_organization_search_test.rb
-- :id: davinci_pdex_plan_net_v110_organization_affiliation_location_search_test
-  :file_name: organization_affiliation_location_search_test.rb
-- :id: davinci_pdex_plan_net_v110_organization_affiliation_service_search_test
-  :file_name: organization_affiliation_service_search_test.rb
-- :id: davinci_pdex_plan_net_v110_organization_affiliation_network_search_test
-  :file_name: organization_affiliation_network_search_test.rb
-- :id: davinci_pdex_plan_net_v110_organization_affiliation_endpoint_search_test
-  :file_name: organization_affiliation_endpoint_search_test.rb
-- :id: davinci_pdex_plan_net_v110_organization_affiliation_role_search_test
-  :file_name: organization_affiliation_role_search_test.rb
-- :id: davinci_pdex_plan_net_v110_organization_affiliation_specialty_search_test
-  :file_name: organization_affiliation_specialty_search_test.rb
-- :id: davinci_pdex_plan_net_v110_organization_affiliation__id_search_test
-  :file_name: organization_affiliation_id_search_test.rb
-- :id: davinci_pdex_plan_net_v110_organization_affiliation__lastUpdated_search_test
-  :file_name: organization_affiliation_lastupdated_search_test.rb
-- :id: davinci_plan_net_v110_organization_affiliation_organization_affiliation_primary_organization_include_search_test
-  :file_name: organization_affiliation_organization_affiliation_primary_organization_include_search_test.rb
-- :id: davinci_plan_net_v110_organization_affiliation_organization_affiliation_participating_organization_include_search_test
-  :file_name: organization_affiliation_organization_affiliation_participating_organization_include_search_test.rb
-- :id: davinci_plan_net_v110_organization_affiliation_organization_affiliation_location_include_search_test
-  :file_name: organization_affiliation_organization_affiliation_location_include_search_test.rb
-- :id: davinci_plan_net_v110_organization_affiliation_organization_affiliation_service_include_search_test
-  :file_name: organization_affiliation_organization_affiliation_service_include_search_test.rb
-- :id: davinci_plan_net_v110_organization_affiliation_organization_affiliation_endpoint_include_search_test
-  :file_name: organization_affiliation_organization_affiliation_endpoint_include_search_test.rb
-- :id: davinci_plan_net_v110_organization_affiliation_organization_affiliation_network_include_search_test
-  :file_name: organization_affiliation_organization_affiliation_network_include_search_test.rb
-- :id: davinci_pdex_plan_net_v110_organization_affiliation_validation_test
-  :file_name: organization_affiliation_validation_test.rb
-- :id: davinci_pdex_plan_net_v110_organization_affiliation_must_support_test
-  :file_name: organization_affiliation_must_support_test.rb
-- :id: davinci_pdex_plan_net_v110_organization_affiliation_reference_resolution_test
-  :file_name: organization_affiliation_reference_resolution_test.rb
-:id: davinci_pdex_plan_net_v110_organization_affiliation
-:file_name: organization_affiliation_group.rb
+- :id: davinci_pdex_plan_net_v110_practitioner_role_no_params_search_test
+  :file_name: practitioner_role_no_params_search_test.rb
+- :id: davinci_pdex_plan_net_v110_practitioner_role_read_test
+  :file_name: practitioner_role_read_test.rb
+- :id: davinci_pdex_plan_net_v110_practitioner_role_practitioner_search_test
+  :file_name: practitioner_role_practitioner_search_test.rb
+- :id: davinci_pdex_plan_net_v110_practitioner_role_organization_search_test
+  :file_name: practitioner_role_organization_search_test.rb
+- :id: davinci_pdex_plan_net_v110_practitioner_role_location_search_test
+  :file_name: practitioner_role_location_search_test.rb
+- :id: davinci_pdex_plan_net_v110_practitioner_role_service_search_test
+  :file_name: practitioner_role_service_search_test.rb
+- :id: davinci_pdex_plan_net_v110_practitioner_role_network_search_test
+  :file_name: practitioner_role_network_search_test.rb
+- :id: davinci_pdex_plan_net_v110_practitioner_role_endpoint_search_test
+  :file_name: practitioner_role_endpoint_search_test.rb
+- :id: davinci_pdex_plan_net_v110_practitioner_role_role_search_test
+  :file_name: practitioner_role_role_search_test.rb
+- :id: davinci_pdex_plan_net_v110_practitioner_role_specialty_search_test
+  :file_name: practitioner_role_specialty_search_test.rb
+- :id: davinci_pdex_plan_net_v110_practitioner_role__id_search_test
+  :file_name: practitioner_role_id_search_test.rb
+- :id: davinci_pdex_plan_net_v110_practitioner_role__lastUpdated_search_test
+  :file_name: practitioner_role_lastupdated_search_test.rb
+- :id: davinci_pdex_plan_net_v110_practitioner_role_validation_test
+  :file_name: practitioner_role_validation_test.rb
+- :id: davinci_pdex_plan_net_v110_practitioner_role_must_support_test
+  :file_name: practitioner_role_must_support_test.rb
+- :id: davinci_pdex_plan_net_v110_practitioner_role_reference_resolution_test
+  :file_name: practitioner_role_reference_resolution_test.rb
+:id: davinci_pdex_plan_net_v110_practitioner_role
+:file_name: practitioner_role_group.rb
 :delayed_references:
+- :path: extension.extension.value[x]
+  :resources:
+  - Organization
+- :path: practitioner
+  :resources:
+  - Practitioner
 - :path: organization
-  :resources:
-  - Organization
-- :path: participatingOrganization
-  :resources:
-  - Organization
-- :path: network
   :resources:
   - Organization
 - :path: location

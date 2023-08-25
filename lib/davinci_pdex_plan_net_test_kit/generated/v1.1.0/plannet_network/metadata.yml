@@ -37,9 +37,8 @@
 - :names:
   - name
   :expectation: SHALL
-  :names_not_must_support_or_mandatory:
-  - name
-  :must_support_or_mandatory: false
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 - :names:
   - _id
   :expectation: SHALL
@@ -102,19 +101,17 @@
     - Organization.address
     :comparators: {}
     :values: []
-    :type: Address
     :contains_multiple: true
     :multiple_or: ''
   :name:
     :paths:
-    - 'name '
-    - " alias"
+    - name
+    - alias
     :full_paths:
-    - 'Organization.name '
-    - " Organization.alias"
+    - Organization.name
+    - Organization.alias
     :comparators: {}
     :values: []
-    :type: string
     :contains_multiple: false
     :multiple_or: ''
   :_id:
@@ -154,7 +151,6 @@
     :comparators: {}
     :values:
     - ntwk
-    :type: CodeableConcept
     :contains_multiple: false
     :multiple_or: ''
   :coverage-area:

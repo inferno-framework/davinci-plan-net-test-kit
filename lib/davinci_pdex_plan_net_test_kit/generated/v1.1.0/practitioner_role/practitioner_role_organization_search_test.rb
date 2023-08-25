@@ -3,13 +3,13 @@ require_relative '../../../generator/group_metadata'
 
 module DaVinciPDEXPlanNetTestKit
   module DaVinciPDEXPlanNetV110
-    class InsurancePlanIdentifierSearchTest < Inferno::Test
+    class PractitionerRoleOrganizationSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns valid results for InsurancePlan search by identifier'
+      title 'Server returns valid results for PractitionerRole search by organization'
       description %(
 A server SHALL support searching by
-identifier on the InsurancePlan resource. This test
+organization on the PractitionerRole resource. This test
 will pass if resources are returned and match the search criteria. If
 none are returned, the test is skipped.
 
@@ -17,13 +17,11 @@ none are returned, the test is skipped.
 
       )
 
-      id :davinci_pdex_plan_net_v110_insurance_plan_identifier_search_test
-      optional
-  
+      id :davinci_pdex_plan_net_v110_practitioner_role_organization_search_test
       def self.properties
         @properties ||= SearchTestProperties.new(
-          resource_type: 'InsurancePlan',
-        search_param_names: ['identifier']
+          resource_type: 'PractitionerRole',
+        search_param_names: ['organization']
         )
       end
 
@@ -32,7 +30,7 @@ none are returned, the test is skipped.
       end
 
       def scratch_resources
-        scratch[:insurance_plan_resources] ||= {}
+        scratch[:practitioner_role_resources] ||= {}
       end
 
       run do

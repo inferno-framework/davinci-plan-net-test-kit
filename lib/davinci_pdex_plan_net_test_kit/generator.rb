@@ -1,4 +1,4 @@
-require 'fhir_models'
+  require 'fhir_models'
 require 'inferno/ext/fhir_models'
 
 require_relative 'generator/ig_loader'

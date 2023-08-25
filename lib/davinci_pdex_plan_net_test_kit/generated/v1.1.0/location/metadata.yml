@@ -130,7 +130,6 @@
     - Location.address.city
     :comparators: {}
     :values: []
-    :type: string
     :contains_multiple: false
     :multiple_or: ''
   :address-state:
@@ -140,7 +139,6 @@
     - Location.address.state
     :comparators: {}
     :values: []
-    :type: string
     :contains_multiple: false
     :multiple_or: ''
   :address-postalcode:
@@ -150,7 +148,6 @@
     - Location.address.postalCode
     :comparators: {}
     :values: []
-    :type: string
     :contains_multiple: false
     :multiple_or: ''
   :address:
@@ -160,7 +157,6 @@
     - Location.address
     :comparators: {}
     :values: []
-    :type: Address
     :contains_multiple: false
     :multiple_or: ''
   :type:
@@ -170,7 +166,6 @@
     - Location.type
     :comparators: {}
     :values: []
-    :type: CodeableConcept
     :contains_multiple: true
     :multiple_or: ''
   :_id:

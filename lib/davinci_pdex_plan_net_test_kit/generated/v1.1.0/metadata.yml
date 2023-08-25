@@ -292,7 +292,6 @@
       - HealthcareService.name
       :comparators: {}
       :values: []
-      :type: string
       :contains_multiple: false
       :multiple_or: ''
     :service-category:
@@ -317,7 +316,6 @@
       - trans
       - urg
       - vis
-      :type: CodeableConcept
       :contains_multiple: false
       :multiple_or: ''
     :service-type:
@@ -429,7 +427,6 @@
       - '571'
       - '614'
       - '628'
-      :type: CodeableConcept
       :contains_multiple: true
       :multiple_or: ''
     :specialty:
@@ -1292,7 +1289,6 @@
       - 347C00000X
       - 347D00000X
       - 347E00000X
-      :type: CodeableConcept
       :contains_multiple: true
       :multiple_or: ''
     :_id:
@@ -1500,9 +1496,8 @@
   - :names:
     - name
     :expectation: SHALL
-    :names_not_must_support_or_mandatory:
-    - name
-    :must_support_or_mandatory: false
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - plan-type
     :expectation: SHALL
@@ -1576,14 +1571,13 @@
       :multiple_or: ''
     :name:
       :paths:
-      - 'name '
-      - " alias"
+      - name
+      - alias
       :full_paths:
-      - 'name '
-      - " alias"
+      - InsurancePlan.name
+      - InsurancePlan.alias
       :comparators: {}
       :values: []
-      :type: string
       :contains_multiple: false
       :multiple_or: ''
     :plan-type:
@@ -1601,7 +1595,6 @@
       - lowdeductible
       - highdeductible
       - catastrophicplan
-      :type: CodeableConcept
       :contains_multiple: false
       :multiple_or: ''
     :identifier:
@@ -1611,7 +1604,6 @@
       - InsurancePlan.identifier
       :comparators: {}
       :values: []
-      :type: Identifier
       :contains_multiple: true
       :multiple_or: ''
     :_id:
@@ -1672,7 +1664,6 @@
       - denthmo
       - vis
       - vishmo
-      :type: CodeableConcept
       :contains_multiple: false
       :multiple_or: ''
   :include_params:
@@ -1936,7 +1927,6 @@
       - Location.address.city
       :comparators: {}
       :values: []
-      :type: string
       :contains_multiple: false
       :multiple_or: ''
     :address-state:
@@ -1946,7 +1936,6 @@
       - Location.address.state
       :comparators: {}
       :values: []
-      :type: string
       :contains_multiple: false
       :multiple_or: ''
     :address-postalcode:
@@ -1956,7 +1945,6 @@
       - Location.address.postalCode
       :comparators: {}
       :values: []
-      :type: string
       :contains_multiple: false
       :multiple_or: ''
     :address:
@@ -1966,7 +1954,6 @@
       - Location.address
       :comparators: {}
       :values: []
-      :type: Address
       :contains_multiple: false
       :multiple_or: ''
     :type:
@@ -1976,7 +1963,6 @@
       - Location.type
       :comparators: {}
       :values: []
-      :type: CodeableConcept
       :contains_multiple: true
       :multiple_or: ''
     :_id:
@@ -2180,9 +2166,8 @@
   - :names:
     - name
     :expectation: SHALL
-    :names_not_must_support_or_mandatory:
-    - name
-    :must_support_or_mandatory: false
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - _id
     :expectation: SHALL
@@ -2245,19 +2230,17 @@
       - Organization.address
       :comparators: {}
       :values: []
-      :type: Address
       :contains_multiple: true
       :multiple_or: ''
     :name:
       :paths:
-      - 'name '
-      - " alias"
+      - name
+      - alias
       :full_paths:
-      - 'Organization.name '
-      - " Organization.alias"
+      - Organization.name
+      - Organization.alias
       :comparators: {}
       :values: []
-      :type: string
       :contains_multiple: false
       :multiple_or: ''
     :_id:
@@ -2297,7 +2280,6 @@
       :comparators: {}
       :values:
       - ntwk
-      :type: CodeableConcept
       :contains_multiple: false
       :multiple_or: ''
     :coverage-area:
@@ -2456,9 +2438,8 @@
   - :names:
     - name
     :expectation: SHALL
-    :names_not_must_support_or_mandatory:
-    - name
-    :must_support_or_mandatory: false
+    :names_not_must_support_or_mandatory: []
+    :must_support_or_mandatory: true
   - :names:
     - _id
     :expectation: SHALL
@@ -2521,19 +2502,17 @@
       - Organization.address
       :comparators: {}
       :values: []
-      :type: Address
       :contains_multiple: true
       :multiple_or: ''
     :name:
       :paths:
-      - 'name '
-      - " alias"
+      - name
+      - alias
       :full_paths:
-      - 'Organization.name '
-      - " Organization.alias"
+      - Organization.name
+      - Organization.alias
       :comparators: {}
       :values: []
-      :type: string
       :contains_multiple: false
       :multiple_or: ''
     :_id:
@@ -2578,7 +2557,6 @@
       - atyprv
       - bus
       - ntwk
-      :type: CodeableConcept
       :contains_multiple: true
       :multiple_or: ''
     :coverage-area:
@@ -2937,7 +2915,6 @@
       - residential
       - respite
       - retail
-      :type: CodeableConcept
       :contains_multiple: true
       :multiple_or: ''
     :specialty:
@@ -3800,7 +3777,6 @@
       - 347C00000X
       - 347D00000X
       - 347E00000X
-      :type: CodeableConcept
       :contains_multiple: true
       :multiple_or: ''
     :_id:
@@ -4010,7 +3986,6 @@
       - Practitioner.name
       :comparators: {}
       :values: []
-      :type: HumanName
       :contains_multiple: true
       :multiple_or: ''
     :_id:
@@ -4049,7 +4024,6 @@
       - Practitioner.name.family
       :comparators: {}
       :values: []
-      :type: string
       :contains_multiple: false
       :multiple_or: ''
     :given:
@@ -4059,7 +4033,6 @@
       - Practitioner.name.given
       :comparators: {}
       :values: []
-      :type: string
       :contains_multiple: true
       :multiple_or: ''
   :include_params: []
@@ -4405,7 +4378,6 @@
       - sp
       - sh
       - te
-      :type: CodeableConcept
       :contains_multiple: true
       :multiple_or: ''
     :specialty:
@@ -5086,7 +5058,6 @@
       - 376J00000X
       - 376K00000X
       - 405300000X
-      :type: CodeableConcept
       :contains_multiple: true
       :multiple_or: ''
     :_id:

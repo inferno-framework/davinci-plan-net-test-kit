@@ -3,7 +3,6 @@ module DaVinciPDEXPlanNetTestKit
     module SpecialCases
       RESOURCES_TO_EXCLUDE = [
         'Medication',
-        'PractitionerRole'
       ].freeze
 
       PROFILES_TO_EXCLUDE = [

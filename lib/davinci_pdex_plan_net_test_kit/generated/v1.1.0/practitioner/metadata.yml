@@ -53,7 +53,6 @@
     - Practitioner.name
     :comparators: {}
     :values: []
-    :type: HumanName
     :contains_multiple: true
     :multiple_or: ''
   :_id:
@@ -92,7 +91,6 @@
     - Practitioner.name.family
     :comparators: {}
     :values: []
-    :type: string
     :contains_multiple: false
     :multiple_or: ''
   :given:
@@ -102,7 +100,6 @@
     - Practitioner.name.given
     :comparators: {}
     :values: []
-    :type: string
     :contains_multiple: true
     :multiple_or: ''
 :include_params: []

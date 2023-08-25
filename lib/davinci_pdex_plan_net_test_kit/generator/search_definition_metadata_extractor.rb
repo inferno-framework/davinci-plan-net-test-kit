@@ -38,13 +38,15 @@ module DaVinciPDEXPlanNetTestKit
       def full_paths
         @full_paths ||=
           begin
-            path = param.expression.gsub(/.where\(resolve\((.*)/, '').gsub(/url = '/, 'url=\'')
+            path = param.expression.gsub(/url = '/, 'url=\'')
             path = path[1..-2] if path.start_with?('(') && path.end_with?(')')
             path.scan(/[. ]as[( ]([^)]*)[)]?/).flatten.map do |as_type|
               path.gsub!(/[. ]as[( ](#{as_type}[^)]*)[)]?/, as_type.upcase_first) if as_type.present?
             end
 
-            full_paths = path.split('|')
+            full_paths = path.split('|').map { |a_path| a_path.strip } # For Lists
+            full_paths = ["InsurancePlan.name", "InsurancePlan.alias"] if param.name == "Plannet_sp_insuranceplan_name"
+            puts full_paths
 
             # There is a bug in US Core 5 asserted-date search parameter. See FHIR-40573
             if param.respond_to?(:version) && param.version == '5.0.1' && name == 'asserted-date'
@@ -118,6 +120,7 @@ module DaVinciPDEXPlanNetTestKit
 
       def type
         if profile_element.present?
+          puts "Found element for #{profile_element.id}" if 
           profile_element.type.first.code
         else
           # search is a variable type, eg. Condition.onsetDateTime - element

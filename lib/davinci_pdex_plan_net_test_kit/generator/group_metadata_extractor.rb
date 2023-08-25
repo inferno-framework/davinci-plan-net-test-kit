@@ -63,8 +63,8 @@ module DaVinciPDEXPlanNetTestKit
               full_must_support_paths = ["#{resource}.#{element[:original_path]}", "#{resource}.#{element[:path]}"]
 
               full_paths.any? do |path|
-                # allow for non-choice, choice types, and _id
-                name == '_id' || full_must_support_paths.include?(path) || full_must_support_paths.include?("#{path}[x]")
+                # allow for non-choice, choice types, _id, and _lastUpdated
+                name == '_id' || name == '_lastUpdated' || full_must_support_paths.include?(path) || full_must_support_paths.include?("#{path}[x]")
               end
             end
 

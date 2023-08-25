@@ -37,9 +37,8 @@
 - :names:
   - name
   :expectation: SHALL
-  :names_not_must_support_or_mandatory:
-  - name
-  :must_support_or_mandatory: false
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 - :names:
   - plan-type
   :expectation: SHALL
@@ -113,14 +112,13 @@
     :multiple_or: ''
   :name:
     :paths:
-    - 'name '
-    - " alias"
+    - name
+    - alias
     :full_paths:
-    - 'name '
-    - " alias"
+    - InsurancePlan.name
+    - InsurancePlan.alias
     :comparators: {}
     :values: []
-    :type: string
     :contains_multiple: false
     :multiple_or: ''
   :plan-type:
@@ -138,7 +136,6 @@
     - lowdeductible
     - highdeductible
     - catastrophicplan
-    :type: CodeableConcept
     :contains_multiple: false
     :multiple_or: ''
   :identifier:
@@ -148,7 +145,6 @@
     - InsurancePlan.identifier
     :comparators: {}
     :values: []
-    :type: Identifier
     :contains_multiple: true
     :multiple_or: ''
   :_id:
@@ -209,7 +205,6 @@
     - denthmo
     - vis
     - vishmo
-    :type: CodeableConcept
     :contains_multiple: false
     :multiple_or: ''
 :include_params:
