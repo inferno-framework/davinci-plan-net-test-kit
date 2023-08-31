@@ -57,9 +57,8 @@
 - :names:
   - coverage-area
   :expectation: SHALL
-  :names_not_must_support_or_mandatory:
-  - coverage-area
-  :must_support_or_mandatory: false
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 :search_definitions:
   :partof:
     :paths:
@@ -157,9 +156,9 @@
     :multiple_or: ''
   :coverage-area:
     :paths:
-    - extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/location-reference').valueReference.reference
+    - extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/location-reference')
     :full_paths:
-    - Organization.extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/location-reference').valueReference.reference
+    - Organization.extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/location-reference')
     :comparators: {}
     :values: []
     :type: Reference

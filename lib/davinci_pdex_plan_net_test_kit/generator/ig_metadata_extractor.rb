@@ -68,7 +68,6 @@ module DaVinciPDEXPlanNetTestKit
               GroupMetadataExtractor.new(resource, supported_profile, metadata, ig_resources).group_metadata
             end
           end.compact
-
         metadata.postprocess_groups(ig_resources)
       end
     end

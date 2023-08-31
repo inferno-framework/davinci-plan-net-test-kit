@@ -162,9 +162,9 @@
     :multiple_or: ''
   :coverage-area:
     :paths:
-    - extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/location-reference').valueReference.reference
+    - extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/location-reference')
     :full_paths:
-    - Organization.extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/location-reference').valueReference.reference
+    - Organization.extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/location-reference')
     :comparators: {}
     :values: []
     :type: Reference

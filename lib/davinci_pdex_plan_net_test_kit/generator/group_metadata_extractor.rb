@@ -82,11 +82,17 @@ module DaVinciPDEXPlanNetTestKit
               end
             end
 
+            any_must_support_extensions = must_supports[:extensions].any? do |extension|
+              full_paths.any? do |path|
+                extension[:url] == path[/(?<=where\(url=').*(?='\))/]
+              end
+            end
+
             any_mandatory_elements = mandatory_elements.any? do |element|
               full_paths.include?(element)
             end
 
-            any_must_support_elements || any_must_support_slices || any_mandatory_elements
+            any_must_support_elements || any_must_support_slices || any_mandatory_elements || any_must_support_extensions
           end
 
           search[:must_support_or_mandatory] = search[:names_not_must_support_or_mandatory].empty?

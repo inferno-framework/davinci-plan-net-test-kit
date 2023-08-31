@@ -42,9 +42,8 @@
 - :names:
   - network
   :expectation: SHALL
-  :names_not_must_support_or_mandatory:
-  - network
-  :must_support_or_mandatory: false
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 - :names:
   - endpoint
   :expectation: SHALL
@@ -149,9 +148,9 @@
       :expectation: 
   :network:
     :paths:
-    - extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/network-reference').valueReference.reference
+    - extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/network-reference')
     :full_paths:
-    - PractitionerRole.extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/network-reference').valueReference.reference
+    - PractitionerRole.extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/network-reference')
     :comparators: {}
     :values: []
     :type: Reference
@@ -1134,6 +1133,18 @@
   :file_name: practitioner_role_id_search_test.rb
 - :id: davinci_pdex_plan_net_v110_practitioner_role__lastUpdated_search_test
   :file_name: practitioner_role_lastupdated_search_test.rb
+- :id: davinci_plan_net_v110_practitioner_role_practitioner_role_practitioner_include_search_test
+  :file_name: practitioner_role_practitioner_role_practitioner_include_search_test.rb
+- :id: davinci_plan_net_v110_practitioner_role_practitioner_role_organization_include_search_test
+  :file_name: practitioner_role_practitioner_role_organization_include_search_test.rb
+- :id: davinci_plan_net_v110_practitioner_role_practitioner_role_location_include_search_test
+  :file_name: practitioner_role_practitioner_role_location_include_search_test.rb
+- :id: davinci_plan_net_v110_practitioner_role_practitioner_role_service_include_search_test
+  :file_name: practitioner_role_practitioner_role_service_include_search_test.rb
+- :id: davinci_plan_net_v110_practitioner_role_practitioner_role_network_include_search_test
+  :file_name: practitioner_role_practitioner_role_network_include_search_test.rb
+- :id: davinci_plan_net_v110_practitioner_role_practitioner_role_endpoint_include_search_test
+  :file_name: practitioner_role_practitioner_role_endpoint_include_search_test.rb
 - :id: davinci_pdex_plan_net_v110_practitioner_role_validation_test
   :file_name: practitioner_role_validation_test.rb
 - :id: davinci_pdex_plan_net_v110_practitioner_role_must_support_test
