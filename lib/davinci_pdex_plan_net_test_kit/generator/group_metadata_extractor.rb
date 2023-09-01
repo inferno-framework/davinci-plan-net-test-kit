@@ -83,10 +83,7 @@ module DaVinciPDEXPlanNetTestKit
             end
 
             any_must_support_extensions = must_supports[:extensions].any? do |extension|
-              full_paths.any? do |path|
-                # Only claim is a must_support if the extension url matches a path and both exist
-                extension[:url] == path[/(?<=where\(url=').*(?='\))/] && !extension[:url].nil?
-              end
+              extension[:url].present? && full_paths.any? { |path| extension[:url] == path[/(?<=where\(url=').*(?='\))/] }
             end
 
             any_mandatory_elements = mandatory_elements.any? do |element|
