@@ -44,13 +44,12 @@ module DaVinciPDEXPlanNetTestKit
               path.gsub!(/[. ]as[( ](#{as_type}[^)]*)[)]?/, as_type.upcase_first) if as_type.present?
             end
 
-            full_paths = path.split('|')
+            full_paths = path.split('|').map { |a_path| a_path.strip } # For Lists
 
             # There is a bug in US Core 5 asserted-date search parameter. See FHIR-40573
             if param.respond_to?(:version) && param.version == '5.0.1' && name == 'asserted-date'
               remove_additional_extension_from_asserted_date(full_paths)
             end
-
             full_paths
           end
       end

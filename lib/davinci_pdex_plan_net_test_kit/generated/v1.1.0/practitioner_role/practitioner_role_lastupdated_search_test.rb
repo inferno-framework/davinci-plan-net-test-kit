@@ -3,13 +3,13 @@ require_relative '../../../generator/group_metadata'
 
 module DaVinciPDEXPlanNetTestKit
   module DaVinciPDEXPlanNetV110
-    class PlannetNetworkCoverageAreaSearchTest < Inferno::Test
+    class PractitionerRoleLastupdatedSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns valid results for Organization search by coverage-area'
+      title 'Server returns valid results for PractitionerRole search by _lastUpdated'
       description %(
 A server SHALL support searching by
-coverage-area on the Organization resource. This test
+_lastUpdated on the PractitionerRole resource. This test
 will pass if resources are returned and match the search criteria. If
 none are returned, the test is skipped.
 
@@ -17,11 +17,13 @@ none are returned, the test is skipped.
 
       )
 
-      id :davinci_pdex_plan_net_v110_plannet_network_coverage_area_search_test
+      id :davinci_pdex_plan_net_v110_practitioner_role__lastUpdated_search_test
+      optional
+  
       def self.properties
         @properties ||= SearchTestProperties.new(
-          resource_type: 'Organization',
-        search_param_names: ['coverage-area']
+          resource_type: 'PractitionerRole',
+        search_param_names: ['_lastUpdated']
         )
       end
 
@@ -30,7 +32,7 @@ none are returned, the test is skipped.
       end
 
       def scratch_resources
-        scratch[:plannet_network_resources] ||= {}
+        scratch[:practitioner_role_resources] ||= {}
       end
 
       run do

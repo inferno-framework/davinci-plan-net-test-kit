@@ -37,9 +37,8 @@
 - :names:
   - name
   :expectation: SHALL
-  :names_not_must_support_or_mandatory:
-  - name
-  :must_support_or_mandatory: false
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 - :names:
   - _id
   :expectation: SHALL
@@ -59,9 +58,8 @@
 - :names:
   - coverage-area
   :expectation: SHALL
-  :names_not_must_support_or_mandatory:
-  - coverage-area
-  :must_support_or_mandatory: false
+  :names_not_must_support_or_mandatory: []
+  :must_support_or_mandatory: true
 :search_definitions:
   :partof:
     :paths:
@@ -107,11 +105,11 @@
     :multiple_or: ''
   :name:
     :paths:
-    - 'name '
-    - " alias"
+    - name
+    - alias
     :full_paths:
-    - 'Organization.name '
-    - " Organization.alias"
+    - Organization.name
+    - Organization.alias
     :comparators: {}
     :values: []
     :type: string

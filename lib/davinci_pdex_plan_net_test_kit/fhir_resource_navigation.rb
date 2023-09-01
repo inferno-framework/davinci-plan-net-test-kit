@@ -35,11 +35,10 @@ module DaVinciPDEXPlanNetTestKit
 
       path_segments = path.split(/(?<!hl7)\./)
       segment = path_segments.shift.delete_suffix('[x]').gsub(/^class$/, 'local_class').to_sym
-
+      
       no_elements_present =
         elements.none? do |element|
         child = get_next_value(element, segment)
-
         child.present? || child == false
       end
 
@@ -64,7 +63,6 @@ module DaVinciPDEXPlanNetTestKit
 
     def get_next_value(element, property)
       extension_url = property[/(?<=where\(url=').*(?='\))/]
-
       if extension_url.present?
         element.url == extension_url ? element : nil
       else

@@ -18,8 +18,6 @@ none are returned, the test is skipped.
       )
 
       id :davinci_pdex_plan_net_v110_insurance_plan_name_search_test
-      optional
-  
       def self.properties
         @properties ||= SearchTestProperties.new(
           resource_type: 'InsurancePlan',
