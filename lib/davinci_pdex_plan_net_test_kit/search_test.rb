@@ -78,9 +78,6 @@ module DaVinciPDEXPlanNetTestKit
           end
         end
 
-      scratch_resources[:all] ||= []
-      scratch_resources[:all].concat(resources)
-
       save_delayed_references(resources, additional_resource_type)
 
       skip_if resources.empty?, no_resources_skip_message(additional_resource_type)
@@ -101,9 +98,6 @@ module DaVinciPDEXPlanNetTestKit
               .reject { |resource| resource.id == "#{self.send(input_name)}" }
           end
         end
-
-      scratch_resources[:all] ||= []
-      scratch_resources[:all].concat(resources)
 
       save_delayed_references(resources, additional_resource_type)
 
