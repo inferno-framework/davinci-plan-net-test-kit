@@ -560,7 +560,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       if ((self.resource_type == additional_resource_type) && (!revinclude_param.nil? || !include_param.nil?))
-        msg.concat(" other than #{self.send(input_name)}, which was used as the base")
+        msg.concat(" (excluding #{self.send(input_name)}, which was used as the base)")
       end
 
       msg + ". Please use patients with more information"
@@ -622,7 +622,6 @@ module DaVinciPDEXPlanNetTestKit
       search_value = nil
       paths.each do |path|
         element = find_a_value_at(resource, path) { |element| element_has_valid_value?(element, include_system) }
-        #assert 1 == 0, "#{element}"
         search_value =
           case element
           when FHIR::Period
@@ -650,6 +649,8 @@ module DaVinciPDEXPlanNetTestKit
             element.family || element.given&.first || element.text
           when FHIR::Address
             element.text || element.city || element.state || element.postalCode || element.country
+          when FHIR::Extension
+            element.valueReference.reference #Should this be more flexible? Does it need to read for any value[x]?  PDEX only
           else
             if metadata.version != 'v3.1.1' &&
                metadata.search_definitions[name.to_sym][:type] == 'date' &&
@@ -740,8 +741,11 @@ module DaVinciPDEXPlanNetTestKit
           values_found =
             resolve_path(resource, path)
               .map do |value|
-                if value.is_a? FHIR::Reference
+                case value
+                when FHIR::Reference
                   value.reference
+                when FHIR::Extension
+                  value.valueReference.reference
                 else
                   value
                 end

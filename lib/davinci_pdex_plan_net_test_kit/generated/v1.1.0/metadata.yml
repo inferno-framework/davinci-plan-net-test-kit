@@ -34,8 +34,9 @@
   - :names:
     - _lastUpdated
     :expectation: SHALL
-    :names_not_must_support_or_mandatory: []
-    :must_support_or_mandatory: true
+    :names_not_must_support_or_mandatory:
+    - _lastUpdated
+    :must_support_or_mandatory: false
   :search_definitions:
     :organization:
       :paths:
@@ -211,8 +212,9 @@
   - :names:
     - _lastUpdated
     :expectation: SHALL
-    :names_not_must_support_or_mandatory: []
-    :must_support_or_mandatory: true
+    :names_not_must_support_or_mandatory:
+    - _lastUpdated
+    :must_support_or_mandatory: false
   :search_definitions:
     :location:
       :paths:
@@ -1519,8 +1521,9 @@
   - :names:
     - _lastUpdated
     :expectation: SHALL
-    :names_not_must_support_or_mandatory: []
-    :must_support_or_mandatory: true
+    :names_not_must_support_or_mandatory:
+    - _lastUpdated
+    :must_support_or_mandatory: false
   - :names:
     - type
     :expectation: SHALL
@@ -1575,8 +1578,8 @@
       - name
       - alias
       :full_paths:
-      - InsurancePlan.name
-      - InsurancePlan.alias
+      - name
+      - alias
       :comparators: {}
       :values: []
       :type: string
@@ -1869,8 +1872,9 @@
   - :names:
     - _lastUpdated
     :expectation: SHALL
-    :names_not_must_support_or_mandatory: []
-    :must_support_or_mandatory: true
+    :names_not_must_support_or_mandatory:
+    - _lastUpdated
+    :must_support_or_mandatory: false
   :search_definitions:
     :partof:
       :paths:
@@ -2185,8 +2189,9 @@
   - :names:
     - _lastUpdated
     :expectation: SHALL
-    :names_not_must_support_or_mandatory: []
-    :must_support_or_mandatory: true
+    :names_not_must_support_or_mandatory:
+    - _lastUpdated
+    :must_support_or_mandatory: false
   - :names:
     - type
     :expectation: SHALL
@@ -2458,8 +2463,9 @@
   - :names:
     - _lastUpdated
     :expectation: SHALL
-    :names_not_must_support_or_mandatory: []
-    :must_support_or_mandatory: true
+    :names_not_must_support_or_mandatory:
+    - _lastUpdated
+    :must_support_or_mandatory: false
   - :names:
     - type
     :expectation: SHALL
@@ -2787,8 +2793,9 @@
   - :names:
     - _lastUpdated
     :expectation: SHALL
-    :names_not_must_support_or_mandatory: []
-    :must_support_or_mandatory: true
+    :names_not_must_support_or_mandatory:
+    - _lastUpdated
+    :must_support_or_mandatory: false
   :search_definitions:
     :primary-organization:
       :paths:
@@ -3978,8 +3985,9 @@
   - :names:
     - _lastUpdated
     :expectation: SHALL
-    :names_not_must_support_or_mandatory: []
-    :must_support_or_mandatory: true
+    :names_not_must_support_or_mandatory:
+    - _lastUpdated
+    :must_support_or_mandatory: false
   - :names:
     - family
     :expectation: SHALL
@@ -4230,8 +4238,9 @@
   - :names:
     - _lastUpdated
     :expectation: SHALL
-    :names_not_must_support_or_mandatory: []
-    :must_support_or_mandatory: true
+    :names_not_must_support_or_mandatory:
+    - _lastUpdated
+    :must_support_or_mandatory: false
   :search_definitions:
     :practitioner:
       :paths:

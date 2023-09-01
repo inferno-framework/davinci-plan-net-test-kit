@@ -32,8 +32,9 @@
 - :names:
   - _lastUpdated
   :expectation: SHALL
-  :names_not_must_support_or_mandatory: []
-  :must_support_or_mandatory: true
+  :names_not_must_support_or_mandatory:
+  - _lastUpdated
+  :must_support_or_mandatory: false
 - :names:
   - family
   :expectation: SHALL

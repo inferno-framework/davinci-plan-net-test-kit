@@ -47,7 +47,7 @@ module DaVinciPDEXPlanNetTestKit
             full_paths = path.split('|').map { |a_path| a_path.strip } # For Lists
 
             #Hardcoded as InsurancePlan is anomolous, see Plannet_sp_organization_name for usual case.
-            full_paths = ["InsurancePlan.name", "InsurancePlan.alias"] if param.name == "Plannet_sp_insuranceplan_name" 
+            #full_paths = ["InsurancePlan.name", "InsurancePlan.alias"] if param.name == "Plannet_sp_insuranceplan_name" 
 
             # There is a bug in US Core 5 asserted-date search parameter. See FHIR-40573
             if param.respond_to?(:version) && param.version == '5.0.1' && name == 'asserted-date'
