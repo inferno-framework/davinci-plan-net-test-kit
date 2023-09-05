@@ -1,8 +1,6 @@
 require_relative 'value_extractor'
 require_relative 'must_support_metadata_extractor_us_core_3'
-require_relative 'must_support_metadata_extractor_us_core_4'
-require_relative 'must_support_metadata_extractor_us_core_5'
-require_relative 'must_support_metadata_extractor_us_core_6'
+
 
 module DaVinciPDEXPlanNetTestKit
   class Generator

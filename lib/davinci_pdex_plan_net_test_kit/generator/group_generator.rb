@@ -72,17 +72,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def search_validation_resource_type
-        text = "#{resource_type} resources"
-        if resource_type == 'Condition' && group_metadata.reformatted_version == 'v501'
-          case profile_url
-          when 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition-encounter-diagnosis'
-            text.concat(' with category `encounter-diagnosis`')
-          when 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition-problems-health-concerns'
-            text.concat(' with category `problem-list-item | health-concern`')
-          end
-        end
-
-        text
+        "#{resource_type} resources"
       end
 
       def profile_name
@@ -94,8 +84,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def optional?
-        resource_type == 'QuestionnaireResponse' ||
-        profile_url == 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-simple-observation'
+        false #No Optional groups in Plan Net
       end
 
       def generate
