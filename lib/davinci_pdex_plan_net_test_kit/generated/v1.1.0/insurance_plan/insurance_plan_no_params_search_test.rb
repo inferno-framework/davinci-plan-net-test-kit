@@ -27,6 +27,7 @@ response will be used for subsequent tests.
         optional: true,
         description: 'Required if parameterless searches not used.'
       input :no_param_search
+      input :max_instances
       input :max_pages
 
       def self.properties

@@ -64,7 +64,7 @@ module DaVinciPDEXPlanNetTestKit
         type: :oauth_credentials,
         optional: true
       input :no_param_search,
-        title: 'Use searches without parameters to identify instances?',
+        title: 'Use parameterless searches to identify instances?',
         type: 'radio',
         options: {
             list_options: [
@@ -79,12 +79,16 @@ module DaVinciPDEXPlanNetTestKit
             ]
           },
         default: 'true',
-        description: 'If No, then the lists of ids by profile below are required. If yes, the lists of ids by profile are optional.'
+        description: 'If No, then the lists of ids by profile are required. If yes, the lists of ids by profile are optional.'
+      input :max_instances,
+        title: 'Maximum number of instances to gather using parameterless searches',
+        default: '200',
+        description: 'Only used when parameterless searches are used. A higher number will evaluate more instances in the tests, if they are available. The test Will stop looking when the page limit has been reached.'
       input :max_pages,
-        title: 'Maximum pages of search results to load per search',
+        title: 'Maximum pages of results to consider when using parameterless searches',
         default: '20',
-        description: 'Only used when parameterless searches are used. A higher number will evaluate more instances in the tests if they are available.'
-
+        description: 'Only used when parameterless searches are used. A higher number will evaluate more instances in the tests, if they are available. The test will not consider further pages once the maximum number of instances has been reached.'
+      
       fhir_client do
         url :url
         oauth_credentials :smart_credentials
