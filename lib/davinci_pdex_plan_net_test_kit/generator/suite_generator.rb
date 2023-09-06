@@ -59,12 +59,8 @@ module DaVinciPDEXPlanNetTestKit
 
       def ig_link
         case ig_metadata.ig_version
-        when 'v5.0.1'
-          'http://hl7.org/fhir/us/core/STU5.0.1'
-        when 'v4.0.0'
-          'http://hl7.org/fhir/us/core/STU4'
-        when 'v3.1.1'
-          'http://hl7.org/fhir/us/core/STU3.1.1'
+        when 'v1.1.0'
+          'http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/'
         end
       end
 
