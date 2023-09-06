@@ -71,6 +71,28 @@ module DaVinciPDEXPlanNetTestKit
       def groups
         ig_metadata.ordered_groups
           .reject { |group| SpecialCases.exclude_group? group }
+          .sort_by { |group| 
+            case group.name
+            when "plannet_Endpoint"
+              1
+            when "plannet_InsurancePlan"
+              2
+            when "plannet_OrganizationAffiliation"
+              3
+            when "plannet_PractitionerRole"
+              4
+            when "plannet_Practitioner"
+              5
+            when "plannet_HealthcareService"
+              6
+            when "plannet_Location"
+              7
+            when "plannet_Network"
+              8
+            when "plannet_Organization"
+              9
+            end
+          }
       end
 
       def group_id_list

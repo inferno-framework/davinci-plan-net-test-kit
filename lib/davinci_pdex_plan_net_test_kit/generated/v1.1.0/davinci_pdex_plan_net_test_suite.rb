@@ -2,14 +2,14 @@ require 'inferno/dsl/oauth_credentials'
 require_relative '../../version'
 require_relative '../../custom_groups/v1.1.0/capability_statement_group'
 require_relative 'endpoint_group'
-require_relative 'healthcare_service_group'
 require_relative 'insurance_plan_group'
+require_relative 'organization_affiliation_group'
+require_relative 'practitioner_role_group'
+require_relative 'practitioner_group'
+require_relative 'healthcare_service_group'
 require_relative 'location_group'
 require_relative 'plannet_network_group'
 require_relative 'plannet_organization_group'
-require_relative 'organization_affiliation_group'
-require_relative 'practitioner_group'
-require_relative 'practitioner_role_group'
 
 module DaVinciPDEXPlanNetTestKit
   module DaVinciPDEXPlanNetV110
@@ -17,7 +17,7 @@ module DaVinciPDEXPlanNetTestKit
       title 'DaVinci PDEX Plan Net v1.1.0'
       description %(
         The Plan Net Test Kit tests systems for their conformance to the [Plan Net
-        Implementation Guide]().
+        Implementation Guide](http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/).
 
         HL7® FHIR® resources are validated with the Java validator using
         `tx.fhir.org` as the terminology server.
@@ -93,14 +93,14 @@ module DaVinciPDEXPlanNetTestKit
       group from: :davinci_pdex_plan_net_v110_capability_statement
   
       group from: :davinci_pdex_plan_net_v110_endpoint
-      group from: :davinci_pdex_plan_net_v110_healthcare_service
       group from: :davinci_pdex_plan_net_v110_insurance_plan
+      group from: :davinci_pdex_plan_net_v110_organization_affiliation
+      group from: :davinci_pdex_plan_net_v110_practitioner_role
+      group from: :davinci_pdex_plan_net_v110_practitioner
+      group from: :davinci_pdex_plan_net_v110_healthcare_service
       group from: :davinci_pdex_plan_net_v110_location
       group from: :davinci_pdex_plan_net_v110_plannet_network
       group from: :davinci_pdex_plan_net_v110_plannet_organization
-      group from: :davinci_pdex_plan_net_v110_organization_affiliation
-      group from: :davinci_pdex_plan_net_v110_practitioner
-      group from: :davinci_pdex_plan_net_v110_practitioner_role
     end
   end
 end
