@@ -17,7 +17,8 @@ module DaVinciPDEXPlanNetTestKit
       id :<%= test_id %>
       input :<%= input_name %>,
         title: 'IDs of <%= resource_type %> that have <%= include_param_resource %> reference(s)',
-        description: 'Comma separated list of <%= resource_type %> IDs that reference by a <%= include_param_resource %>'
+        description: 'Comma separated list of <%= resource_type %> IDs that reference by a <%= include_param_resource %>',
+        optional: true
 
       def properties
         @properties ||= SearchTestProperties.new(

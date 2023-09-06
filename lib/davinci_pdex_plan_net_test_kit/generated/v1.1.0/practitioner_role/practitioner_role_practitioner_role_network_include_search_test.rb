@@ -17,7 +17,8 @@ module DaVinciPDEXPlanNetTestKit
       id :davinci_plan_net_v110_practitioner_role_practitioner_role_network_include_search_test
       input :practitioner_role_network_input,
         title: 'IDs of PractitionerRole that have Organization reference(s)',
-        description: 'Comma separated list of PractitionerRole IDs that reference by a Organization'
+        description: 'Comma separated list of PractitionerRole IDs that reference by a Organization',
+        optional: true
 
       def properties
         @properties ||= SearchTestProperties.new(

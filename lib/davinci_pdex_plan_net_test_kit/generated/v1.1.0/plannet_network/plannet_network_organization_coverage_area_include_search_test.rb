@@ -17,7 +17,8 @@ module DaVinciPDEXPlanNetTestKit
       id :davinci_plan_net_v110_plannet_network_organization_coverage_area_include_search_test
       input :organization_coverage_area_input,
         title: 'IDs of Organization that have Location reference(s)',
-        description: 'Comma separated list of Organization IDs that reference by a Location'
+        description: 'Comma separated list of Organization IDs that reference by a Location',
+        optional: true
 
       def properties
         @properties ||= SearchTestProperties.new(

@@ -17,7 +17,8 @@ module DaVinciPDEXPlanNetTestKit
       id :davinci_plan_net_v110_endpoint_endpoint_organization_include_search_test
       input :endpoint_organization_input,
         title: 'IDs of Endpoint that have Organization reference(s)',
-        description: 'Comma separated list of Endpoint IDs that reference by a Organization'
+        description: 'Comma separated list of Endpoint IDs that reference by a Organization',
+        optional: true
 
       def properties
         @properties ||= SearchTestProperties.new(

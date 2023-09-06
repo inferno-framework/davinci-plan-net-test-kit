@@ -17,8 +17,9 @@ module DaVinciPDEXPlanNetTestKit
       id :davinci_plan_net_v110_plannet_organization_insurance_plan_owned_by_revinclude_search_test
       input :insurance_plan_owned_by_input,
         title: 'InsurancePlan referenced Organization IDs',
-        description: 'Comma separated list of Organization  IDs that are referenced by a InsurancePlan'
-
+        description: 'Comma separated list of Organization  IDs that are referenced by a InsurancePlan',
+        optional: true
+        
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'Organization',

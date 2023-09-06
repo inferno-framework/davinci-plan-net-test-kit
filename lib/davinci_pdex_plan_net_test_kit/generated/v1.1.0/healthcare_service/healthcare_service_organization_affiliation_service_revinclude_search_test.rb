@@ -17,8 +17,9 @@ module DaVinciPDEXPlanNetTestKit
       id :davinci_plan_net_v110_healthcare_service_organization_affiliation_service_revinclude_search_test
       input :organization_affiliation_service_input,
         title: 'OrganizationAffiliation referenced HealthcareService IDs',
-        description: 'Comma separated list of HealthcareService  IDs that are referenced by a OrganizationAffiliation'
-
+        description: 'Comma separated list of HealthcareService  IDs that are referenced by a OrganizationAffiliation',
+        optional: true
+        
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'HealthcareService',
