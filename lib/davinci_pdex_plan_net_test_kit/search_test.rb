@@ -20,7 +20,6 @@ module DaVinciPDEXPlanNetTestKit
                    :first_search?,
                    :fixed_value_search?,
                    :possible_status_search?,
-                   :test_medication_inclusion?,
                    :test_post_search?,
                    :token_search_params,
                    :test_reference_variants?,
@@ -29,18 +28,18 @@ module DaVinciPDEXPlanNetTestKit
 
     def all_search_params
       @all_search_params ||=
-        patient_id_list.each_with_object({}) do |patient_id, params|
-          params[patient_id] ||= []
+        resource_id_list.each_with_object({}) do |resource_id, params|
+          params[resource_id] ||= []
           new_params =
             if fixed_value_search?
-              fixed_value_search_param_values.map { |value| fixed_value_search_params(value, patient_id) }
+              fixed_value_search_param_values.map { |value| fixed_value_search_params(value, resource_id) }
             else
-              [search_params_with_values(search_param_names, patient_id)]
+              [search_params_with_values(search_param_names, resource_id)]
             end
           new_params.reject! do |params|
             params.any? { |_key, value| value.blank? }
           end
-          params[patient_id].concat(new_params)
+          params[resource_id].concat(new_params)
         end
     end
 
@@ -59,16 +58,16 @@ module DaVinciPDEXPlanNetTestKit
     end
 
     def any_valid_search_params?(search_params)
-      search_params.any? { |_patient_id, params| params.present? }
+      search_params.any? { |_resource_id, params| params.present? }
     end
 
     def run_include_search_test
       skip_if !any_valid_search_params?(all_include_search_params), "Invalid Params"
       resources =
-        all_include_search_params.flat_map do |_patient_id, params_list|
+        all_include_search_params.flat_map do |_resource_id, params_list|
           params_list.flat_map do |params|
             fhir_search resource_type, params: params
-            perform_search_with_status(params, patient_id) if response[:status] == 400 && possible_status_search?
+            perform_search_with_status(params, resource_id) if response[:status] == 400 && possible_status_search?
         
             check_search_response
 
@@ -86,10 +85,10 @@ module DaVinciPDEXPlanNetTestKit
     def run_revinclude_search_test
       skip_if !any_valid_search_params?(all_revinclude_search_params), "Invalid Params"
       resources =
-        all_revinclude_search_params.flat_map do |_patient_id, params_list|
+        all_revinclude_search_params.flat_map do |_resource_id, params_list|
           params_list.flat_map do |params|
             fhir_search resource_type, params: params
-            perform_search_with_status(params, patient_id) if response[:status] == 400 && possible_status_search?
+            perform_search_with_status(params, resource_id) if response[:status] == 400 && possible_status_search?
 
             check_search_response
 
@@ -109,8 +108,8 @@ module DaVinciPDEXPlanNetTestKit
       skip_if !any_valid_search_params?(all_search_params), unable_to_resolve_params_message
 
       resources_returned =
-        all_search_params.flat_map do |patient_id, params_list|
-          params_list.flat_map { |params| perform_search(params, patient_id) }
+        all_search_params.flat_map do |resource_id, params_list|
+          params_list.flat_map { |params| perform_search(params, resource_id) }
         end
 
       skip_if resources_returned.empty?, no_resources_skip_message
@@ -133,10 +132,10 @@ module DaVinciPDEXPlanNetTestKit
       end
     end
 
-    def perform_search(params, patient_id)
+    def perform_search(params, resource_id)
       fhir_search resource_type, params: params
 
-      perform_search_with_status(params, patient_id) if response[:status] == 400 && possible_status_search?
+      perform_search_with_status(params, resource_id) if response[:status] == 400 && possible_status_search?
 
       check_search_response
 
@@ -145,14 +144,11 @@ module DaVinciPDEXPlanNetTestKit
 
       return [] if resources_returned.blank?
 
-      perform_comparator_searches(params, patient_id) if params_with_comparators.present?
-
-      filter_conditions(resources_returned) if resource_type == 'Condition' && metadata.version == 'v5.0.1'
-      filter_devices(resources_returned) if resource_type == 'Device'
+      perform_comparator_searches(params, resource_id) if params_with_comparators.present?
 
       if first_search?
         all_scratch_resources.concat(resources_returned).uniq!
-        scratch_resources_for_patient(patient_id).concat(resources_returned).uniq!
+        scratch_resources_for_resource(resource_id).concat(resources_returned).uniq!
       end
 
       resources_returned.each do |resource|
@@ -164,9 +160,9 @@ module DaVinciPDEXPlanNetTestKit
       return resources_returned if all_search_variants_tested?
 
       perform_post_search(resources_returned, params) if test_post_search?
-      test_medication_inclusion(resources_returned, params, patient_id) if test_medication_inclusion?
+
       perform_reference_with_type_search(params, resources_returned.count) if test_reference_variants?
-      perform_search_with_system(params, patient_id) if token_search_params.present?
+      perform_search_with_system(params, resource_id) if token_search_params.present?
 
       resources_returned
     end
@@ -202,9 +198,8 @@ module DaVinciPDEXPlanNetTestKit
     end
 
     def filter_conditions(resources)
-      # HL7 JIRA FHIR-37917. US Core v5.0.1 does not required patient+category.
       # In order to distinguish which resources matches the current profile, Inferno has to manually filter
-      # the result of first search, which is searching by patient.
+      # the result of first search.
       resources.select! do |resource|
         resource.category.any? do |category|
           category.coding.any? do |coding|
@@ -233,7 +228,6 @@ module DaVinciPDEXPlanNetTestKit
     def initial_search_variant_test_records
       {}.tap do |records|
         records[:post_variant] = false if test_post_search?
-        records[:medication_inclusion] = false if test_medication_inclusion?
         records[:reference_variants] = false if test_reference_variants?
         records[:token_variants] = false if token_search_params.present?
         records[:comparator_searches] = Set.new if params_with_comparators.present?
@@ -273,13 +267,13 @@ module DaVinciPDEXPlanNetTestKit
         .map(&:to_s)
     end
 
-    def perform_comparator_searches(params, patient_id)
+    def perform_comparator_searches(params, resource_id)
       params_with_comparators.each do |name|
         next if search_variant_test_records[:comparator_searches].include? name
 
         required_comparators(name).each do |comparator|
           paths = search_param_paths(name).first
-          date_element = find_a_value_at(scratch_resources_for_patient(patient_id), paths)
+          date_element = find_a_value_at(scratch_resources_for_resource(resource_id), paths)
           params_with_comparator = params.merge(name => date_comparator_value(comparator, date_element))
 
           search_and_check_response(params_with_comparator)
@@ -297,28 +291,26 @@ module DaVinciPDEXPlanNetTestKit
       return if resource_count == 0
       return if search_variant_test_records[:reference_variants]
 
-      new_search_params = params.merge('patient' => "Patient/#{params['patient']}")
+      new_search_params = params.merge(resource_type.underscore => "#{resource_type}/#{params['resource']}")
       search_and_check_response(new_search_params)
 
       reference_with_type_resources = fetch_all_bundled_resources.select { |resource| resource.resourceType == resource_type }
 
-      filter_conditions(reference_with_type_resources) if resource_type == 'Condition' && metadata.version == 'v5.0.1'
-      filter_devices(reference_with_type_resources) if resource_type == 'Device'
 
       new_resource_count = reference_with_type_resources.count
 
       assert new_resource_count == resource_count,
-             "Expected search by `#{params['patient']}` to to return the same results as searching " \
-             "by `#{new_search_params['patient']}`, but found #{resource_count} resources with " \
-             "`#{params['patient']}` and #{new_resource_count} with `#{new_search_params['patient']}`"
+             "Expected search by `#{params['resource']}` to to return the same results as searching " \
+             "by `#{new_search_params['resource']}`, but found #{resource_count} resources with " \
+             "`#{params['resource']}` and #{new_resource_count} with `#{new_search_params['resource']}`"
 
       search_variant_test_records[:reference_variants] = true
     end
 
-    def perform_search_with_system(params, patient_id)
+    def perform_search_with_system(params, resource_id)
       return if search_variant_test_records[:token_variants]
 
-      new_search_params = search_params_with_values(token_search_params, patient_id, include_system: true)
+      new_search_params = search_params_with_values(token_search_params, resource_id, include_system: true)
       return if new_search_params.any? { |_name, value| value.blank? }
 
       search_params = params.merge(new_search_params)
@@ -335,7 +327,7 @@ module DaVinciPDEXPlanNetTestKit
 
     def perform_search_with_status(
           original_params,
-          patient_id,
+          resource_id,
           status_search_values: self.status_search_values,
           resource_type: self.resource_type
         )
@@ -375,7 +367,7 @@ module DaVinciPDEXPlanNetTestKit
     def perform_multiple_or_search_test
       resolved_one = false
 
-      all_search_params.each do |patient_id, params_list|
+      all_search_params.each do |resource_id, params_list|
         next unless params_list.present?
 
         search_params = params_list.first
@@ -385,10 +377,10 @@ module DaVinciPDEXPlanNetTestKit
         multiple_or_search_params.each do |param_name|
           search_value = default_search_values(param_name.to_sym)
           search_params = search_params.merge("#{param_name}" => search_value)
-          existing_values[param_name.to_sym] = scratch_resources_for_patient(patient_id).map(&param_name.to_sym).compact.uniq
+          existing_values[param_name.to_sym] = scratch_resources_for_resource(resource_id).map(&param_name.to_sym).compact.uniq
         end
 
-        # skip patient without multiple-or values
+        # skip resources without multiple-or values
         next if existing_values.values.any?(&:empty?)
 
         resolved_one = true
@@ -408,60 +400,20 @@ module DaVinciPDEXPlanNetTestKit
           .map { |param_name, missing_value| "#{missing_value.join(',')} values from #{param_name}" }
           .join(' and ')
 
-        assert missing_value_message.blank?, "Could not find #{missing_value_message} in any of the resources returned for Patient/#{patient_id}"
+        assert missing_value_message.blank?, "Could not find #{missing_value_message} in any of the resources returned for #{resource_type}/#{resource_id}"
 
         break if resolved_one
       end
-    end
-
-    def test_medication_inclusion(medication_requests, params, patient_id)
-      return if search_variant_test_records[:medication_inclusion]
-
-      scratch[:medication_resources] ||= {}
-      scratch[:medication_resources][:all] ||= []
-      scratch[:medication_resources][patient_id] ||= []
-      scratch[:medication_resources][:contained] ||= []
-
-      requests_with_external_references =
-        medication_requests
-          .select { |request| request&.medicationReference&.present? }
-          .reject { |request| request&.medicationReference&.reference&.start_with? '#' }
-
-      contained_medications =
-        medication_requests
-          .select { |request| request&.medicationReference&.reference&.start_with? '#' }
-          .flat_map(&:contained)
-          .select { |resource| resource.resourceType == 'Medication' }
-
-      scratch[:medication_resources][:all] += contained_medications
-      scratch[:medication_resources][patient_id] += contained_medications
-      scratch[:medication_resources][:contained] += contained_medications
-
-      return if requests_with_external_references.blank?
-
-      search_params = params.merge(_include: 'MedicationRequest:medication')
-
-      search_and_check_response(search_params)
-
-      medications = fetch_all_bundled_resources.select { |resource| resource.resourceType == 'Medication' }
-      assert medications.present?, 'No Medications were included in the search results'
-
-      medications.uniq!(&:id)
-
-      scratch[:medication_resources][:all] += medications
-      scratch[:medication_resources][patient_id] += medications
-
-      search_variant_test_records[:medication_inclusion] = true
     end
 
     def all_scratch_resources
       scratch_resources[:all] ||= []
     end
 
-    def scratch_resources_for_patient(patient_id)
-      return all_scratch_resources if patient_id.nil?
+    def scratch_resources_for_resource(resource_id)
+      return all_scratch_resources if resource_id.nil?
 
-      scratch_resources[patient_id] ||= []
+      scratch_resources[resource_id] ||= []
     end
 
     def references_to_save(resource_type = nil)
@@ -470,32 +422,32 @@ module DaVinciPDEXPlanNetTestKit
     end
 
     def fixed_value_search_param_name
-      (search_param_names - ['patient']).first
+      (search_param_names - ['resource']).first
     end
 
     def fixed_value_search_param_values
       metadata.search_definitions[fixed_value_search_param_name.to_sym][:values]
     end
 
-    def fixed_value_search_params(value, patient_id)
+    def fixed_value_search_params(value, resource_id)
       search_param_names.each_with_object({}) do |name, params|
-        patient_id_param?(name) ? params[name] = patient_id : params[name] = value
+        resource_id_param?(name) ? params[name] = resource_id : params[name] = value
       end
     end
 
-    def search_params_with_values(search_param_names, patient_id, include_system: false)
-      resources = scratch_resources_for_patient(patient_id)
-
+    def search_params_with_values(search_param_names, resource_id, include_system: false)
+      resources = scratch_resources_for_resource(resource_id)
+      #skip_if 0 == 0, "Analyzing #{search_param_names} for scratch resources, found #{resources}"
       if resources.empty?
         return search_param_names.each_with_object({}) do |name, params|
-          value = patient_id_param?(name) ? patient_id : nil
+          value = resource_id_param?(name) ? resource_id : nil
           params[name] = value
         end
       end
 
       params_with_partial_value = resources.each_with_object({}) do |resource, outer_params|
         results_from_one_resource = search_param_names.each_with_object({}) do |name, params|
-          value = patient_id_param?(name) ? patient_id : search_param_value(name, resource, include_system: include_system)
+          value = resource_id_param?(name) ? resource_id : search_param_value(name, resource, include_system: include_system)
           params[name] = value
         end
 
@@ -508,17 +460,17 @@ module DaVinciPDEXPlanNetTestKit
       params_with_partial_value
     end
 
-    def patient_id_list
-      return [nil] unless respond_to? :patient_ids
-      patient_ids.split(',').map(&:strip)
+    def resource_id_list
+      return [nil] unless respond_to? :resource_ids
+      resource_ids.split(',').map(&:strip)
     end
 
-    def patient_search?
-      search_param_names.any? { |name| patient_id_param? name }
+    def resource_search?
+      search_param_names.any? { |name| resource_id_param? name }
     end
 
-    def patient_id_param?(name)
-      name == 'patient' || (name == '_id' && resource_type == 'Patient')
+    def resource_id_param?(name)
+      name == '_id'
     end
 
     def search_param_paths(name)
@@ -549,15 +501,19 @@ module DaVinciPDEXPlanNetTestKit
     def no_resources_skip_message(resource_type = self.resource_type)
       msg = "No #{resource_type} resources appear to be available"
 
-      if (resource_type == 'Device' && implantable_device_codes.present?)
-        msg.concat(" with the following Device Type Code filter: #{implantable_device_codes}")
-      end
-
       if ((self.resource_type == additional_resource_type) && (!revinclude_param.nil? || !include_param.nil?))
-        msg.concat(" (excluding #{self.send(input_name)}, which was used as the base)")
+        msg.concat(" (excluding #{self.send(input_name)}, which was used as the base).")
       end
 
-      msg + ". Please use patients with more information"
+      if (!revinclude_param.nil? && include_param.nil?)
+        msg.concat(" Please choose a base resource that is referenced by a #{additional_resource_type}")
+      end
+
+      if (revinclude_param.nil? && !include_param.nil?)
+        msg.concat(" Please choose a base resource that is references a #{additional_resource_type}")
+      end
+
+      "#{msg}."
     end
 
     def fetch_all_bundled_resources(
@@ -591,7 +547,6 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       valid_resource_types = [resource_type, 'OperationOutcome'].concat(additional_resource_types)
-      valid_resource_types << 'Medication' if resource_type == 'MedicationRequest'
 
       invalid_resource_types =
         resources.reject { |entry| valid_resource_types.include? entry.resourceType }
@@ -646,23 +601,7 @@ module DaVinciPDEXPlanNetTestKit
           when FHIR::Extension
             element.valueReference.reference #Should this be more flexible? Does it need to read for any value[x]?  PDEX only
           else
-            if metadata.version != 'v3.1.1' &&
-               metadata.search_definitions[name.to_sym][:type] == 'date' &&
-               params_with_comparators&.include?(name)
-              # convert date search to greath-than comparator search with correct precision
-              # For all date search parameters:
-              #   Patient.birthDate does not mandate comparators so cannot be converted
-              #   Goal.target-date has day precision
-              #   All others have second + time offset precision
-              if /^\d{4}(-\d{2})?$/.match?(element) || # YYYY or YYYY-MM
-                (/^\d{4}-\d{2}-\d{2}$/.match?(element) && resource_type != "Goal") # YYY-MM-DD AND Resource is NOT Goal
-                "gt#{(DateTime.xmlschema(element)-1).xmlschema}"
-              else
-                element
-              end
-            else
-              element
-            end
+            element
           end
 
         break if search_value.present?
@@ -802,18 +741,8 @@ module DaVinciPDEXPlanNetTestKit
                 searched_values.any? { |searched_value| value_found.downcase.starts_with? searched_value }
               end
             else
-              # searching by patient requires special case because we are searching by a resource identifier
-              # references can also be URLs, so we may need to resolve those URLs
-              if ['subject', 'patient'].include? name.to_s
-                id = search_value.split('Patient/').last
-                possible_values = [id, "Patient/#{id}", "#{url}/Patient/#{id}"]
-                values_found.any? do |reference|
-                  possible_values.include? reference
-                end
-              else
-                search_values = search_value.split(/(?<!\\\\),/).map { |string| string.gsub('\\,', ',') }
-                values_found.any? { |value_found| search_values.include? value_found }
-              end
+              search_values = search_value.split(/(?<!\\\\),/).map { |string| string.gsub('\\,', ',') }
+              values_found.any? { |value_found| search_values.include? value_found }
             end
 
           break if match_found

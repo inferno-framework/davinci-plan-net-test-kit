@@ -10,12 +10,6 @@ require_relative 'organization_affiliation/organization_affiliation_role_search_
 require_relative 'organization_affiliation/organization_affiliation_specialty_search_test'
 require_relative 'organization_affiliation/organization_affiliation_id_search_test'
 require_relative 'organization_affiliation/organization_affiliation_lastupdated_search_test'
-require_relative 'organization_affiliation/organization_affiliation_organization_affiliation_primary_organization_include_search_test'
-require_relative 'organization_affiliation/organization_affiliation_organization_affiliation_participating_organization_include_search_test'
-require_relative 'organization_affiliation/organization_affiliation_organization_affiliation_location_include_search_test'
-require_relative 'organization_affiliation/organization_affiliation_organization_affiliation_service_include_search_test'
-require_relative 'organization_affiliation/organization_affiliation_organization_affiliation_endpoint_include_search_test'
-require_relative 'organization_affiliation/organization_affiliation_organization_affiliation_network_include_search_test'
 require_relative 'organization_affiliation/organization_affiliation_validation_test'
 require_relative 'organization_affiliation/organization_affiliation_must_support_test'
 require_relative 'organization_affiliation/organization_affiliation_reference_resolution_test'
@@ -51,11 +45,11 @@ following parameters:
 * _lastUpdated
 
 ### Search Parameters
-The first search uses the selected patient(s) from the prior launch
+The first search uses the selected Plan-Net OrganizationAffiliation(s) from the prior launch
 sequence. Any subsequent searches will look for its parameter values
 from the results of the first search. For example, the `identifier`
-search in the patient sequence is performed by looking for an existing
-`Patient.identifier` from any of the resources returned in the `_id`
+search in the Plan-Net OrganizationAffiliation sequence is performed by looking for an existing
+`OrganizationAffiliation.identifier` from any of the Plan-Net OrganizationAffiliations returned in the `_id`
 search. If a value cannot be found this way, the search is skipped.
 
 ### Search Validation
@@ -64,8 +58,8 @@ OrganizationAffiliation resources and save them for subsequent tests. Each of
 these resources is then checked to see if it matches the searched
 parameters in accordance with [FHIR search
 guidelines](https://www.hl7.org/fhir/search.html). The test will fail,
-for example, if a Patient search for `gender=male` returns a `female`
-patient.
+for example, if a Plan-Net OrganizationAffiliation search for `primary-organization=X``
+returns a Plan-Net OrganizationAffiliation where `primary-organization!=X`
 
 
 ## Must Support
@@ -111,12 +105,6 @@ read succeeds.
       test from: :davinci_pdex_plan_net_v110_organization_affiliation_specialty_search_test
       test from: :davinci_pdex_plan_net_v110_organization_affiliation__id_search_test
       test from: :davinci_pdex_plan_net_v110_organization_affiliation__lastUpdated_search_test
-      test from: :davinci_plan_net_v110_organization_affiliation_organization_affiliation_primary_organization_include_search_test
-      test from: :davinci_plan_net_v110_organization_affiliation_organization_affiliation_participating_organization_include_search_test
-      test from: :davinci_plan_net_v110_organization_affiliation_organization_affiliation_location_include_search_test
-      test from: :davinci_plan_net_v110_organization_affiliation_organization_affiliation_service_include_search_test
-      test from: :davinci_plan_net_v110_organization_affiliation_organization_affiliation_endpoint_include_search_test
-      test from: :davinci_plan_net_v110_organization_affiliation_organization_affiliation_network_include_search_test
       test from: :davinci_pdex_plan_net_v110_organization_affiliation_validation_test
       test from: :davinci_pdex_plan_net_v110_organization_affiliation_must_support_test
       test from: :davinci_pdex_plan_net_v110_organization_affiliation_reference_resolution_test

@@ -56,7 +56,7 @@ module DaVinciPDEXPlanNetTestKit
 
     def no_resources_skip_message
       "No #{resource_type} resources appear to be available. " \
-      'Please use patients with more information.'
+      'Please use resources with more information.'
     end
 
     def must_support_references

@@ -16,7 +16,7 @@ the test is skipped.
 Because this is the first search of the sequence, resources in the
 response will be used for subsequent tests.
 
-[US Core Server CapabilityStatement](http://hl7.org/fhir/us/core//CapabilityStatement-us-core-server.html)
+[Plan Net Server CapabilityStatement](http://hl7.org/fhir/us/davinci-pdex-plan-net/CapabilityStatement/plan-net)
 
       )
 

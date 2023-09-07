@@ -30,14 +30,12 @@ module DaVinciPDEXPlanNetTestKit
       ].freeze
 
       NON_USCDI_RESOURCES = {
-        'Encounter' => ['v311', 'v400'],
-        'Location' => ['v311', 'v400', 'v501', 'v610'],
-        'Organization' => ['v311', 'v400', 'v501', 'v610'],
-        'Practitioner' => ['v311', 'v400', 'v501', 'v610'],
-        'PractitionerRole' => ['v311', 'v400', 'v501', 'v610'],
-        'Provenance' => ['v311', 'v400', 'v501', 'v610'],
-        'RelatedPerson' => ['v501', 'v610'],
-        'Specimen' => ['v610']
+        'Encounter' => ['v311'],
+        'Location' => ['v311'],
+        'Organization' => ['v311'],
+        'Practitioner' => ['v311'],
+        'PractitionerRole' => ['v311'],
+        'Provenance' => ['v311']
       }.freeze
 
 
@@ -52,17 +50,8 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def delayed?
-        return false if resource == 'Patient'
-
-        no_patient_searches? || non_uscdi_resource?
-      end
-
-      def no_patient_searches?
-        searches.none? { |search| search[:names].include? 'patient' }
-      end
-
-      def non_uscdi_resource?
-        NON_USCDI_RESOURCES.key?(resource) && NON_USCDI_RESOURCES[resource].include?(reformatted_version)
+        #TODO
+        true
       end
 
       def add_test(id:, file_name:)

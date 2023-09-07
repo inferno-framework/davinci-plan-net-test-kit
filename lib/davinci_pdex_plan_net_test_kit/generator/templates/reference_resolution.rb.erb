@@ -13,7 +13,7 @@ module DaVinciPDEXPlanNetTestKit
         marked as 'MustSupport', if any are available.
 
         It verifies that at least one external reference for each MustSupport Reference element
-        can be accessed by the test client, and conforms to corresponding US Core profile.
+        can be accessed by the test client, and conforms to corresponding Plan Net profile.
 
         Elements which may provide external references include:
 

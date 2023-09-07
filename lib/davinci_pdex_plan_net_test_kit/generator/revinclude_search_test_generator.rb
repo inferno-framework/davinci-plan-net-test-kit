@@ -87,12 +87,12 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def fixed_value_search?
-        search_metadata[:names] != ['patient'] &&
-          !group_metadata.delayed? && resource_type != 'Patient'
+        #TODO
+        false
       end
 
       def fixed_value_search_param_name
-        (search_metadata[:names] - [:patient]).first
+        #TODO
       end
 
       def revinclude_param_string
@@ -126,11 +126,6 @@ module DaVinciPDEXPlanNetTestKit
             comparators[name] = required_comparators if required_comparators.present?
           end
       end
-
-      # def patient_id_param?(param)
-      #   param[:name] == 'patient' ||
-      #     (resource_type == 'Patient' && param[:name] == '_id')
-      # end
 
       def search_definition(name)
         group_metadata.search_definitions[name.to_sym]

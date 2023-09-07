@@ -10,12 +10,6 @@ require_relative 'practitioner_role/practitioner_role_role_search_test'
 require_relative 'practitioner_role/practitioner_role_specialty_search_test'
 require_relative 'practitioner_role/practitioner_role_id_search_test'
 require_relative 'practitioner_role/practitioner_role_lastupdated_search_test'
-require_relative 'practitioner_role/practitioner_role_practitioner_role_practitioner_include_search_test'
-require_relative 'practitioner_role/practitioner_role_practitioner_role_organization_include_search_test'
-require_relative 'practitioner_role/practitioner_role_practitioner_role_location_include_search_test'
-require_relative 'practitioner_role/practitioner_role_practitioner_role_service_include_search_test'
-require_relative 'practitioner_role/practitioner_role_practitioner_role_network_include_search_test'
-require_relative 'practitioner_role/practitioner_role_practitioner_role_endpoint_include_search_test'
 require_relative 'practitioner_role/practitioner_role_validation_test'
 require_relative 'practitioner_role/practitioner_role_must_support_test'
 require_relative 'practitioner_role/practitioner_role_reference_resolution_test'
@@ -51,11 +45,11 @@ following parameters:
 * _lastUpdated
 
 ### Search Parameters
-The first search uses the selected patient(s) from the prior launch
+The first search uses the selected Plan-Net PractitionerRole(s) from the prior launch
 sequence. Any subsequent searches will look for its parameter values
 from the results of the first search. For example, the `identifier`
-search in the patient sequence is performed by looking for an existing
-`Patient.identifier` from any of the resources returned in the `_id`
+search in the Plan-Net PractitionerRole sequence is performed by looking for an existing
+`PractitionerRole.identifier` from any of the Plan-Net PractitionerRoles returned in the `_id`
 search. If a value cannot be found this way, the search is skipped.
 
 ### Search Validation
@@ -64,8 +58,8 @@ PractitionerRole resources and save them for subsequent tests. Each of
 these resources is then checked to see if it matches the searched
 parameters in accordance with [FHIR search
 guidelines](https://www.hl7.org/fhir/search.html). The test will fail,
-for example, if a Patient search for `gender=male` returns a `female`
-patient.
+for example, if a Plan-Net PractitionerRole search for `practitioner=X``
+returns a Plan-Net PractitionerRole where `practitioner!=X`
 
 
 ## Must Support
@@ -111,12 +105,6 @@ read succeeds.
       test from: :davinci_pdex_plan_net_v110_practitioner_role_specialty_search_test
       test from: :davinci_pdex_plan_net_v110_practitioner_role__id_search_test
       test from: :davinci_pdex_plan_net_v110_practitioner_role__lastUpdated_search_test
-      test from: :davinci_plan_net_v110_practitioner_role_practitioner_role_practitioner_include_search_test
-      test from: :davinci_plan_net_v110_practitioner_role_practitioner_role_organization_include_search_test
-      test from: :davinci_plan_net_v110_practitioner_role_practitioner_role_location_include_search_test
-      test from: :davinci_plan_net_v110_practitioner_role_practitioner_role_service_include_search_test
-      test from: :davinci_plan_net_v110_practitioner_role_practitioner_role_network_include_search_test
-      test from: :davinci_plan_net_v110_practitioner_role_practitioner_role_endpoint_include_search_test
       test from: :davinci_pdex_plan_net_v110_practitioner_role_validation_test
       test from: :davinci_pdex_plan_net_v110_practitioner_role_must_support_test
       test from: :davinci_pdex_plan_net_v110_practitioner_role_reference_resolution_test

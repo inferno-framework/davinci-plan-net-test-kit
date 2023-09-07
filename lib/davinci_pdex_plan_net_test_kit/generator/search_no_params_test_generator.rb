@@ -133,7 +133,7 @@ module DaVinciPDEXPlanNetTestKit
         Additionally, this test will check that GET and POST search methods
         return the same number of results. Search by POST is required by the
         FHIR R4 specification, and these tests interpret search by GET as a
-        requirement of US Core #{group_metadata.version}.
+        requirement of Plan Net #{group_metadata.version}.
         POST_SEARCH_DESCRIPTION
       end
 
@@ -147,7 +147,7 @@ module DaVinciPDEXPlanNetTestKit
         #{first_search_description}
         #{post_search_description}
 
-        [US Core Server CapabilityStatement](http://hl7.org/fhir/us/core/#{url_version}/CapabilityStatement-us-core-server.html)
+        [Plan Net Server CapabilityStatement](http://hl7.org/fhir/us/davinci-pdex-plan-net/CapabilityStatement/plan-net)
         DESCRIPTION
       end
     end

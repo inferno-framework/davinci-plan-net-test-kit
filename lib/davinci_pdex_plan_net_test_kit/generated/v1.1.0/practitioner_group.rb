@@ -5,7 +5,6 @@ require_relative 'practitioner/practitioner_id_search_test'
 require_relative 'practitioner/practitioner_lastupdated_search_test'
 require_relative 'practitioner/practitioner_family_search_test'
 require_relative 'practitioner/practitioner_given_search_test'
-require_relative 'practitioner/practitioner_practitioner_role_practitioner_revinclude_search_test'
 require_relative 'practitioner/practitioner_validation_test'
 require_relative 'practitioner/practitioner_must_support_test'
 require_relative 'practitioner/practitioner_reference_resolution_test'
@@ -36,11 +35,11 @@ following parameters:
 * given
 
 ### Search Parameters
-The first search uses the selected patient(s) from the prior launch
+The first search uses the selected Plan-Net Practitioner(s) from the prior launch
 sequence. Any subsequent searches will look for its parameter values
 from the results of the first search. For example, the `identifier`
-search in the patient sequence is performed by looking for an existing
-`Patient.identifier` from any of the resources returned in the `_id`
+search in the Plan-Net Practitioner sequence is performed by looking for an existing
+`Practitioner.identifier` from any of the Plan-Net Practitioners returned in the `_id`
 search. If a value cannot be found this way, the search is skipped.
 
 ### Search Validation
@@ -49,8 +48,8 @@ Practitioner resources and save them for subsequent tests. Each of
 these resources is then checked to see if it matches the searched
 parameters in accordance with [FHIR search
 guidelines](https://www.hl7.org/fhir/search.html). The test will fail,
-for example, if a Patient search for `gender=male` returns a `female`
-patient.
+for example, if a Plan-Net Practitioner search for `name=X``
+returns a Plan-Net Practitioner where `name!=X`
 
 
 ## Must Support
@@ -91,7 +90,6 @@ read succeeds.
       test from: :davinci_pdex_plan_net_v110_practitioner__lastUpdated_search_test
       test from: :davinci_pdex_plan_net_v110_practitioner_family_search_test
       test from: :davinci_pdex_plan_net_v110_practitioner_given_search_test
-      test from: :davinci_plan_net_v110_practitioner_practitioner_role_practitioner_revinclude_search_test
       test from: :davinci_pdex_plan_net_v110_practitioner_validation_test
       test from: :davinci_pdex_plan_net_v110_practitioner_must_support_test
       test from: :davinci_pdex_plan_net_v110_practitioner_reference_resolution_test

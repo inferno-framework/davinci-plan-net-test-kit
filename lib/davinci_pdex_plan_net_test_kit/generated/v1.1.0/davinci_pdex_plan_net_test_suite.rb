@@ -5,8 +5,8 @@ require_relative 'endpoint_group'
 require_relative 'healthcare_service_group'
 require_relative 'insurance_plan_group'
 require_relative 'location_group'
-require_relative 'plannet_network_group'
-require_relative 'plannet_organization_group'
+require_relative 'network_group'
+require_relative 'organization_group'
 require_relative 'organization_affiliation_group'
 require_relative 'practitioner_group'
 require_relative 'practitioner_role_group'
@@ -17,7 +17,7 @@ module DaVinciPDEXPlanNetTestKit
       title 'DaVinci PDEX Plan Net v1.1.0'
       description %(
         The Plan Net Test Kit tests systems for their conformance to the [Plan Net
-        Implementation Guide]().
+        Implementation Guide](https://hl7.org/fhir/us/davinci-pdex-plan-net).
 
         HL7® FHIR® resources are validated with the Java validator using
         `tx.fhir.org` as the terminology server.
@@ -27,9 +27,7 @@ module DaVinciPDEXPlanNetTestKit
       VALIDATION_MESSAGE_FILTERS = [
         %r{Sub-extension url 'introspect' is not defined by the Extension http://fhir-registry\.smarthealthit\.org/StructureDefinition/oauth-uris},
         %r{Sub-extension url 'revoke' is not defined by the Extension http://fhir-registry\.smarthealthit\.org/StructureDefinition/oauth-uris},
-        /Observation\.effective\.ofType\(Period\): .*vs-1:/, # Invalid invariant in FHIR v4.0.1
         /Observation\.effective\.ofType\(Period\): .*us-core-1:/, # Invalid invariant in US Core v3.1.1
-        /Provenance.agent\[\d*\]: Rule provenance-1/ #Invalid invariant in US Core v5.0.1
       ].freeze
 
       VERSION_SPECIFIC_MESSAGE_FILTERS = [].freeze
@@ -75,8 +73,8 @@ module DaVinciPDEXPlanNetTestKit
       group from: :davinci_pdex_plan_net_v110_healthcare_service
       group from: :davinci_pdex_plan_net_v110_insurance_plan
       group from: :davinci_pdex_plan_net_v110_location
-      group from: :davinci_pdex_plan_net_v110_plannet_network
-      group from: :davinci_pdex_plan_net_v110_plannet_organization
+      group from: :davinci_pdex_plan_net_v110_network
+      group from: :davinci_pdex_plan_net_v110_organization
       group from: :davinci_pdex_plan_net_v110_organization_affiliation
       group from: :davinci_pdex_plan_net_v110_practitioner
       group from: :davinci_pdex_plan_net_v110_practitioner_role

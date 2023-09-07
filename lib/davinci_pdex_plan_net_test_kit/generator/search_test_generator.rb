@@ -90,21 +90,20 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def fixed_value_search?
-        first_search? && search_metadata[:names] != ['patient'] &&
-          !group_metadata.delayed? && resource_type != 'Patient'
+        #TODO
+        false
       end
 
       def fixed_value_search_param_name
-        (search_metadata[:names] - [:patient]).first
+        #TODO
       end
 
       def search_param_name_string
         search_metadata[:names].join(' + ')
       end
 
-      def needs_patient_id?
-        search_metadata[:names].include?('patient') ||
-          (resource_type == 'Patient' && search_metadata[:names].include?('_id'))
+      def needs_resource_id?
+        search_metadata[:names].include?(resource_type)
       end
 
       def search_param_names
@@ -180,11 +179,8 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def test_reference_variants?
-        first_search? && search_param_names.include?('patient')
-      end
-
-      def test_medication_inclusion?
-        ['MedicationRequest', 'MedicationDispense'].include?(resource_type)
+        # TODO
+        false
       end
 
       def test_post_search?
@@ -199,7 +195,6 @@ module DaVinciPDEXPlanNetTestKit
           properties[:search_param_names] = search_param_names_array
           properties[:saves_delayed_references] = 'true' if saves_delayed_references?
           properties[:possible_status_search] = 'true' if possible_status_search?
-          properties[:test_medication_inclusion] = 'true' if test_medication_inclusion?
           properties[:token_search_params] = token_search_params_string if token_search_params.present?
           properties[:test_reference_variants] = 'true' if test_reference_variants?
           properties[:params_with_comparators] = required_comparators_string if required_comparators.present?
@@ -212,8 +207,6 @@ module DaVinciPDEXPlanNetTestKit
         case group_metadata.version
         when 'v3.1.1'
           'STU3.1.1'
-        when 'v4.0.0'
-          'STU4'
         end
       end
 
@@ -238,9 +231,9 @@ module DaVinciPDEXPlanNetTestKit
 
         <<~REFERENCE_SEARCH_DESCRIPTION
         This test verifies that the server supports searching by reference using
-        the form `patient=[id]` as well as `patient=Patient/[id]`. The two
-        different forms are expected to return the same number of results. US
-        Core requires that both forms are supported by US Core responders.
+        the form `resource=[id]` as well as `resource=Resource/[id]`. The two
+        different forms are expected to return the same number of results.
+        Plan Net requires that both forms are supported by Plan Net responders.
         REFERENCE_SEARCH_DESCRIPTION
       end
 
@@ -253,16 +246,6 @@ module DaVinciPDEXPlanNetTestKit
         FIRST_SEARCH_DESCRIPTION
       end
 
-      def medication_inclusion_description
-        return '' unless test_medication_inclusion?
-
-        <<~MEDICATION_INCLUSION_DESCRIPTION
-        If any MedicationRequest resources use external references to
-        Medications, the search will be repeated with
-        `_include=MedicationRequest:medication`.
-        MEDICATION_INCLUSION_DESCRIPTION
-      end
-
       def post_search_description
         return '' unless test_post_search?
 
@@ -270,7 +253,7 @@ module DaVinciPDEXPlanNetTestKit
         Additionally, this test will check that GET and POST search methods
         return the same number of results. Search by POST is required by the
         FHIR R4 specification, and these tests interpret search by GET as a
-        requirement of US Core #{group_metadata.version}.
+        requirement of Plan Net #{group_metadata.version}.
         POST_SEARCH_DESCRIPTION
       end
 
@@ -281,7 +264,6 @@ module DaVinciPDEXPlanNetTestKit
         will pass if resources are returned and match the search criteria. If
         none are returned, the test is skipped.
 
-        #{medication_inclusion_description}
         #{reference_search_description}
         #{first_search_description}
         #{post_search_description}

@@ -1,12 +1,12 @@
 module DaVinciPDEXPlanNetTestKit
   class DataAbsentReasonGroup < Inferno::TestGroup
-    id :us_core_311_data_absent_reason
+    id :davinci_pdex_plan_net_v110_data_absent_reason
     title 'Missing Data Tests'
     short_description 'Verify that the server is capable of representing missing data.'
 
     description %(
-      The [US Core Missing Data
-      Guidance](http://hl7.org/fhir/us/core/STU3.1.1/general-guidance.html#missing-data)
+      The [Plan Net Missing Data
+      Guidance](http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/implementation.html#health-plan-api-requirements)
       gives instructions on how to represent various types of missing data.
 
       In the previous resource tests, each resource returned from the server was
@@ -18,7 +18,7 @@ module DaVinciPDEXPlanNetTestKit
 
     test do
       title 'Server represents missing data with the DataAbsentReason Extension'
-      id :us_core_311_data_absent_reason_extension
+      id :davinci_pdex_plan_net_v110_data_absent_reason_extension
       description %(
         For non-coded data elements, servers SHALL use the DataAbsentReason
         Extension to represent missing data in a required field
@@ -37,7 +37,7 @@ module DaVinciPDEXPlanNetTestKit
 
     test do
       title 'Server represents missing data with the DataAbsentReason CodeSystem'
-      id :us_core_311_data_absent_reason_code_system
+      id :davinci_pdex_plan_net_v110_data_absent_reason_code_system
       description %(
         For coded data elements with example, preferred, or extensible binding
         strengths to ValueSets which do not include an appropriate "unknown"

@@ -19,7 +19,7 @@ response will be used for subsequent tests.
 Additionally, this test will check that GET and POST search methods
 return the same number of results. Search by POST is required by the
 FHIR R4 specification, and these tests interpret search by GET as a
-requirement of US Core v1.1.0.
+requirement of Plan Net v1.1.0.
 
 [Plan Net Server CapabilityStatement](http://hl7.org/fhir/us/davinci-pdex-plan-net/CapabilityStatement/plan-net)
 
