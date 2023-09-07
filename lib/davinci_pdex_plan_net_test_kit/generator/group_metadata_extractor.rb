@@ -109,8 +109,8 @@ module DaVinciPDEXPlanNetTestKit
 
 
       def first_search_params
-        # we are still defining what first_searching is for Plan Net I believe.  I think
-        # we could probably delete this, but not sure.
+        # TODO
+        # I think we are still defining this?
       end
 
       def handle_special_cases
