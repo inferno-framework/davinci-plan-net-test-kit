@@ -231,6 +231,8 @@
   :file_name: practitioner_family_search_test.rb
 - :id: davinci_pdex_plan_net_v110_practitioner_given_search_test
   :file_name: practitioner_given_search_test.rb
+- :id: davinci_plan_net_v110_practitioner_practitioner_role_practitioner_revinclude_search_test
+  :file_name: practitioner_practitioner_role_practitioner_revinclude_search_test.rb
 - :id: davinci_pdex_plan_net_v110_practitioner_validation_test
   :file_name: practitioner_validation_test.rb
 - :id: davinci_pdex_plan_net_v110_practitioner_must_support_test

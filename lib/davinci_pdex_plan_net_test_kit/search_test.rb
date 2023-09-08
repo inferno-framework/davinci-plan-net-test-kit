@@ -446,7 +446,7 @@ module DaVinciPDEXPlanNetTestKit
 
       params_with_partial_value = resources.each_with_object({}) do |resource, outer_params|
         results_from_one_resource = search_param_names.each_with_object({}) do |name, params|
-          value = resource_id_param?(name) ? resource_id : search_param_resource_searchvalue(name, resource, include_system: include_system)
+          value = search_param_value(name, resource, include_system: include_system)
           params[name] = value
         end
 

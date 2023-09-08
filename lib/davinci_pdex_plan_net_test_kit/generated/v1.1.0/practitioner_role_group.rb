@@ -10,6 +10,12 @@ require_relative 'practitioner_role/practitioner_role_role_search_test'
 require_relative 'practitioner_role/practitioner_role_specialty_search_test'
 require_relative 'practitioner_role/practitioner_role_id_search_test'
 require_relative 'practitioner_role/practitioner_role_lastupdated_search_test'
+require_relative 'practitioner_role/practitioner_role_practitioner_role_practitioner_include_search_test'
+require_relative 'practitioner_role/practitioner_role_practitioner_role_organization_include_search_test'
+require_relative 'practitioner_role/practitioner_role_practitioner_role_location_include_search_test'
+require_relative 'practitioner_role/practitioner_role_practitioner_role_service_include_search_test'
+require_relative 'practitioner_role/practitioner_role_practitioner_role_network_include_search_test'
+require_relative 'practitioner_role/practitioner_role_practitioner_role_endpoint_include_search_test'
 require_relative 'practitioner_role/practitioner_role_validation_test'
 require_relative 'practitioner_role/practitioner_role_must_support_test'
 require_relative 'practitioner_role/practitioner_role_reference_resolution_test'
@@ -105,6 +111,12 @@ read succeeds.
       test from: :davinci_pdex_plan_net_v110_practitioner_role_specialty_search_test
       test from: :davinci_pdex_plan_net_v110_practitioner_role__id_search_test
       test from: :davinci_pdex_plan_net_v110_practitioner_role__lastUpdated_search_test
+      test from: :davinci_plan_net_v110_practitioner_role_practitioner_role_practitioner_include_search_test
+      test from: :davinci_plan_net_v110_practitioner_role_practitioner_role_organization_include_search_test
+      test from: :davinci_plan_net_v110_practitioner_role_practitioner_role_location_include_search_test
+      test from: :davinci_plan_net_v110_practitioner_role_practitioner_role_service_include_search_test
+      test from: :davinci_plan_net_v110_practitioner_role_practitioner_role_network_include_search_test
+      test from: :davinci_plan_net_v110_practitioner_role_practitioner_role_endpoint_include_search_test
       test from: :davinci_pdex_plan_net_v110_practitioner_role_validation_test
       test from: :davinci_pdex_plan_net_v110_practitioner_role_must_support_test
       test from: :davinci_pdex_plan_net_v110_practitioner_role_reference_resolution_test

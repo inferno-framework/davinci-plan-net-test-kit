@@ -8,6 +8,17 @@ require_relative 'organization/organization_id_search_test'
 require_relative 'organization/organization_lastupdated_search_test'
 require_relative 'organization/organization_type_search_test'
 require_relative 'organization/organization_coverage_area_search_test'
+require_relative 'organization/organization_organization_partof_include_search_test'
+require_relative 'organization/organization_organization_endpoint_include_search_test'
+require_relative 'organization/organization_organization_coverage_area_include_search_test'
+require_relative 'organization/organization_endpoint_organization_revinclude_search_test'
+require_relative 'organization/organization_healthcare_service_organization_revinclude_search_test'
+require_relative 'organization/organization_insurance_plan_administered_by_revinclude_search_test'
+require_relative 'organization/organization_insurance_plan_owned_by_revinclude_search_test'
+require_relative 'organization/organization_organization_affiliation_primary_organization_revinclude_search_test'
+require_relative 'organization/organization_practitioner_role_organization_revinclude_search_test'
+require_relative 'organization/organization_practitioner_role_network_revinclude_search_test'
+require_relative 'organization/organization_organization_affiliation_participating_organization_revinclude_search_test'
 require_relative 'organization/organization_validation_test'
 require_relative 'organization/organization_must_support_test'
 require_relative 'organization/organization_reference_resolution_test'
@@ -99,6 +110,17 @@ read succeeds.
       test from: :davinci_pdex_plan_net_v110_organization__lastUpdated_search_test
       test from: :davinci_pdex_plan_net_v110_organization_type_search_test
       test from: :davinci_pdex_plan_net_v110_organization_coverage_area_search_test
+      test from: :davinci_plan_net_v110_organization_organization_partof_include_search_test
+      test from: :davinci_plan_net_v110_organization_organization_endpoint_include_search_test
+      test from: :davinci_plan_net_v110_organization_organization_coverage_area_include_search_test
+      test from: :davinci_plan_net_v110_organization_endpoint_organization_revinclude_search_test
+      test from: :davinci_plan_net_v110_organization_healthcare_service_organization_revinclude_search_test
+      test from: :davinci_plan_net_v110_organization_insurance_plan_administered_by_revinclude_search_test
+      test from: :davinci_plan_net_v110_organization_insurance_plan_owned_by_revinclude_search_test
+      test from: :davinci_plan_net_v110_organization_organization_affiliation_primary_organization_revinclude_search_test
+      test from: :davinci_plan_net_v110_organization_practitioner_role_organization_revinclude_search_test
+      test from: :davinci_plan_net_v110_organization_practitioner_role_network_revinclude_search_test
+      test from: :davinci_plan_net_v110_organization_organization_affiliation_participating_organization_revinclude_search_test
       test from: :davinci_pdex_plan_net_v110_organization_validation_test
       test from: :davinci_pdex_plan_net_v110_organization_must_support_test
       test from: :davinci_pdex_plan_net_v110_organization_reference_resolution_test

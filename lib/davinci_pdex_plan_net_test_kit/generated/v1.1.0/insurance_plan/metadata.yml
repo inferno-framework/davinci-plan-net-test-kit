@@ -342,6 +342,12 @@
   :file_name: insurance_plan_lastupdated_search_test.rb
 - :id: davinci_pdex_plan_net_v110_insurance_plan_type_search_test
   :file_name: insurance_plan_type_search_test.rb
+- :id: davinci_plan_net_v110_insurance_plan_insurance_plan_administered_by_include_search_test
+  :file_name: insurance_plan_insurance_plan_administered_by_include_search_test.rb
+- :id: davinci_plan_net_v110_insurance_plan_insurance_plan_owned_by_include_search_test
+  :file_name: insurance_plan_insurance_plan_owned_by_include_search_test.rb
+- :id: davinci_plan_net_v110_insurance_plan_insurance_plan_coverage_area_include_search_test
+  :file_name: insurance_plan_insurance_plan_coverage_area_include_search_test.rb
 - :id: davinci_pdex_plan_net_v110_insurance_plan_validation_test
   :file_name: insurance_plan_validation_test.rb
 - :id: davinci_pdex_plan_net_v110_insurance_plan_must_support_test

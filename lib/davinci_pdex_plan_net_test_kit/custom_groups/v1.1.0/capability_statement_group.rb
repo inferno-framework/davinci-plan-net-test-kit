@@ -28,8 +28,7 @@ module DaVinciPDEXPlanNetTestKit
         * The resource matches the expected FHIR version defined by the tests
         * The resource is a valid FHIR resource
         * The server claims support for JSON encoding of resources
-        * The server claims support for the Patient resource and one other
-          resource
+        * The server claims support for all resources.
 
         It collects the following information that is saved in the testing session
         for use by later tests:

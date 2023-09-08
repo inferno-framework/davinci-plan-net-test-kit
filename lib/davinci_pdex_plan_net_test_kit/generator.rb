@@ -41,8 +41,8 @@ module DaVinciPDEXPlanNetTestKit
       generate_search_tests
       # TODO: generate_vread_tests
       # TODO: generate_history_tests
-      # generate_include_search_tests
-      # generate_revinclude_search_tests
+      generate_include_search_tests
+      generate_revinclude_search_tests
       generate_validation_tests
       generate_must_support_tests
       generate_reference_resolution_tests

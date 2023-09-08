@@ -86,7 +86,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def first_search?
-        group_metadata.searches.first == search_metadata
+        false
       end
 
       def fixed_value_search?
