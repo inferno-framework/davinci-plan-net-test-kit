@@ -639,14 +639,13 @@ module DaVinciPDEXPlanNetTestKit
 
       loop do
         bundle&.entry&.each do |a_entry|
-          a_resource = a_entry.resource
-          if ( a_resource && 
-               a_resource.resourceType == resource_type && 
-               # todo: move special cases somewhere else so this isn't specific to Plan Net
-               (metadata.profile_url != 'http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Organization' || !a_resource.type.reduce(false) { |outer_result, a_type| outer_result || a_type.coding.reduce(false) { |result, a_coding| result || (a_coding.code == 'ntwk' && a_coding.system == 'http://hl7.org/fhir/us/davinci-pdex-plan-net/CodeSystem/OrgTypeCS') } }) &&
-               (metadata.profile_url != 'http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Network' || !a_resource.type.reduce(true) { |outer_result, a_type| outer_result && a_type.coding.reduce(true) { |result, a_coding| result && !(a_coding.code == 'ntwk' && a_coding.system == 'http://hl7.org/fhir/us/davinci-pdex-plan-net/CodeSystem/OrgTypeCS') } })
+          an_instance = a_entry.resource
+          if ( an_instance && 
+               an_instance.resourceType == resource_type && 
+               # Plan Net Specific Special Case
+               !DaVinciPDEXPlanNetTestKit::SpecialCases::filter_instance_for_parameterless_gathering?(metadata.profile_url, an_instance)
           )
-            resources << a_resource
+            resources << an_instance
             break if resources.size >= max_instances
           end
         end
