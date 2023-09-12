@@ -4,7 +4,9 @@ module DaVinciPDEXPlanNetTestKit
       :resource_type,
       :search_param_names,
       :revinclude_param,
+      :rev_param_sp,
       :include_param,
+      :inc_param_sp,
       :additional_resource_type,
       :input_name,
       :first_search,
@@ -23,7 +25,7 @@ module DaVinciPDEXPlanNetTestKit
 
     def initialize(**properties)
       properties.each do |key, value|
-        raise StandardError, "Unkown search test property: #{key}" unless ATTRIBUTES.include?(key)
+        raise StandardError, "Unknown search test property: #{key}" unless ATTRIBUTES.include?(key)
 
         instance_variable_set(:"@#{key}", value)
       end

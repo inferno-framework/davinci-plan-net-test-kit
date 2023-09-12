@@ -26,6 +26,7 @@ module DaVinciPDEXPlanNetTestKit
           search_param_names: [],
           input_name: 'organization_affiliation_network_input',
           include_param: 'OrganizationAffiliation:network',
+          inc_param_sp: 'network',
           additional_resource_type: 'Organization'
         )
       end

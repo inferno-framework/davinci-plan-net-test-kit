@@ -26,6 +26,7 @@ module DaVinciPDEXPlanNetTestKit
           search_param_names: [],
           input_name: 'practitioner_role_practitioner_input',
           include_param: 'PractitionerRole:practitioner',
+          inc_param_sp: 'practitioner',
           additional_resource_type: 'Practitioner'
         )
       end

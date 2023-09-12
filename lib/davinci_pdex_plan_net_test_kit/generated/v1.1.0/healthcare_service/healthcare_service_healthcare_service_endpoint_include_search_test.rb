@@ -26,6 +26,7 @@ module DaVinciPDEXPlanNetTestKit
           search_param_names: [],
           input_name: 'healthcare_service_endpoint_input',
           include_param: 'HealthcareService:endpoint',
+          inc_param_sp: 'endpoint',
           additional_resource_type: 'Endpoint'
         )
       end

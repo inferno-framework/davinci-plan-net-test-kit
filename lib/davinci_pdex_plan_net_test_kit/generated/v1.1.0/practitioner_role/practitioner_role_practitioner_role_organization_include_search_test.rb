@@ -26,6 +26,7 @@ module DaVinciPDEXPlanNetTestKit
           search_param_names: [],
           input_name: 'practitioner_role_organization_input',
           include_param: 'PractitionerRole:organization',
+          inc_param_sp: 'organization',
           additional_resource_type: 'Organization'
         )
       end

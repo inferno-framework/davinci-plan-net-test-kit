@@ -26,6 +26,7 @@ module DaVinciPDEXPlanNetTestKit
           search_param_names: [],
           input_name: 'insurance_plan_owned_by_input',
           revinclude_param: 'InsurancePlan:owned-by',
+          rev_param_sp: 'owned-by',
           additional_resource_type: 'InsurancePlan'
         )
       end
@@ -43,7 +44,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_revinclude_resources
-        scratch[:insuranceplan_resources] ||= {}
+        scratch[:InsurancePlan_resources] ||= {}
       end
 
       run do

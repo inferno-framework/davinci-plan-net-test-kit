@@ -26,6 +26,7 @@ module DaVinciPDEXPlanNetTestKit
           search_param_names: [],
           input_name: 'insurance_plan_owned_by_input',
           include_param: 'InsurancePlan:owned-by',
+          inc_param_sp: 'owned-by',
           additional_resource_type: 'Organization'
         )
       end

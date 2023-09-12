@@ -26,6 +26,7 @@ module DaVinciPDEXPlanNetTestKit
           search_param_names: [],
           input_name: 'organization_affiliation_participating_organization_input',
           revinclude_param: 'OrganizationAffiliation:participating-organization',
+          rev_param_sp: 'participating-organization',
           additional_resource_type: 'OrganizationAffiliation'
         )
       end
@@ -43,7 +44,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_revinclude_resources
-        scratch[:organizationaffiliation_resources] ||= {}
+        scratch[:OrganizationAffiliation_resources] ||= {}
       end
 
       run do

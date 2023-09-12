@@ -26,6 +26,7 @@ module DaVinciPDEXPlanNetTestKit
           search_param_names: [],
           input_name: 'organization_affiliation_endpoint_input',
           include_param: 'OrganizationAffiliation:endpoint',
+          inc_param_sp: 'endpoint',
           additional_resource_type: 'Endpoint'
         )
       end

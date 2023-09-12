@@ -26,6 +26,7 @@ module DaVinciPDEXPlanNetTestKit
           search_param_names: [],
           input_name: 'endpoint_organization_input',
           revinclude_param: 'Endpoint:organization',
+          rev_param_sp: 'organization',
           additional_resource_type: 'Endpoint'
         )
       end
@@ -43,7 +44,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_revinclude_resources
-        scratch[:endpoint_resources] ||= {}
+        scratch[:Endpoint_resources] ||= {}
       end
 
       run do

@@ -26,6 +26,7 @@ module DaVinciPDEXPlanNetTestKit
           search_param_names: [],
           input_name: 'practitioner_role_service_input',
           revinclude_param: 'PractitionerRole:service',
+          rev_param_sp: 'service',
           additional_resource_type: 'PractitionerRole'
         )
       end
@@ -43,7 +44,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_revinclude_resources
-        scratch[:practitionerrole_resources] ||= {}
+        scratch[:PractitionerRole_resources] ||= {}
       end
 
       run do

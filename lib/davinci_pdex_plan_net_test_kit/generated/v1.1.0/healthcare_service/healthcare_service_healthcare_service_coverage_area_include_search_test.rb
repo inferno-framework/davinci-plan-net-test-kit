@@ -26,6 +26,7 @@ module DaVinciPDEXPlanNetTestKit
           search_param_names: [],
           input_name: 'healthcare_service_coverage_area_input',
           include_param: 'HealthcareService:coverage-area',
+          inc_param_sp: 'coverage-area',
           additional_resource_type: 'Location'
         )
       end

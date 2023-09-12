@@ -26,6 +26,7 @@ module DaVinciPDEXPlanNetTestKit
           search_param_names: [],
           input_name: 'organization_coverage_area_input',
           include_param: 'Organization:coverage-area',
+          inc_param_sp: 'coverage-area',
           additional_resource_type: 'Location'
         )
       end
