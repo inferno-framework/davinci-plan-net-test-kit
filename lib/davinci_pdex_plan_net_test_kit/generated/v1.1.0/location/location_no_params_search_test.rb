@@ -25,7 +25,6 @@ response will be used for subsequent tests.
         @properties ||= SearchTestProperties.new(
           first_search: true,
         resource_type: 'Location',
-        saves_delayed_references: true,
         test_post_search: false
         )
       end

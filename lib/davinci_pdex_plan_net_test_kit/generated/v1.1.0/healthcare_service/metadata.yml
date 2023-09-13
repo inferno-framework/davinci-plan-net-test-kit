@@ -1349,16 +1349,4 @@
   :file_name: healthcare_service_reference_resolution_test.rb
 :id: davinci_pdex_plan_net_v110_healthcare_service
 :file_name: healthcare_service_group.rb
-:delayed_references:
-- :path: providedBy
-  :resources:
-  - Organization
-- :path: location
-  :resources:
-  - Location
-- :path: coverageArea
-  :resources:
-  - Location
-- :path: endpoint
-  :resources:
-  - Endpoint
+:delayed_references: []

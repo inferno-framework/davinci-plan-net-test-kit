@@ -140,10 +140,7 @@
   - :path: Endpoint.managingOrganization
     :profiles:
     - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Organization
-  :delayed_references:
-  - :path: managingOrganization
-    :resources:
-    - Organization
+  :delayed_references: []
 - :name: plannet_HealthcareService
   :class_name: PlannetHealthcareserviceSequence
   :version: v1.1.0
@@ -1449,19 +1446,7 @@
   - :path: HealthcareService.endpoint
     :profiles:
     - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Endpoint
-  :delayed_references:
-  - :path: providedBy
-    :resources:
-    - Organization
-  - :path: location
-    :resources:
-    - Location
-  - :path: coverageArea
-    :resources:
-    - Location
-  - :path: endpoint
-    :resources:
-    - Endpoint
+  :delayed_references: []
 - :name: plannet_InsurancePlan
   :class_name: PlannetInsuranceplanSequence
   :version: v1.1.0
@@ -1782,28 +1767,7 @@
   - :path: InsurancePlan.plan.network
     :profiles:
     - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Network
-  :delayed_references:
-  - :path: ownedBy
-    :resources:
-    - Organization
-  - :path: administeredBy
-    :resources:
-    - Organization
-  - :path: coverageArea
-    :resources:
-    - Location
-  - :path: endpoint
-    :resources:
-    - Endpoint
-  - :path: network
-    :resources:
-    - Organization
-  - :path: plan.coverageArea
-    :resources:
-    - Location
-  - :path: plan.network
-    :resources:
-    - Organization
+  :delayed_references: []
 - :name: plannet_Location
   :class_name: PlannetLocationSequence
   :version: v1.1.0
@@ -2131,16 +2095,7 @@
   - :path: Location.endpoint
     :profiles:
     - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Endpoint
-  :delayed_references:
-  - :path: managingOrganization
-    :resources:
-    - Organization
-  - :path: partOf
-    :resources:
-    - Location
-  - :path: endpoint
-    :resources:
-    - Endpoint
+  :delayed_references: []
 - :name: plannet_Network
   :class_name: PlannetNetworkSequence
   :version: v1.1.0
@@ -2408,13 +2363,7 @@
   - :path: Organization.endpoint
     :profiles:
     - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Endpoint
-  :delayed_references:
-  - :path: partOf
-    :resources:
-    - Organization
-  - :path: endpoint
-    :resources:
-    - Endpoint
+  :delayed_references: []
 - :name: plannet_Organization
   :class_name: PlannetOrganizationSequence
   :version: v1.1.0
@@ -2721,10 +2670,7 @@
   - :path: Organization.endpoint
     :profiles:
     - http://hl7.org/fhir/StructureDefinition/Endpoint
-  :delayed_references:
-  - :path: partOf
-    :resources:
-    - Organization
+  :delayed_references: []
 - :name: plannet_OrganizationAffiliation
   :class_name: PlannetOrganizationaffiliationSequence
   :version: v1.1.0
@@ -3933,25 +3879,7 @@
   - :path: OrganizationAffiliation.endpoint
     :profiles:
     - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Endpoint
-  :delayed_references:
-  - :path: organization
-    :resources:
-    - Organization
-  - :path: participatingOrganization
-    :resources:
-    - Organization
-  - :path: network
-    :resources:
-    - Organization
-  - :path: location
-    :resources:
-    - Location
-  - :path: healthcareService
-    :resources:
-    - HealthcareService
-  - :path: endpoint
-    :resources:
-    - Endpoint
+  :delayed_references: []
 - :name: plannet_Practitioner
   :class_name: PlannetPractitionerSequence
   :version: v1.1.0
@@ -5280,22 +5208,4 @@
   - :path: PractitionerRole.endpoint
     :profiles:
     - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Endpoint
-  :delayed_references:
-  - :path: extension.extension.value[x]
-    :resources:
-    - Organization
-  - :path: practitioner
-    :resources:
-    - Practitioner
-  - :path: organization
-    :resources:
-    - Organization
-  - :path: location
-    :resources:
-    - Location
-  - :path: healthcareService
-    :resources:
-    - HealthcareService
-  - :path: endpoint
-    :resources:
-    - Endpoint
+  :delayed_references: []

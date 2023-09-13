@@ -373,13 +373,4 @@
   :file_name: location_reference_resolution_test.rb
 :id: davinci_pdex_plan_net_v110_location
 :file_name: location_group.rb
-:delayed_references:
-- :path: managingOrganization
-  :resources:
-  - Organization
-- :path: partOf
-  :resources:
-  - Location
-- :path: endpoint
-  :resources:
-  - Endpoint
+:delayed_references: []

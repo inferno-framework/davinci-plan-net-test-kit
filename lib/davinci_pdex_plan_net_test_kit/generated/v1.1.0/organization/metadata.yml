@@ -367,7 +367,4 @@
   :file_name: organization_reference_resolution_test.rb
 :id: davinci_pdex_plan_net_v110_organization
 :file_name: organization_group.rb
-:delayed_references:
-- :path: partOf
-  :resources:
-  - Organization
+:delayed_references: []

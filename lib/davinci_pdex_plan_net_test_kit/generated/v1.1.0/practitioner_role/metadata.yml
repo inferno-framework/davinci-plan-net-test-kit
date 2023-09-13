@@ -1154,22 +1154,4 @@
   :file_name: practitioner_role_reference_resolution_test.rb
 :id: davinci_pdex_plan_net_v110_practitioner_role
 :file_name: practitioner_role_group.rb
-:delayed_references:
-- :path: extension.extension.value[x]
-  :resources:
-  - Organization
-- :path: practitioner
-  :resources:
-  - Practitioner
-- :path: organization
-  :resources:
-  - Organization
-- :path: location
-  :resources:
-  - Location
-- :path: healthcareService
-  :resources:
-  - HealthcareService
-- :path: endpoint
-  :resources:
-  - Endpoint
+:delayed_references: []

@@ -1252,22 +1252,4 @@
   :file_name: organization_affiliation_reference_resolution_test.rb
 :id: davinci_pdex_plan_net_v110_organization_affiliation
 :file_name: organization_affiliation_group.rb
-:delayed_references:
-- :path: organization
-  :resources:
-  - Organization
-- :path: participatingOrganization
-  :resources:
-  - Organization
-- :path: network
-  :resources:
-  - Organization
-- :path: location
-  :resources:
-  - Location
-- :path: healthcareService
-  :resources:
-  - HealthcareService
-- :path: endpoint
-  :resources:
-  - Endpoint
+:delayed_references: []

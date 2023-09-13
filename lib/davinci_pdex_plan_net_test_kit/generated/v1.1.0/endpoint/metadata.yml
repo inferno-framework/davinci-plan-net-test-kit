@@ -159,7 +159,4 @@
   :file_name: endpoint_reference_resolution_test.rb
 :id: davinci_pdex_plan_net_v110_endpoint
 :file_name: endpoint_group.rb
-:delayed_references:
-- :path: managingOrganization
-  :resources:
-  - Organization
+:delayed_references: []
