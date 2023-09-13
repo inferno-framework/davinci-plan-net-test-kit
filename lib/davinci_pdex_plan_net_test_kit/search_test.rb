@@ -36,13 +36,15 @@ module DaVinciPDEXPlanNetTestKit
 
     def find_base_id(desired_resource, search_param)
       # Access correct scratch based on what base you are looking for
-      scratch_for_base = desired_resource == resource_type ? all_scratch_resources : scratch_revinclude_resources[:all]
+      is_include = desired_resource == resource_type
+      scratch_for_base = is_include ? all_scratch_resources : scratch_revinclude_resources[:all]
       base_resource = scratch_for_base
         .select { |resource| resource.resourceType == desired_resource }
         .reject { |resource| search_param_value(search_param, resource).nil? }
         .first
       skip_if base_resource.nil?, unable_to_find_base_message(desired_resource, search_param)
-      base_resource.id
+      # If revinclude test, make sure you grab the id of base, not revincluded resource
+      is_include ? base_resource.id : search_param_value(search_param, base_resource)
     end
 
     def all_search_params
@@ -559,8 +561,9 @@ module DaVinciPDEXPlanNetTestKit
       name == 'patient' || (name == '_id' && resource_type == 'Patient')
     end
 
-    def search_param_paths(name)
-      paths = metadata.search_definitions[name.to_sym][:paths]
+    def search_param_paths(name, resource = resource_type)
+      resource_metadata = (resource != additional_resource_type || revinclude_param.nil?) ? metadata : revinclude_metadata
+      paths = resource_metadata.search_definitions[name.to_sym][:paths]
       if paths.first =='class'
         paths[0] = 'local_class'
       end
@@ -701,7 +704,7 @@ module DaVinciPDEXPlanNetTestKit
     end
 
     def search_param_value(name, resource, include_system: false)
-      paths = search_param_paths(name)
+      paths = search_param_paths(name, resource.resourceType)
       search_value = nil
       paths.each do |path|
         element = find_a_value_at(resource, path) { |element| element_has_valid_value?(element, include_system) }
@@ -735,23 +738,7 @@ module DaVinciPDEXPlanNetTestKit
           when FHIR::Extension
             element.valueReference.reference #Should this be more flexible? Does it need to read for any value[x]?  PDEX only
           else
-            if metadata.version != 'v3.1.1' &&
-               metadata.search_definitions[name.to_sym][:type] == 'date' &&
-               params_with_comparators&.include?(name)
-              # convert date search to greath-than comparator search with correct precision
-              # For all date search parameters:
-              #   Patient.birthDate does not mandate comparators so cannot be converted
-              #   Goal.target-date has day precision
-              #   All others have second + time offset precision
-              if /^\d{4}(-\d{2})?$/.match?(element) || # YYYY or YYYY-MM
-                (/^\d{4}-\d{2}-\d{2}$/.match?(element) && resource_type != "Goal") # YYY-MM-DD AND Resource is NOT Goal
-                "gt#{(DateTime.xmlschema(element)-1).xmlschema}"
-              else
-                element
-              end
-            else
-              element
-            end
+            element
           end
 
         break if search_value.present?
