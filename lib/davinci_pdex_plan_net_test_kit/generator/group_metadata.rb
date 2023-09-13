@@ -29,16 +29,6 @@ module DaVinciPDEXPlanNetTestKit
         :delayed_references
       ].freeze
 
-      NON_USCDI_RESOURCES = {
-        'Encounter' => ['v311'],
-        'Location' => ['v311'],
-        'Organization' => ['v311'],
-        'Practitioner' => ['v311'],
-        'PractitionerRole' => ['v311'],
-        'Provenance' => ['v311']
-      }.freeze
-
-
       ATTRIBUTES.each { |name| attr_accessor name }
 
       def initialize(metadata)
@@ -50,8 +40,8 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def delayed?
-        #TODO
-        true
+        # No delayed resources in Plan Net
+        false
       end
 
       def add_test(id:, file_name:)

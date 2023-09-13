@@ -98,19 +98,9 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       ### BEGIN SPECIAL CASES ###
-
-      ALL_VERSION_CATEGORY_FIRST_PROFILES = [
-        
-      ]
-
-      VERSION_SPECIFIC_CATEGORY_FIRST_PROFILES = {
-
-      }
-
-
       def first_search_params
         # TODO
-        # I think we are still defining this?
+        # I think we are still defining this? Shouldn't parameterless always be the first search at this point?
       end
 
       def handle_special_cases
