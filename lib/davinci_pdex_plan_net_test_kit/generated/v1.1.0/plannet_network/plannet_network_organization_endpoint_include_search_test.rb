@@ -6,25 +6,20 @@ module DaVinciPDEXPlanNetTestKit
     class PlannetNetworkOrganizationEndpointIncludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns Endpoint resources from Organization search by _include=Organization:endpoint'
+      title 'Server returns Endpoint resources from Organization search with _include=Organization:endpoint'
       description %(
         A server SHALL be capable of supporting _includes for Organization:endpoint.
 
-        This test will perform a search by _include=Organization:endpoint and
+        This test will perform a search with _include=Organization:endpoint and
         will pass if a Endpoint resource is found in the response.
       )
 
       id :davinci_plan_net_v110_plannet_network_organization_endpoint_include_search_test
-      input :organization_endpoint_input,
-        title: 'IDs of Organization that have Endpoint reference(s)',
-        description: 'Comma separated list of Organization IDs that reference by a Endpoint',
-        optional: true
 
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'Organization',
           search_param_names: [],
-          input_name: 'organization_endpoint_input',
           include_param: 'Organization:endpoint',
           inc_param_sp: 'endpoint',
           additional_resource_type: 'Endpoint'

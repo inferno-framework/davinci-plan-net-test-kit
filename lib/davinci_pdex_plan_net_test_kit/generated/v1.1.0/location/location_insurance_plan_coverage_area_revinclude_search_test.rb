@@ -6,11 +6,11 @@ module DaVinciPDEXPlanNetTestKit
     class LocationInsurancePlanCoverageAreaRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns InsurancePlan resources from Location search by _revinclude=InsurancePlan:coverage-area'
+      title 'Server returns InsurancePlan resources from Location search with _revinclude=InsurancePlan:coverage-area'
       description %(
         A server SHALL be capable of supporting _revIncludes for InsurancePlan:coverage-area.
 
-        This test will perform a search by _revinclude=InsurancePlan:coverage-area and
+        This test will perform a search with _revinclude=InsurancePlan:coverage-area and
         will pass if a InsurancePlan resource is found in the response.
       )
 

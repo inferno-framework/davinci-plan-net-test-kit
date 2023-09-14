@@ -38,6 +38,9 @@ module DaVinciPDEXPlanNetTestKit
       # Access correct scratch based on what base you are looking for
       is_include = desired_resource == resource_type
       scratch_for_base = is_include ? all_scratch_resources : scratch_revinclude_resources[:all]
+
+      skip_if scratch_for_base.nil?, no_instance_gathering_message
+
       base_resource = scratch_for_base
         .select { |resource| resource.resourceType == desired_resource }
         .reject { |resource| search_param_value(search_param, resource).nil? }
@@ -75,8 +78,8 @@ module DaVinciPDEXPlanNetTestKit
     def all_include_search_params
       @all_revinclude_search_params ||=
         all_search_params.transform_values! do |params_list|
-          base_id = given_input? ? self.send(input_name) : find_base_id(resource_type, inc_param_sp)
-          params_list.map { |params| {_id: base_id}.merge(_include: include_param) }
+          # No input needed for includes so can just pass into the map
+          params_list.map { |params| {_id: find_base_id(resource_type, inc_param_sp)}.merge(_include: include_param) }
         end
     end
 
@@ -96,7 +99,7 @@ module DaVinciPDEXPlanNetTestKit
 
             fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
               .select { |resource| resource.resourceType == additional_resource_type }
-              .reject { |resource| resource.id == "#{self.send(input_name)}"} 
+              .reject { |resource| resource.id == params[:_id]} 
           end
         end
 
@@ -586,6 +589,11 @@ module DaVinciPDEXPlanNetTestKit
     def unable_to_find_base_message(resource_type, param)
       "Unable to find any #{resource_type} with the #{param} field populated from
       previously gathered resources. Please return more resources or provide a base id."
+    end
+
+    def no_instance_gathering_message
+      "Unable to find previously gathered instances of #{additional_resource_type}, please provide IDs or
+      \"Run All Tests\" from suite level"
     end
 
     def empty_search_params_message(empty_search_params)

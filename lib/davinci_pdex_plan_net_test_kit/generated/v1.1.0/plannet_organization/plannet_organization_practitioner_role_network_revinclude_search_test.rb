@@ -6,11 +6,11 @@ module DaVinciPDEXPlanNetTestKit
     class PlannetOrganizationPractitionerRoleNetworkRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns PractitionerRole resources from Organization search by _revinclude=PractitionerRole:network'
+      title 'Server returns PractitionerRole resources from Organization search with _revinclude=PractitionerRole:network'
       description %(
         A server SHALL be capable of supporting _revIncludes for PractitionerRole:network.
 
-        This test will perform a search by _revinclude=PractitionerRole:network and
+        This test will perform a search with _revinclude=PractitionerRole:network and
         will pass if a PractitionerRole resource is found in the response.
       )
 

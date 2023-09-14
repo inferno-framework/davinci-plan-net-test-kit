@@ -6,11 +6,11 @@ module DaVinciPDEXPlanNetTestKit
     class PlannetNetworkInsurancePlanAdministeredByRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns InsurancePlan resources from Organization search by _revinclude=InsurancePlan:administered-by'
+      title 'Server returns InsurancePlan resources from Organization search with _revinclude=InsurancePlan:administered-by'
       description %(
         A server SHALL be capable of supporting _revIncludes for InsurancePlan:administered-by.
 
-        This test will perform a search by _revinclude=InsurancePlan:administered-by and
+        This test will perform a search with _revinclude=InsurancePlan:administered-by and
         will pass if a InsurancePlan resource is found in the response.
       )
 

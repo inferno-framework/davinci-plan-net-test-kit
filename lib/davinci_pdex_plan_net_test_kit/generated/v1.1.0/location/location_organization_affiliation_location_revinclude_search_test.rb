@@ -6,11 +6,11 @@ module DaVinciPDEXPlanNetTestKit
     class LocationOrganizationAffiliationLocationRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns OrganizationAffiliation resources from Location search by _revinclude=OrganizationAffiliation:location'
+      title 'Server returns OrganizationAffiliation resources from Location search with _revinclude=OrganizationAffiliation:location'
       description %(
         A server SHALL be capable of supporting _revIncludes for OrganizationAffiliation:location.
 
-        This test will perform a search by _revinclude=OrganizationAffiliation:location and
+        This test will perform a search with _revinclude=OrganizationAffiliation:location and
         will pass if a OrganizationAffiliation resource is found in the response.
       )
 

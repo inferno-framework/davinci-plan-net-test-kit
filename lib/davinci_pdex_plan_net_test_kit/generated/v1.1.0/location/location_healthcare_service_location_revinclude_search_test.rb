@@ -6,11 +6,11 @@ module DaVinciPDEXPlanNetTestKit
     class LocationHealthcareServiceLocationRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns HealthcareService resources from Location search by _revinclude=HealthcareService:location'
+      title 'Server returns HealthcareService resources from Location search with _revinclude=HealthcareService:location'
       description %(
         A server SHALL be capable of supporting _revIncludes for HealthcareService:location.
 
-        This test will perform a search by _revinclude=HealthcareService:location and
+        This test will perform a search with _revinclude=HealthcareService:location and
         will pass if a HealthcareService resource is found in the response.
       )
 

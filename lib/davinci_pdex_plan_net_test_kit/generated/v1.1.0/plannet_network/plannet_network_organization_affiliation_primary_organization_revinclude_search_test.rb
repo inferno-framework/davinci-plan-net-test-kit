@@ -6,11 +6,11 @@ module DaVinciPDEXPlanNetTestKit
     class PlannetNetworkOrganizationAffiliationPrimaryOrganizationRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns OrganizationAffiliation resources from Organization search by _revinclude=OrganizationAffiliation:primary-organization'
+      title 'Server returns OrganizationAffiliation resources from Organization search with _revinclude=OrganizationAffiliation:primary-organization'
       description %(
         A server SHALL be capable of supporting _revIncludes for OrganizationAffiliation:primary-organization.
 
-        This test will perform a search by _revinclude=OrganizationAffiliation:primary-organization and
+        This test will perform a search with _revinclude=OrganizationAffiliation:primary-organization and
         will pass if a OrganizationAffiliation resource is found in the response.
       )
 

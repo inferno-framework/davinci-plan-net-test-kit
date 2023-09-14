@@ -6,19 +6,15 @@ module DaVinciPDEXPlanNetTestKit
     class <%= class_name %> < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns <%= include_param_resource %> resources from <%= resource_type %> search by <%= include_param_string %>'
+      title 'Server returns <%= include_param_resource %> resources from <%= resource_type %> search with <%= include_param_string %>'
       description %(
         A server SHALL be capable of supporting _includes for <%= include_param %>.
 
-        This test will perform a search by <%= include_param_string %> and
+        This test will perform a search with <%= include_param_string %> and
         will pass if a <%= include_param_resource %> resource is found in the response.
       )
 
       id :<%= test_id %>
-      input :<%= input_name %>,
-        title: 'IDs of <%= resource_type %> that have <%= include_param_resource %> reference(s)',
-        description: 'Comma separated list of <%= resource_type %> IDs that reference by a <%= include_param_resource %>',
-        optional: true
 
       def properties
         @properties ||= SearchTestProperties.new(
