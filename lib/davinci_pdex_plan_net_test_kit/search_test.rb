@@ -603,12 +603,10 @@ module DaVinciPDEXPlanNetTestKit
     def no_resources_skip_message(resource_type = self.resource_type)
       msg = "No #{resource_type} resources appear to be available"
 
-      if (resource_type == 'Device' && implantable_device_codes.present?)
-        msg.concat(" with the following Device Type Code filter: #{implantable_device_codes}")
-      end
-
       if ((self.resource_type == additional_resource_type) && (!revinclude_param.nil? || !include_param.nil?))
-        msg.concat(" (excluding #{self.send(input_name)}, which was used as the base)")
+        if !input_name.nil?
+          msg.concat(" (excluding #{self.send(input_name)}, which was used as the base)")
+        end
       end
 
       msg + ". Please use patients with more information"
