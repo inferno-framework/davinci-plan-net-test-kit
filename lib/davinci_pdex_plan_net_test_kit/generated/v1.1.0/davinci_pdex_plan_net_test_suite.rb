@@ -61,6 +61,27 @@ module DaVinciPDEXPlanNetTestKit
         title: 'OAuth Credentials',
         type: :oauth_credentials,
         optional: true
+      input :no_param_search,
+        title: 'Use searches without parameters to identify instances?',
+        type: 'radio',
+        options: {
+            list_options: [
+              {
+                label: 'Yes',
+                value: 'true'
+              },
+              {
+                label: 'No',
+                value: 'false'
+              }
+            ]
+          },
+        default: 'true',
+        description: 'If No, then the lists of ids by profile below are required. If yes, the lists of ids by profile are optional.'
+      input :max_pages,
+        title: 'Maximum pages of search results to load per search',
+        default: '20',
+        description: 'Only used when parameterless searches are used. A higher number will evaluate more instances in the tests if they are available.'
 
       fhir_client do
         url :url
