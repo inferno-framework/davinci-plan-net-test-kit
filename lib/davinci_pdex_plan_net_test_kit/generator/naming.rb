@@ -1,10 +1,6 @@
 module DaVinciPDEXPlanNetTestKit
   class Generator
     module Naming
-      LOCATION = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-location'
-      ORGANIZATION = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-organization'
-      PRACTITIONER = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitioner'
-      PRACTITIONER_ROLE = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitionerrole'
 
       class << self
         def resources_with_multiple_profiles
