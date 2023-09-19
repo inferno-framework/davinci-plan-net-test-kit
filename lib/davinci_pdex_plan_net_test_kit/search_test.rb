@@ -117,19 +117,37 @@ module DaVinciPDEXPlanNetTestKit
       perform_multiple_or_search_test if multiple_or_search_params.present?
     end
 
-    def run_search_no_params_test
-      fhir_search resource_type
-      
-      check_search_response
+    def run_search_no_params_test(profile_instance_id_string)
+       
+      # read ids provided by user input
+       if profile_instance_id_string
+        input_instance_id_list = profile_instance_id_string.split(',').map(&:strip)
 
-      resources_returned =
-        fetch_all_bundled_resources.select { |resource| resource.resourceType == resource_type }
-
-      skip_if resources_returned.empty?, no_resources_skip_message
-
-      if first_search?
-        all_scratch_resources.concat(resources_returned).uniq!
+        input_instance_id_list.each do |id|
+          fhir_read resource_type, id
+          assert_response_status(200)
+          assert_resource_type(resource_type)
+          all_scratch_resources << resource
+        end
       end
+
+      if no_param_search == 'true'
+        fhir_search resource_type
+      
+        check_search_response
+        
+        resources_returned = fetch_all_bundled_resources(max_pages: max_pages.to_i).select { |resource| resource.resourceType == resource_type }
+
+        if first_search? && !resources_returned.empty?
+          all_scratch_resources.concat(resources_returned).uniq!
+        end
+      end
+
+
+      info "Found #{all_scratch_resources.size} instances to use for testing profile #{metadata.profile_name}."
+
+      assert !all_scratch_resources.empty?, "No instances found for testing profile #{metadata.profile_name}."
+
     end
 
     def perform_search(params, resource_id)
@@ -524,9 +542,10 @@ module DaVinciPDEXPlanNetTestKit
       page_count = 1
       resources = []
       bundle = resource
+      resources += bundle&.entry&.map { |entry| entry&.resource }
 
       until bundle.nil? || page_count == max_pages
-        resources += bundle&.entry&.map { |entry| entry&.resource }
+        
         next_bundle_link = bundle&.link&.find { |link| link.relation == 'next' }&.url
         reply_handler&.call(response)
 
@@ -541,6 +560,7 @@ module DaVinciPDEXPlanNetTestKit
         assert_valid_json(reply.body, error_message)
 
         bundle = fhir_client.parse_reply(FHIR::Bundle, fhir_client.default_format, reply)
+        resources += bundle&.entry&.map { |entry| entry&.resource }
 
         page_count += 1
       end
