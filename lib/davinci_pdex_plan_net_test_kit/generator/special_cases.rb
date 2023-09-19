@@ -5,11 +5,24 @@ module DaVinciPDEXPlanNetTestKit
 
       PROFILES_TO_EXCLUDE = [].freeze
 
+      GROUP_SORT_ORDER = ["plannet_Endpoint", 
+                          "plannet_InsurancePlan", 
+                          "plannet_OrganizationAffiliation",
+                          "plannet_PractitionerRole",
+                          "plannet_Practitioner",
+                          "plannet_HealthcareService",
+                          "plannet_Location",
+                          "plannet_Network",
+                          "plannet_Organization"].freeze
+
       class << self
         def exclude_group?(group)
           RESOURCES_TO_EXCLUDE.include?(group.resource)
         end
-        
+
+        def group_index(group_name)
+          GROUP_SORT_ORDER.index(group_name)
+        end
       end
     end
   end
