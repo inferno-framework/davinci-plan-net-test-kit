@@ -6,25 +6,20 @@ module DaVinciPDEXPlanNetTestKit
     class OrganizationOrganizationPartofIncludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns Organization resources from Organization search by _include=Organization:partof'
+      title 'Server returns Organization resources from Organization search with _include=Organization:partof'
       description %(
         A server SHALL be capable of supporting _includes for Organization:partof.
 
-        This test will perform a search by _include=Organization:partof and
+        This test will perform a search with _include=Organization:partof and
         will pass if a Organization resource is found in the response.
       )
 
-      id :davinci_plan_net_v110_organization_organization_partof_include_search_test
-      input :organization_partof_input,
-        title: 'IDs of Organization that have Organization reference(s)',
-        description: 'Comma separated list of Organization IDs that reference by a Organization',
-        optional: true
+      id :davinci_plan_net_v110_plannet_organization_organization_partof_include_search_test
 
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'Organization',
           search_param_names: [],
-          input_name: 'organization_partof_input',
           include_param: 'Organization:partof',
           inc_param_sp: 'partof',
           additional_resource_type: 'Organization'

@@ -6,11 +6,11 @@ module DaVinciPDEXPlanNetTestKit
     class PractitionerPractitionerRolePractitionerRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns PractitionerRole resources from Practitioner search by _revinclude=PractitionerRole:practitioner'
+      title 'Server returns PractitionerRole resources from Practitioner search with _revinclude=PractitionerRole:practitioner'
       description %(
         A server SHALL be capable of supporting _revIncludes for PractitionerRole:practitioner.
 
-        This test will perform a search by _revinclude=PractitionerRole:practitioner and
+        This test will perform a search with _revinclude=PractitionerRole:practitioner and
         will pass if a PractitionerRole resource is found in the response.
       )
 

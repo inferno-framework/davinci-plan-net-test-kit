@@ -6,11 +6,11 @@ module DaVinciPDEXPlanNetTestKit
     class NetworkHealthcareServiceOrganizationRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns HealthcareService resources from Organization search by _revinclude=HealthcareService:organization'
+      title 'Server returns HealthcareService resources from Organization search with _revinclude=HealthcareService:organization'
       description %(
         A server SHALL be capable of supporting _revIncludes for HealthcareService:organization.
 
-        This test will perform a search by _revinclude=HealthcareService:organization and
+        This test will perform a search with _revinclude=HealthcareService:organization and
         will pass if a HealthcareService resource is found in the response.
       )
 

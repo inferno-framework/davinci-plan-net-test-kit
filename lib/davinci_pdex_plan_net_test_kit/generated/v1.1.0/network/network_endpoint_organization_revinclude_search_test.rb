@@ -6,11 +6,11 @@ module DaVinciPDEXPlanNetTestKit
     class NetworkEndpointOrganizationRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns Endpoint resources from Organization search by _revinclude=Endpoint:organization'
+      title 'Server returns Endpoint resources from Organization search with _revinclude=Endpoint:organization'
       description %(
         A server SHALL be capable of supporting _revIncludes for Endpoint:organization.
 
-        This test will perform a search by _revinclude=Endpoint:organization and
+        This test will perform a search with _revinclude=Endpoint:organization and
         will pass if a Endpoint resource is found in the response.
       )
 

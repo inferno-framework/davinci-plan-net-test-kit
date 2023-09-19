@@ -6,25 +6,20 @@ module DaVinciPDEXPlanNetTestKit
     class InsurancePlanInsurancePlanCoverageAreaIncludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns Location resources from InsurancePlan search by _include=InsurancePlan:coverage-area'
+      title 'Server returns Location resources from InsurancePlan search with _include=InsurancePlan:coverage-area'
       description %(
         A server SHALL be capable of supporting _includes for InsurancePlan:coverage-area.
 
-        This test will perform a search by _include=InsurancePlan:coverage-area and
+        This test will perform a search with _include=InsurancePlan:coverage-area and
         will pass if a Location resource is found in the response.
       )
 
       id :davinci_plan_net_v110_insurance_plan_insurance_plan_coverage_area_include_search_test
-      input :insurance_plan_coverage_area_input,
-        title: 'IDs of InsurancePlan that have Location reference(s)',
-        description: 'Comma separated list of InsurancePlan IDs that reference by a Location',
-        optional: true
 
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'InsurancePlan',
           search_param_names: [],
-          input_name: 'insurance_plan_coverage_area_input',
           include_param: 'InsurancePlan:coverage-area',
           inc_param_sp: 'coverage-area',
           additional_resource_type: 'Location'

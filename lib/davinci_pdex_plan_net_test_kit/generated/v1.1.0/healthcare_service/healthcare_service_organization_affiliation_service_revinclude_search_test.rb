@@ -6,11 +6,11 @@ module DaVinciPDEXPlanNetTestKit
     class HealthcareServiceOrganizationAffiliationServiceRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns OrganizationAffiliation resources from HealthcareService search by _revinclude=OrganizationAffiliation:service'
+      title 'Server returns OrganizationAffiliation resources from HealthcareService search with _revinclude=OrganizationAffiliation:service'
       description %(
         A server SHALL be capable of supporting _revIncludes for OrganizationAffiliation:service.
 
-        This test will perform a search by _revinclude=OrganizationAffiliation:service and
+        This test will perform a search with _revinclude=OrganizationAffiliation:service and
         will pass if a OrganizationAffiliation resource is found in the response.
       )
 

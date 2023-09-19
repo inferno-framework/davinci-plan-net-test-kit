@@ -6,25 +6,20 @@ module DaVinciPDEXPlanNetTestKit
     class HealthcareServiceHealthcareServiceLocationIncludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns Location resources from HealthcareService search by _include=HealthcareService:location'
+      title 'Server returns Location resources from HealthcareService search with _include=HealthcareService:location'
       description %(
         A server SHALL be capable of supporting _includes for HealthcareService:location.
 
-        This test will perform a search by _include=HealthcareService:location and
+        This test will perform a search with _include=HealthcareService:location and
         will pass if a Location resource is found in the response.
       )
 
       id :davinci_plan_net_v110_healthcare_service_healthcare_service_location_include_search_test
-      input :healthcare_service_location_input,
-        title: 'IDs of HealthcareService that have Location reference(s)',
-        description: 'Comma separated list of HealthcareService IDs that reference by a Location',
-        optional: true
 
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'HealthcareService',
           search_param_names: [],
-          input_name: 'healthcare_service_location_input',
           include_param: 'HealthcareService:location',
           inc_param_sp: 'location',
           additional_resource_type: 'Location'
