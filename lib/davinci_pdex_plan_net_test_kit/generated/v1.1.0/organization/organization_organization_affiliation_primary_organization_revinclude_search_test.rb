@@ -36,7 +36,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def self.revinclude_metadata
-        @revinclude_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', 'OrganizationAffiliation', 'metadata.yml'), aliases: true))
+        @revinclude_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', 'organization_affiliation', 'metadata.yml'), aliases: true))
       end
 
       def scratch_resources
@@ -44,7 +44,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_revinclude_resources
-        scratch[:OrganizationAffiliation_resources] ||= {}
+        scratch[:organization_affiliation_resources] ||= {}
       end
 
       run do

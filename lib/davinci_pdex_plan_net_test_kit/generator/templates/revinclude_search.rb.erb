@@ -31,7 +31,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def self.revinclude_metadata
-        @revinclude_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', '<%= revinclude_param_resource %>', 'metadata.yml'), aliases: true))
+        @revinclude_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', '<%= revinclude_param_resource.underscore %>', 'metadata.yml'), aliases: true))
       end
 
       def scratch_resources
@@ -39,7 +39,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_revinclude_resources
-        scratch[:<%= revinclude_param_resource %>_resources] ||= {}
+        scratch[:<%= revinclude_param_resource.underscore %>_resources] ||= {}
       end
 
       run do
