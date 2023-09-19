@@ -2,12 +2,11 @@ module DaVinciPDEXPlanNetTestKit
   class Generator
     module SpecialCases
       RESOURCES_TO_EXCLUDE = [
-        'Medication',
+        
       ].freeze
 
       PROFILES_TO_EXCLUDE = [
-        'http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-survey',
-        'http://hl7.org/fhir/us/core/StructureDefinition/us-core-vital-signs'
+        
       ].freeze
 
       class << self

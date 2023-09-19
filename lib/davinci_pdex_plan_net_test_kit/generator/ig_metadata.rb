@@ -12,11 +12,6 @@ module DaVinciPDEXPlanNetTestKit
           non_delayed_groups + delayed_groups
       end
 
-      def patient_group
-        @patient_group ||=
-          groups.find { |group| group.resource == 'Patient' }
-      end
-
       def delayed_groups
         @delayed_groups ||=
           groups.select { |group| group.delayed? }
@@ -24,7 +19,7 @@ module DaVinciPDEXPlanNetTestKit
 
       def non_delayed_groups
         @non_delayed_groups ||=
-          groups.reject { |group| group.delayed? } - [patient_group]
+          groups.reject { |group| group.delayed? }
       end
 
       def delayed_profiles

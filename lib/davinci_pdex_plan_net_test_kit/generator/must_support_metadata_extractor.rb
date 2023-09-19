@@ -1,8 +1,6 @@
 require_relative 'value_extractor'
 require_relative 'must_support_metadata_extractor_us_core_3'
-require_relative 'must_support_metadata_extractor_us_core_4'
-require_relative 'must_support_metadata_extractor_us_core_5'
-require_relative 'must_support_metadata_extractor_us_core_6'
+
 
 module DaVinciPDEXPlanNetTestKit
   class Generator
@@ -316,51 +314,10 @@ module DaVinciPDEXPlanNetTestKit
       #### SPECIAL CASE ####
 
       def handle_special_cases
-        remove_vital_sign_component
-        remove_blood_pressure_value
-        remove_observation_data_absent_reason
 
         case profile.version
-        when '3.1.1'
+        when '1.1.0'
           MustSupportMetadataExtractorUsCore3.new(profile, @must_supports).handle_special_cases
-        when '4.0.0'
-          MustSupportMetadataExtractorUsCore4.new(profile, @must_supports).handle_special_cases
-        when '5.0.1'
-          MustSupportMetadataExtractorUsCore5.new(profile, @must_supports).handle_special_cases
-        when '6.1.0'
-          MustSupportMetadataExtractorUsCore6.new(profile, @must_supports).handle_special_cases
-        end
-      end
-
-      def is_vital_sign?
-        [
-          'http://hl7.org/fhir/StructureDefinition/vitalsigns',
-          'http://hl7.org/fhir/us/core/StructureDefinition/us-core-vital-signs'
-        ].include?(profile.baseDefinition)
-      end
-
-      def is_blood_pressure?
-        ['observation-bp', 'USCoreBloodPressureProfile'].include?(profile.name)
-      end
-
-      # Exclude Observation.component from vital sign profiles except observation-bp and observation-pulse-ox
-      def remove_vital_sign_component
-        if is_vital_sign? && !is_blood_pressure? && profile.name != 'USCorePulseOximetryProfile'
-          @must_supports[:elements].delete_if do |element|
-            element[:path].start_with?('component')
-          end
-        end
-      end
-
-      # Exclude Observation.value[x] from observation-bp
-      def remove_blood_pressure_value
-        if is_blood_pressure?
-          @must_supports[:elements].delete_if do |element|
-            element[:path].start_with?('value[x]') || element[:original_path]&.start_with?('value[x]')
-          end
-          @must_supports[:slices].delete_if do |slice|
-            slice[:path].start_with?('value[x]')
-          end
         end
       end
 

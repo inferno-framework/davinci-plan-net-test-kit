@@ -84,13 +84,13 @@
     :multiple_or: ''
     :chain:
     - :chain: type
-      :expectation: 
+      :expectation: SHALL
     - :chain: address
-      :expectation: 
+      :expectation: SHALL
     - :chain: name
-      :expectation: 
+      :expectation: SHALL
     - :chain: partof
-      :expectation: 
+      :expectation: SHALL
   :participating-organization:
     :paths:
     - participatingOrganization
@@ -104,13 +104,13 @@
     :multiple_or: ''
     :chain:
     - :chain: type
-      :expectation: 
+      :expectation: SHALL
     - :chain: address
-      :expectation: 
+      :expectation: SHALL
     - :chain: name
-      :expectation: 
+      :expectation: SHALL
     - :chain: partof
-      :expectation: 
+      :expectation: SHALL
   :location:
     :paths:
     - location
@@ -124,17 +124,17 @@
     :multiple_or: ''
     :chain:
     - :chain: address
-      :expectation: 
+      :expectation: SHALL
     - :chain: address-postalcode
-      :expectation: 
+      :expectation: SHALL
     - :chain: address-city
-      :expectation: 
+      :expectation: SHALL
     - :chain: address-state
-      :expectation: 
+      :expectation: SHALL
     - :chain: organization
-      :expectation: 
+      :expectation: SHALL
     - :chain: type
-      :expectation: 
+      :expectation: SHALL
   :service:
     :paths:
     - healthcareService
@@ -148,11 +148,11 @@
     :multiple_or: ''
     :chain:
     - :chain: service-category
-      :expectation: 
+      :expectation: SHALL
     - :chain: organization
-      :expectation: 
+      :expectation: SHALL
     - :chain: location
-      :expectation: 
+      :expectation: SHALL
   :network:
     :paths:
     - network
@@ -166,9 +166,9 @@
     :multiple_or: ''
     :chain:
     - :chain: name
-      :expectation: 
+      :expectation: SHALL
     - :chain: partof
-      :expectation: 
+      :expectation: SHALL
   :endpoint:
     :paths:
     - endpoint
@@ -182,7 +182,7 @@
     :multiple_or: ''
     :chain:
     - :chain: organization
-      :expectation: 
+      :expectation: SHALL
   :role:
     :paths:
     - code
@@ -1252,22 +1252,4 @@
   :file_name: organization_affiliation_reference_resolution_test.rb
 :id: davinci_pdex_plan_net_v110_organization_affiliation
 :file_name: organization_affiliation_group.rb
-:delayed_references:
-- :path: organization
-  :resources:
-  - Organization
-- :path: participatingOrganization
-  :resources:
-  - Organization
-- :path: network
-  :resources:
-  - Organization
-- :path: location
-  :resources:
-  - Location
-- :path: healthcareService
-  :resources:
-  - HealthcareService
-- :path: endpoint
-  :resources:
-  - Endpoint
+:delayed_references: []

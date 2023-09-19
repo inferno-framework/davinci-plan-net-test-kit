@@ -51,13 +51,13 @@
       :multiple_or: ''
       :chain:
       - :chain: name
-        :expectation: 
+        :expectation: SHALL
       - :chain: address
-        :expectation: 
+        :expectation: SHALL
       - :chain: partof
-        :expectation: 
+        :expectation: SHALL
       - :chain: type
-        :expectation: 
+        :expectation: SHALL
     :_id:
       :paths:
       - Resource.id
@@ -140,10 +140,7 @@
   - :path: Endpoint.managingOrganization
     :profiles:
     - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Organization
-  :delayed_references:
-  - :path: managingOrganization
-    :resources:
-    - Organization
+  :delayed_references: []
 - :name: plannet_HealthcareService
   :class_name: PlannetHealthcareserviceSequence
   :version: v1.1.0
@@ -229,17 +226,17 @@
       :multiple_or: ''
       :chain:
       - :chain: address
-        :expectation: 
+        :expectation: SHALL
       - :chain: address-postalcode
-        :expectation: 
+        :expectation: SHALL
       - :chain: address-city
-        :expectation: 
+        :expectation: SHALL
       - :chain: address-state
-        :expectation: 
+        :expectation: SHALL
       - :chain: organization
-        :expectation: 
+        :expectation: SHALL
       - :chain: type
-        :expectation: 
+        :expectation: SHALL
     :coverage-area:
       :paths:
       - coverageArea
@@ -264,13 +261,13 @@
       :multiple_or: ''
       :chain:
       - :chain: name
-        :expectation: 
+        :expectation: SHALL
       - :chain: address
-        :expectation: 
+        :expectation: SHALL
       - :chain: partof
-        :expectation: 
+        :expectation: SHALL
       - :chain: type
-        :expectation: 
+        :expectation: SHALL
     :endpoint:
       :paths:
       - endpoint
@@ -284,7 +281,7 @@
       :multiple_or: ''
       :chain:
       - :chain: organization
-        :expectation: 
+        :expectation: SHALL
     :name:
       :paths:
       - name
@@ -1449,19 +1446,7 @@
   - :path: HealthcareService.endpoint
     :profiles:
     - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Endpoint
-  :delayed_references:
-  - :path: providedBy
-    :resources:
-    - Organization
-  - :path: location
-    :resources:
-    - Location
-  - :path: coverageArea
-    :resources:
-    - Location
-  - :path: endpoint
-    :resources:
-    - Endpoint
+  :delayed_references: []
 - :name: plannet_InsurancePlan
   :class_name: PlannetInsuranceplanSequence
   :version: v1.1.0
@@ -1543,9 +1528,9 @@
       :multiple_or: ''
       :chain:
       - :chain: name
-        :expectation: 
+        :expectation: SHALL
       - :chain: partof
-        :expectation: 
+        :expectation: SHALL
     :owned-by:
       :paths:
       - ownedBy
@@ -1559,9 +1544,9 @@
       :multiple_or: ''
       :chain:
       - :chain: name
-        :expectation: 
+        :expectation: SHALL
       - :chain: partof
-        :expectation: 
+        :expectation: SHALL
     :coverage-area:
       :paths:
       - coverageArea
@@ -1782,28 +1767,7 @@
   - :path: InsurancePlan.plan.network
     :profiles:
     - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Network
-  :delayed_references:
-  - :path: ownedBy
-    :resources:
-    - Organization
-  - :path: administeredBy
-    :resources:
-    - Organization
-  - :path: coverageArea
-    :resources:
-    - Location
-  - :path: endpoint
-    :resources:
-    - Endpoint
-  - :path: network
-    :resources:
-    - Organization
-  - :path: plan.coverageArea
-    :resources:
-    - Location
-  - :path: plan.network
-    :resources:
-    - Organization
+  :delayed_references: []
 - :name: plannet_Location
   :class_name: PlannetLocationSequence
   :version: v1.1.0
@@ -1889,11 +1853,11 @@
       :multiple_or: ''
       :chain:
       - :chain: type
-        :expectation: 
+        :expectation: SHALL
       - :chain: address
-        :expectation: 
+        :expectation: SHALL
       - :chain: organization
-        :expectation: 
+        :expectation: SHALL
     :organization:
       :paths:
       - managingOrganization
@@ -1907,13 +1871,13 @@
       :multiple_or: ''
       :chain:
       - :chain: name
-        :expectation: 
+        :expectation: SHALL
       - :chain: address
-        :expectation: 
+        :expectation: SHALL
       - :chain: partof
-        :expectation: 
+        :expectation: SHALL
       - :chain: type
-        :expectation: 
+        :expectation: SHALL
     :endpoint:
       :paths:
       - endpoint
@@ -1927,7 +1891,7 @@
       :multiple_or: ''
       :chain:
       - :chain: organization
-        :expectation: 
+        :expectation: SHALL
     :address-city:
       :paths:
       - address.city
@@ -2131,16 +2095,7 @@
   - :path: Location.endpoint
     :profiles:
     - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Endpoint
-  :delayed_references:
-  - :path: managingOrganization
-    :resources:
-    - Organization
-  - :path: partOf
-    :resources:
-    - Location
-  - :path: endpoint
-    :resources:
-    - Endpoint
+  :delayed_references: []
 - :name: plannet_Network
   :class_name: PlannetNetworkSequence
   :version: v1.1.0
@@ -2216,11 +2171,11 @@
       :multiple_or: ''
       :chain:
       - :chain: name
-        :expectation: 
+        :expectation: SHALL
       - :chain: address
-        :expectation: 
+        :expectation: SHALL
       - :chain: type
-        :expectation: 
+        :expectation: SHALL
     :endpoint:
       :paths:
       - endpoint
@@ -2234,7 +2189,7 @@
       :multiple_or: ''
       :chain:
       - :chain: organization
-        :expectation: 
+        :expectation: SHALL
     :address:
       :paths:
       - address
@@ -2408,13 +2363,7 @@
   - :path: Organization.endpoint
     :profiles:
     - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Endpoint
-  :delayed_references:
-  - :path: partOf
-    :resources:
-    - Organization
-  - :path: endpoint
-    :resources:
-    - Endpoint
+  :delayed_references: []
 - :name: plannet_Organization
   :class_name: PlannetOrganizationSequence
   :version: v1.1.0
@@ -2491,11 +2440,11 @@
       :multiple_or: ''
       :chain:
       - :chain: name
-        :expectation: 
+        :expectation: SHALL
       - :chain: address
-        :expectation: 
+        :expectation: SHALL
       - :chain: type
-        :expectation: 
+        :expectation: SHALL
     :endpoint:
       :paths:
       - endpoint
@@ -2509,7 +2458,7 @@
       :multiple_or: ''
       :chain:
       - :chain: organization
-        :expectation: 
+        :expectation: SHALL
     :address:
       :paths:
       - address
@@ -2721,10 +2670,7 @@
   - :path: Organization.endpoint
     :profiles:
     - http://hl7.org/fhir/StructureDefinition/Endpoint
-  :delayed_references:
-  - :path: partOf
-    :resources:
-    - Organization
+  :delayed_references: []
 - :name: plannet_OrganizationAffiliation
   :class_name: PlannetOrganizationaffiliationSequence
   :version: v1.1.0
@@ -2810,13 +2756,13 @@
       :multiple_or: ''
       :chain:
       - :chain: type
-        :expectation: 
+        :expectation: SHALL
       - :chain: address
-        :expectation: 
+        :expectation: SHALL
       - :chain: name
-        :expectation: 
+        :expectation: SHALL
       - :chain: partof
-        :expectation: 
+        :expectation: SHALL
     :participating-organization:
       :paths:
       - participatingOrganization
@@ -2830,13 +2776,13 @@
       :multiple_or: ''
       :chain:
       - :chain: type
-        :expectation: 
+        :expectation: SHALL
       - :chain: address
-        :expectation: 
+        :expectation: SHALL
       - :chain: name
-        :expectation: 
+        :expectation: SHALL
       - :chain: partof
-        :expectation: 
+        :expectation: SHALL
     :location:
       :paths:
       - location
@@ -2850,17 +2796,17 @@
       :multiple_or: ''
       :chain:
       - :chain: address
-        :expectation: 
+        :expectation: SHALL
       - :chain: address-postalcode
-        :expectation: 
+        :expectation: SHALL
       - :chain: address-city
-        :expectation: 
+        :expectation: SHALL
       - :chain: address-state
-        :expectation: 
+        :expectation: SHALL
       - :chain: organization
-        :expectation: 
+        :expectation: SHALL
       - :chain: type
-        :expectation: 
+        :expectation: SHALL
     :service:
       :paths:
       - healthcareService
@@ -2874,11 +2820,11 @@
       :multiple_or: ''
       :chain:
       - :chain: service-category
-        :expectation: 
+        :expectation: SHALL
       - :chain: organization
-        :expectation: 
+        :expectation: SHALL
       - :chain: location
-        :expectation: 
+        :expectation: SHALL
     :network:
       :paths:
       - network
@@ -2892,9 +2838,9 @@
       :multiple_or: ''
       :chain:
       - :chain: name
-        :expectation: 
+        :expectation: SHALL
       - :chain: partof
-        :expectation: 
+        :expectation: SHALL
     :endpoint:
       :paths:
       - endpoint
@@ -2908,7 +2854,7 @@
       :multiple_or: ''
       :chain:
       - :chain: organization
-        :expectation: 
+        :expectation: SHALL
     :role:
       :paths:
       - code
@@ -3933,25 +3879,7 @@
   - :path: OrganizationAffiliation.endpoint
     :profiles:
     - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Endpoint
-  :delayed_references:
-  - :path: organization
-    :resources:
-    - Organization
-  - :path: participatingOrganization
-    :resources:
-    - Organization
-  - :path: network
-    :resources:
-    - Organization
-  - :path: location
-    :resources:
-    - Location
-  - :path: healthcareService
-    :resources:
-    - HealthcareService
-  - :path: endpoint
-    :resources:
-    - Endpoint
+  :delayed_references: []
 - :name: plannet_Practitioner
   :class_name: PlannetPractitionerSequence
   :version: v1.1.0
@@ -4255,7 +4183,7 @@
       :multiple_or: ''
       :chain:
       - :chain: name
-        :expectation: 
+        :expectation: SHALL
     :organization:
       :paths:
       - organization
@@ -4269,13 +4197,13 @@
       :multiple_or: ''
       :chain:
       - :chain: name
-        :expectation: 
+        :expectation: SHALL
       - :chain: address
-        :expectation: 
+        :expectation: SHALL
       - :chain: partof
-        :expectation: 
+        :expectation: SHALL
       - :chain: type
-        :expectation: 
+        :expectation: SHALL
     :location:
       :paths:
       - location
@@ -4289,17 +4217,17 @@
       :multiple_or: ''
       :chain:
       - :chain: address
-        :expectation: 
+        :expectation: SHALL
       - :chain: address-postalcode
-        :expectation: 
+        :expectation: SHALL
       - :chain: address-city
-        :expectation: 
+        :expectation: SHALL
       - :chain: address-state
-        :expectation: 
+        :expectation: SHALL
       - :chain: organization
-        :expectation: 
+        :expectation: SHALL
       - :chain: type
-        :expectation: 
+        :expectation: SHALL
     :service:
       :paths:
       - healthcareService
@@ -4313,11 +4241,11 @@
       :multiple_or: ''
       :chain:
       - :chain: service-category
-        :expectation: 
+        :expectation: SHALL
       - :chain: organization
-        :expectation: 
+        :expectation: SHALL
       - :chain: location
-        :expectation: 
+        :expectation: SHALL
     :network:
       :paths:
       - extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/network-reference')
@@ -4331,13 +4259,13 @@
       :multiple_or: ''
       :chain:
       - :chain: name
-        :expectation: 
+        :expectation: SHALL
       - :chain: address
-        :expectation: 
+        :expectation: SHALL
       - :chain: partof
-        :expectation: 
+        :expectation: SHALL
       - :chain: type
-        :expectation: 
+        :expectation: SHALL
     :endpoint:
       :paths:
       - endpoint
@@ -4351,7 +4279,7 @@
       :multiple_or: ''
       :chain:
       - :chain: organization
-        :expectation: 
+        :expectation: SHALL
     :role:
       :paths:
       - code
@@ -5280,22 +5208,4 @@
   - :path: PractitionerRole.endpoint
     :profiles:
     - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Endpoint
-  :delayed_references:
-  - :path: extension.extension.value[x]
-    :resources:
-    - Organization
-  - :path: practitioner
-    :resources:
-    - Practitioner
-  - :path: organization
-    :resources:
-    - Organization
-  - :path: location
-    :resources:
-    - Location
-  - :path: healthcareService
-    :resources:
-    - HealthcareService
-  - :path: endpoint
-    :resources:
-    - Endpoint
+  :delayed_references: []

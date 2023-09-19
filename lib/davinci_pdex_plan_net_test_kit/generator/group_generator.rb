@@ -72,17 +72,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def search_validation_resource_type
-        text = "#{resource_type} resources"
-        if resource_type == 'Condition' && group_metadata.reformatted_version == 'v501'
-          case profile_url
-          when 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition-encounter-diagnosis'
-            text.concat(' with category `encounter-diagnosis`')
-          when 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition-problems-health-concerns'
-            text.concat(' with category `problem-list-item | health-concern`')
-          end
-        end
-
-        text
+        "#{resource_type} resources"
       end
 
       def profile_name
@@ -94,8 +84,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def optional?
-        resource_type == 'QuestionnaireResponse' ||
-        profile_url == 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-simple-observation'
+        false #No Optional groups in Plan Net
       end
 
       def generate
@@ -108,14 +97,6 @@ module DaVinciPDEXPlanNetTestKit
 
       def add_special_tests
         return if group_metadata.reformatted_version == 'v311'
-
-        case group_metadata.resource
-        when 'DocumentReference'
-          group_metadata.add_test(
-            id: 'us_core_v400_document_reference_custodian_test',
-            file_name: '../../custom_groups/v4.0.0/document_reference_custodian_test.rb'
-          )
-        end
       end
 
       def test_id_list
@@ -154,11 +135,11 @@ module DaVinciPDEXPlanNetTestKit
         #{search_param_name_string}
 
         ### Search Parameters
-        The first search uses the selected patient(s) from the prior launch
+        The first search uses the selected #{profile_name}(s) from the prior launch
         sequence. Any subsequent searches will look for its parameter values
         from the results of the first search. For example, the `identifier`
-        search in the patient sequence is performed by looking for an existing
-        `Patient.identifier` from any of the resources returned in the `_id`
+        search in the #{profile_name} sequence is performed by looking for an existing
+        `#{resource_type}.identifier` from any of the #{profile_name}s returned in the `_id`
         search. If a value cannot be found this way, the search is skipped.
 
         ### Search Validation
@@ -167,8 +148,8 @@ module DaVinciPDEXPlanNetTestKit
         these resources is then checked to see if it matches the searched
         parameters in accordance with [FHIR search
         guidelines](https://www.hl7.org/fhir/search.html). The test will fail,
-        for example, if a Patient search for `gender=male` returns a `female`
-        patient.
+        for example, if a #{profile_name} search for `#{required_searches.first[:names].first}=X``
+        returns a #{profile_name} where `#{required_searches.first[:names].first}!=X`
         SEARCH_DESCRIPTION
       end
 

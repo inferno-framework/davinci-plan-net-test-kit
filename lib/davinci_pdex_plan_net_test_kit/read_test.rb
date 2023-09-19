@@ -48,7 +48,7 @@ module DaVinciPDEXPlanNetTestKit
 
     def no_resources_skip_message
       "No #{resource_type} resources appear to be available. " \
-      'Please use patients with more information.'
+      "Please use #{resource_type}s with more information."
     end
 
     def bad_resource_id_message(expected_id)

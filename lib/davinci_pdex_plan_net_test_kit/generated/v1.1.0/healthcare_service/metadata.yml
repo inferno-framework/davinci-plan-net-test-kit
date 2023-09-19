@@ -84,17 +84,17 @@
     :multiple_or: ''
     :chain:
     - :chain: address
-      :expectation: 
+      :expectation: SHALL
     - :chain: address-postalcode
-      :expectation: 
+      :expectation: SHALL
     - :chain: address-city
-      :expectation: 
+      :expectation: SHALL
     - :chain: address-state
-      :expectation: 
+      :expectation: SHALL
     - :chain: organization
-      :expectation: 
+      :expectation: SHALL
     - :chain: type
-      :expectation: 
+      :expectation: SHALL
   :coverage-area:
     :paths:
     - coverageArea
@@ -119,13 +119,13 @@
     :multiple_or: ''
     :chain:
     - :chain: name
-      :expectation: 
+      :expectation: SHALL
     - :chain: address
-      :expectation: 
+      :expectation: SHALL
     - :chain: partof
-      :expectation: 
+      :expectation: SHALL
     - :chain: type
-      :expectation: 
+      :expectation: SHALL
   :endpoint:
     :paths:
     - endpoint
@@ -139,7 +139,7 @@
     :multiple_or: ''
     :chain:
     - :chain: organization
-      :expectation: 
+      :expectation: SHALL
   :name:
     :paths:
     - name
@@ -1349,16 +1349,4 @@
   :file_name: healthcare_service_reference_resolution_test.rb
 :id: davinci_pdex_plan_net_v110_healthcare_service
 :file_name: healthcare_service_group.rb
-:delayed_references:
-- :path: providedBy
-  :resources:
-  - Organization
-- :path: location
-  :resources:
-  - Location
-- :path: coverageArea
-  :resources:
-  - Location
-- :path: endpoint
-  :resources:
-  - Endpoint
+:delayed_references: []

@@ -46,10 +46,6 @@ module DaVinciPDEXPlanNetTestKit
 
             full_paths = path.split('|').map { |a_path| a_path.strip } # For Lists
 
-            # There is a bug in US Core 5 asserted-date search parameter. See FHIR-40573
-            if param.respond_to?(:version) && param.version == '5.0.1' && name == 'asserted-date'
-              remove_additional_extension_from_asserted_date(full_paths)
-            end
             full_paths
           end
       end
@@ -132,7 +128,7 @@ module DaVinciPDEXPlanNetTestKit
       def contains_multiple?
         if profile_element.present?
           if profile_element.id.start_with?('Extension') && extension_definition.present?
-            # Find the extension instance in a US Core profile
+            # Find the extension instance in a profile
             target_element = profile_elements.find do |element|
               element.type.any? { |type| type.code == "Extension" && type.profile.include?(extension_definition.url) }
             end
@@ -162,7 +158,7 @@ module DaVinciPDEXPlanNetTestKit
 
         param.chain
           .zip(chain_expectations)
-          .map { |chain, expectation| { chain: chain, expectation: expectation } }
+          .map { |chain, expectation| { chain: chain, expectation: expectation.present? ? expectation : 'SHALL' } }
       end
 
       def multiple_or_expectation

@@ -80,9 +80,9 @@
     :multiple_or: ''
     :chain:
     - :chain: name
-      :expectation: 
+      :expectation: SHALL
     - :chain: partof
-      :expectation: 
+      :expectation: SHALL
   :owned-by:
     :paths:
     - ownedBy
@@ -96,9 +96,9 @@
     :multiple_or: ''
     :chain:
     - :chain: name
-      :expectation: 
+      :expectation: SHALL
     - :chain: partof
-      :expectation: 
+      :expectation: SHALL
   :coverage-area:
     :paths:
     - coverageArea
@@ -356,25 +356,4 @@
   :file_name: insurance_plan_reference_resolution_test.rb
 :id: davinci_pdex_plan_net_v110_insurance_plan
 :file_name: insurance_plan_group.rb
-:delayed_references:
-- :path: ownedBy
-  :resources:
-  - Organization
-- :path: administeredBy
-  :resources:
-  - Organization
-- :path: coverageArea
-  :resources:
-  - Location
-- :path: endpoint
-  :resources:
-  - Endpoint
-- :path: network
-  :resources:
-  - Organization
-- :path: plan.coverageArea
-  :resources:
-  - Location
-- :path: plan.network
-  :resources:
-  - Organization
+:delayed_references: []

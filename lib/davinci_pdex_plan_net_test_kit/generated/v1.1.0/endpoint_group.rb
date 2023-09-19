@@ -32,11 +32,11 @@ following parameters:
 * _lastUpdated
 
 ### Search Parameters
-The first search uses the selected patient(s) from the prior launch
+The first search uses the selected Plan-Net Endpoint(s) from the prior launch
 sequence. Any subsequent searches will look for its parameter values
 from the results of the first search. For example, the `identifier`
-search in the patient sequence is performed by looking for an existing
-`Patient.identifier` from any of the resources returned in the `_id`
+search in the Plan-Net Endpoint sequence is performed by looking for an existing
+`Endpoint.identifier` from any of the Plan-Net Endpoints returned in the `_id`
 search. If a value cannot be found this way, the search is skipped.
 
 ### Search Validation
@@ -45,8 +45,8 @@ Endpoint resources and save them for subsequent tests. Each of
 these resources is then checked to see if it matches the searched
 parameters in accordance with [FHIR search
 guidelines](https://www.hl7.org/fhir/search.html). The test will fail,
-for example, if a Patient search for `gender=male` returns a `female`
-patient.
+for example, if a Plan-Net Endpoint search for `organization=X``
+returns a Plan-Net Endpoint where `organization!=X`
 
 
 ## Must Support

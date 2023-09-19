@@ -98,45 +98,9 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       ### BEGIN SPECIAL CASES ###
-
-      ALL_VERSION_CATEGORY_FIRST_PROFILES = [
-        'http://hl7.org/fhir/us/core/StructureDefinition/us-core-careplan',
-        'http://hl7.org/fhir/us/core/StructureDefinition/us-core-diagnosticreport-lab',
-        'http://hl7.org/fhir/us/core/StructureDefinition/us-core-diagnosticreport-note',
-        'http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-clinical-result',
-        'http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-clinical-test',
-        'http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-imaging',
-        'http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-lab',
-        'http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-screening-assessment',
-        'http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-sdoh-assessment',
-        'http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-social-history',
-        'http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-survey',
-        'http://hl7.org/fhir/us/core/StructureDefinition/us-core-simple-observation'
-      ]
-
-      VERSION_SPECIFIC_CATEGORY_FIRST_PROFILES = {
-        'http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition-encounter-diagnosis' => ['v610'],
-        'http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition-problems-health-concerns' => ['v610']
-      }
-
-      def category_first_profile?
-        ALL_VERSION_CATEGORY_FIRST_PROFILES.include?(profile_url) ||
-        VERSION_SPECIFIC_CATEGORY_FIRST_PROFILES[profile_url]&.include?(reformatted_version)
-      end
-
       def first_search_params
-        @first_search_params ||=
-        if category_first_profile?
-          ['patient', 'category']
-        elsif resource == 'Observation'
-          ['patient', 'code']
-        elsif resource == 'MedicationRequest'
-          ['patient', 'intent']
-        elsif resource == 'CareTeam'
-          ['patient', 'status']
-        else
-          ['patient']
-        end
+        # TODO
+        # I think we are still defining this? Shouldn't parameterless always be the first search at this point?
       end
 
       def handle_special_cases
@@ -174,7 +138,6 @@ module DaVinciPDEXPlanNetTestKit
           .split('-')
           .map(&:capitalize)
           .join
-          .gsub('UsCore', "USCore#{ig_metadata.reformatted_version}")
           .concat('Sequence')
       end
 
@@ -199,7 +162,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def title
-        title = profile.title.gsub(/US\s*Core\s*/, '').gsub(/\s*Profile/, '').strip
+        title = profile.title.gsub(/\s*Profile/, '').strip
 
         if (Naming.resources_with_multiple_profiles.include?(resource)) && !title.start_with?(resource) && version != 'v3.1.1'
           title = resource + ' ' + title.split(resource).map(&:strip).join(' ')
