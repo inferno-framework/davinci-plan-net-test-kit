@@ -6,26 +6,22 @@ module DaVinciPDEXPlanNetTestKit
     class InsurancePlanInsurancePlanAdministeredByIncludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns Organization resources from InsurancePlan search by _include=InsurancePlan:administered-by'
+      title 'Server returns Organization resources from InsurancePlan search with _include=InsurancePlan:administered-by'
       description %(
         A server SHALL be capable of supporting _includes for InsurancePlan:administered-by.
 
-        This test will perform a search by _include=InsurancePlan:administered-by and
+        This test will perform a search with _include=InsurancePlan:administered-by and
         will pass if a Organization resource is found in the response.
       )
 
       id :davinci_plan_net_v110_insurance_plan_insurance_plan_administered_by_include_search_test
-      input :insurance_plan_administered_by_input,
-        title: 'IDs of InsurancePlan that have Organization reference(s)',
-        description: 'Comma separated list of InsurancePlan IDs that reference by a Organization',
-        optional: true
 
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'InsurancePlan',
           search_param_names: [],
-          input_name: 'insurance_plan_administered_by_input',
           include_param: 'InsurancePlan:administered-by',
+          inc_param_sp: 'administered-by',
           additional_resource_type: 'Organization'
         )
       end

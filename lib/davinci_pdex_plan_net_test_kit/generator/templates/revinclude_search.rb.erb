@@ -6,11 +6,11 @@ module DaVinciPDEXPlanNetTestKit
     class <%= class_name %> < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns <%= revinclude_param_resource %> resources from <%= resource_type %> search by <%= revinclude_param_string %>'
+      title 'Server returns <%= revinclude_param_resource %> resources from <%= resource_type %> search with <%= revinclude_param_string %>'
       description %(
         A server SHALL be capable of supporting _revIncludes for <%= revinclude_param %>.
 
-        This test will perform a search by <%= revinclude_param_string %> and
+        This test will perform a search with <%= revinclude_param_string %> and
         will pass if a <%= revinclude_param_resource %> resource is found in the response.
       )
 
@@ -31,7 +31,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def self.revinclude_metadata
-        @revinclude_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', '<%= revinclude_param_resource %>', 'metadata.yml'), aliases: true))
+        @revinclude_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', '<%= revinclude_param_resource.underscore %>', 'metadata.yml'), aliases: true))
       end
 
       def scratch_resources
@@ -39,7 +39,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_revinclude_resources
-        scratch[:<%= revinclude_param_resource.downcase %>_resources] ||= {}
+        scratch[:<%= revinclude_param_resource.underscore %>_resources] ||= {}
       end
 
       run do

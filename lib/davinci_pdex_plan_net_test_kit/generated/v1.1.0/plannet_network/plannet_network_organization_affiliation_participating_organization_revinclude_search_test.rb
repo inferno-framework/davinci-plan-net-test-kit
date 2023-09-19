@@ -6,11 +6,11 @@ module DaVinciPDEXPlanNetTestKit
     class PlannetNetworkOrganizationAffiliationParticipatingOrganizationRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns OrganizationAffiliation resources from Organization search by _revinclude=OrganizationAffiliation:participating-organization'
+      title 'Server returns OrganizationAffiliation resources from Organization search with _revinclude=OrganizationAffiliation:participating-organization'
       description %(
         A server SHALL be capable of supporting _revIncludes for OrganizationAffiliation:participating-organization.
 
-        This test will perform a search by _revinclude=OrganizationAffiliation:participating-organization and
+        This test will perform a search with _revinclude=OrganizationAffiliation:participating-organization and
         will pass if a OrganizationAffiliation resource is found in the response.
       )
 
@@ -26,6 +26,7 @@ module DaVinciPDEXPlanNetTestKit
           search_param_names: [],
           input_name: 'organization_affiliation_participating_organization_input',
           revinclude_param: 'OrganizationAffiliation:participating-organization',
+          rev_param_sp: 'participating-organization',
           additional_resource_type: 'OrganizationAffiliation'
         )
       end
@@ -35,7 +36,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def self.revinclude_metadata
-        @revinclude_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', 'OrganizationAffiliation', 'metadata.yml'), aliases: true))
+        @revinclude_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', 'organization_affiliation', 'metadata.yml'), aliases: true))
       end
 
       def scratch_resources
@@ -43,7 +44,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_revinclude_resources
-        scratch[:organizationaffiliation_resources] ||= {}
+        scratch[:organization_affiliation_resources] ||= {}
       end
 
       run do

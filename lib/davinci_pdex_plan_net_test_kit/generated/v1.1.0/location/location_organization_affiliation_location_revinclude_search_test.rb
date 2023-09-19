@@ -6,11 +6,11 @@ module DaVinciPDEXPlanNetTestKit
     class LocationOrganizationAffiliationLocationRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns OrganizationAffiliation resources from Location search by _revinclude=OrganizationAffiliation:location'
+      title 'Server returns OrganizationAffiliation resources from Location search with _revinclude=OrganizationAffiliation:location'
       description %(
         A server SHALL be capable of supporting _revIncludes for OrganizationAffiliation:location.
 
-        This test will perform a search by _revinclude=OrganizationAffiliation:location and
+        This test will perform a search with _revinclude=OrganizationAffiliation:location and
         will pass if a OrganizationAffiliation resource is found in the response.
       )
 
@@ -26,6 +26,7 @@ module DaVinciPDEXPlanNetTestKit
           search_param_names: [],
           input_name: 'organization_affiliation_location_input',
           revinclude_param: 'OrganizationAffiliation:location',
+          rev_param_sp: 'location',
           additional_resource_type: 'OrganizationAffiliation'
         )
       end
@@ -35,7 +36,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def self.revinclude_metadata
-        @revinclude_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', 'OrganizationAffiliation', 'metadata.yml'), aliases: true))
+        @revinclude_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', 'organization_affiliation', 'metadata.yml'), aliases: true))
       end
 
       def scratch_resources
@@ -43,7 +44,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_revinclude_resources
-        scratch[:organizationaffiliation_resources] ||= {}
+        scratch[:organization_affiliation_resources] ||= {}
       end
 
       run do
