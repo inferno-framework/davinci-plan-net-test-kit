@@ -17,8 +17,9 @@ module DaVinciPDEXPlanNetTestKit
       id :davinci_plan_net_v110_organization_healthcare_service_organization_revinclude_search_test
       input :healthcare_service_organization_input,
         title: 'HealthcareService referenced Organization IDs',
-        description: 'Comma separated list of Organization  IDs that are referenced by a HealthcareService'
-
+        description: 'Comma separated list of Organization  IDs that are referenced by a HealthcareService',
+        optional: true
+        
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'Organization',

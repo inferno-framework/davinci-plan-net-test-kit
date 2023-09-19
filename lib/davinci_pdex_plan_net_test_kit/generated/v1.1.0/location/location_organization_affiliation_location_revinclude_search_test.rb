@@ -17,8 +17,9 @@ module DaVinciPDEXPlanNetTestKit
       id :davinci_plan_net_v110_location_organization_affiliation_location_revinclude_search_test
       input :organization_affiliation_location_input,
         title: 'OrganizationAffiliation referenced Location IDs',
-        description: 'Comma separated list of Location  IDs that are referenced by a OrganizationAffiliation'
-
+        description: 'Comma separated list of Location  IDs that are referenced by a OrganizationAffiliation',
+        optional: true
+        
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'Location',

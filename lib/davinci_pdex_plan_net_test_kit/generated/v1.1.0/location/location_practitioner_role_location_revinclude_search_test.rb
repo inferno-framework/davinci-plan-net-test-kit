@@ -17,8 +17,9 @@ module DaVinciPDEXPlanNetTestKit
       id :davinci_plan_net_v110_location_practitioner_role_location_revinclude_search_test
       input :practitioner_role_location_input,
         title: 'PractitionerRole referenced Location IDs',
-        description: 'Comma separated list of Location  IDs that are referenced by a PractitionerRole'
-
+        description: 'Comma separated list of Location  IDs that are referenced by a PractitionerRole',
+        optional: true
+        
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'Location',

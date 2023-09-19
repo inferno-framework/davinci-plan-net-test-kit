@@ -17,7 +17,8 @@ module DaVinciPDEXPlanNetTestKit
       id :davinci_plan_net_v110_organization_affiliation_organization_affiliation_primary_organization_include_search_test
       input :organization_affiliation_primary_organization_input,
         title: 'IDs of OrganizationAffiliation that have Organization reference(s)',
-        description: 'Comma separated list of OrganizationAffiliation IDs that reference by a Organization'
+        description: 'Comma separated list of OrganizationAffiliation IDs that reference by a Organization',
+        optional: true
 
       def properties
         @properties ||= SearchTestProperties.new(

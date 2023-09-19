@@ -17,7 +17,8 @@ module DaVinciPDEXPlanNetTestKit
       id :davinci_plan_net_v110_location_location_partof_include_search_test
       input :location_partof_input,
         title: 'IDs of Location that have Location reference(s)',
-        description: 'Comma separated list of Location IDs that reference by a Location'
+        description: 'Comma separated list of Location IDs that reference by a Location',
+        optional: true
 
       def properties
         @properties ||= SearchTestProperties.new(

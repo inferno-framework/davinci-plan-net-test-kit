@@ -17,8 +17,9 @@ module DaVinciPDEXPlanNetTestKit
       id :davinci_plan_net_v110_healthcare_service_practitioner_role_service_revinclude_search_test
       input :practitioner_role_service_input,
         title: 'PractitionerRole referenced HealthcareService IDs',
-        description: 'Comma separated list of HealthcareService  IDs that are referenced by a PractitionerRole'
-
+        description: 'Comma separated list of HealthcareService  IDs that are referenced by a PractitionerRole',
+        optional: true
+        
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'HealthcareService',

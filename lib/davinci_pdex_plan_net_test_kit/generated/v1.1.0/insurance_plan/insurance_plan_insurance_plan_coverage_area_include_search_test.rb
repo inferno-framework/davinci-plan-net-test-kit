@@ -17,7 +17,8 @@ module DaVinciPDEXPlanNetTestKit
       id :davinci_plan_net_v110_insurance_plan_insurance_plan_coverage_area_include_search_test
       input :insurance_plan_coverage_area_input,
         title: 'IDs of InsurancePlan that have Location reference(s)',
-        description: 'Comma separated list of InsurancePlan IDs that reference by a Location'
+        description: 'Comma separated list of InsurancePlan IDs that reference by a Location',
+        optional: true
 
       def properties
         @properties ||= SearchTestProperties.new(

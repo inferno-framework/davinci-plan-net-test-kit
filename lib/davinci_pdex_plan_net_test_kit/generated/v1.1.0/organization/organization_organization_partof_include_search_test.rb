@@ -17,7 +17,8 @@ module DaVinciPDEXPlanNetTestKit
       id :davinci_plan_net_v110_organization_organization_partof_include_search_test
       input :organization_partof_input,
         title: 'IDs of Organization that have Organization reference(s)',
-        description: 'Comma separated list of Organization IDs that reference by a Organization'
+        description: 'Comma separated list of Organization IDs that reference by a Organization',
+        optional: true
 
       def properties
         @properties ||= SearchTestProperties.new(

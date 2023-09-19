@@ -17,8 +17,9 @@ module DaVinciPDEXPlanNetTestKit
       id :davinci_plan_net_v110_location_healthcare_service_location_revinclude_search_test
       input :healthcare_service_location_input,
         title: 'HealthcareService referenced Location IDs',
-        description: 'Comma separated list of Location  IDs that are referenced by a HealthcareService'
-
+        description: 'Comma separated list of Location  IDs that are referenced by a HealthcareService',
+        optional: true
+        
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'Location',

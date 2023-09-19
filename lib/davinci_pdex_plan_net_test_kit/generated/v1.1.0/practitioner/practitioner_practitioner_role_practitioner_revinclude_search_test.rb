@@ -17,8 +17,9 @@ module DaVinciPDEXPlanNetTestKit
       id :davinci_plan_net_v110_practitioner_practitioner_role_practitioner_revinclude_search_test
       input :practitioner_role_practitioner_input,
         title: 'PractitionerRole referenced Practitioner IDs',
-        description: 'Comma separated list of Practitioner  IDs that are referenced by a PractitionerRole'
-
+        description: 'Comma separated list of Practitioner  IDs that are referenced by a PractitionerRole',
+        optional: true
+        
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'Practitioner',
