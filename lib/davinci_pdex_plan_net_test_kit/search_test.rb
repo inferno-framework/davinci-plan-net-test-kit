@@ -1,6 +1,7 @@
 require_relative 'date_search_validation'
 require_relative 'fhir_resource_navigation'
 require_relative 'search_test_properties'
+require_relative 'generator/special_cases'
 
 module DaVinciPDEXPlanNetTestKit
   module SearchTest
@@ -131,18 +132,18 @@ module DaVinciPDEXPlanNetTestKit
         end
       end
 
+      # perform parameterless search for the profile's resourceType
       if no_param_search == 'true'
         fhir_search resource_type
       
         check_search_response
         
-        resources_returned = fetch_all_bundled_resources(max_pages: max_pages.to_i).select { |resource| resource.resourceType == resource_type }
+        resources_returned = fetch_matching_bundled_resources(max_pages: max_pages.to_i, max_instances: max_instances.to_i)
 
         if first_search? && !resources_returned.empty?
           all_scratch_resources.concat(resources_returned).uniq!
         end
       end
-
 
       info "Found #{all_scratch_resources.size} instances to use for testing profile #{metadata.profile_name}."
 
@@ -576,6 +577,50 @@ module DaVinciPDEXPlanNetTestKit
         info "Received resource type(s) #{invalid_resource_types.join(', ')} in search bundle, " \
              "but only expected resource types #{valid_resource_types.join(', ')}. " + \
              "This is unusual but allowed if the server believes additional resource types are relevant."
+      end
+
+      resources
+    end
+
+    def fetch_matching_bundled_resources(
+          max_pages: 20,
+          max_instances: 200,
+          resource_type: self.resource_type
+        )
+      page_count = 0
+      resources = []
+      bundle = resource
+
+      loop do
+        bundle&.entry&.each do |a_entry|
+          a_resource = a_entry.resource
+          if ( a_resource && 
+               a_resource.resourceType == resource_type && 
+               # todo: move special cases somewhere else so this isn't specific to Plan Net
+               (metadata.profile_url != 'http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Organization' || !a_resource.type.reduce(false) { |outer_result, a_type| outer_result || a_type.coding.reduce(false) { |result, a_coding| result || (a_coding.code == 'ntwk' && a_coding.system == 'http://hl7.org/fhir/us/davinci-pdex-plan-net/CodeSystem/OrgTypeCS') } }) &&
+               (metadata.profile_url != 'http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Network' || !a_resource.type.reduce(true) { |outer_result, a_type| outer_result && a_type.coding.reduce(true) { |result, a_coding| result && !(a_coding.code == 'ntwk' && a_coding.system == 'http://hl7.org/fhir/us/davinci-pdex-plan-net/CodeSystem/OrgTypeCS') } })
+          )
+            resources << a_resource
+            break if resources.size >= max_instances
+          end
+        end
+        break if resources.size >= max_instances
+
+        page_count += 1
+        break if page_count >= max_pages
+
+        next_bundle_link = bundle&.link&.find { |link| link.relation == 'next' }&.url
+        break if next_bundle_link.blank?
+
+        reply = fhir_client.raw_read_url(next_bundle_link)
+
+        store_request('outgoing') { reply }
+        error_message = cant_resolve_next_bundle_message(next_bundle_link)
+
+        assert_response_status(200)
+        assert_valid_json(reply.body, error_message)
+
+        bundle = fhir_client.parse_reply(FHIR::Bundle, fhir_client.default_format, reply)
       end
 
       resources
