@@ -80,9 +80,9 @@
     :multiple_or: ''
     :chain:
     - :chain: name
-      :expectation: 
+      :expectation: SHALL
     - :chain: partof
-      :expectation: 
+      :expectation: SHALL
   :owned-by:
     :paths:
     - ownedBy
@@ -96,9 +96,9 @@
     :multiple_or: ''
     :chain:
     - :chain: name
-      :expectation: 
+      :expectation: SHALL
     - :chain: partof
-      :expectation: 
+      :expectation: SHALL
   :coverage-area:
     :paths:
     - coverageArea

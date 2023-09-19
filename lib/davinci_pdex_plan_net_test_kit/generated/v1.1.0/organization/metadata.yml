@@ -75,11 +75,11 @@
     :multiple_or: ''
     :chain:
     - :chain: name
-      :expectation: 
+      :expectation: SHALL
     - :chain: address
-      :expectation: 
+      :expectation: SHALL
     - :chain: type
-      :expectation: 
+      :expectation: SHALL
   :endpoint:
     :paths:
     - endpoint
@@ -93,7 +93,7 @@
     :multiple_or: ''
     :chain:
     - :chain: organization
-      :expectation: 
+      :expectation: SHALL
   :address:
     :paths:
     - address

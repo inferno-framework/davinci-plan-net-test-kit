@@ -158,7 +158,7 @@ module DaVinciPDEXPlanNetTestKit
 
         param.chain
           .zip(chain_expectations)
-          .map { |chain, expectation| { chain: chain, expectation: expectation } }
+          .map { |chain, expectation| { chain: chain, expectation: expectation.present? ? expectation : 'SHALL' } }
       end
 
       def multiple_or_expectation

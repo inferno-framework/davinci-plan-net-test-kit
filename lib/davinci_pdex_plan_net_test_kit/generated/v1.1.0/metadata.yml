@@ -51,13 +51,13 @@
       :multiple_or: ''
       :chain:
       - :chain: name
-        :expectation: 
+        :expectation: SHALL
       - :chain: address
-        :expectation: 
+        :expectation: SHALL
       - :chain: partof
-        :expectation: 
+        :expectation: SHALL
       - :chain: type
-        :expectation: 
+        :expectation: SHALL
     :_id:
       :paths:
       - Resource.id
@@ -226,17 +226,17 @@
       :multiple_or: ''
       :chain:
       - :chain: address
-        :expectation: 
+        :expectation: SHALL
       - :chain: address-postalcode
-        :expectation: 
+        :expectation: SHALL
       - :chain: address-city
-        :expectation: 
+        :expectation: SHALL
       - :chain: address-state
-        :expectation: 
+        :expectation: SHALL
       - :chain: organization
-        :expectation: 
+        :expectation: SHALL
       - :chain: type
-        :expectation: 
+        :expectation: SHALL
     :coverage-area:
       :paths:
       - coverageArea
@@ -261,13 +261,13 @@
       :multiple_or: ''
       :chain:
       - :chain: name
-        :expectation: 
+        :expectation: SHALL
       - :chain: address
-        :expectation: 
+        :expectation: SHALL
       - :chain: partof
-        :expectation: 
+        :expectation: SHALL
       - :chain: type
-        :expectation: 
+        :expectation: SHALL
     :endpoint:
       :paths:
       - endpoint
@@ -281,7 +281,7 @@
       :multiple_or: ''
       :chain:
       - :chain: organization
-        :expectation: 
+        :expectation: SHALL
     :name:
       :paths:
       - name
@@ -1528,9 +1528,9 @@
       :multiple_or: ''
       :chain:
       - :chain: name
-        :expectation: 
+        :expectation: SHALL
       - :chain: partof
-        :expectation: 
+        :expectation: SHALL
     :owned-by:
       :paths:
       - ownedBy
@@ -1544,9 +1544,9 @@
       :multiple_or: ''
       :chain:
       - :chain: name
-        :expectation: 
+        :expectation: SHALL
       - :chain: partof
-        :expectation: 
+        :expectation: SHALL
     :coverage-area:
       :paths:
       - coverageArea
@@ -1853,11 +1853,11 @@
       :multiple_or: ''
       :chain:
       - :chain: type
-        :expectation: 
+        :expectation: SHALL
       - :chain: address
-        :expectation: 
+        :expectation: SHALL
       - :chain: organization
-        :expectation: 
+        :expectation: SHALL
     :organization:
       :paths:
       - managingOrganization
@@ -1871,13 +1871,13 @@
       :multiple_or: ''
       :chain:
       - :chain: name
-        :expectation: 
+        :expectation: SHALL
       - :chain: address
-        :expectation: 
+        :expectation: SHALL
       - :chain: partof
-        :expectation: 
+        :expectation: SHALL
       - :chain: type
-        :expectation: 
+        :expectation: SHALL
     :endpoint:
       :paths:
       - endpoint
@@ -1891,7 +1891,7 @@
       :multiple_or: ''
       :chain:
       - :chain: organization
-        :expectation: 
+        :expectation: SHALL
     :address-city:
       :paths:
       - address.city
@@ -2171,11 +2171,11 @@
       :multiple_or: ''
       :chain:
       - :chain: name
-        :expectation: 
+        :expectation: SHALL
       - :chain: address
-        :expectation: 
+        :expectation: SHALL
       - :chain: type
-        :expectation: 
+        :expectation: SHALL
     :endpoint:
       :paths:
       - endpoint
@@ -2189,7 +2189,7 @@
       :multiple_or: ''
       :chain:
       - :chain: organization
-        :expectation: 
+        :expectation: SHALL
     :address:
       :paths:
       - address
@@ -2440,11 +2440,11 @@
       :multiple_or: ''
       :chain:
       - :chain: name
-        :expectation: 
+        :expectation: SHALL
       - :chain: address
-        :expectation: 
+        :expectation: SHALL
       - :chain: type
-        :expectation: 
+        :expectation: SHALL
     :endpoint:
       :paths:
       - endpoint
@@ -2458,7 +2458,7 @@
       :multiple_or: ''
       :chain:
       - :chain: organization
-        :expectation: 
+        :expectation: SHALL
     :address:
       :paths:
       - address
@@ -2756,13 +2756,13 @@
       :multiple_or: ''
       :chain:
       - :chain: type
-        :expectation: 
+        :expectation: SHALL
       - :chain: address
-        :expectation: 
+        :expectation: SHALL
       - :chain: name
-        :expectation: 
+        :expectation: SHALL
       - :chain: partof
-        :expectation: 
+        :expectation: SHALL
     :participating-organization:
       :paths:
       - participatingOrganization
@@ -2776,13 +2776,13 @@
       :multiple_or: ''
       :chain:
       - :chain: type
-        :expectation: 
+        :expectation: SHALL
       - :chain: address
-        :expectation: 
+        :expectation: SHALL
       - :chain: name
-        :expectation: 
+        :expectation: SHALL
       - :chain: partof
-        :expectation: 
+        :expectation: SHALL
     :location:
       :paths:
       - location
@@ -2796,17 +2796,17 @@
       :multiple_or: ''
       :chain:
       - :chain: address
-        :expectation: 
+        :expectation: SHALL
       - :chain: address-postalcode
-        :expectation: 
+        :expectation: SHALL
       - :chain: address-city
-        :expectation: 
+        :expectation: SHALL
       - :chain: address-state
-        :expectation: 
+        :expectation: SHALL
       - :chain: organization
-        :expectation: 
+        :expectation: SHALL
       - :chain: type
-        :expectation: 
+        :expectation: SHALL
     :service:
       :paths:
       - healthcareService
@@ -2820,11 +2820,11 @@
       :multiple_or: ''
       :chain:
       - :chain: service-category
-        :expectation: 
+        :expectation: SHALL
       - :chain: organization
-        :expectation: 
+        :expectation: SHALL
       - :chain: location
-        :expectation: 
+        :expectation: SHALL
     :network:
       :paths:
       - network
@@ -2838,9 +2838,9 @@
       :multiple_or: ''
       :chain:
       - :chain: name
-        :expectation: 
+        :expectation: SHALL
       - :chain: partof
-        :expectation: 
+        :expectation: SHALL
     :endpoint:
       :paths:
       - endpoint
@@ -2854,7 +2854,7 @@
       :multiple_or: ''
       :chain:
       - :chain: organization
-        :expectation: 
+        :expectation: SHALL
     :role:
       :paths:
       - code
@@ -4183,7 +4183,7 @@
       :multiple_or: ''
       :chain:
       - :chain: name
-        :expectation: 
+        :expectation: SHALL
     :organization:
       :paths:
       - organization
@@ -4197,13 +4197,13 @@
       :multiple_or: ''
       :chain:
       - :chain: name
-        :expectation: 
+        :expectation: SHALL
       - :chain: address
-        :expectation: 
+        :expectation: SHALL
       - :chain: partof
-        :expectation: 
+        :expectation: SHALL
       - :chain: type
-        :expectation: 
+        :expectation: SHALL
     :location:
       :paths:
       - location
@@ -4217,17 +4217,17 @@
       :multiple_or: ''
       :chain:
       - :chain: address
-        :expectation: 
+        :expectation: SHALL
       - :chain: address-postalcode
-        :expectation: 
+        :expectation: SHALL
       - :chain: address-city
-        :expectation: 
+        :expectation: SHALL
       - :chain: address-state
-        :expectation: 
+        :expectation: SHALL
       - :chain: organization
-        :expectation: 
+        :expectation: SHALL
       - :chain: type
-        :expectation: 
+        :expectation: SHALL
     :service:
       :paths:
       - healthcareService
@@ -4241,11 +4241,11 @@
       :multiple_or: ''
       :chain:
       - :chain: service-category
-        :expectation: 
+        :expectation: SHALL
       - :chain: organization
-        :expectation: 
+        :expectation: SHALL
       - :chain: location
-        :expectation: 
+        :expectation: SHALL
     :network:
       :paths:
       - extension.where(url='http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/network-reference')
@@ -4259,13 +4259,13 @@
       :multiple_or: ''
       :chain:
       - :chain: name
-        :expectation: 
+        :expectation: SHALL
       - :chain: address
-        :expectation: 
+        :expectation: SHALL
       - :chain: partof
-        :expectation: 
+        :expectation: SHALL
       - :chain: type
-        :expectation: 
+        :expectation: SHALL
     :endpoint:
       :paths:
       - endpoint
@@ -4279,7 +4279,7 @@
       :multiple_or: ''
       :chain:
       - :chain: organization
-        :expectation: 
+        :expectation: SHALL
     :role:
       :paths:
       - code
