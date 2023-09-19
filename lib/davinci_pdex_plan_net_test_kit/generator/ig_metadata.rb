@@ -1,3 +1,5 @@
+require_relative 'special_cases'
+
 module DaVinciPDEXPlanNetTestKit
   class Generator
     class IGMetadata
@@ -8,8 +10,14 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def ordered_groups
-        @ordered_groups ||=
-          non_delayed_groups + delayed_groups
+        
+        if SpecialCases.has_explicit_group_order()
+          @ordered_groups ||=
+            groups.sort_by { |group| SpecialCases.group_index(group.name) }
+        else
+          @ordered_groups ||=
+            non_delayed_groups + delayed_groups
+        end
       end
 
       def delayed_groups
