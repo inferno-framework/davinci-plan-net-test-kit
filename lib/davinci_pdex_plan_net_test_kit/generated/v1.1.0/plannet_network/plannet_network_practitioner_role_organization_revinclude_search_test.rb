@@ -6,11 +6,11 @@ module DaVinciPDEXPlanNetTestKit
     class PlannetNetworkPractitionerRoleOrganizationRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns PractitionerRole resources from Organization search by _revinclude=PractitionerRole:organization'
+      title 'Server returns PractitionerRole resources from Organization search with _revinclude=PractitionerRole:organization'
       description %(
         A server SHALL be capable of supporting _revIncludes for PractitionerRole:organization.
 
-        This test will perform a search by _revinclude=PractitionerRole:organization and
+        This test will perform a search with _revinclude=PractitionerRole:organization and
         will pass if a PractitionerRole resource is found in the response.
       )
 
@@ -26,6 +26,7 @@ module DaVinciPDEXPlanNetTestKit
           search_param_names: [],
           input_name: 'practitioner_role_organization_input',
           revinclude_param: 'PractitionerRole:organization',
+          rev_param_sp: 'organization',
           additional_resource_type: 'PractitionerRole'
         )
       end
@@ -35,7 +36,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def self.revinclude_metadata
-        @revinclude_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', 'PractitionerRole', 'metadata.yml'), aliases: true))
+        @revinclude_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', 'practitioner_role', 'metadata.yml'), aliases: true))
       end
 
       def scratch_resources
@@ -43,7 +44,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_revinclude_resources
-        scratch[:practitionerrole_resources] ||= {}
+        scratch[:practitioner_role_resources] ||= {}
       end
 
       run do

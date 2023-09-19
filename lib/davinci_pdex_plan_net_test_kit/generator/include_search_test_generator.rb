@@ -105,6 +105,10 @@ module DaVinciPDEXPlanNetTestKit
         res_type
       end
 
+      def inc_param_sp
+        include_param.split(/:/)[1]
+      end
+
       def search_param_names
         search_params.map { |param| param[:name] }
       end
@@ -175,9 +179,9 @@ module DaVinciPDEXPlanNetTestKit
           properties[:fixed_value_search] = 'true' if fixed_value_search?
           properties[:resource_type] = "'#{resource_type}'"
           properties[:search_param_names] = []
-          properties[:input_name] = "'#{input_name}'"
           properties[:possible_status_search] = 'true' if possible_status_search?
           properties[:include_param] = "'#{include_param}'"
+          properties[:inc_param_sp] = "'#{inc_param_sp}'"
           properties[:additional_resource_type] = "'#{include_param_resource}'"
         end
       end

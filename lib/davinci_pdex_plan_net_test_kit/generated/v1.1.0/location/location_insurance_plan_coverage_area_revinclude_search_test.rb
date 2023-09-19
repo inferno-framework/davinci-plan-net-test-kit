@@ -6,11 +6,11 @@ module DaVinciPDEXPlanNetTestKit
     class LocationInsurancePlanCoverageAreaRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns InsurancePlan resources from Location search by _revinclude=InsurancePlan:coverage-area'
+      title 'Server returns InsurancePlan resources from Location search with _revinclude=InsurancePlan:coverage-area'
       description %(
         A server SHALL be capable of supporting _revIncludes for InsurancePlan:coverage-area.
 
-        This test will perform a search by _revinclude=InsurancePlan:coverage-area and
+        This test will perform a search with _revinclude=InsurancePlan:coverage-area and
         will pass if a InsurancePlan resource is found in the response.
       )
 
@@ -26,6 +26,7 @@ module DaVinciPDEXPlanNetTestKit
           search_param_names: [],
           input_name: 'insurance_plan_coverage_area_input',
           revinclude_param: 'InsurancePlan:coverage-area',
+          rev_param_sp: 'coverage-area',
           additional_resource_type: 'InsurancePlan'
         )
       end
@@ -35,7 +36,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def self.revinclude_metadata
-        @revinclude_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', 'InsurancePlan', 'metadata.yml'), aliases: true))
+        @revinclude_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', 'insurance_plan', 'metadata.yml'), aliases: true))
       end
 
       def scratch_resources
@@ -43,7 +44,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_revinclude_resources
-        scratch[:insuranceplan_resources] ||= {}
+        scratch[:insurance_plan_resources] ||= {}
       end
 
       run do

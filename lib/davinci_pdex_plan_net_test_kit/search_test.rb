@@ -14,7 +14,9 @@ module DaVinciPDEXPlanNetTestKit
                    :resource_type,
                    :search_param_names,
                    :revinclude_param,
+                   :rev_param_sp,
                    :include_param,
+                   :inc_param_sp,
                    :additional_resource_type,
                    :input_name,
                    :saves_delayed_references?,
@@ -27,6 +29,26 @@ module DaVinciPDEXPlanNetTestKit
                    :test_reference_variants?,
                    :params_with_comparators,
                    :multiple_or_search_params
+
+    def given_input?
+      !(self.send(:"#{input_name}").nil? || self.send(:"#{input_name}").empty?)
+    end
+
+    def find_base_id(desired_resource, search_param)
+      # Access correct scratch based on what base you are looking for
+      is_include = desired_resource == resource_type
+      scratch_for_base = is_include ? all_scratch_resources : scratch_revinclude_resources[:all]
+
+      skip_if scratch_for_base.nil?, no_instance_gathering_message
+
+      base_resource = scratch_for_base
+        .select { |resource| resource.resourceType == desired_resource }
+        .reject { |resource| search_param_value(search_param, resource).nil? }
+        .first
+      skip_if base_resource.nil?, unable_to_find_base_message(desired_resource, search_param)
+      # If revinclude test, make sure you grab the id of base, not revincluded resource
+      is_include ? base_resource.id : search_param_value(search_param, base_resource)
+    end
 
     def all_search_params
       @all_search_params ||=
@@ -48,14 +70,16 @@ module DaVinciPDEXPlanNetTestKit
     def all_revinclude_search_params
       @all_revinclude_search_params ||=
         all_search_params.transform_values! do |params_list|
-          params_list.map { |params| {_id: self.send(input_name)}.merge(_revinclude: revinclude_param) }
+          base_id = given_input? ? self.send(input_name) : find_base_id(additional_resource_type, rev_param_sp)
+          params_list.map { |params| {_id: base_id}.merge(_revinclude: revinclude_param) }
         end
     end
 
     def all_include_search_params
       @all_revinclude_search_params ||=
         all_search_params.transform_values! do |params_list|
-          params_list.map { |params| {_id: self.send(input_name)}.merge(_include: include_param) }
+          # No input needed for includes so can just pass into the map
+          params_list.map { |params| {_id: find_base_id(resource_type, inc_param_sp)}.merge(_include: include_param) }
         end
     end
 
@@ -75,7 +99,7 @@ module DaVinciPDEXPlanNetTestKit
 
             fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
               .select { |resource| resource.resourceType == additional_resource_type }
-              .reject { |resource| resource.id == "#{self.send(input_name)}"} 
+              .reject { |resource| resource.id == params[:_id]} 
           end
         end
 
@@ -540,8 +564,9 @@ module DaVinciPDEXPlanNetTestKit
       name == 'patient' || (name == '_id' && resource_type == 'Patient')
     end
 
-    def search_param_paths(name)
-      paths = metadata.search_definitions[name.to_sym][:paths]
+    def search_param_paths(name, resource = resource_type)
+      resource_metadata = (resource != additional_resource_type || revinclude_param.nil?) ? metadata : revinclude_metadata
+      paths = resource_metadata.search_definitions[name.to_sym][:paths]
       if paths.first =='class'
         paths[0] = 'local_class'
       end
@@ -561,6 +586,16 @@ module DaVinciPDEXPlanNetTestKit
       "Could not find values for all search params #{array_of_codes(search_param_names)}"
     end
 
+    def unable_to_find_base_message(resource_type, param)
+      "Unable to find any #{resource_type} with the #{param} field populated from
+      previously gathered resources. Please return more resources or provide a base id."
+    end
+
+    def no_instance_gathering_message
+      "Unable to find previously gathered instances of #{additional_resource_type}, please provide IDs or
+      \"Run All Tests\" from suite level"
+    end
+
     def empty_search_params_message(empty_search_params)
       "Could not find values for the search parameters #{array_of_codes(empty_search_params.keys)}"
     end
@@ -568,12 +603,10 @@ module DaVinciPDEXPlanNetTestKit
     def no_resources_skip_message(resource_type = self.resource_type)
       msg = "No #{resource_type} resources appear to be available"
 
-      if (resource_type == 'Device' && implantable_device_codes.present?)
-        msg.concat(" with the following Device Type Code filter: #{implantable_device_codes}")
-      end
-
       if ((self.resource_type == additional_resource_type) && (!revinclude_param.nil? || !include_param.nil?))
-        msg.concat(" (excluding #{self.send(input_name)}, which was used as the base)")
+        if !input_name.nil?
+          msg.concat(" (excluding #{self.send(input_name)}, which was used as the base)")
+        end
       end
 
       msg + ". Please use patients with more information"
@@ -676,7 +709,7 @@ module DaVinciPDEXPlanNetTestKit
     end
 
     def search_param_value(name, resource, include_system: false)
-      paths = search_param_paths(name)
+      paths = search_param_paths(name, resource.resourceType)
       search_value = nil
       paths.each do |path|
         element = find_a_value_at(resource, path) { |element| element_has_valid_value?(element, include_system) }
@@ -710,23 +743,7 @@ module DaVinciPDEXPlanNetTestKit
           when FHIR::Extension
             element.valueReference.reference #Should this be more flexible? Does it need to read for any value[x]?  PDEX only
           else
-            if metadata.version != 'v3.1.1' &&
-               metadata.search_definitions[name.to_sym][:type] == 'date' &&
-               params_with_comparators&.include?(name)
-              # convert date search to greath-than comparator search with correct precision
-              # For all date search parameters:
-              #   Patient.birthDate does not mandate comparators so cannot be converted
-              #   Goal.target-date has day precision
-              #   All others have second + time offset precision
-              if /^\d{4}(-\d{2})?$/.match?(element) || # YYYY or YYYY-MM
-                (/^\d{4}-\d{2}-\d{2}$/.match?(element) && resource_type != "Goal") # YYY-MM-DD AND Resource is NOT Goal
-                "gt#{(DateTime.xmlschema(element)-1).xmlschema}"
-              else
-                element
-              end
-            else
-              element
-            end
+            element
           end
 
         break if search_value.present?

@@ -6,26 +6,22 @@ module DaVinciPDEXPlanNetTestKit
     class PractitionerRolePractitionerRoleNetworkIncludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns Organization resources from PractitionerRole search by _include=PractitionerRole:network'
+      title 'Server returns Organization resources from PractitionerRole search with _include=PractitionerRole:network'
       description %(
         A server SHALL be capable of supporting _includes for PractitionerRole:network.
 
-        This test will perform a search by _include=PractitionerRole:network and
+        This test will perform a search with _include=PractitionerRole:network and
         will pass if a Organization resource is found in the response.
       )
 
       id :davinci_plan_net_v110_practitioner_role_practitioner_role_network_include_search_test
-      input :practitioner_role_network_input,
-        title: 'IDs of PractitionerRole that have Organization reference(s)',
-        description: 'Comma separated list of PractitionerRole IDs that reference by a Organization',
-        optional: true
 
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'PractitionerRole',
           search_param_names: [],
-          input_name: 'practitioner_role_network_input',
           include_param: 'PractitionerRole:network',
+          inc_param_sp: 'network',
           additional_resource_type: 'Organization'
         )
       end
