@@ -23,6 +23,11 @@ module DaVinciPDEXPlanNetTestKit
         def group_index(group_name)
           GROUP_SORT_ORDER.index(group_name)
         end
+
+        def has_explicit_group_order()
+          GROUP_SORT_ORDER.size > 0
+        end
+
       end
     end
   end

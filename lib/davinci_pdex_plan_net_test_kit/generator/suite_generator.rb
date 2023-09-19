@@ -71,7 +71,6 @@ module DaVinciPDEXPlanNetTestKit
       def groups
         ig_metadata.ordered_groups
           .reject { |group| SpecialCases.exclude_group? group }
-          .sort_by { |group| SpecialCases.group_index(group.name) }
       end
 
       def group_id_list
