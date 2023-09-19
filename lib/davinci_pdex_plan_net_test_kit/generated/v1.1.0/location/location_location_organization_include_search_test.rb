@@ -26,6 +26,7 @@ module DaVinciPDEXPlanNetTestKit
           search_param_names: [],
           input_name: 'location_organization_input',
           include_param: 'Location:organization',
+          inc_param_sp: 'organization',
           additional_resource_type: 'Organization'
         )
       end

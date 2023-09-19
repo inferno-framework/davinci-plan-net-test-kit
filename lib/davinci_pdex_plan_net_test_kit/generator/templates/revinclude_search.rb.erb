@@ -39,7 +39,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_revinclude_resources
-        scratch[:<%= revinclude_param_resource.downcase %>_resources] ||= {}
+        scratch[:<%= revinclude_param_resource %>_resources] ||= {}
       end
 
       run do

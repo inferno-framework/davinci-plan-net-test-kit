@@ -26,6 +26,7 @@ module DaVinciPDEXPlanNetTestKit
           search_param_names: [],
           input_name: 'healthcare_service_location_input',
           revinclude_param: 'HealthcareService:location',
+          rev_param_sp: 'location',
           additional_resource_type: 'HealthcareService'
         )
       end
@@ -43,7 +44,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_revinclude_resources
-        scratch[:healthcareservice_resources] ||= {}
+        scratch[:HealthcareService_resources] ||= {}
       end
 
       run do

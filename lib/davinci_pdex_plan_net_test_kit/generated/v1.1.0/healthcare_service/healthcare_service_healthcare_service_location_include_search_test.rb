@@ -26,6 +26,7 @@ module DaVinciPDEXPlanNetTestKit
           search_param_names: [],
           input_name: 'healthcare_service_location_input',
           include_param: 'HealthcareService:location',
+          inc_param_sp: 'location',
           additional_resource_type: 'Location'
         )
       end

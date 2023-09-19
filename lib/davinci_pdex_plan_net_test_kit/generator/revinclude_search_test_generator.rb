@@ -103,6 +103,10 @@ module DaVinciPDEXPlanNetTestKit
         revinclude_param.split(/:/)[0]
       end
 
+      def rev_param_sp
+        revinclude_param.split(/:/)[1]
+      end
+
       def search_param_names
         search_params.map { |param| param[:name] }
       end
@@ -171,6 +175,7 @@ module DaVinciPDEXPlanNetTestKit
           properties[:input_name] = "'#{input_name}'"
           properties[:possible_status_search] = 'true' if possible_status_search?
           properties[:revinclude_param] = "'#{revinclude_param}'"
+          properties[:rev_param_sp] = "'#{rev_param_sp}'"
           properties[:additional_resource_type] = "'#{revinclude_param_resource}'"
         end
       end

@@ -26,6 +26,7 @@ module DaVinciPDEXPlanNetTestKit
           search_param_names: [],
           input_name: 'insurance_plan_administered_by_input',
           include_param: 'InsurancePlan:administered-by',
+          inc_param_sp: 'administered-by',
           additional_resource_type: 'Organization'
         )
       end

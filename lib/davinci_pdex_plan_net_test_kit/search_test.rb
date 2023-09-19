@@ -14,7 +14,9 @@ module DaVinciPDEXPlanNetTestKit
                    :resource_type,
                    :search_param_names,
                    :revinclude_param,
+                   :rev_param_sp,
                    :include_param,
+                   :inc_param_sp,
                    :additional_resource_type,
                    :input_name,
                    :saves_delayed_references?,
@@ -26,6 +28,21 @@ module DaVinciPDEXPlanNetTestKit
                    :test_reference_variants?,
                    :params_with_comparators,
                    :multiple_or_search_params
+
+    def given_input?
+      !(self.send(:"#{input_name}").nil? || self.send(:"#{input_name}").empty?)
+    end
+
+    def find_base_id(desired_resource, search_param)
+      # Access correct scratch based on what base you are looking for
+      scratch_for_base = desired_resource == resource_type ? all_scratch_resources : scratch_revinclude_resources[:all]
+      base_resource = scratch_for_base
+        .select { |resource| resource.resourceType == desired_resource }
+        .reject { |resource| search_param_value(search_param, resource).nil? }
+        .first
+      skip_if base_resource.nil?, unable_to_find_base_message(desired_resource, search_param)
+      base_resource.id
+    end
 
     def all_search_params
       @all_search_params ||=
@@ -47,14 +64,16 @@ module DaVinciPDEXPlanNetTestKit
     def all_revinclude_search_params
       @all_revinclude_search_params ||=
         all_search_params.transform_values! do |params_list|
-          params_list.map { |params| {_id: self.send(input_name)}.merge(_revinclude: revinclude_param) }
+          base_id = given_input? ? self.send(input_name) : find_base_id(additional_resource_type, rev_param_sp)
+          params_list.map { |params| {_id: base_id}.merge(_revinclude: revinclude_param) }
         end
     end
 
     def all_include_search_params
       @all_revinclude_search_params ||=
         all_search_params.transform_values! do |params_list|
-          params_list.map { |params| {_id: self.send(input_name)}.merge(_include: include_param) }
+          base_id = given_input? ? self.send(input_name) : find_base_id(resource_type, inc_param_sp)
+          params_list.map { |params| {_id: base_id}.merge(_include: include_param) }
         end
     end
 
@@ -510,6 +529,11 @@ module DaVinciPDEXPlanNetTestKit
 
     def unable_to_resolve_params_message
       "Could not find values for all search params #{array_of_codes(search_param_names)}"
+    end
+
+    def unable_to_find_base_message(resource_type, param)
+      "Unable to find any #{resource_type} with the #{param} field populated from
+      previously gathered resources. Please return more resources or provide a base id."
     end
 
     def empty_search_params_message(empty_search_params)

@@ -26,6 +26,7 @@ module DaVinciPDEXPlanNetTestKit
           search_param_names: [],
           input_name: 'location_partof_input',
           include_param: 'Location:partof',
+          inc_param_sp: 'partof',
           additional_resource_type: 'Location'
         )
       end

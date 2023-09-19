@@ -26,6 +26,7 @@ module DaVinciPDEXPlanNetTestKit
           search_param_names: [],
           input_name: 'organization_affiliation_primary_organization_input',
           include_param: 'OrganizationAffiliation:primary-organization',
+          inc_param_sp: 'primary-organization',
           additional_resource_type: 'Organization'
         )
       end
