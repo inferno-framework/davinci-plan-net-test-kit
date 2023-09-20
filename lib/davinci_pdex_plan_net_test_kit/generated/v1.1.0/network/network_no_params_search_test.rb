@@ -20,9 +20,9 @@ response will be used for subsequent tests.
 
       )
 
-      id :davinci_pdex_plan_net_v110_plannet_network_no_params_search_test
+      id :davinci_pdex_plan_net_v110_network_no_params_search_test
 
-      input :davinci_pdex_plan_net_v110_plannet_network_no_params_search_test_ids,
+      input :davinci_pdex_plan_net_v110_network_no_params_search_test_ids,
         title: 'Ids of instances of Plan-Net Network',
         optional: true,
         description: 'Required if parameterless searches not used.'
@@ -47,7 +47,7 @@ response will be used for subsequent tests.
       end
 
       run do
-        run_search_no_params_test(davinci_pdex_plan_net_v110_plannet_network_no_params_search_test_ids)
+        run_search_no_params_test(davinci_pdex_plan_net_v110_network_no_params_search_test_ids)
       end
     end
   end

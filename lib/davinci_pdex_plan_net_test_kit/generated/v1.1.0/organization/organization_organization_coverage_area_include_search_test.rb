@@ -14,7 +14,7 @@ module DaVinciPDEXPlanNetTestKit
         will pass if a Location resource is found in the response.
       )
 
-      id :davinci_plan_net_v110_plannet_organization_organization_coverage_area_include_search_test
+      id :davinci_plan_net_v110_organization_organization_coverage_area_include_search_test
 
       def properties
         @properties ||= SearchTestProperties.new(

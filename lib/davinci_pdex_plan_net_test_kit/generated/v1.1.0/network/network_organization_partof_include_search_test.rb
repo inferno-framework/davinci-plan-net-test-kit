@@ -14,7 +14,7 @@ module DaVinciPDEXPlanNetTestKit
         will pass if a Organization resource is found in the response.
       )
 
-      id :davinci_plan_net_v110_plannet_network_organization_partof_include_search_test
+      id :davinci_plan_net_v110_network_organization_partof_include_search_test
 
       def properties
         @properties ||= SearchTestProperties.new(
