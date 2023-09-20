@@ -15,6 +15,11 @@ module DaVinciPDEXPlanNetTestKit
                           "plannet_Network",
                           "plannet_Organization"].freeze
 
+      PARAMETERLESS_FILTER_DESCRIPTION = {
+        "Plan-Net Network" => "In order to gather only Organization instances expected to conform to the Plan-Net Network profile, instances where `type` does not equal `ntwk` will be discarded. ",
+        "Plan-Net Organization" => "In order to gather only Organization instances expected to conform to the Plan-Net Organization profile, instances where `type` equals `ntwk` will be discarded. "
+      }.freeze
+
       class << self
         def exclude_group?(group)
           RESOURCES_TO_EXCLUDE.include?(group.resource)
@@ -28,6 +33,13 @@ module DaVinciPDEXPlanNetTestKit
           GROUP_SORT_ORDER.size > 0
         end
 
+        def has_parameterless_filter?(profile_name)
+          PARAMETERLESS_FILTER_DESCRIPTION.key?(profile_name)
+        end
+
+        def parameterless_filter_description(profile_name)
+          PARAMETERLESS_FILTER_DESCRIPTION[profile_name]
+        end
       end
     end
   end

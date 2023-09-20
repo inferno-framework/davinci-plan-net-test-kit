@@ -127,8 +127,9 @@ module DaVinciPDEXPlanNetTestKit
         return '' if required_searches.blank?
 
         <<~SEARCH_DESCRIPTION
+        
         ## Searching
-        This test sequence will first perform each required search associated
+        This test sequence will perform each required search associated
         with this resource. This sequence will perform searches with the
         following parameters:
 
@@ -139,17 +140,18 @@ module DaVinciPDEXPlanNetTestKit
         sequence. Any subsequent searches will look for its parameter values
         from the results of the first search. For example, the `identifier`
         search in the #{profile_name} sequence is performed by looking for an existing
-        `#{resource_type}.identifier` from any of the #{profile_name}s returned in the `_id`
-        search. If a value cannot be found this way, the search is skipped.
+        `#{resource_type}.identifier` value from an instance identified during
+        the instance gathering step. If a value cannot be found this way, the search is skipped.
 
         ### Search Validation
         Inferno will retrieve up to the first 20 bundle pages of the reply for
-        #{search_validation_resource_type} and save them for subsequent tests. Each of
+        #{search_validation_resource_type}. Each of
         these resources is then checked to see if it matches the searched
         parameters in accordance with [FHIR search
         guidelines](https://www.hl7.org/fhir/search.html). The test will fail,
-        for example, if a #{profile_name} search for `#{required_searches.first[:names].first}=X``
+        for example, if a #{profile_name} search for `#{required_searches.first[:names].first}=X`
         returns a #{profile_name} where `#{required_searches.first[:names].first}!=X`
+
         SEARCH_DESCRIPTION
       end
 
@@ -159,21 +161,49 @@ module DaVinciPDEXPlanNetTestKit
 
         The #{title} sequence verifies that the system under test is
         able to provide correct responses for #{resource_type} queries. These queries
-        must contain resources conforming to the #{profile_name} as
+        must return resources conforming to the #{profile_name} profile as
         specified in the Plan Net #{group_metadata.version} Implementation Guide.
 
         # Testing Methodology
+        
+        ## Instance Gathering
+
+        Inferno will first identify and obtain a set of instances to use for the rest
+        of the tests, requiring at least one instances to be identified for the test to pass. 
+        Instances to gather are indentified in two ways. One or both will be used,
+        depending on user input.
+
+        ### Parameterless searches 
+        Instances can be gathered using a query requesting all instances of #{resource_type} 
+        (e.g., `GET [FHIR Endpoint]/#{resource_type}`). #{SpecialCases.has_parameterless_filter?(profile_name) ? SpecialCases.parameterless_filter_description(profile_name) : "" }Gathering through this method is controlled 
+        by the following input fields (used for all profiles):
+        - _Use parameterless searches to identify instances?_: 
+          parameterless searches can be disabled using this input field if, for example, 
+          the server under test does not support them, or not all instances on the server 
+          should be expected to conform to Plan Net profiles. In this case the user **MUST**
+          provide specific instance ids to gather.
+        - _Maximum number of instances to gather using parameterless searches_: sets an upper 
+          bound on the number of instances Inferno will gather from parameterless searches.
+        - _Maximum pages of results to consider when using parameterless searches_: sets an upper bound 
+          on the number of pages of search results Inferno will load when gathering instances 
+          using parameterless searches.
+        
+        ### User-provided instance ids
+        
+        If ids are listed in the _Ids of instances of #{profile_name}_ optional input field, 
+        they will be read and included in the set of gathered instances.
+
         #{search_description}
 
         ## Must Support
         Each profile contains elements marked as "must support". This test
-        sequence expects to see each of these elements at least once. If at
+        sequence expects to see each of these elements populated at least once. If at
         least one cannot be found, the test will fail. The test will look
-        through the #{resource_type} resources found in the first test for these
-        elements.
+        through the #{profile_name} instances identified during instance gathering
+        for these elements.
 
         ## Profile Validation
-        Each resource returned from the first search is expected to conform to
+        Each resource identified during instance gathering is expected to conform to
         the [#{profile_name}](#{profile_url}). Each element is checked against
         teminology binding and cardinality requirements.
 
