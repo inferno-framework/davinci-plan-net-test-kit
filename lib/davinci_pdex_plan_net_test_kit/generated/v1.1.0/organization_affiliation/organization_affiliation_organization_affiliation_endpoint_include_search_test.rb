@@ -6,25 +6,22 @@ module DaVinciPDEXPlanNetTestKit
     class OrganizationAffiliationOrganizationAffiliationEndpointIncludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns Endpoint resources from OrganizationAffiliation search by _include=OrganizationAffiliation:endpoint'
+      title 'Server returns Endpoint resources from OrganizationAffiliation search with _include=OrganizationAffiliation:endpoint'
       description %(
         A server SHALL be capable of supporting _includes for OrganizationAffiliation:endpoint.
 
-        This test will perform a search by _include=OrganizationAffiliation:endpoint and
+        This test will perform a search with _include=OrganizationAffiliation:endpoint and
         will pass if a Endpoint resource is found in the response.
       )
 
       id :davinci_plan_net_v110_organization_affiliation_organization_affiliation_endpoint_include_search_test
-      input :organization_affiliation_endpoint_input,
-        title: 'IDs of OrganizationAffiliation that have Endpoint reference(s)',
-        description: 'Comma separated list of OrganizationAffiliation IDs that reference by a Endpoint'
 
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'OrganizationAffiliation',
           search_param_names: [],
-          input_name: 'organization_affiliation_endpoint_input',
           include_param: 'OrganizationAffiliation:endpoint',
+          inc_param_sp: 'endpoint',
           additional_resource_type: 'Endpoint'
         )
       end

@@ -6,25 +6,22 @@ module DaVinciPDEXPlanNetTestKit
     class OrganizationAffiliationOrganizationAffiliationLocationIncludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns Location resources from OrganizationAffiliation search by _include=OrganizationAffiliation:location'
+      title 'Server returns Location resources from OrganizationAffiliation search with _include=OrganizationAffiliation:location'
       description %(
         A server SHALL be capable of supporting _includes for OrganizationAffiliation:location.
 
-        This test will perform a search by _include=OrganizationAffiliation:location and
+        This test will perform a search with _include=OrganizationAffiliation:location and
         will pass if a Location resource is found in the response.
       )
 
       id :davinci_plan_net_v110_organization_affiliation_organization_affiliation_location_include_search_test
-      input :organization_affiliation_location_input,
-        title: 'IDs of OrganizationAffiliation that have Location reference(s)',
-        description: 'Comma separated list of OrganizationAffiliation IDs that reference by a Location'
 
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'OrganizationAffiliation',
           search_param_names: [],
-          input_name: 'organization_affiliation_location_input',
           include_param: 'OrganizationAffiliation:location',
+          inc_param_sp: 'location',
           additional_resource_type: 'Location'
         )
       end

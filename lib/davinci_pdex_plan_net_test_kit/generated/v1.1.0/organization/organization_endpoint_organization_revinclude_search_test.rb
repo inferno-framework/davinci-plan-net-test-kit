@@ -6,25 +6,27 @@ module DaVinciPDEXPlanNetTestKit
     class OrganizationEndpointOrganizationRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns Endpoint resources from Organization search by _revinclude=Endpoint:organization'
+      title 'Server returns Endpoint resources from Organization search with _revinclude=Endpoint:organization'
       description %(
         A server SHALL be capable of supporting _revIncludes for Endpoint:organization.
 
-        This test will perform a search by _revinclude=Endpoint:organization and
+        This test will perform a search with _revinclude=Endpoint:organization and
         will pass if a Endpoint resource is found in the response.
       )
 
       id :davinci_plan_net_v110_organization_endpoint_organization_revinclude_search_test
       input :endpoint_organization_input,
         title: 'Endpoint referenced Organization IDs',
-        description: 'Comma separated list of Organization  IDs that are referenced by a Endpoint'
-
+        description: 'Comma separated list of Organization  IDs that are referenced by a Endpoint',
+        optional: true
+        
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'Organization',
           search_param_names: [],
           input_name: 'endpoint_organization_input',
           revinclude_param: 'Endpoint:organization',
+          rev_param_sp: 'organization',
           additional_resource_type: 'Endpoint'
         )
       end
@@ -34,7 +36,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def self.revinclude_metadata
-        @revinclude_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', 'Endpoint', 'metadata.yml'), aliases: true))
+        @revinclude_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', 'endpoint', 'metadata.yml'), aliases: true))
       end
 
       def scratch_resources

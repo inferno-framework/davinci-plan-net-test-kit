@@ -2,14 +2,14 @@ require 'inferno/dsl/oauth_credentials'
 require_relative '../../version'
 require_relative '../../custom_groups/v1.1.0/capability_statement_group'
 require_relative 'endpoint_group'
-require_relative 'healthcare_service_group'
 require_relative 'insurance_plan_group'
+require_relative 'organization_affiliation_group'
+require_relative 'practitioner_role_group'
+require_relative 'practitioner_group'
+require_relative 'healthcare_service_group'
 require_relative 'location_group'
 require_relative 'network_group'
 require_relative 'organization_group'
-require_relative 'organization_affiliation_group'
-require_relative 'practitioner_group'
-require_relative 'practitioner_role_group'
 
 module DaVinciPDEXPlanNetTestKit
   module DaVinciPDEXPlanNetV110
@@ -61,7 +61,32 @@ module DaVinciPDEXPlanNetTestKit
         title: 'OAuth Credentials',
         type: :oauth_credentials,
         optional: true
-
+      input :no_param_search,
+        title: 'Use parameterless searches to identify instances?',
+        type: 'radio',
+        options: {
+            list_options: [
+              {
+                label: 'Yes',
+                value: 'true'
+              },
+              {
+                label: 'No',
+                value: 'false'
+              }
+            ]
+          },
+        default: 'true',
+        description: 'If No, then the lists of ids by profile are required. If yes, the lists of ids by profile are optional.'
+      input :max_instances,
+        title: 'Maximum number of instances to gather using parameterless searches',
+        default: '200',
+        description: 'Only used when parameterless searches are used. A higher number will evaluate more instances in the tests, if they are available. The test will stop looking when the page limit has been reached.'
+      input :max_pages,
+        title: 'Maximum pages of results to consider when using parameterless searches',
+        default: '20',
+        description: 'Only used when parameterless searches are used. A higher number will evaluate more instances in the tests, if they are available. The test will not consider further pages once the maximum number of instances has been reached.'
+      
       fhir_client do
         url :url
         oauth_credentials :smart_credentials
@@ -70,14 +95,14 @@ module DaVinciPDEXPlanNetTestKit
       group from: :davinci_pdex_plan_net_v110_capability_statement
   
       group from: :davinci_pdex_plan_net_v110_endpoint
-      group from: :davinci_pdex_plan_net_v110_healthcare_service
       group from: :davinci_pdex_plan_net_v110_insurance_plan
+      group from: :davinci_pdex_plan_net_v110_organization_affiliation
+      group from: :davinci_pdex_plan_net_v110_practitioner_role
+      group from: :davinci_pdex_plan_net_v110_practitioner
+      group from: :davinci_pdex_plan_net_v110_healthcare_service
       group from: :davinci_pdex_plan_net_v110_location
       group from: :davinci_pdex_plan_net_v110_network
       group from: :davinci_pdex_plan_net_v110_organization
-      group from: :davinci_pdex_plan_net_v110_organization_affiliation
-      group from: :davinci_pdex_plan_net_v110_practitioner
-      group from: :davinci_pdex_plan_net_v110_practitioner_role
     end
   end
 end

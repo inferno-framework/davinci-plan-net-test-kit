@@ -6,25 +6,22 @@ module DaVinciPDEXPlanNetTestKit
     class OrganizationAffiliationOrganizationAffiliationServiceIncludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns HealthcareService resources from OrganizationAffiliation search by _include=OrganizationAffiliation:service'
+      title 'Server returns HealthcareService resources from OrganizationAffiliation search with _include=OrganizationAffiliation:service'
       description %(
         A server SHALL be capable of supporting _includes for OrganizationAffiliation:service.
 
-        This test will perform a search by _include=OrganizationAffiliation:service and
+        This test will perform a search with _include=OrganizationAffiliation:service and
         will pass if a HealthcareService resource is found in the response.
       )
 
       id :davinci_plan_net_v110_organization_affiliation_organization_affiliation_service_include_search_test
-      input :organization_affiliation_service_input,
-        title: 'IDs of OrganizationAffiliation that have HealthcareService reference(s)',
-        description: 'Comma separated list of OrganizationAffiliation IDs that reference by a HealthcareService'
 
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'OrganizationAffiliation',
           search_param_names: [],
-          input_name: 'organization_affiliation_service_input',
           include_param: 'OrganizationAffiliation:service',
+          inc_param_sp: 'service',
           additional_resource_type: 'HealthcareService'
         )
       end
@@ -42,7 +39,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_include_resources
-        scratch[:healthcareservice_resources] ||= {}
+        scratch[:healthcare_service_resources] ||= {}
       end
 
       run do

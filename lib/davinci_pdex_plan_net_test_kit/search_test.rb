@@ -1,6 +1,7 @@
 require_relative 'date_search_validation'
 require_relative 'fhir_resource_navigation'
 require_relative 'search_test_properties'
+require_relative 'generator/special_cases'
 
 module DaVinciPDEXPlanNetTestKit
   module SearchTest
@@ -13,7 +14,9 @@ module DaVinciPDEXPlanNetTestKit
                    :resource_type,
                    :search_param_names,
                    :revinclude_param,
+                   :rev_param_sp,
                    :include_param,
+                   :inc_param_sp,
                    :additional_resource_type,
                    :input_name,
                    :saves_delayed_references?,
@@ -25,6 +28,26 @@ module DaVinciPDEXPlanNetTestKit
                    :test_reference_variants?,
                    :params_with_comparators,
                    :multiple_or_search_params
+
+    def given_input?
+      !(self.send(:"#{input_name}").nil? || self.send(:"#{input_name}").empty?)
+    end
+
+    def find_base_id(desired_resource, search_param)
+      # Access correct scratch based on what base you are looking for
+      is_include = desired_resource == resource_type
+      scratch_for_base = is_include ? all_scratch_resources : scratch_revinclude_resources[:all]
+
+      skip_if scratch_for_base.nil?, no_instance_gathering_message
+
+      base_resource = scratch_for_base
+        .select { |resource| resource.resourceType == desired_resource }
+        .reject { |resource| search_param_value(search_param, resource).nil? }
+        .first
+      skip_if base_resource.nil?, unable_to_find_base_message(desired_resource, search_param)
+      # If revinclude test, make sure you grab the id of base, not revincluded resource
+      is_include ? base_resource.id : search_param_value(search_param, base_resource)
+    end
 
     def all_search_params
       @all_search_params ||=
@@ -46,14 +69,16 @@ module DaVinciPDEXPlanNetTestKit
     def all_revinclude_search_params
       @all_revinclude_search_params ||=
         all_search_params.transform_values! do |params_list|
-          params_list.map { |params| {_id: self.send(input_name)}.merge(_revinclude: revinclude_param) }
+          base_id = given_input? ? self.send(input_name) : find_base_id(additional_resource_type, rev_param_sp)
+          params_list.map { |params| {_id: base_id}.merge(_revinclude: revinclude_param) }
         end
     end
 
     def all_include_search_params
       @all_revinclude_search_params ||=
         all_search_params.transform_values! do |params_list|
-          params_list.map { |params| {_id: self.send(input_name)}.merge(_include: include_param) }
+          # No input needed for includes so can just pass into the map
+          params_list.map { |params| {_id: find_base_id(resource_type, inc_param_sp)}.merge(_include: include_param) }
         end
     end
 
@@ -73,7 +98,7 @@ module DaVinciPDEXPlanNetTestKit
 
             fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
               .select { |resource| resource.resourceType == additional_resource_type }
-              .reject { |resource| resource.id == "#{self.send(input_name)}"} 
+              .reject { |resource| resource.id == params[:_id]} 
           end
         end
 
@@ -117,19 +142,37 @@ module DaVinciPDEXPlanNetTestKit
       perform_multiple_or_search_test if multiple_or_search_params.present?
     end
 
-    def run_search_no_params_test
-      fhir_search resource_type
-      
-      check_search_response
+    def run_search_no_params_test(profile_instance_id_string)
+       
+      # read ids provided by user input
+       if profile_instance_id_string
+        input_instance_id_list = profile_instance_id_string.split(',').map(&:strip)
 
-      resources_returned =
-        fetch_all_bundled_resources.select { |resource| resource.resourceType == resource_type }
-
-      skip_if resources_returned.empty?, no_resources_skip_message
-
-      if first_search?
-        all_scratch_resources.concat(resources_returned).uniq!
+        input_instance_id_list.each do |id|
+          fhir_read resource_type, id
+          assert_response_status(200)
+          assert_resource_type(resource_type)
+          all_scratch_resources << resource
+        end
       end
+
+      # perform parameterless search for the profile's resourceType
+      if no_param_search == 'true'
+        fhir_search resource_type
+      
+        check_search_response
+        
+        resources_returned = fetch_matching_bundled_resources(max_pages: max_pages.to_i, max_instances: max_instances.to_i)
+
+        if first_search? && !resources_returned.empty?
+          all_scratch_resources.concat(resources_returned).uniq!
+        end
+      end
+
+      info "Found #{all_scratch_resources.size} instances to use for testing profile #{metadata.profile_name}."
+
+      assert !all_scratch_resources.empty?, "No instances found for testing profile #{metadata.profile_name}."
+
     end
 
     def perform_search(params, resource_id)
@@ -472,8 +515,9 @@ module DaVinciPDEXPlanNetTestKit
       name == '_id'
     end
 
-    def search_param_paths(name)
-      paths = metadata.search_definitions[name.to_sym][:paths]
+    def search_param_paths(name, resource = resource_type)
+      resource_metadata = (resource != additional_resource_type || revinclude_param.nil?) ? metadata : revinclude_metadata
+      paths = resource_metadata.search_definitions[name.to_sym][:paths]
       if paths.first =='class'
         paths[0] = 'local_class'
       end
@@ -493,6 +537,16 @@ module DaVinciPDEXPlanNetTestKit
       "Could not find values for all search params #{array_of_codes(search_param_names)}"
     end
 
+    def unable_to_find_base_message(resource_type, param)
+      "Unable to find any #{resource_type} with the #{param} field populated from
+      previously gathered resources. Please return more resources or provide a base id."
+    end
+
+    def no_instance_gathering_message
+      "Unable to find previously gathered instances of #{additional_resource_type}, please provide IDs or
+      \"Run All Tests\" from suite level"
+    end
+
     def empty_search_params_message(empty_search_params)
       "Could not find values for the search parameters #{array_of_codes(empty_search_params.keys)}"
     end
@@ -501,7 +555,9 @@ module DaVinciPDEXPlanNetTestKit
       msg = "No #{resource_type} resources appear to be available"
 
       if ((self.resource_type == additional_resource_type) && (!revinclude_param.nil? || !include_param.nil?))
-        msg.concat(" (excluding #{self.send(input_name)}, which was used as the base).")
+        if !input_name.nil?
+          msg.concat(" (excluding #{self.send(input_name)}, which was used as the base).")
+        end
       end
 
       if (!revinclude_param.nil? && include_param.nil?)
@@ -524,9 +580,10 @@ module DaVinciPDEXPlanNetTestKit
       page_count = 1
       resources = []
       bundle = resource
+      resources += bundle&.entry&.map { |entry| entry&.resource }
 
       until bundle.nil? || page_count == max_pages
-        resources += bundle&.entry&.map { |entry| entry&.resource }
+        
         next_bundle_link = bundle&.link&.find { |link| link.relation == 'next' }&.url
         reply_handler&.call(response)
 
@@ -541,6 +598,7 @@ module DaVinciPDEXPlanNetTestKit
         assert_valid_json(reply.body, error_message)
 
         bundle = fhir_client.parse_reply(FHIR::Bundle, fhir_client.default_format, reply)
+        resources += bundle&.entry&.map { |entry| entry&.resource }
 
         page_count += 1
       end
@@ -561,12 +619,55 @@ module DaVinciPDEXPlanNetTestKit
       resources
     end
 
+    def fetch_matching_bundled_resources(
+          max_pages: 20,
+          max_instances: 200,
+          resource_type: self.resource_type
+        )
+      page_count = 0
+      resources = []
+      bundle = resource
+
+      loop do
+        bundle&.entry&.each do |a_entry|
+          an_instance = a_entry.resource
+          if ( an_instance && 
+               an_instance.resourceType == resource_type && 
+               # Plan Net Specific Special Case
+               !DaVinciPDEXPlanNetTestKit::SpecialCases::filter_instance_for_parameterless_gathering?(metadata.profile_url, an_instance)
+          )
+            resources << an_instance
+            break if resources.size >= max_instances
+          end
+        end
+        break if resources.size >= max_instances
+
+        page_count += 1
+        break if page_count >= max_pages
+
+        next_bundle_link = bundle&.link&.find { |link| link.relation == 'next' }&.url
+        break if next_bundle_link.blank?
+
+        reply = fhir_client.raw_read_url(next_bundle_link)
+
+        store_request('outgoing') { reply }
+        error_message = cant_resolve_next_bundle_message(next_bundle_link)
+
+        assert_response_status(200)
+        assert_valid_json(reply.body, error_message)
+
+        bundle = fhir_client.parse_reply(FHIR::Bundle, fhir_client.default_format, reply)
+      end
+
+      resources
+    end
+
     def cant_resolve_next_bundle_message(link)
       "Could not resolve next bundle: #{link}"
     end
 
     def search_param_value(name, resource, include_system: false)
-      paths = search_param_paths(name)
+      paths = search_param_paths(name, resource.resourceType)
       search_value = nil
       paths.each do |path|
         element = find_a_value_at(resource, path) { |element| element_has_valid_value?(element, include_system) }

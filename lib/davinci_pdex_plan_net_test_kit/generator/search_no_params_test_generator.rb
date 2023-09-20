@@ -42,6 +42,10 @@ module DaVinciPDEXPlanNetTestKit
         File.join(output_file_directory, base_output_file_name)
       end
 
+      def profile_name
+        group_metadata.profile_name
+      end
+
       def profile_identifier
         Naming.snake_case_for_profile(group_metadata)
       end

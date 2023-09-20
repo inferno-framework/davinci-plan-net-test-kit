@@ -6,25 +6,27 @@ module DaVinciPDEXPlanNetTestKit
     class OrganizationInsurancePlanOwnedByRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns InsurancePlan resources from Organization search by _revinclude=InsurancePlan:owned-by'
+      title 'Server returns InsurancePlan resources from Organization search with _revinclude=InsurancePlan:owned-by'
       description %(
         A server SHALL be capable of supporting _revIncludes for InsurancePlan:owned-by.
 
-        This test will perform a search by _revinclude=InsurancePlan:owned-by and
+        This test will perform a search with _revinclude=InsurancePlan:owned-by and
         will pass if a InsurancePlan resource is found in the response.
       )
 
       id :davinci_plan_net_v110_organization_insurance_plan_owned_by_revinclude_search_test
       input :insurance_plan_owned_by_input,
         title: 'InsurancePlan referenced Organization IDs',
-        description: 'Comma separated list of Organization  IDs that are referenced by a InsurancePlan'
-
+        description: 'Comma separated list of Organization  IDs that are referenced by a InsurancePlan',
+        optional: true
+        
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'Organization',
           search_param_names: [],
           input_name: 'insurance_plan_owned_by_input',
           revinclude_param: 'InsurancePlan:owned-by',
+          rev_param_sp: 'owned-by',
           additional_resource_type: 'InsurancePlan'
         )
       end
@@ -34,7 +36,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def self.revinclude_metadata
-        @revinclude_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', 'InsurancePlan', 'metadata.yml'), aliases: true))
+        @revinclude_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', 'insurance_plan', 'metadata.yml'), aliases: true))
       end
 
       def scratch_resources
@@ -42,7 +44,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_revinclude_resources
-        scratch[:insuranceplan_resources] ||= {}
+        scratch[:insurance_plan_resources] ||= {}
       end
 
       run do

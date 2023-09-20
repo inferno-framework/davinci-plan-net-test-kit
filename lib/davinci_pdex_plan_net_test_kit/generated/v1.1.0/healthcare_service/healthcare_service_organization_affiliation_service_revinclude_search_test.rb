@@ -6,25 +6,27 @@ module DaVinciPDEXPlanNetTestKit
     class HealthcareServiceOrganizationAffiliationServiceRevincludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns OrganizationAffiliation resources from HealthcareService search by _revinclude=OrganizationAffiliation:service'
+      title 'Server returns OrganizationAffiliation resources from HealthcareService search with _revinclude=OrganizationAffiliation:service'
       description %(
         A server SHALL be capable of supporting _revIncludes for OrganizationAffiliation:service.
 
-        This test will perform a search by _revinclude=OrganizationAffiliation:service and
+        This test will perform a search with _revinclude=OrganizationAffiliation:service and
         will pass if a OrganizationAffiliation resource is found in the response.
       )
 
       id :davinci_plan_net_v110_healthcare_service_organization_affiliation_service_revinclude_search_test
       input :organization_affiliation_service_input,
         title: 'OrganizationAffiliation referenced HealthcareService IDs',
-        description: 'Comma separated list of HealthcareService  IDs that are referenced by a OrganizationAffiliation'
-
+        description: 'Comma separated list of HealthcareService  IDs that are referenced by a OrganizationAffiliation',
+        optional: true
+        
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'HealthcareService',
           search_param_names: [],
           input_name: 'organization_affiliation_service_input',
           revinclude_param: 'OrganizationAffiliation:service',
+          rev_param_sp: 'service',
           additional_resource_type: 'OrganizationAffiliation'
         )
       end
@@ -34,7 +36,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def self.revinclude_metadata
-        @revinclude_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', 'OrganizationAffiliation', 'metadata.yml'), aliases: true))
+        @revinclude_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', 'organization_affiliation', 'metadata.yml'), aliases: true))
       end
 
       def scratch_resources
@@ -42,7 +44,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_revinclude_resources
-        scratch[:organizationaffiliation_resources] ||= {}
+        scratch[:organization_affiliation_resources] ||= {}
       end
 
       run do

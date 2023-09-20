@@ -6,25 +6,22 @@ module DaVinciPDEXPlanNetTestKit
     class HealthcareServiceHealthcareServiceEndpointIncludeSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns Endpoint resources from HealthcareService search by _include=HealthcareService:endpoint'
+      title 'Server returns Endpoint resources from HealthcareService search with _include=HealthcareService:endpoint'
       description %(
         A server SHALL be capable of supporting _includes for HealthcareService:endpoint.
 
-        This test will perform a search by _include=HealthcareService:endpoint and
+        This test will perform a search with _include=HealthcareService:endpoint and
         will pass if a Endpoint resource is found in the response.
       )
 
       id :davinci_plan_net_v110_healthcare_service_healthcare_service_endpoint_include_search_test
-      input :healthcare_service_endpoint_input,
-        title: 'IDs of HealthcareService that have Endpoint reference(s)',
-        description: 'Comma separated list of HealthcareService IDs that reference by a Endpoint'
 
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'HealthcareService',
           search_param_names: [],
-          input_name: 'healthcare_service_endpoint_input',
           include_param: 'HealthcareService:endpoint',
+          inc_param_sp: 'endpoint',
           additional_resource_type: 'Endpoint'
         )
       end
