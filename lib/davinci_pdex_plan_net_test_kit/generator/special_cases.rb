@@ -40,6 +40,17 @@ module DaVinciPDEXPlanNetTestKit
         def parameterless_filter_description(profile_name)
           PARAMETERLESS_FILTER_DESCRIPTION[profile_name]
         end
+
+        def fix_revincludes_for_organization(ig_metadata)
+          organization_group = ig_metadata.groups.find { |group| group.name == 'plannet_Organization'}
+          network_group = ig_metadata.groups.find { |group| group.name == 'plannet_Network'}
+
+          network_revinclude = organization_group.revincludes.find { |revinclude| revinclude.split(/:/)[1] == "network"}
+          corrected_revinclude_list = organization_group.revincludes.dup.delete_if { |revinclude| revinclude.split(/:/)[1] == "network"}
+          
+          organization_group.revincludes = corrected_revinclude_list
+          network_group.revincludes = [network_revinclude]
+        end
       end
     end
   end

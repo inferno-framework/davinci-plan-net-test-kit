@@ -11,14 +11,7 @@ require_relative 'network/network_coverage_area_search_test'
 require_relative 'network/network_organization_partof_include_search_test'
 require_relative 'network/network_organization_endpoint_include_search_test'
 require_relative 'network/network_organization_coverage_area_include_search_test'
-require_relative 'network/network_endpoint_organization_revinclude_search_test'
-require_relative 'network/network_healthcare_service_organization_revinclude_search_test'
-require_relative 'network/network_insurance_plan_administered_by_revinclude_search_test'
-require_relative 'network/network_insurance_plan_owned_by_revinclude_search_test'
-require_relative 'network/network_organization_affiliation_primary_organization_revinclude_search_test'
-require_relative 'network/network_practitioner_role_organization_revinclude_search_test'
 require_relative 'network/network_practitioner_role_network_revinclude_search_test'
-require_relative 'network/network_organization_affiliation_participating_organization_revinclude_search_test'
 require_relative 'network/network_validation_test'
 require_relative 'network/network_must_support_test'
 require_relative 'network/network_reference_resolution_test'
@@ -143,14 +136,7 @@ read succeeds.
       test from: :davinci_plan_net_v110_network_organization_partof_include_search_test
       test from: :davinci_plan_net_v110_network_organization_endpoint_include_search_test
       test from: :davinci_plan_net_v110_network_organization_coverage_area_include_search_test
-      test from: :davinci_plan_net_v110_network_endpoint_organization_revinclude_search_test
-      test from: :davinci_plan_net_v110_network_healthcare_service_organization_revinclude_search_test
-      test from: :davinci_plan_net_v110_network_insurance_plan_administered_by_revinclude_search_test
-      test from: :davinci_plan_net_v110_network_insurance_plan_owned_by_revinclude_search_test
-      test from: :davinci_plan_net_v110_network_organization_affiliation_primary_organization_revinclude_search_test
-      test from: :davinci_plan_net_v110_network_practitioner_role_organization_revinclude_search_test
       test from: :davinci_plan_net_v110_network_practitioner_role_network_revinclude_search_test
-      test from: :davinci_plan_net_v110_network_organization_affiliation_participating_organization_revinclude_search_test
       test from: :davinci_pdex_plan_net_v110_network_validation_test
       test from: :davinci_pdex_plan_net_v110_network_must_support_test
       test from: :davinci_pdex_plan_net_v110_network_reference_resolution_test

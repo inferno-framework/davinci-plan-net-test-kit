@@ -183,7 +183,6 @@
 - InsurancePlan:owned-by
 - OrganizationAffiliation:primary-organization
 - PractitionerRole:organization
-- PractitionerRole:network
 - OrganizationAffiliation:participating-organization
 :required_concepts: []
 :must_supports:
@@ -355,8 +354,6 @@
   :file_name: organization_organization_affiliation_primary_organization_revinclude_search_test.rb
 - :id: davinci_plan_net_v110_organization_practitioner_role_organization_revinclude_search_test
   :file_name: organization_practitioner_role_organization_revinclude_search_test.rb
-- :id: davinci_plan_net_v110_organization_practitioner_role_network_revinclude_search_test
-  :file_name: organization_practitioner_role_network_revinclude_search_test.rb
 - :id: davinci_plan_net_v110_organization_organization_affiliation_participating_organization_revinclude_search_test
   :file_name: organization_organization_affiliation_participating_organization_revinclude_search_test.rb
 - :id: davinci_pdex_plan_net_v110_organization_validation_test
