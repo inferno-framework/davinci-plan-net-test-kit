@@ -555,7 +555,9 @@ module DaVinciPDEXPlanNetTestKit
       msg = "No #{resource_type} resources appear to be available"
 
       if ((self.resource_type == additional_resource_type) && (!revinclude_param.nil? || !include_param.nil?))
-        msg.concat(" (excluding #{self.send(input_name)}, which was used as the base).")
+        if !input_name.nil?
+          msg.concat(" (excluding #{self.send(input_name)}, which was used as the base).")
+        end
       end
 
       if (!revinclude_param.nil? && include_param.nil?)
