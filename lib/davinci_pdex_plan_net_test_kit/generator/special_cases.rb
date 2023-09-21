@@ -40,6 +40,14 @@ module DaVinciPDEXPlanNetTestKit
         def parameterless_filter_description(profile_name)
           PARAMETERLESS_FILTER_DESCRIPTION[profile_name]
         end
+
+        def fix_network_must_support
+          # The Network profile is based on USCore Organization, since there was no contradiction between the USCore profile 
+          # and the Plan-Net requirements. However, the NPI and CLIA identifier types, which are Must-Support, are clearly 
+          # intended for provider organizations only and are not expected to be populated for other organization types.
+          
+        end
+
       end
     end
   end
