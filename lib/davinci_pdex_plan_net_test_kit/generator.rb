@@ -14,6 +14,7 @@ require_relative 'generator/search_test_generator'
 require_relative 'generator/search_no_params_test_generator'
 require_relative 'generator/suite_generator'
 require_relative 'generator/validation_test_generator'
+require_relative 'generator/special_cases'
 
 module DaVinciPDEXPlanNetTestKit
   class Generator
@@ -54,6 +55,8 @@ module DaVinciPDEXPlanNetTestKit
 
     def extract_metadata
       self.ig_metadata = IGMetadataExtractor.new(ig_resources).extract
+
+      SpecialCases.fix_network_must_support(ig_metadata)
 
       FileUtils.mkdir_p(base_output_dir)
       File.open(File.join(base_output_dir, 'metadata.yml'), 'w') do |file|

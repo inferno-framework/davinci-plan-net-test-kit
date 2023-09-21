@@ -2282,13 +2282,7 @@
     :extensions:
     - :id: Organization.extension:location-reference
       :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/location-reference
-    :slices:
-    - :name: Organization.identifier:NPI
-      :path: identifier
-      :discriminator:
-        :type: patternIdentifier
-        :path: ''
-        :system: http://hl7.org/fhir/sid/us-npi
+    :slices: []
     :elements:
     - :path: identifier
     - :path: identifier.type
