@@ -42,14 +42,18 @@ module DaVinciPDEXPlanNetTestKit
         end
 
         def fix_revincludes_for_organization(ig_metadata)
+          # Revincludes are listed in the capability statement at the resource level,
+          # but resources that support multiple profiles do not make the distinction of which tests are for which
+          # This separates the revinclude lists for Network and Organization profiles from the Organization resource 
           organization_group = ig_metadata.groups.find { |group| group.name == 'plannet_Organization'}
           network_group = ig_metadata.groups.find { |group| group.name == 'plannet_Network'}
 
-          network_revinclude = organization_group.revincludes.find { |revinclude| revinclude.split(/:/)[1] == "network"}
-          corrected_revinclude_list = organization_group.revincludes.dup.delete_if { |revinclude| revinclude.split(/:/)[1] == "network"}
+          network_revincludes, corrected_revinclude_list = organization_group.revincludes.partition do |revinclude|
+            revinclude.split(/:/)[1] == "network"
+          end
           
           organization_group.revincludes = corrected_revinclude_list
-          network_group.revincludes = [network_revinclude]
+          network_group.revincludes = network_revincludes
         end
       end
     end
