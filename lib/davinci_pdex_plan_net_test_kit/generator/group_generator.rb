@@ -123,6 +123,18 @@ module DaVinciPDEXPlanNetTestKit
           .join("\n")
       end
 
+      def include_param_name_string
+        group_metadata.include_params
+          .map { |names| "* #{names}" }
+          .join("\n")
+      end
+
+      def revinclude_param_name_string
+        group_metadata.revincludes
+          .map { |names| "* #{names}" }
+          .join("\n")
+      end
+
       def search_description
         return '' if required_searches.blank?
 
@@ -153,6 +165,45 @@ module DaVinciPDEXPlanNetTestKit
         returns a #{profile_name} where `#{required_searches.first[:names].first}!=X`
 
         SEARCH_DESCRIPTION
+      end
+
+      def include_description
+        return '' if group_metadata.include_params.blank?
+
+        <<~INCLUDE_DESCRIPTION
+        ## _include Requirement Testing
+        This test sequence will perform each required _include search associated
+        with this resource. This sequence will perform searches with the
+        following includes:
+
+        #{include_param_name_string}
+
+        All _include searches will look for candidate IDs from the results of 
+        instance gathering.  Each search will use a #{profile_name} ID and the include parameter.
+        The return is scanned to find any of the expected additional resource.
+
+        INCLUDE_DESCRIPTION
+      end
+
+      def revinclude_description
+        return '' if group_metadata.revincludes.blank?
+
+        <<~REVINCLUDE_DESCRIPTION
+        ## _revinclude Requirement Testing
+        This test sequence will perform each required _revinclude search associated
+        with this resource. This sequence will perform searches with the
+        following includes:
+
+        #{revinclude_param_name_string}
+
+        All _revinclude searches will look for candidate IDs from the results of 
+        instance gathering _only_ if tests are ran from the suite level.  Each search 
+        will use a #{profile_name} ID that is referenced by an instance of the revincluded resource
+        and the revinclude parameter. The return is scanned to find any of the expected additional resource.
+
+        If running from the profile level, input boxes are provided for these tests upon test start.
+
+        REVINCLUDE_DESCRIPTION
       end
 
       def description
@@ -194,6 +245,8 @@ module DaVinciPDEXPlanNetTestKit
         they will be read and included in the set of gathered instances.
 
         #{search_description}
+        #{include_description}
+        #{revinclude_description}
 
         ## Must Support
         Each profile contains elements marked as "must support". This test

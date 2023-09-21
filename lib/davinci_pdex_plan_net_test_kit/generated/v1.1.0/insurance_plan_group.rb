@@ -92,6 +92,21 @@ for example, if a Plan-Net InsurancePlan search for `administered-by=X`
 returns a Plan-Net InsurancePlan where `administered-by!=X`
 
 
+## _include Requirement Testing
+This test sequence will perform each required _include search associated
+with this resource. This sequence will perform searches with the
+following includes:
+
+* InsurancePlan:administered-by
+* InsurancePlan:owned-by
+* InsurancePlan:coverage-area
+
+All _include searches will look for candidate IDs from the results of 
+instance gathering.  Each search will use a Plan-Net InsurancePlan ID and the include parameter.
+The return is scanned to find any of the expected additional resource.
+
+
+
 
 ## Must Support
 Each profile contains elements marked as "must support". This test

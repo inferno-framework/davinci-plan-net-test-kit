@@ -97,6 +97,24 @@ for example, if a Plan-Net OrganizationAffiliation search for `primary-organizat
 returns a Plan-Net OrganizationAffiliation where `primary-organization!=X`
 
 
+## _include Requirement Testing
+This test sequence will perform each required _include search associated
+with this resource. This sequence will perform searches with the
+following includes:
+
+* OrganizationAffiliation:primary-organization
+* OrganizationAffiliation:participating-organization
+* OrganizationAffiliation:location
+* OrganizationAffiliation:service
+* OrganizationAffiliation:endpoint
+* OrganizationAffiliation:network
+
+All _include searches will look for candidate IDs from the results of 
+instance gathering.  Each search will use a Plan-Net OrganizationAffiliation ID and the include parameter.
+The return is scanned to find any of the expected additional resource.
+
+
+
 
 ## Must Support
 Each profile contains elements marked as "must support". This test
