@@ -45,6 +45,7 @@ module DaVinciPDEXPlanNetTestKit
           # Revincludes are listed in the capability statement at the resource level,
           # but resources that support multiple profiles do not make the distinction of which tests are for which
           # This separates the revinclude lists for Network and Organization profiles from the Organization resource 
+          # For Plan Net PDEX v1.1.0
           organization_group = ig_metadata.groups.find { |group| group.name == 'plannet_Organization'}
           network_group = ig_metadata.groups.find { |group| group.name == 'plannet_Network'}
 
