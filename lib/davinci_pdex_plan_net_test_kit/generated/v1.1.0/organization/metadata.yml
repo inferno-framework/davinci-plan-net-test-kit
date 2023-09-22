@@ -359,6 +359,14 @@
   :file_name: organization_practitioner_role_network_revinclude_search_test.rb
 - :id: davinci_plan_net_v110_organization_organization_affiliation_participating_organization_revinclude_search_test
   :file_name: organization_organization_affiliation_participating_organization_revinclude_search_test.rb
+- :id: davinci_plan_net_v110_partof_name_forward_chain_search_test
+  :file_name: organization_partof_name_forward_chain_search_test.rb
+- :id: davinci_plan_net_v110_partof_address_forward_chain_search_test
+  :file_name: organization_partof_address_forward_chain_search_test.rb
+- :id: davinci_plan_net_v110_partof_type_forward_chain_search_test
+  :file_name: organization_partof_type_forward_chain_search_test.rb
+- :id: davinci_plan_net_v110_endpoint_organization_forward_chain_search_test
+  :file_name: organization_endpoint_organization_forward_chain_search_test.rb
 - :id: davinci_pdex_plan_net_v110_organization_validation_test
   :file_name: organization_validation_test.rb
 - :id: davinci_pdex_plan_net_v110_organization_must_support_test

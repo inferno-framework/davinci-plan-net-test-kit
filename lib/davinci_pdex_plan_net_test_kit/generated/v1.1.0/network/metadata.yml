@@ -309,6 +309,14 @@
   :file_name: network_practitioner_role_network_revinclude_search_test.rb
 - :id: davinci_plan_net_v110_network_organization_affiliation_participating_organization_revinclude_search_test
   :file_name: network_organization_affiliation_participating_organization_revinclude_search_test.rb
+- :id: davinci_plan_net_v110_partof_name_forward_chain_search_test
+  :file_name: network_partof_name_forward_chain_search_test.rb
+- :id: davinci_plan_net_v110_partof_address_forward_chain_search_test
+  :file_name: network_partof_address_forward_chain_search_test.rb
+- :id: davinci_plan_net_v110_partof_type_forward_chain_search_test
+  :file_name: network_partof_type_forward_chain_search_test.rb
+- :id: davinci_plan_net_v110_endpoint_organization_forward_chain_search_test
+  :file_name: network_endpoint_organization_forward_chain_search_test.rb
 - :id: davinci_pdex_plan_net_v110_network_validation_test
   :file_name: network_validation_test.rb
 - :id: davinci_pdex_plan_net_v110_network_must_support_test

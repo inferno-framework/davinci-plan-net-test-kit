@@ -19,6 +19,10 @@ require_relative 'network/network_organization_affiliation_primary_organization_
 require_relative 'network/network_practitioner_role_organization_revinclude_search_test'
 require_relative 'network/network_practitioner_role_network_revinclude_search_test'
 require_relative 'network/network_organization_affiliation_participating_organization_revinclude_search_test'
+require_relative 'network/network_partof_name_forward_chain_search_test'
+require_relative 'network/network_partof_address_forward_chain_search_test'
+require_relative 'network/network_partof_type_forward_chain_search_test'
+require_relative 'network/network_endpoint_organization_forward_chain_search_test'
 require_relative 'network/network_validation_test'
 require_relative 'network/network_must_support_test'
 require_relative 'network/network_reference_resolution_test'
@@ -187,6 +191,10 @@ read succeeds.
       test from: :davinci_plan_net_v110_network_practitioner_role_organization_revinclude_search_test
       test from: :davinci_plan_net_v110_network_practitioner_role_network_revinclude_search_test
       test from: :davinci_plan_net_v110_network_organization_affiliation_participating_organization_revinclude_search_test
+      test from: :davinci_plan_net_v110_partof_name_forward_chain_search_test
+      test from: :davinci_plan_net_v110_partof_address_forward_chain_search_test
+      test from: :davinci_plan_net_v110_partof_type_forward_chain_search_test
+      test from: :davinci_plan_net_v110_endpoint_organization_forward_chain_search_test
       test from: :davinci_pdex_plan_net_v110_network_validation_test
       test from: :davinci_pdex_plan_net_v110_network_must_support_test
       test from: :davinci_pdex_plan_net_v110_network_reference_resolution_test

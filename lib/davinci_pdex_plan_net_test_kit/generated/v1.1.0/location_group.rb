@@ -17,6 +17,14 @@ require_relative 'location/location_healthcare_service_location_revinclude_searc
 require_relative 'location/location_insurance_plan_coverage_area_revinclude_search_test'
 require_relative 'location/location_organization_affiliation_location_revinclude_search_test'
 require_relative 'location/location_practitioner_role_location_revinclude_search_test'
+require_relative 'location/location_partof_type_forward_chain_search_test'
+require_relative 'location/location_partof_address_forward_chain_search_test'
+require_relative 'location/location_partof_organization_forward_chain_search_test'
+require_relative 'location/location_organization_name_forward_chain_search_test'
+require_relative 'location/location_organization_address_forward_chain_search_test'
+require_relative 'location/location_organization_partof_forward_chain_search_test'
+require_relative 'location/location_organization_type_forward_chain_search_test'
+require_relative 'location/location_endpoint_organization_forward_chain_search_test'
 require_relative 'location/location_validation_test'
 require_relative 'location/location_must_support_test'
 require_relative 'location/location_reference_resolution_test'
@@ -181,6 +189,14 @@ read succeeds.
       test from: :davinci_plan_net_v110_location_insurance_plan_coverage_area_revinclude_search_test
       test from: :davinci_plan_net_v110_location_organization_affiliation_location_revinclude_search_test
       test from: :davinci_plan_net_v110_location_practitioner_role_location_revinclude_search_test
+      test from: :davinci_plan_net_v110_partof_type_forward_chain_search_test
+      test from: :davinci_plan_net_v110_partof_address_forward_chain_search_test
+      test from: :davinci_plan_net_v110_partof_organization_forward_chain_search_test
+      test from: :davinci_plan_net_v110_organization_name_forward_chain_search_test
+      test from: :davinci_plan_net_v110_organization_address_forward_chain_search_test
+      test from: :davinci_plan_net_v110_organization_partof_forward_chain_search_test
+      test from: :davinci_plan_net_v110_organization_type_forward_chain_search_test
+      test from: :davinci_plan_net_v110_endpoint_organization_forward_chain_search_test
       test from: :davinci_pdex_plan_net_v110_location_validation_test
       test from: :davinci_pdex_plan_net_v110_location_must_support_test
       test from: :davinci_pdex_plan_net_v110_location_reference_resolution_test
