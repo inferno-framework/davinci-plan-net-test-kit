@@ -11,14 +11,7 @@ require_relative 'network/network_coverage_area_search_test'
 require_relative 'network/network_organization_partof_include_search_test'
 require_relative 'network/network_organization_endpoint_include_search_test'
 require_relative 'network/network_organization_coverage_area_include_search_test'
-require_relative 'network/network_endpoint_organization_revinclude_search_test'
-require_relative 'network/network_healthcare_service_organization_revinclude_search_test'
-require_relative 'network/network_insurance_plan_administered_by_revinclude_search_test'
-require_relative 'network/network_insurance_plan_owned_by_revinclude_search_test'
-require_relative 'network/network_organization_affiliation_primary_organization_revinclude_search_test'
-require_relative 'network/network_practitioner_role_organization_revinclude_search_test'
 require_relative 'network/network_practitioner_role_network_revinclude_search_test'
-require_relative 'network/network_organization_affiliation_participating_organization_revinclude_search_test'
 require_relative 'network/network_validation_test'
 require_relative 'network/network_must_support_test'
 require_relative 'network/network_reference_resolution_test'
@@ -98,6 +91,35 @@ for example, if a Plan-Net Network search for `partof=X`
 returns a Plan-Net Network where `partof!=X`
 
 
+## _include Requirement Testing
+This test sequence will perform each required _include search associated
+with this resource. This sequence will perform searches with the
+following includes:
+
+* Organization:partof
+* Organization:endpoint
+* Organization:coverage-area
+
+All _include searches will look for candidate IDs from the results of 
+instance gathering.  Each search will use a Plan-Net Network ID and the include parameter.
+The return is scanned to find any of the expected additional resource.
+
+
+## _revinclude Requirement Testing
+This test sequence will perform each required _revinclude search associated
+with this resource. This sequence will perform searches with the
+following includes:
+
+* PractitionerRole:network
+
+All _revinclude searches will look for candidate IDs from the results of 
+instance gathering _only_ if tests are ran from the suite level.  Each search 
+will use a Plan-Net Network ID that is referenced by an instance of the revincluded resource
+and the revinclude parameter. The return is scanned to find any of the expected additional resource.
+
+If running from the profile level, input boxes are provided for these tests upon test start.
+
+
 
 ## Must Support
 Each profile contains elements marked as "must support". This test
@@ -143,14 +165,7 @@ read succeeds.
       test from: :davinci_plan_net_v110_network_organization_partof_include_search_test
       test from: :davinci_plan_net_v110_network_organization_endpoint_include_search_test
       test from: :davinci_plan_net_v110_network_organization_coverage_area_include_search_test
-      test from: :davinci_plan_net_v110_network_endpoint_organization_revinclude_search_test
-      test from: :davinci_plan_net_v110_network_healthcare_service_organization_revinclude_search_test
-      test from: :davinci_plan_net_v110_network_insurance_plan_administered_by_revinclude_search_test
-      test from: :davinci_plan_net_v110_network_insurance_plan_owned_by_revinclude_search_test
-      test from: :davinci_plan_net_v110_network_organization_affiliation_primary_organization_revinclude_search_test
-      test from: :davinci_plan_net_v110_network_practitioner_role_organization_revinclude_search_test
       test from: :davinci_plan_net_v110_network_practitioner_role_network_revinclude_search_test
-      test from: :davinci_plan_net_v110_network_organization_affiliation_participating_organization_revinclude_search_test
       test from: :davinci_pdex_plan_net_v110_network_validation_test
       test from: :davinci_pdex_plan_net_v110_network_must_support_test
       test from: :davinci_pdex_plan_net_v110_network_reference_resolution_test

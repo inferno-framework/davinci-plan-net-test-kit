@@ -2267,15 +2267,8 @@
   - Organization:partof
   - Organization:endpoint
   - Organization:coverage-area
-  :revincludes: &2
-  - Endpoint:organization
-  - HealthcareService:organization
-  - InsurancePlan:administered-by
-  - InsurancePlan:owned-by
-  - OrganizationAffiliation:primary-organization
-  - PractitionerRole:organization
+  :revincludes:
   - PractitionerRole:network
-  - OrganizationAffiliation:participating-organization
   :required_concepts:
   - type
   :must_supports:
@@ -2532,7 +2525,14 @@
       :contains_multiple: false
       :multiple_or: ''
   :include_params: *1
-  :revincludes: *2
+  :revincludes:
+  - Endpoint:organization
+  - HealthcareService:organization
+  - InsurancePlan:administered-by
+  - InsurancePlan:owned-by
+  - OrganizationAffiliation:primary-organization
+  - PractitionerRole:organization
+  - OrganizationAffiliation:participating-organization
   :required_concepts: []
   :must_supports:
     :extensions:

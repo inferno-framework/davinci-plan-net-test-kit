@@ -97,6 +97,37 @@ for example, if a Plan-Net HealthcareService search for `location=X`
 returns a Plan-Net HealthcareService where `location!=X`
 
 
+## _include Requirement Testing
+This test sequence will perform each required _include search associated
+with this resource. This sequence will perform searches with the
+following includes:
+
+* HealthcareService:location
+* HealthcareService:coverage-area
+* HealthcareService:organization
+* HealthcareService:endpoint
+
+All _include searches will look for candidate IDs from the results of 
+instance gathering.  Each search will use a Plan-Net HealthcareService ID and the include parameter.
+The return is scanned to find any of the expected additional resource.
+
+
+## _revinclude Requirement Testing
+This test sequence will perform each required _revinclude search associated
+with this resource. This sequence will perform searches with the
+following includes:
+
+* PractitionerRole:service
+* OrganizationAffiliation:service
+
+All _revinclude searches will look for candidate IDs from the results of 
+instance gathering _only_ if tests are ran from the suite level.  Each search 
+will use a Plan-Net HealthcareService ID that is referenced by an instance of the revincluded resource
+and the revinclude parameter. The return is scanned to find any of the expected additional resource.
+
+If running from the profile level, input boxes are provided for these tests upon test start.
+
+
 
 ## Must Support
 Each profile contains elements marked as "must support". This test

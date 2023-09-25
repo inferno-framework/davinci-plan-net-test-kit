@@ -41,6 +41,11 @@ module DaVinciPDEXPlanNetTestKit
           PARAMETERLESS_FILTER_DESCRIPTION[profile_name]
         end
 
+        def run_special_cases(ig_metadata)
+          fix_network_must_support(ig_metadata)
+          fix_revincludes_for_organization(ig_metadata)
+        end
+
         def fix_network_must_support(ig_metadata)
           # The Network profile is based on USCore Organization, since there was no contradiction between the USCore profile 
           # and the Plan-Net requirements. However, the NPI and CLIA identifier types, which are Must-Support, are clearly 
@@ -50,6 +55,21 @@ module DaVinciPDEXPlanNetTestKit
           network_group.must_supports[:slices] = adjusted_must_supports
         end
 
+        def fix_revincludes_for_organization(ig_metadata)
+          # Revincludes are listed in the capability statement at the resource level,
+          # but resources that support multiple profiles do not make the distinction of which tests are for which
+          # This separates the revinclude lists for Network and Organization profiles from the Organization resource 
+          # For Plan Net PDEX v1.1.0
+          organization_group = ig_metadata.groups.find { |group| group.name == 'plannet_Organization'}
+          network_group = ig_metadata.groups.find { |group| group.name == 'plannet_Network'}
+
+          network_revincludes, corrected_revinclude_list = organization_group.revincludes.partition do |revinclude|
+            revinclude.split(/:/)[1] == "network"
+          end
+          
+          organization_group.revincludes = corrected_revinclude_list
+          network_group.revincludes = network_revincludes
+        end
       end
     end
   end

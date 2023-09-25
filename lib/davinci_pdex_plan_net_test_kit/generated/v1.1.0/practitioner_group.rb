@@ -83,6 +83,22 @@ returns a Plan-Net Practitioner where `name!=X`
 
 
 
+## _revinclude Requirement Testing
+This test sequence will perform each required _revinclude search associated
+with this resource. This sequence will perform searches with the
+following includes:
+
+* PractitionerRole:practitioner
+
+All _revinclude searches will look for candidate IDs from the results of 
+instance gathering _only_ if tests are ran from the suite level.  Each search 
+will use a Plan-Net Practitioner ID that is referenced by an instance of the revincluded resource
+and the revinclude parameter. The return is scanned to find any of the expected additional resource.
+
+If running from the profile level, input boxes are provided for these tests upon test start.
+
+
+
 ## Must Support
 Each profile contains elements marked as "must support". This test
 sequence expects to see each of these elements populated at least once. If at
