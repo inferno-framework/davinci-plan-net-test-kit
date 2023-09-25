@@ -17,7 +17,6 @@ require_relative 'organization/organization_insurance_plan_administered_by_revin
 require_relative 'organization/organization_insurance_plan_owned_by_revinclude_search_test'
 require_relative 'organization/organization_organization_affiliation_primary_organization_revinclude_search_test'
 require_relative 'organization/organization_practitioner_role_organization_revinclude_search_test'
-require_relative 'organization/organization_practitioner_role_network_revinclude_search_test'
 require_relative 'organization/organization_organization_affiliation_participating_organization_revinclude_search_test'
 require_relative 'organization/organization_validation_test'
 require_relative 'organization/organization_must_support_test'
@@ -185,7 +184,6 @@ read succeeds.
       test from: :davinci_plan_net_v110_organization_insurance_plan_owned_by_revinclude_search_test
       test from: :davinci_plan_net_v110_organization_organization_affiliation_primary_organization_revinclude_search_test
       test from: :davinci_plan_net_v110_organization_practitioner_role_organization_revinclude_search_test
-      test from: :davinci_plan_net_v110_organization_practitioner_role_network_revinclude_search_test
       test from: :davinci_plan_net_v110_organization_organization_affiliation_participating_organization_revinclude_search_test
       test from: :davinci_pdex_plan_net_v110_organization_validation_test
       test from: :davinci_pdex_plan_net_v110_organization_must_support_test
