@@ -6,7 +6,8 @@ module DaVinciPDEXPlanNetTestKit
     class PractitionerRolePractitionerNameForwardChainSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns PractitionerRole that populate the name field of a Practitioner instance'
+      title 'Server returns PractitionerRole that populate the name field of a Practitioner instance
+      through the search parameter practitioner'
       description %(
         A server SHALL be capable of supporting chaining for name.
 

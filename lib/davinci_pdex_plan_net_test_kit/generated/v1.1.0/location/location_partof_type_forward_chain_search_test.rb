@@ -6,7 +6,8 @@ module DaVinciPDEXPlanNetTestKit
     class LocationPartofTypeForwardChainSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns Location that populate the type field of a Location instance'
+      title 'Server returns Location that populate the type field of a Location instance
+      through the search parameter partof'
       description %(
         A server SHALL be capable of supporting chaining for type.
 

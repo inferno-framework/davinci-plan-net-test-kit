@@ -6,7 +6,8 @@ module DaVinciPDEXPlanNetTestKit
     class HealthcareServiceLocationAddressForwardChainSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns HealthcareService that populate the address field of a Location instance'
+      title 'Server returns HealthcareService that populate the address field of a Location instance
+      through the search parameter location'
       description %(
         A server SHALL be capable of supporting chaining for address.
 

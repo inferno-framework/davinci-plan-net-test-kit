@@ -6,7 +6,8 @@ module DaVinciPDEXPlanNetTestKit
     class LocationOrganizationPartofForwardChainSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns Location that populate the partof field of a Organization instance'
+      title 'Server returns Location that populate the partof field of a Organization instance
+      through the search parameter organization'
       description %(
         A server SHALL be capable of supporting chaining for partof.
 

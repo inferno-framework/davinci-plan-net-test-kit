@@ -6,7 +6,8 @@ module DaVinciPDEXPlanNetTestKit
     class InsurancePlanAdministeredByPartofForwardChainSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns InsurancePlan that populate the partof field of a Organization instance'
+      title 'Server returns InsurancePlan that populate the partof field of a Organization instance
+      through the search parameter administered-by'
       description %(
         A server SHALL be capable of supporting chaining for partof.
 

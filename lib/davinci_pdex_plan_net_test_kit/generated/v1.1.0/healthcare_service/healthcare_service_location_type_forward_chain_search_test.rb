@@ -6,7 +6,8 @@ module DaVinciPDEXPlanNetTestKit
     class HealthcareServiceLocationTypeForwardChainSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns HealthcareService that populate the type field of a Location instance'
+      title 'Server returns HealthcareService that populate the type field of a Location instance
+      through the search parameter location'
       description %(
         A server SHALL be capable of supporting chaining for type.
 

@@ -6,7 +6,8 @@ module DaVinciPDEXPlanNetTestKit
     class OrganizationAffiliationParticipatingOrganizationAddressForwardChainSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns OrganizationAffiliation that populate the address field of a Organization instance'
+      title 'Server returns OrganizationAffiliation that populate the address field of a Organization instance
+      through the search parameter participating-organization'
       description %(
         A server SHALL be capable of supporting chaining for address.
 

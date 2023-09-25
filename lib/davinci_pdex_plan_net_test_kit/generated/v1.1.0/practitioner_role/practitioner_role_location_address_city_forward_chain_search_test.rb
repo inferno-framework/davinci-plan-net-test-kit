@@ -6,7 +6,8 @@ module DaVinciPDEXPlanNetTestKit
     class PractitionerRoleLocationAddressCityForwardChainSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns PractitionerRole that populate the address-city field of a Location instance'
+      title 'Server returns PractitionerRole that populate the address-city field of a Location instance
+      through the search parameter location'
       description %(
         A server SHALL be capable of supporting chaining for address-city.
 

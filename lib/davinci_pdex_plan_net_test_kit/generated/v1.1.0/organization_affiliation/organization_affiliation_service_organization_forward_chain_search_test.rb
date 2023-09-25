@@ -6,7 +6,8 @@ module DaVinciPDEXPlanNetTestKit
     class OrganizationAffiliationServiceOrganizationForwardChainSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns OrganizationAffiliation that populate the organization field of a HealthcareService instance'
+      title 'Server returns OrganizationAffiliation that populate the organization field of a HealthcareService instance
+      through the search parameter service'
       description %(
         A server SHALL be capable of supporting chaining for organization.
 

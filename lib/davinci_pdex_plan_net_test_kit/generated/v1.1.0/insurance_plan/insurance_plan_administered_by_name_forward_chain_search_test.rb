@@ -6,7 +6,8 @@ module DaVinciPDEXPlanNetTestKit
     class InsurancePlanAdministeredByNameForwardChainSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns InsurancePlan that populate the name field of a Organization instance'
+      title 'Server returns InsurancePlan that populate the name field of a Organization instance
+      through the search parameter administered-by'
       description %(
         A server SHALL be capable of supporting chaining for name.
 

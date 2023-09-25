@@ -6,7 +6,8 @@ module DaVinciPDEXPlanNetTestKit
     class HealthcareServiceOrganizationNameForwardChainSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns HealthcareService that populate the name field of a Organization instance'
+      title 'Server returns HealthcareService that populate the name field of a Organization instance
+      through the search parameter organization'
       description %(
         A server SHALL be capable of supporting chaining for name.
 

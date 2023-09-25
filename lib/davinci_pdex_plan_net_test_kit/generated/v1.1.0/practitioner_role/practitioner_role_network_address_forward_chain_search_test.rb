@@ -6,7 +6,8 @@ module DaVinciPDEXPlanNetTestKit
     class PractitionerRoleNetworkAddressForwardChainSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns PractitionerRole that populate the address field of a Organization instance'
+      title 'Server returns PractitionerRole that populate the address field of a Organization instance
+      through the search parameter network'
       description %(
         A server SHALL be capable of supporting chaining for address.
 

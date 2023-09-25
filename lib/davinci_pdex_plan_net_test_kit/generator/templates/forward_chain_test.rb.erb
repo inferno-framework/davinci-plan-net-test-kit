@@ -6,7 +6,8 @@ module DaVinciPDEXPlanNetTestKit
     class <%= class_name %> < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns <%= resource_type %> that populate the <%= chain_param %> field of a <%= chained_resource %> instance'
+      title 'Server returns <%= resource_type %> that populate the <%= chain_param %> field of a <%= chained_resource %> instance
+      through the search parameter <%= chain_param_base %>'
       description %(
         A server SHALL be capable of supporting chaining for <%= chain_param %>.
 

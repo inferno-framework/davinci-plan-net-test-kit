@@ -6,7 +6,8 @@ module DaVinciPDEXPlanNetTestKit
     class LocationEndpointOrganizationForwardChainSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns Location that populate the organization field of a Endpoint instance'
+      title 'Server returns Location that populate the organization field of a Endpoint instance
+      through the search parameter endpoint'
       description %(
         A server SHALL be capable of supporting chaining for organization.
 
