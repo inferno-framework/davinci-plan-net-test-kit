@@ -61,6 +61,7 @@ module DaVinciPDEXPlanNetTestKit
       chain_field_value
     end
 
+
     def all_search_params
       @all_search_params ||=
         resource_id_list.each_with_object({}) do |resource_id, params|
@@ -205,11 +206,10 @@ module DaVinciPDEXPlanNetTestKit
 
             check_search_response
 
-            fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
-              .select { |resource| resource.resourceType == additional_resource_type }
-              .reject { |resource| resource.id == "#{self.send(input_name)}" }
+            fetch_all_bundled_resources
           end
         end
+        skip_if resources.empty?, no_resources_skip_message
     end
 
     def perform_search(params, resource_id)
@@ -759,6 +759,9 @@ module DaVinciPDEXPlanNetTestKit
 
       escaped_value = search_value&.gsub(',', '\\,')
       escaped_value
+      # I think the escaped value is getting encoded which is causing issues.  I think it's fine to not escape it OR escape and don't encode, but not
+      # sure if we have control over encoding rules as that seems like it is handled in inferno core.
+      #search_value
     end
 
     def element_has_valid_value?(element, include_system)

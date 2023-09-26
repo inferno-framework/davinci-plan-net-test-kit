@@ -52,7 +52,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def test_id
-        "davinci_plan_net_#{group_metadata.reformatted_version}_#{search_identifier}_forward_chain_search_test"
+        "davinci_plan_net_#{group_metadata.reformatted_version}_#{search_identifier}_backward_chain_search_test"
       end
 
       def search_identifier
@@ -64,7 +64,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def class_name
-        "#{Naming.upper_camel_case_for_profile(group_metadata)}#{search_title}ForwardChainSearchTest"
+        "#{Naming.upper_camel_case_for_profile(group_metadata)}#{search_title}BackwardChainSearchTest"
       end
 
       def module_name
@@ -167,6 +167,7 @@ module DaVinciPDEXPlanNetTestKit
           properties[:fixed_value_search] = 'true' if fixed_value_search?
           properties[:resource_type] = "'#{resource_type}'"
           properties[:search_param_names] = []
+          properties[:input_name] = "'#{input_name}'"
           properties[:possible_status_search] = 'true' if possible_status_search?
           properties[:chain_param] = "'#{chain_param}'"
           properties[:chain_param_base] = "'#{chain_param_base}'"
