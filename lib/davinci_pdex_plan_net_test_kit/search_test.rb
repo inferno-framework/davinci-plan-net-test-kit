@@ -9,7 +9,7 @@ module DaVinciPDEXPlanNetTestKit
     include DateSearchValidation
     include FHIRResourceNavigation
 
-    def_delegators 'self.class', :metadata, :additional_metadata, :properties
+    def_delegators 'self.class', :metadata, :additional_metadata, :reverse_chain_field_name, :properties
     def_delegators 'properties',
                    :resource_type,
                    :search_param_names,
@@ -101,6 +101,7 @@ module DaVinciPDEXPlanNetTestKit
           params_list.map { |params| {"#{chain_param_base}.#{chain_param}": find_chain_resource} }
         end
     end
+
 
     def any_valid_search_params?(search_params)
       search_params.any? { |_resource_id, params| params.present? }
@@ -196,8 +197,6 @@ module DaVinciPDEXPlanNetTestKit
     end
 
     def run_forward_chain_search_test
-
-      # Build request using chain parameter
       resources =
         all_forward_chain_search_params.flat_map do |_resource_id, params_list|
           params_list.flat_map do |params|
@@ -757,11 +756,8 @@ module DaVinciPDEXPlanNetTestKit
         break if search_value.present?
       end
 
-      escaped_value = search_value&.gsub(',', '\\,')
+      escaped_value = search_value&.gsub(',', '\,')
       escaped_value
-      # I think the escaped value is getting encoded which is causing issues.  I think it's fine to not escape it OR escape and don't encode, but not
-      # sure if we have control over encoding rules as that seems like it is handled in inferno core.
-      #search_value
     end
 
     def element_has_valid_value?(element, include_system)

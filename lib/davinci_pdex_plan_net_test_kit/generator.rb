@@ -111,7 +111,7 @@ module DaVinciPDEXPlanNetTestKit
     def generate_forward_chain_search_tests
       ForwardChainSearchTestGenerator.generate(ig_metadata, base_output_dir)
     end
-
+    
     def generate_groups
       GroupGenerator.generate(ig_metadata, base_output_dir)
     end
