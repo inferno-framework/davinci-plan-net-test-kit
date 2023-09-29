@@ -6,13 +6,13 @@ module DaVinciPDEXPlanNetTestKit
     class <%= class_name %> < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns <%= resource_type %> that populate the <%= chain_param %> field of a <%= chained_resource %> instance
-      through the search parameter <%= chain_param_base %>'
+      title 'Server capable of forward chaining with <%= "#{chain_param_base}.#{chain_param}" %>'
       description %(
-        A server SHALL be capable of supporting chaining for <%= chain_param %>.
+        A server SHALL be capable of supporting chaining for <%= chain_param %> through the search parameter <%= chain_param_base %>
+        for the <%= profile_identifier.capitalize %> profile.
 
-        This test will perform a search with <%= chain_param %> and
-        will pass if a <%= chain_param %> resource is found in the response.
+        This test will perform a search with <%= "#{chain_param_base}.#{chain_param}" %> and
+        will pass if <%= a_or_an(resource_type) %> resource is found in the response.
       )
 
       id :<%= test_id %>

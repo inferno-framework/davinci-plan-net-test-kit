@@ -149,16 +149,16 @@
   :file_name: endpoint_id_search_test.rb
 - :id: davinci_pdex_plan_net_v110_endpoint__lastUpdated_search_test
   :file_name: endpoint_lastupdated_search_test.rb
-- :id: davinci_plan_net_v110_endpoint_endpoint_organization_include_search_test
-  :file_name: endpoint_endpoint_organization_include_search_test.rb
-- :id: davinci_plan_net_v110_organization_name_forward_chain_search_test
-  :file_name: endpoint_organization_name_forward_chain_search_test.rb
-- :id: davinci_plan_net_v110_organization_address_forward_chain_search_test
-  :file_name: endpoint_organization_address_forward_chain_search_test.rb
-- :id: davinci_plan_net_v110_organization_partof_forward_chain_search_test
-  :file_name: endpoint_organization_partof_forward_chain_search_test.rb
-- :id: davinci_plan_net_v110_organization_type_forward_chain_search_test
-  :file_name: endpoint_organization_type_forward_chain_search_test.rb
+- :id: davinci_plan_net_v110_include_endpoint_endpoint_organization_search_test
+  :file_name: endpoint_include_endpoint_organization_search_test.rb
+- :id: davinci_plan_net_v110_forward_chain_organization_name_search_test
+  :file_name: endpoint_forward_chain_organization_name_search_test.rb
+- :id: davinci_plan_net_v110_forward_chain_organization_address_search_test
+  :file_name: endpoint_forward_chain_organization_address_search_test.rb
+- :id: davinci_plan_net_v110_forward_chain_organization_partof_search_test
+  :file_name: endpoint_forward_chain_organization_partof_search_test.rb
+- :id: davinci_plan_net_v110_forward_chain_organization_type_search_test
+  :file_name: endpoint_forward_chain_organization_type_search_test.rb
 - :id: davinci_pdex_plan_net_v110_endpoint_validation_test
   :file_name: endpoint_validation_test.rb
 - :id: davinci_pdex_plan_net_v110_endpoint_must_support_test

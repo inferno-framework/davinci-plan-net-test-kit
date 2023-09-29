@@ -9,13 +9,13 @@ require_relative 'insurance_plan/insurance_plan_identifier_search_test'
 require_relative 'insurance_plan/insurance_plan_id_search_test'
 require_relative 'insurance_plan/insurance_plan_lastupdated_search_test'
 require_relative 'insurance_plan/insurance_plan_type_search_test'
-require_relative 'insurance_plan/insurance_plan_insurance_plan_administered_by_include_search_test'
-require_relative 'insurance_plan/insurance_plan_insurance_plan_owned_by_include_search_test'
-require_relative 'insurance_plan/insurance_plan_insurance_plan_coverage_area_include_search_test'
-require_relative 'insurance_plan/insurance_plan_administered_by_name_forward_chain_search_test'
-require_relative 'insurance_plan/insurance_plan_administered_by_partof_forward_chain_search_test'
-require_relative 'insurance_plan/insurance_plan_owned_by_name_forward_chain_search_test'
-require_relative 'insurance_plan/insurance_plan_owned_by_partof_forward_chain_search_test'
+require_relative 'insurance_plan/insurance_plan_include_insurance_plan_administered_by_search_test'
+require_relative 'insurance_plan/insurance_plan_include_insurance_plan_owned_by_search_test'
+require_relative 'insurance_plan/insurance_plan_include_insurance_plan_coverage_area_search_test'
+require_relative 'insurance_plan/insurance_plan_forward_chain_administered_by_name_search_test'
+require_relative 'insurance_plan/insurance_plan_forward_chain_administered_by_partof_search_test'
+require_relative 'insurance_plan/insurance_plan_forward_chain_owned_by_name_search_test'
+require_relative 'insurance_plan/insurance_plan_forward_chain_owned_by_partof_search_test'
 require_relative 'insurance_plan/insurance_plan_validation_test'
 require_relative 'insurance_plan/insurance_plan_must_support_test'
 require_relative 'insurance_plan/insurance_plan_reference_resolution_test'
@@ -111,6 +111,18 @@ The return is scanned to find any of the expected additional resource.
 
 
 
+## Forward Chaining Requirement Testing
+This test sequence will perform each required forward chaining search for each of 
+the search parameters that specify chaining capabilities.  This sequence will perform searches with the
+following chaining parameters:
+
+| Search Parameters | Chain Requirements |
+| --- | --- |
+| administered-by | name, partof |
+| owned-by | name, partof |
+
+
+
 
 ## Must Support
 Each profile contains elements marked as "must support". This test
@@ -154,13 +166,13 @@ read succeeds.
       test from: :davinci_pdex_plan_net_v110_insurance_plan__id_search_test
       test from: :davinci_pdex_plan_net_v110_insurance_plan__lastUpdated_search_test
       test from: :davinci_pdex_plan_net_v110_insurance_plan_type_search_test
-      test from: :davinci_plan_net_v110_insurance_plan_insurance_plan_administered_by_include_search_test
-      test from: :davinci_plan_net_v110_insurance_plan_insurance_plan_owned_by_include_search_test
-      test from: :davinci_plan_net_v110_insurance_plan_insurance_plan_coverage_area_include_search_test
-      test from: :davinci_plan_net_v110_administered_by_name_forward_chain_search_test
-      test from: :davinci_plan_net_v110_administered_by_partof_forward_chain_search_test
-      test from: :davinci_plan_net_v110_owned_by_name_forward_chain_search_test
-      test from: :davinci_plan_net_v110_owned_by_partof_forward_chain_search_test
+      test from: :davinci_plan_net_v110_include_insurance_plan_insurance_plan_administered_by_search_test
+      test from: :davinci_plan_net_v110_include_insurance_plan_insurance_plan_owned_by_search_test
+      test from: :davinci_plan_net_v110_include_insurance_plan_insurance_plan_coverage_area_search_test
+      test from: :davinci_plan_net_v110_forward_chain_administered_by_name_search_test
+      test from: :davinci_plan_net_v110_forward_chain_administered_by_partof_search_test
+      test from: :davinci_plan_net_v110_forward_chain_owned_by_name_search_test
+      test from: :davinci_plan_net_v110_forward_chain_owned_by_partof_search_test
       test from: :davinci_pdex_plan_net_v110_insurance_plan_validation_test
       test from: :davinci_pdex_plan_net_v110_insurance_plan_must_support_test
       test from: :davinci_pdex_plan_net_v110_insurance_plan_reference_resolution_test

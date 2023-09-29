@@ -8,21 +8,21 @@ require_relative 'organization/organization_id_search_test'
 require_relative 'organization/organization_lastupdated_search_test'
 require_relative 'organization/organization_type_search_test'
 require_relative 'organization/organization_coverage_area_search_test'
-require_relative 'organization/organization_organization_partof_include_search_test'
-require_relative 'organization/organization_organization_endpoint_include_search_test'
-require_relative 'organization/organization_organization_coverage_area_include_search_test'
-require_relative 'organization/organization_endpoint_organization_revinclude_search_test'
-require_relative 'organization/organization_healthcare_service_organization_revinclude_search_test'
-require_relative 'organization/organization_insurance_plan_administered_by_revinclude_search_test'
-require_relative 'organization/organization_insurance_plan_owned_by_revinclude_search_test'
-require_relative 'organization/organization_organization_affiliation_primary_organization_revinclude_search_test'
-require_relative 'organization/organization_practitioner_role_organization_revinclude_search_test'
-require_relative 'organization/organization_practitioner_role_network_revinclude_search_test'
-require_relative 'organization/organization_organization_affiliation_participating_organization_revinclude_search_test'
-require_relative 'organization/organization_partof_name_forward_chain_search_test'
-require_relative 'organization/organization_partof_address_forward_chain_search_test'
-require_relative 'organization/organization_partof_type_forward_chain_search_test'
-require_relative 'organization/organization_endpoint_organization_forward_chain_search_test'
+require_relative 'organization/organization_include_organization_partof_search_test'
+require_relative 'organization/organization_include_organization_endpoint_search_test'
+require_relative 'organization/organization_include_organization_coverage_area_search_test'
+require_relative 'organization/organization_revinclude_endpoint_organization_search_test'
+require_relative 'organization/organization_revinclude_healthcare_service_organization_search_test'
+require_relative 'organization/organization_revinclude_insurance_plan_administered_by_search_test'
+require_relative 'organization/organization_revinclude_insurance_plan_owned_by_search_test'
+require_relative 'organization/organization_revinclude_organization_affiliation_primary_organization_search_test'
+require_relative 'organization/organization_revinclude_practitioner_role_organization_search_test'
+require_relative 'organization/organization_revinclude_practitioner_role_network_search_test'
+require_relative 'organization/organization_revinclude_organization_affiliation_participating_organization_search_test'
+require_relative 'organization/organization_forward_chain_partof_name_search_test'
+require_relative 'organization/organization_forward_chain_partof_address_search_test'
+require_relative 'organization/organization_forward_chain_partof_type_search_test'
+require_relative 'organization/organization_forward_chain_endpoint_organization_search_test'
 require_relative 'organization/organization_validation_test'
 require_relative 'organization/organization_must_support_test'
 require_relative 'organization/organization_reference_resolution_test'
@@ -138,6 +138,18 @@ and the revinclude parameter. The return is scanned to find any of the expected 
 If running from the profile level, input boxes are provided for these tests upon test start.
 
 
+## Forward Chaining Requirement Testing
+This test sequence will perform each required forward chaining search for each of 
+the search parameters that specify chaining capabilities.  This sequence will perform searches with the
+following chaining parameters:
+
+| Search Parameters | Chain Requirements |
+| --- | --- |
+| partof | name, address, type |
+| endpoint | organization |
+
+
+
 
 ## Must Support
 Each profile contains elements marked as "must support". This test
@@ -180,21 +192,21 @@ read succeeds.
       test from: :davinci_pdex_plan_net_v110_organization__lastUpdated_search_test
       test from: :davinci_pdex_plan_net_v110_organization_type_search_test
       test from: :davinci_pdex_plan_net_v110_organization_coverage_area_search_test
-      test from: :davinci_plan_net_v110_organization_organization_partof_include_search_test
-      test from: :davinci_plan_net_v110_organization_organization_endpoint_include_search_test
-      test from: :davinci_plan_net_v110_organization_organization_coverage_area_include_search_test
-      test from: :davinci_plan_net_v110_organization_endpoint_organization_revinclude_search_test
-      test from: :davinci_plan_net_v110_organization_healthcare_service_organization_revinclude_search_test
-      test from: :davinci_plan_net_v110_organization_insurance_plan_administered_by_revinclude_search_test
-      test from: :davinci_plan_net_v110_organization_insurance_plan_owned_by_revinclude_search_test
-      test from: :davinci_plan_net_v110_organization_organization_affiliation_primary_organization_revinclude_search_test
-      test from: :davinci_plan_net_v110_organization_practitioner_role_organization_revinclude_search_test
-      test from: :davinci_plan_net_v110_organization_practitioner_role_network_revinclude_search_test
-      test from: :davinci_plan_net_v110_organization_organization_affiliation_participating_organization_revinclude_search_test
-      test from: :davinci_plan_net_v110_partof_name_forward_chain_search_test
-      test from: :davinci_plan_net_v110_partof_address_forward_chain_search_test
-      test from: :davinci_plan_net_v110_partof_type_forward_chain_search_test
-      test from: :davinci_plan_net_v110_endpoint_organization_forward_chain_search_test
+      test from: :davinci_plan_net_v110_include_organization_organization_partof_search_test
+      test from: :davinci_plan_net_v110_include_organization_organization_endpoint_search_test
+      test from: :davinci_plan_net_v110_include_organization_organization_coverage_area_search_test
+      test from: :davinci_plan_net_v110_revinclude_organization_endpoint_organization_search_test
+      test from: :davinci_plan_net_v110_revinclude_organization_healthcare_service_organization_search_test
+      test from: :davinci_plan_net_v110_revinclude_organization_insurance_plan_administered_by_search_test
+      test from: :davinci_plan_net_v110_revinclude_organization_insurance_plan_owned_by_search_test
+      test from: :davinci_plan_net_v110_revinclude_organization_organization_affiliation_primary_organization_search_test
+      test from: :davinci_plan_net_v110_revinclude_organization_practitioner_role_organization_search_test
+      test from: :davinci_plan_net_v110_revinclude_organization_practitioner_role_network_search_test
+      test from: :davinci_plan_net_v110_revinclude_organization_organization_affiliation_participating_organization_search_test
+      test from: :davinci_plan_net_v110_forward_chain_partof_name_search_test
+      test from: :davinci_plan_net_v110_forward_chain_partof_address_search_test
+      test from: :davinci_plan_net_v110_forward_chain_partof_type_search_test
+      test from: :davinci_plan_net_v110_forward_chain_endpoint_organization_search_test
       test from: :davinci_pdex_plan_net_v110_organization_validation_test
       test from: :davinci_pdex_plan_net_v110_organization_must_support_test
       test from: :davinci_pdex_plan_net_v110_organization_reference_resolution_test

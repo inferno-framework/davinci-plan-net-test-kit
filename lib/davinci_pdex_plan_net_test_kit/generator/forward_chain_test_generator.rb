@@ -10,7 +10,7 @@ module DaVinciPDEXPlanNetTestKit
             .reject { |group| SpecialCases.exclude_group? group }
             .each do |group|
                 group.searches.each do |search_param|
-                    # Grab the name of the search parameter that will be chained upon
+                    # Generate a test for any parameters that specify chaining, one for each chain requirement
                     search_def = group.search_definitions[search_param[:names].first.to_sym]
                     search_def[:chain]&.each { |chain_param| new(group, search_param, base_output_dir, chain_param[:chain]).generate }
                 end
@@ -52,7 +52,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def test_id
-        "davinci_plan_net_#{group_metadata.reformatted_version}_#{search_identifier}_forward_chain_search_test"
+        "davinci_plan_net_#{group_metadata.reformatted_version}_forward_chain_#{search_identifier}_search_test"
       end
 
       def search_identifier
@@ -64,7 +64,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def class_name
-        "#{Naming.upper_camel_case_for_profile(group_metadata)}#{search_title}ForwardChainSearchTest"
+        "#{Naming.upper_camel_case_for_profile(group_metadata)}ForwardChain#{search_title}SearchTest"
       end
 
       def module_name
@@ -100,6 +100,10 @@ module DaVinciPDEXPlanNetTestKit
         res_type = search_definition(chain_param_base.to_sym)[:type]
         res_type = search_definition(chain_param_base.to_sym)[:target] if res_type == "Reference"
         res_type
+      end
+
+      def a_or_an(name)
+        ['a','e','i','o','u'].include?(name.first.downcase) ? "an #{name}" : "a #{name}"
       end
 
       def search_param_names

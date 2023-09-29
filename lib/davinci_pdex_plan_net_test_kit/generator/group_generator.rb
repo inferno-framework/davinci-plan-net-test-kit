@@ -87,8 +87,26 @@ module DaVinciPDEXPlanNetTestKit
         false #No Optional groups in Plan Net
       end
 
+      def chain_requirement_list_for_param(search_parameter)
+        sym = search_parameter.class != Symbol ? search_parameter.to_sym : search_parameter
+        req_list = group_metadata.search_definitions[sym][:chain].nil? ? [] : group_metadata.search_definitions[sym][:chain]
+        req_list
+      end
+
+      def any_chain_requirements?
+        !chainable_parameters.empty?
+      end
+
+      def chainable_parameters
+        chainable_params = group_metadata.search_definitions.keys.reject do |search_parameter| 
+          req_list = chain_requirement_list_for_param(search_parameter)  
+          req_list.nil? || req_list.empty?
+        end
+        chainable_params
+      end
+
       def generate
-#        add_special_tests
+#       add_special_tests
         File.open(output_file_name, 'w') { |f| f.write(output) }
         group_metadata.id = group_id
         group_metadata.file_name = base_output_file_name
@@ -133,6 +151,17 @@ module DaVinciPDEXPlanNetTestKit
         group_metadata.revincludes
           .map { |names| "* #{names}" }
           .join("\n")
+      end
+
+      def forward_chain_table
+        chain_table = "| Search Parameters | Chain Requirements |\n| --- | --- |\n"
+        # Iterate through the chain requirements and add to table
+        chainable_parameters.each do |chain_param|
+          chain_requirement_list = chain_requirement_list_for_param(chain_param).map { |chain| chain[:chain]}
+          chain_table += "| #{chain_param} | #{chain_requirement_list.join(', ')} |\n"
+        end
+        
+        chain_table
       end
 
       def search_description
@@ -206,6 +235,20 @@ module DaVinciPDEXPlanNetTestKit
         REVINCLUDE_DESCRIPTION
       end
 
+      def forward_chain_description
+        return '' if !any_chain_requirements?
+
+        <<~FORWARD_CHAINING_DESCRIPTION
+        ## Forward Chaining Requirement Testing
+        This test sequence will perform each required forward chaining search for each of 
+        the search parameters that specify chaining capabilities.  This sequence will perform searches with the
+        following chaining parameters:
+
+        #{forward_chain_table}
+        
+        FORWARD_CHAINING_DESCRIPTION
+      end
+
       def description
         <<~DESCRIPTION
         # Background
@@ -247,6 +290,7 @@ module DaVinciPDEXPlanNetTestKit
         #{search_description}
         #{include_description}
         #{revinclude_description}
+        #{forward_chain_description}
 
         ## Must Support
         Each profile contains elements marked as "must support". This test
