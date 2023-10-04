@@ -53,7 +53,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def search_identifier
-        "#{source_resource}_#{constraining_param}".gsub(/[-:]/, '_').underscore
+        "#{source_resource}_#{target_param}_#{constraining_param}".gsub(/[-:]/, '_').underscore
       end
 
       def search_title
@@ -93,6 +93,10 @@ module DaVinciPDEXPlanNetTestKit
 
       def fixed_value_search_param_name
         #TODO
+      end
+
+      def a_or_an(name)
+        ['a','e','i','o','u'].include?(name.first.downcase) ? "an #{name}" : "a #{name}"
       end
 
       def search_param_names

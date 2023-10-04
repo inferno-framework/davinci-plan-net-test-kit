@@ -3,20 +3,28 @@ require_relative '../../../generator/group_metadata'
 
 module DaVinciPDEXPlanNetTestKit
   module DaVinciPDEXPlanNetV110
-    class PractitionerReverseChainPractitionerRoleSpecialitySearchTest < Inferno::Test
+    class PractitionerReverseChainPractitionerRolePractitionerNetworkSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Example Test of _has:PractitionerRole:practitioner:speciality'
+      title 'Example Test of _has:PractitionerRole:practitioner:network'
       description %(
         Placeholder test for reverse chaining
       )
-        
+      
+      id :davinci_plan_net_v110_practitioner_reverse_chain_practitioner_role_practitioner_network_search_test
+      id :davinci_plan_net_v110_practitioner_reverse_chain_practitioner_role_practitioner_network_search_test
+      input :practitioner_role_practitioner_network_input,
+        title: 'network field value for PractitionerRole',
+        description: 'Value from the network field of a PractitionerRole
+        that also references a Practitioner instance in its practitioner field',
+        optional: true
+
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'Practitioner',
           search_param_names: [],
-          input_name: 'practitioner_role_speciality_input',
-          reverse_chain_param: 'speciality',
+          input_name: 'practitioner_role_practitioner_network_input',
+          reverse_chain_param: 'network',
           reverse_chain_target: 'practitioner',
           additional_resource_type: 'PractitionerRole'
         )

@@ -296,8 +296,8 @@
   :file_name: network_forward_chain_partof_type_search_test.rb
 - :id: davinci_plan_net_v110_forward_chain_endpoint_organization_search_test
   :file_name: network_forward_chain_endpoint_organization_search_test.rb
-- :id: davinci_plan_net_v110_network_reverse_chain_practitioner_role_location_search_test
-  :file_name: network_reverse_chain_practitioner_role_location_search_test.rb
+- :id: davinci_plan_net_v110_network_reverse_chain_practitioner_role_network_location_search_test
+  :file_name: network_reverse_chain_practitioner_role_network_location_search_test.rb
 - :id: davinci_pdex_plan_net_v110_network_validation_test
   :file_name: network_validation_test.rb
 - :id: davinci_pdex_plan_net_v110_network_must_support_test

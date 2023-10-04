@@ -3,20 +3,28 @@ require_relative '../../../generator/group_metadata'
 
 module DaVinciPDEXPlanNetTestKit
   module DaVinciPDEXPlanNetV110
-    class OrganizationReverseChainOrganizationAffiliationSpecialitySearchTest < Inferno::Test
+    class OrganizationReverseChainOrganizationAffiliationParticipatingOrganizationLocationSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Example Test of _has:OrganizationAffiliation:participating-organization:speciality'
+      title 'Example Test of _has:OrganizationAffiliation:participating-organization:location'
       description %(
         Placeholder test for reverse chaining
       )
-        
+      
+      id :davinci_plan_net_v110_organization_reverse_chain_organization_affiliation_participating_organization_location_search_test
+      id :davinci_plan_net_v110_organization_reverse_chain_organization_affiliation_participating_organization_location_search_test
+      input :organization_affiliation_participating_organization_location_input,
+        title: 'location field value for OrganizationAffiliation',
+        description: 'Value from the location field of an OrganizationAffiliation
+        that also references a Organization instance in its participating-organization field',
+        optional: true
+
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'Organization',
           search_param_names: [],
-          input_name: 'organization_affiliation_speciality_input',
-          reverse_chain_param: 'speciality',
+          input_name: 'organization_affiliation_participating_organization_location_input',
+          reverse_chain_param: 'location',
           reverse_chain_target: 'participating-organization',
           additional_resource_type: 'OrganizationAffiliation'
         )

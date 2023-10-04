@@ -10,7 +10,15 @@ module DaVinciPDEXPlanNetTestKit
       description %(
         Placeholder test for reverse chaining
       )
-        
+      
+      id :<%= test_id %>
+      id :<%= test_id %>
+      input :<%= input_name %>,
+        title: '<%= constraining_param %> field value for <%= source_resource %>',
+        description: 'Value from the <%= constraining_param %> field of <%= a_or_an(source_resource) %>
+        that also references a <%= resource_type %> instance in its <%= target_param %> field',
+        optional: true
+
       def properties
         @properties ||= SearchTestProperties.new(
   <%= search_test_properties_string %>

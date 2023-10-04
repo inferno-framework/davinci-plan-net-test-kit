@@ -25,7 +25,7 @@ require_relative 'location/location_forward_chain_organization_address_search_te
 require_relative 'location/location_forward_chain_organization_partof_search_test'
 require_relative 'location/location_forward_chain_organization_type_search_test'
 require_relative 'location/location_forward_chain_endpoint_organization_search_test'
-require_relative 'location/location_reverse_chain_insurance_plan_owned_by_search_test'
+require_relative 'location/location_reverse_chain_insurance_plan_coverage_area_owned_by_search_test'
 require_relative 'location/location_validation_test'
 require_relative 'location/location_must_support_test'
 require_relative 'location/location_reference_resolution_test'
@@ -211,7 +211,7 @@ read succeeds.
       test from: :davinci_plan_net_v110_forward_chain_organization_partof_search_test
       test from: :davinci_plan_net_v110_forward_chain_organization_type_search_test
       test from: :davinci_plan_net_v110_forward_chain_endpoint_organization_search_test
-      test from: :davinci_plan_net_v110_location_reverse_chain_insurance_plan_owned_by_search_test
+      test from: :davinci_plan_net_v110_location_reverse_chain_insurance_plan_coverage_area_owned_by_search_test
       test from: :davinci_pdex_plan_net_v110_location_validation_test
       test from: :davinci_pdex_plan_net_v110_location_must_support_test
       test from: :davinci_pdex_plan_net_v110_location_reference_resolution_test

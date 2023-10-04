@@ -13,7 +13,7 @@
     {
         "source_resource": "PractitionerRole",
         "target_param": "practitioner",
-        "constraining_param": "speciality"
+        "constraining_param": "specialty"
     },
     {
         "source_resource": "PractitionerRole",
@@ -35,7 +35,7 @@
     {
         "source_resource": "OrganizationAffiliation",
         "target_param": "participating-organization",
-        "constraining_param": "speciality"
+        "constraining_param": "specialty"
     },
     {
         "source_resource": "InsurancePlan",

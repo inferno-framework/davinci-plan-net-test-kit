@@ -53,13 +53,24 @@ module DaVinciPDEXPlanNetTestKit
       is_include ? base_resource.id : search_param_value(search_param, base_resource)
     end
 
-    def find_chain_resource(param)
+    def find_forward_chain_resource
       # Look through return from relevant include test
       # If it is in chain_scratch_resources, it was put there from an _include/_revinclude test
       # so do not need to verify if it also references a base resource
-      chain_candidate = chain_scratch_resources.find { |resource| !search_param_value(param, resource).nil?}
-      skip_if chain_candidate.nil?, no_chain_resource_found_message
-      chain_field_value = search_param_value(param, chain_candidate)
+      chain_candidate = chain_scratch_resources
+        .find { |resource| !search_param_value(chain_param, resource).nil?}
+      skip_if chain_candidate.nil?, no_forward_chain_resource_found_message
+      chain_field_value = search_param_value(chain_param, chain_candidate)
+      chain_field_value
+    end
+
+    def find_reverse_chain_resource
+      
+      chain_candidate = chain_scratch_resources
+        .reject { |resource| search_param_value(reverse_chain_target, resource).nil?}
+        .find { |resource| !search_param_value(reverse_chain_param, resource).nil?}
+      skip_if chain_candidate.nil?, no_reverse_chain_resource_found_message
+      chain_field_value = search_param_value(reverse_chain_param, chain_candidate)
       chain_field_value
     end
 
@@ -99,14 +110,15 @@ module DaVinciPDEXPlanNetTestKit
     def all_reverse_chain_search_params
       @all_revchain_search_params ||=
         all_search_params.transform_values! do |params_list|
-          params_list.map { |params| {"_has:#{additional_resource_type}:#{reverse_chain_target}:#{reverse_chain_param}": find_chain_resource(reverse_chain_target)}}
+          field_value = given_input? ? self.send(input_name) : find_reverse_chain_resource
+          params_list.map { |params| {"_has:#{additional_resource_type}:#{reverse_chain_target}:#{reverse_chain_param}": field_value}}
         end
     end
 
     def all_forward_chain_search_params
       @all_forward_chain_search_params ||=
         all_search_params.transform_values! do |params_list|
-          params_list.map { |params| {"#{chain_param_base}.#{chain_param}": find_chain_resource(chain_param)} }
+          params_list.map { |params| {"#{chain_param_base}.#{chain_param}": find_forward_chain_resource} }
         end
     end
 
@@ -154,6 +166,7 @@ module DaVinciPDEXPlanNetTestKit
         end
 
       save_delayed_references(resources, additional_resource_type)
+      revinclude_scratch_resources.concat(resources).uniq!
 
       skip_if resources.empty?, no_resources_skip_message(additional_resource_type)
     end
@@ -517,6 +530,10 @@ module DaVinciPDEXPlanNetTestKit
       scratch_include_resources[:all] ||= []
     end
 
+    def revinclude_scratch_resources
+      scratch_revinclude_resources[:all] ||= []
+    end
+
     def chain_scratch_resources
       scratch_chain_resources[:all] ||= []
     end
@@ -615,9 +632,15 @@ module DaVinciPDEXPlanNetTestKit
       \"Run All Tests\" from suite level"
     end
 
-    def no_chain_resource_found_message
+    def no_forward_chain_resource_found_message
       "Unable to find any previously returned #{additional_resource_type} instances with the 
       #{chain_param} field populated."
+    end
+
+    def no_reverse_chain_resource_found_message
+      "Unable to find any previously returned #{additional_resource_type} instances with both
+      #{reverse_chain_param} and #{reverse_chain_target} fields populated.  Please \"Run All Tests\"
+      from suite level or provide specific field values."
     end
 
     def empty_search_params_message(empty_search_params)
