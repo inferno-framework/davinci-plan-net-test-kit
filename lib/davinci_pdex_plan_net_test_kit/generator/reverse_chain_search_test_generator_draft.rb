@@ -13,15 +13,15 @@ module DaVinciPDEXPlanNetTestKit
         end
       end
 
-      attr_accessor :group_metadata, :search_metadata, :base_output_dir, :rev_chain_example
+      attr_accessor :group_metadata, :search_metadata, :base_output_dir, :source_resource, :target_param, :constraining_param
 
       def initialize(group_metadata, search_metadata, base_output_dir, rev_chain_example)
         self.group_metadata = group_metadata
         self.search_metadata = search_metadata
         self.base_output_dir = base_output_dir
-        self.source_resource = rev_chain_example[:source_resource]
-        self.target_param = rev_chain_example[:target_param]
-        self.constraining_param = rev_chain_example[:constraining_param]
+        self.source_resource = rev_chain_example["source_resource"]
+        self.target_param = rev_chain_example["target_param"]
+        self.constraining_param = rev_chain_example["constraining_param"]
       end
 
       def template
@@ -53,7 +53,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def search_identifier
-        revinclude_param.gsub(/[-:]/, '_').underscore
+        "#{source_resource}_#{constraining_param}".gsub(/[-:]/, '_').underscore
       end
 
       def search_title

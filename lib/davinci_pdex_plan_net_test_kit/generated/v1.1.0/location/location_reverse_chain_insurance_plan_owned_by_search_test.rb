@@ -2,18 +2,23 @@ require_relative '../../../search_test'
 require_relative '../../../generator/group_metadata'
 
 module DaVinciPDEXPlanNetTestKit
-  module <%= module_name %>
-    class <%= class_name %> < Inferno::Test
+  module DaVinciPDEXPlanNetV110
+    class LocationReverseChainInsurancePlanOwnedBySearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Example Test of _has:<%= "#{source_resource}:#{target_param}:#{constraining_param}" %>'
+      title 'Example Test of _has:InsurancePlan:coverage-area:owned-by'
       description %(
         Placeholder test for reverse chaining
       )
         
       def properties
         @properties ||= SearchTestProperties.new(
-  <%= search_test_properties_string %>
+            resource_type: 'Location',
+          search_param_names: [],
+          input_name: 'insurance_plan_owned_by_input',
+          reverse_chain_param: 'owned-by',
+          reverse_chain_target: 'coverage-area',
+          additional_resource_type: 'InsurancePlan'
         )
       end
 
@@ -22,15 +27,15 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def self.additional_metadata
-        @additional_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', '<%= source_resource.underscore %>', 'metadata.yml'), aliases: true))
+        @additional_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', 'insurance_plan', 'metadata.yml'), aliases: true))
       end
 
       def scratch_resources
-        scratch[:<%= profile_identifier %>_resources] ||= {}
+        scratch[:location_resources] ||= {}
       end
 
       def scratch_revchain_resources
-        scratch[:<%= source_resource.underscore %>_resources] ||= {}
+        scratch[:insurance_plan_resources] ||= {}
       end
 
       run do

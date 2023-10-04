@@ -18,6 +18,8 @@ module DaVinciPDEXPlanNetTestKit
                    :include_param,
                    :inc_param_sp,
                    :additional_resource_type,
+                   :reverse_chain_param,
+                   :reverse_chain_target,
                    :input_name,
                    :saves_delayed_references?,
                    :first_search?,
@@ -47,6 +49,16 @@ module DaVinciPDEXPlanNetTestKit
       skip_if base_resource.nil?, unable_to_find_base_message(desired_resource, search_param)
       # If revinclude test, make sure you grab the id of base, not revincluded resource
       is_include ? base_resource.id : search_param_value(search_param, base_resource)
+    end
+
+    def find_revchain_resource
+      # Look through return from relevant include test
+      # If it is in chain_scratch_resources, it was put there from an _include/_revinclude test
+      # so do not need to verify if it also references a base resource
+      chain_candidate = chain_revscratch_resources.find { |resource| !search_param_value(chain_param, resource).nil?}
+      skip_if chain_candidate.nil?, no_chain_resource_found_message
+      chain_field_value = search_param_value(chain_param, chain_candidate)
+      chain_field_value
     end
 
     def all_search_params
@@ -81,6 +93,11 @@ module DaVinciPDEXPlanNetTestKit
           params_list.map { |params| {_id: find_base_id(resource_type, inc_param_sp)}.merge(_include: include_param) }
         end
     end
+
+    def all_revchain_search_params
+      @all_revchain_search_params ||=
+        all_search_params.transform_values! do |params_list|
+          params_list.map { |params| {"_has:#{additional_resource_type}:#{reverse_chain_target}:#{reverse_chain_param}": }}
 
     def any_valid_search_params?(search_params)
       search_params.any? { |_resource_id, params| params.present? }
@@ -129,7 +146,17 @@ module DaVinciPDEXPlanNetTestKit
     end
 
     def run_reverse_chain_search_test
-      skip_if !any_valid_search_params
+      skip_if !any_valid_search_params?(all_revchain_search_param), "Invalid Params"
+      resources =
+        all_revinclude_search_params.flat_map do |_resource_id, params_list|
+          params_list.flat_map do |params|
+            fhir_search resource_type, params: params
+            perform_search_with_status(params, resource_id) if response[:status] == 400 && possible_status_search?
+
+            check_search_response
+          end
+          fetch_all_bundled_resources.select { |resource| resource.resourceType == resource_type }
+        end
 
       skip_if resources.empty?, "No resources found TODO:REPLACE MESSAGE"
     end

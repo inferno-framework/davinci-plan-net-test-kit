@@ -18,6 +18,10 @@ require_relative 'organization/organization_insurance_plan_owned_by_revinclude_s
 require_relative 'organization/organization_organization_affiliation_primary_organization_revinclude_search_test'
 require_relative 'organization/organization_practitioner_role_organization_revinclude_search_test'
 require_relative 'organization/organization_organization_affiliation_participating_organization_revinclude_search_test'
+require_relative 'organization/organization_reverse_chain_organization_affiliation_location_search_test'
+require_relative 'organization/organization_reverse_chain_organization_affiliation_network_search_test'
+require_relative 'organization/organization_reverse_chain_organization_affiliation_speciality_search_test'
+require_relative 'organization/organization_reverse_chain_insurance_plan_coverage_area_search_test'
 require_relative 'organization/organization_validation_test'
 require_relative 'organization/organization_must_support_test'
 require_relative 'organization/organization_reference_resolution_test'
@@ -122,7 +126,6 @@ following includes:
 * InsurancePlan:owned-by
 * OrganizationAffiliation:primary-organization
 * PractitionerRole:organization
-* PractitionerRole:network
 * OrganizationAffiliation:participating-organization
 
 All _revinclude searches will look for candidate IDs from the results of 
@@ -185,6 +188,10 @@ read succeeds.
       test from: :davinci_plan_net_v110_organization_organization_affiliation_primary_organization_revinclude_search_test
       test from: :davinci_plan_net_v110_organization_practitioner_role_organization_revinclude_search_test
       test from: :davinci_plan_net_v110_organization_organization_affiliation_participating_organization_revinclude_search_test
+      test from: :davinci_plan_net_v110_organization_reverse_chain_organization_affiliation_location_search_test
+      test from: :davinci_plan_net_v110_organization_reverse_chain_organization_affiliation_network_search_test
+      test from: :davinci_plan_net_v110_organization_reverse_chain_organization_affiliation_speciality_search_test
+      test from: :davinci_plan_net_v110_organization_reverse_chain_insurance_plan_coverage_area_search_test
       test from: :davinci_pdex_plan_net_v110_organization_validation_test
       test from: :davinci_pdex_plan_net_v110_organization_must_support_test
       test from: :davinci_pdex_plan_net_v110_organization_reference_resolution_test

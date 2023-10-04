@@ -6,6 +6,7 @@ require_relative 'generator/ig_metadata_extractor'
 require_relative 'generator/group_generator'
 require_relative 'generator/must_support_test_generator'
 require_relative 'generator/revinclude_search_test_generator'
+require_relative 'generator/reverse_chain_search_test_generator_draft' #TODO: remove draft when reverse chaining is more defined
 require_relative 'generator/include_search_test_generator'
 require_relative 'generator/read_test_generator'
 require_relative 'generator/reference_resolution_test_generator'
@@ -112,7 +113,7 @@ module DaVinciPDEXPlanNetTestKit
     end
 
     def generate_reverse_chain_search_tests
-      examples = File.read('custom_groups/examples.json')
+      examples = File.read('lib/davinci_pdex_plan_net_test_kit/custom_groups/reverse_chain_tests/examples.json')
       examples_hash = JSON.parse(examples)
       ReverseChainSearchTestGenerator.generate(ig_metadata, examples_hash, base_output_dir)
     end
