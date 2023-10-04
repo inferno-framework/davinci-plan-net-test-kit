@@ -183,7 +183,6 @@
 - InsurancePlan:owned-by
 - OrganizationAffiliation:primary-organization
 - PractitionerRole:organization
-- PractitionerRole:network
 - OrganizationAffiliation:participating-organization
 :required_concepts: []
 :must_supports:

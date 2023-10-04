@@ -171,14 +171,7 @@
 - Organization:endpoint
 - Organization:coverage-area
 :revincludes:
-- Endpoint:organization
-- HealthcareService:organization
-- InsurancePlan:administered-by
-- InsurancePlan:owned-by
-- OrganizationAffiliation:primary-organization
-- PractitionerRole:organization
 - PractitionerRole:network
-- OrganizationAffiliation:participating-organization
 :required_concepts:
 - type
 :must_supports:
