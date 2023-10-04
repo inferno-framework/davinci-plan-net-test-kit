@@ -9,7 +9,7 @@ module DaVinciPDEXPlanNetTestKit
     include DateSearchValidation
     include FHIRResourceNavigation
 
-    def_delegators 'self.class', :metadata, :revinclude_metadata, :properties
+    def_delegators 'self.class', :metadata, :additional_metadata, :reverse_chain_field_name, :properties
     def_delegators 'properties',
                    :resource_type,
                    :search_param_names,
@@ -17,6 +17,8 @@ module DaVinciPDEXPlanNetTestKit
                    :rev_param_sp,
                    :include_param,
                    :inc_param_sp,
+                   :chain_param,
+                   :chain_param_base,
                    :additional_resource_type,
                    :reverse_chain_param,
                    :reverse_chain_target,
@@ -51,11 +53,11 @@ module DaVinciPDEXPlanNetTestKit
       is_include ? base_resource.id : search_param_value(search_param, base_resource)
     end
 
-    def find_revchain_resource
+    def find_chain_resource
       # Look through return from relevant include test
       # If it is in chain_scratch_resources, it was put there from an _include/_revinclude test
       # so do not need to verify if it also references a base resource
-      chain_candidate = chain_revscratch_resources.find { |resource| !search_param_value(chain_param, resource).nil?}
+      chain_candidate = chain_scratch_resources.find { |resource| !search_param_value(chain_param, resource).nil?}
       skip_if chain_candidate.nil?, no_chain_resource_found_message
       chain_field_value = search_param_value(chain_param, chain_candidate)
       chain_field_value
@@ -87,7 +89,7 @@ module DaVinciPDEXPlanNetTestKit
     end
 
     def all_include_search_params
-      @all_revinclude_search_params ||=
+      @all_include_search_params ||=
         all_search_params.transform_values! do |params_list|
           # No input needed for includes so can just pass into the map
           params_list.map { |params| {_id: find_base_id(resource_type, inc_param_sp)}.merge(_include: include_param) }
@@ -98,6 +100,16 @@ module DaVinciPDEXPlanNetTestKit
       @all_revchain_search_params ||=
         all_search_params.transform_values! do |params_list|
           params_list.map { |params| {"_has:#{additional_resource_type}:#{reverse_chain_target}:#{reverse_chain_param}": }}
+        end
+    end
+    
+    def all_forward_chain_search_params
+      @all_forward_chain_search_params ||=
+        all_search_params.transform_values! do |params_list|
+          params_list.map { |params| {"#{chain_param_base}.#{chain_param}": find_chain_resource} }
+        end
+    end
+
 
     def any_valid_search_params?(search_params)
       search_params.any? { |_resource_id, params| params.present? }
@@ -120,6 +132,7 @@ module DaVinciPDEXPlanNetTestKit
         end
 
       save_delayed_references(resources, additional_resource_type)
+      include_scratch_resources.concat(resources).uniq!
 
       skip_if resources.empty?, no_resources_skip_message(additional_resource_type)
     end
@@ -164,7 +177,6 @@ module DaVinciPDEXPlanNetTestKit
     def run_search_test
       # TODO: skip if not supported?
       skip_if !any_valid_search_params?(all_search_params), unable_to_resolve_params_message
-
       resources_returned =
         all_search_params.flat_map do |resource_id, params_list|
           params_list.flat_map { |params| perform_search(params, resource_id) }
@@ -206,6 +218,21 @@ module DaVinciPDEXPlanNetTestKit
 
       assert !all_scratch_resources.empty?, "No instances found for testing profile #{metadata.profile_name}."
 
+    end
+
+    def run_forward_chain_search_test
+      resources =
+        all_forward_chain_search_params.flat_map do |_resource_id, params_list|
+          params_list.flat_map do |params|
+            fhir_search resource_type, params: params
+            perform_search_with_status(params, resource_id) if response[:status] == 400 && possible_status_search?
+
+            check_search_response
+
+            fetch_all_bundled_resources
+          end
+        end
+        skip_if resources.empty?, no_resources_skip_message
     end
 
     def perform_search(params, resource_id)
@@ -486,6 +513,14 @@ module DaVinciPDEXPlanNetTestKit
       scratch_resources[:all] ||= []
     end
 
+    def include_scratch_resources
+      scratch_include_resources[:all] ||= []
+    end
+
+    def chain_scratch_resources
+      scratch_chain_resources[:all] ||= []
+    end
+
     def scratch_resources_for_resource(resource_id)
       return all_scratch_resources if resource_id.nil?
 
@@ -549,7 +584,7 @@ module DaVinciPDEXPlanNetTestKit
     end
 
     def search_param_paths(name, resource = resource_type)
-      resource_metadata = (resource != additional_resource_type || revinclude_param.nil?) ? metadata : revinclude_metadata
+      resource_metadata = resource == resource_type ? metadata : additional_metadata
       paths = resource_metadata.search_definitions[name.to_sym][:paths]
       if paths.first =='class'
         paths[0] = 'local_class'
@@ -578,6 +613,11 @@ module DaVinciPDEXPlanNetTestKit
     def no_instance_gathering_message
       "Unable to find previously gathered instances of #{additional_resource_type}, please provide IDs or
       \"Run All Tests\" from suite level"
+    end
+
+    def no_chain_resource_found_message
+      "Unable to find any previously returned #{additional_resource_type} instances with the 
+      #{chain_param} field populated."
     end
 
     def empty_search_params_message(empty_search_params)
@@ -740,7 +780,7 @@ module DaVinciPDEXPlanNetTestKit
         break if search_value.present?
       end
 
-      escaped_value = search_value&.gsub(',', '\\,')
+      escaped_value = search_value&.gsub(',', '\,')
       escaped_value
     end
 
