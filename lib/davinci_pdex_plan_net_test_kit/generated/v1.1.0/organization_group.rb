@@ -17,7 +17,6 @@ require_relative 'organization/organization_revinclude_insurance_plan_administer
 require_relative 'organization/organization_revinclude_insurance_plan_owned_by_search_test'
 require_relative 'organization/organization_revinclude_organization_affiliation_primary_organization_search_test'
 require_relative 'organization/organization_revinclude_practitioner_role_organization_search_test'
-require_relative 'organization/organization_revinclude_practitioner_role_network_search_test'
 require_relative 'organization/organization_revinclude_organization_affiliation_participating_organization_search_test'
 require_relative 'organization/organization_forward_chain_partof_name_search_test'
 require_relative 'organization/organization_forward_chain_partof_address_search_test'
@@ -127,7 +126,6 @@ following includes:
 * InsurancePlan:owned-by
 * OrganizationAffiliation:primary-organization
 * PractitionerRole:organization
-* PractitionerRole:network
 * OrganizationAffiliation:participating-organization
 
 All _revinclude searches will look for candidate IDs from the results of 
@@ -201,7 +199,6 @@ read succeeds.
       test from: :davinci_plan_net_v110_revinclude_organization_insurance_plan_owned_by_search_test
       test from: :davinci_plan_net_v110_revinclude_organization_organization_affiliation_primary_organization_search_test
       test from: :davinci_plan_net_v110_revinclude_organization_practitioner_role_organization_search_test
-      test from: :davinci_plan_net_v110_revinclude_organization_practitioner_role_network_search_test
       test from: :davinci_plan_net_v110_revinclude_organization_organization_affiliation_participating_organization_search_test
       test from: :davinci_plan_net_v110_forward_chain_partof_name_search_test
       test from: :davinci_plan_net_v110_forward_chain_partof_address_search_test

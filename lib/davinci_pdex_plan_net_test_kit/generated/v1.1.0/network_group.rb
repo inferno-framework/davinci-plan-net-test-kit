@@ -11,14 +11,7 @@ require_relative 'network/network_coverage_area_search_test'
 require_relative 'network/network_include_organization_partof_search_test'
 require_relative 'network/network_include_organization_endpoint_search_test'
 require_relative 'network/network_include_organization_coverage_area_search_test'
-require_relative 'network/network_revinclude_endpoint_organization_search_test'
-require_relative 'network/network_revinclude_healthcare_service_organization_search_test'
-require_relative 'network/network_revinclude_insurance_plan_administered_by_search_test'
-require_relative 'network/network_revinclude_insurance_plan_owned_by_search_test'
-require_relative 'network/network_revinclude_organization_affiliation_primary_organization_search_test'
-require_relative 'network/network_revinclude_practitioner_role_organization_search_test'
 require_relative 'network/network_revinclude_practitioner_role_network_search_test'
-require_relative 'network/network_revinclude_organization_affiliation_participating_organization_search_test'
 require_relative 'network/network_forward_chain_partof_name_search_test'
 require_relative 'network/network_forward_chain_partof_address_search_test'
 require_relative 'network/network_forward_chain_partof_type_search_test'
@@ -121,14 +114,7 @@ This test sequence will perform each required _revinclude search associated
 with this resource. This sequence will perform searches with the
 following includes:
 
-* Endpoint:organization
-* HealthcareService:organization
-* InsurancePlan:administered-by
-* InsurancePlan:owned-by
-* OrganizationAffiliation:primary-organization
-* PractitionerRole:organization
 * PractitionerRole:network
-* OrganizationAffiliation:participating-organization
 
 All _revinclude searches will look for candidate IDs from the results of 
 instance gathering _only_ if tests are ran from the suite level.  Each search 
@@ -195,14 +181,7 @@ read succeeds.
       test from: :davinci_plan_net_v110_include_network_organization_partof_search_test
       test from: :davinci_plan_net_v110_include_network_organization_endpoint_search_test
       test from: :davinci_plan_net_v110_include_network_organization_coverage_area_search_test
-      test from: :davinci_plan_net_v110_revinclude_network_endpoint_organization_search_test
-      test from: :davinci_plan_net_v110_revinclude_network_healthcare_service_organization_search_test
-      test from: :davinci_plan_net_v110_revinclude_network_insurance_plan_administered_by_search_test
-      test from: :davinci_plan_net_v110_revinclude_network_insurance_plan_owned_by_search_test
-      test from: :davinci_plan_net_v110_revinclude_network_organization_affiliation_primary_organization_search_test
-      test from: :davinci_plan_net_v110_revinclude_network_practitioner_role_organization_search_test
       test from: :davinci_plan_net_v110_revinclude_network_practitioner_role_network_search_test
-      test from: :davinci_plan_net_v110_revinclude_network_organization_affiliation_participating_organization_search_test
       test from: :davinci_plan_net_v110_forward_chain_partof_name_search_test
       test from: :davinci_plan_net_v110_forward_chain_partof_address_search_test
       test from: :davinci_plan_net_v110_forward_chain_partof_type_search_test
