@@ -53,13 +53,13 @@ module DaVinciPDEXPlanNetTestKit
       is_include ? base_resource.id : search_param_value(search_param, base_resource)
     end
 
-    def find_chain_resource
+    def find_chain_resource(param)
       # Look through return from relevant include test
       # If it is in chain_scratch_resources, it was put there from an _include/_revinclude test
       # so do not need to verify if it also references a base resource
-      chain_candidate = chain_scratch_resources.find { |resource| !search_param_value(chain_param, resource).nil?}
+      chain_candidate = chain_scratch_resources.find { |resource| !search_param_value(param, resource).nil?}
       skip_if chain_candidate.nil?, no_chain_resource_found_message
-      chain_field_value = search_param_value(chain_param, chain_candidate)
+      chain_field_value = search_param_value(param, chain_candidate)
       chain_field_value
     end
 
@@ -96,17 +96,17 @@ module DaVinciPDEXPlanNetTestKit
         end
     end
 
-    def all_revchain_search_params
+    def all_reverse_chain_search_params
       @all_revchain_search_params ||=
         all_search_params.transform_values! do |params_list|
-          params_list.map { |params| {"_has:#{additional_resource_type}:#{reverse_chain_target}:#{reverse_chain_param}": }}
+          params_list.map { |params| {"_has:#{additional_resource_type}:#{reverse_chain_target}:#{reverse_chain_param}": find_chain_resource(reverse_chain_target)}}
         end
     end
-    
+
     def all_forward_chain_search_params
       @all_forward_chain_search_params ||=
         all_search_params.transform_values! do |params_list|
-          params_list.map { |params| {"#{chain_param_base}.#{chain_param}": find_chain_resource} }
+          params_list.map { |params| {"#{chain_param_base}.#{chain_param}": find_chain_resource(chain_param)} }
         end
     end
 
@@ -156,22 +156,6 @@ module DaVinciPDEXPlanNetTestKit
       save_delayed_references(resources, additional_resource_type)
 
       skip_if resources.empty?, no_resources_skip_message(additional_resource_type)
-    end
-
-    def run_reverse_chain_search_test
-      skip_if !any_valid_search_params?(all_revchain_search_param), "Invalid Params"
-      resources =
-        all_revinclude_search_params.flat_map do |_resource_id, params_list|
-          params_list.flat_map do |params|
-            fhir_search resource_type, params: params
-            perform_search_with_status(params, resource_id) if response[:status] == 400 && possible_status_search?
-
-            check_search_response
-          end
-          fetch_all_bundled_resources.select { |resource| resource.resourceType == resource_type }
-        end
-
-      skip_if resources.empty?, "No resources found TODO:REPLACE MESSAGE"
     end
 
     def run_search_test
@@ -233,6 +217,22 @@ module DaVinciPDEXPlanNetTestKit
           end
         end
         skip_if resources.empty?, no_resources_skip_message
+    end
+
+    def run_reverse_chain_search_test
+      resources =
+        all_reverse_chain_search_params.flat_map do |_resource_id, params_list|
+          params_list.flat_map do |params|
+            fhir_search resource_type, params: params
+            perform_search_with_status(params, resource_id) if response[:status] == 400 && possible_status_search?
+
+            check_search_response
+
+            fetch_all_bundled_resources
+          end
+        end
+        
+      skip_if resources.empty?, "No resources found TODO:REPLACE MESSAGE"
     end
 
     def perform_search(params, resource_id)

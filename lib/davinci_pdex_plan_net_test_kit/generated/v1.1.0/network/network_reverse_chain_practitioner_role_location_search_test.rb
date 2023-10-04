@@ -34,7 +34,7 @@ module DaVinciPDEXPlanNetTestKit
         scratch[:network_resources] ||= {}
       end
 
-      def scratch_revchain_resources
+      def scratch_chain_resources
         scratch[:practitioner_role_resources] ||= {}
       end
 
