@@ -381,6 +381,8 @@
   :file_name: location_forward_chain_organization_type_search_test.rb
 - :id: davinci_plan_net_v110_forward_chain_endpoint_organization_search_test
   :file_name: location_forward_chain_endpoint_organization_search_test.rb
+- :id: davinci_plan_net_v110_location_reverse_chain_insurance_plan_owned_by_search_test
+  :file_name: location_reverse_chain_insurance_plan_owned_by_search_test.rb
 - :id: davinci_pdex_plan_net_v110_location_validation_test
   :file_name: location_validation_test.rb
 - :id: davinci_pdex_plan_net_v110_location_must_support_test

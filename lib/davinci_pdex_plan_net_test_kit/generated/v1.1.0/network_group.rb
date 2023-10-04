@@ -8,13 +8,6 @@ require_relative 'network/network_id_search_test'
 require_relative 'network/network_lastupdated_search_test'
 require_relative 'network/network_type_search_test'
 require_relative 'network/network_coverage_area_search_test'
-<<<<<<< HEAD
-require_relative 'network/network_organization_partof_include_search_test'
-require_relative 'network/network_organization_endpoint_include_search_test'
-require_relative 'network/network_organization_coverage_area_include_search_test'
-require_relative 'network/network_practitioner_role_network_revinclude_search_test'
-require_relative 'network/network_reverse_chain_practitioner_role_location_search_test'
-=======
 require_relative 'network/network_include_organization_partof_search_test'
 require_relative 'network/network_include_organization_endpoint_search_test'
 require_relative 'network/network_include_organization_coverage_area_search_test'
@@ -23,7 +16,7 @@ require_relative 'network/network_forward_chain_partof_name_search_test'
 require_relative 'network/network_forward_chain_partof_address_search_test'
 require_relative 'network/network_forward_chain_partof_type_search_test'
 require_relative 'network/network_forward_chain_endpoint_organization_search_test'
->>>>>>> FI-2176-Single-Depth-Chain-Parameter-Tests
+require_relative 'network/network_reverse_chain_practitioner_role_location_search_test'
 require_relative 'network/network_validation_test'
 require_relative 'network/network_must_support_test'
 require_relative 'network/network_reference_resolution_test'
@@ -194,6 +187,7 @@ read succeeds.
       test from: :davinci_plan_net_v110_forward_chain_partof_address_search_test
       test from: :davinci_plan_net_v110_forward_chain_partof_type_search_test
       test from: :davinci_plan_net_v110_forward_chain_endpoint_organization_search_test
+      test from: :davinci_plan_net_v110_network_reverse_chain_practitioner_role_location_search_test
       test from: :davinci_pdex_plan_net_v110_network_validation_test
       test from: :davinci_pdex_plan_net_v110_network_must_support_test
       test from: :davinci_pdex_plan_net_v110_network_reference_resolution_test

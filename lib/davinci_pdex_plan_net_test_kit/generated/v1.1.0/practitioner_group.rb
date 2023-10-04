@@ -6,6 +6,10 @@ require_relative 'practitioner/practitioner_lastupdated_search_test'
 require_relative 'practitioner/practitioner_family_search_test'
 require_relative 'practitioner/practitioner_given_search_test'
 require_relative 'practitioner/practitioner_revinclude_practitioner_role_practitioner_search_test'
+require_relative 'practitioner/practitioner_reverse_chain_practitioner_role_location_search_test'
+require_relative 'practitioner/practitioner_reverse_chain_practitioner_role_network_search_test'
+require_relative 'practitioner/practitioner_reverse_chain_practitioner_role_speciality_search_test'
+require_relative 'practitioner/practitioner_reverse_chain_practitioner_role_role_search_test'
 require_relative 'practitioner/practitioner_validation_test'
 require_relative 'practitioner/practitioner_must_support_test'
 require_relative 'practitioner/practitioner_reference_resolution_test'
@@ -138,15 +142,11 @@ read succeeds.
       test from: :davinci_pdex_plan_net_v110_practitioner__lastUpdated_search_test
       test from: :davinci_pdex_plan_net_v110_practitioner_family_search_test
       test from: :davinci_pdex_plan_net_v110_practitioner_given_search_test
-<<<<<<< HEAD
-      test from: :davinci_plan_net_v110_practitioner_practitioner_role_practitioner_revinclude_search_test
+      test from: :davinci_plan_net_v110_revinclude_practitioner_practitioner_role_practitioner_search_test
       test from: :davinci_plan_net_v110_practitioner_reverse_chain_practitioner_role_location_search_test
       test from: :davinci_plan_net_v110_practitioner_reverse_chain_practitioner_role_network_search_test
       test from: :davinci_plan_net_v110_practitioner_reverse_chain_practitioner_role_speciality_search_test
       test from: :davinci_plan_net_v110_practitioner_reverse_chain_practitioner_role_role_search_test
-=======
-      test from: :davinci_plan_net_v110_revinclude_practitioner_practitioner_role_practitioner_search_test
->>>>>>> FI-2176-Single-Depth-Chain-Parameter-Tests
       test from: :davinci_pdex_plan_net_v110_practitioner_validation_test
       test from: :davinci_pdex_plan_net_v110_practitioner_must_support_test
       test from: :davinci_pdex_plan_net_v110_practitioner_reference_resolution_test

@@ -25,6 +25,7 @@ require_relative 'location/location_forward_chain_organization_address_search_te
 require_relative 'location/location_forward_chain_organization_partof_search_test'
 require_relative 'location/location_forward_chain_organization_type_search_test'
 require_relative 'location/location_forward_chain_endpoint_organization_search_test'
+require_relative 'location/location_reverse_chain_insurance_plan_owned_by_search_test'
 require_relative 'location/location_validation_test'
 require_relative 'location/location_must_support_test'
 require_relative 'location/location_reference_resolution_test'
@@ -195,16 +196,6 @@ read succeeds.
       test from: :davinci_pdex_plan_net_v110_location_type_search_test
       test from: :davinci_pdex_plan_net_v110_location__id_search_test
       test from: :davinci_pdex_plan_net_v110_location__lastUpdated_search_test
-<<<<<<< HEAD
-      test from: :davinci_plan_net_v110_location_location_endpoint_include_search_test
-      test from: :davinci_plan_net_v110_location_location_organization_include_search_test
-      test from: :davinci_plan_net_v110_location_location_partof_include_search_test
-      test from: :davinci_plan_net_v110_location_healthcare_service_location_revinclude_search_test
-      test from: :davinci_plan_net_v110_location_insurance_plan_coverage_area_revinclude_search_test
-      test from: :davinci_plan_net_v110_location_organization_affiliation_location_revinclude_search_test
-      test from: :davinci_plan_net_v110_location_practitioner_role_location_revinclude_search_test
-      test from: :davinci_plan_net_v110_location_reverse_chain_insurance_plan_owned_by_search_test
-=======
       test from: :davinci_plan_net_v110_include_location_location_endpoint_search_test
       test from: :davinci_plan_net_v110_include_location_location_organization_search_test
       test from: :davinci_plan_net_v110_include_location_location_partof_search_test
@@ -220,7 +211,7 @@ read succeeds.
       test from: :davinci_plan_net_v110_forward_chain_organization_partof_search_test
       test from: :davinci_plan_net_v110_forward_chain_organization_type_search_test
       test from: :davinci_plan_net_v110_forward_chain_endpoint_organization_search_test
->>>>>>> FI-2176-Single-Depth-Chain-Parameter-Tests
+      test from: :davinci_plan_net_v110_location_reverse_chain_insurance_plan_owned_by_search_test
       test from: :davinci_pdex_plan_net_v110_location_validation_test
       test from: :davinci_pdex_plan_net_v110_location_must_support_test
       test from: :davinci_pdex_plan_net_v110_location_reference_resolution_test
