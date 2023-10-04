@@ -128,6 +128,12 @@ module DaVinciPDEXPlanNetTestKit
       skip_if resources.empty?, no_resources_skip_message(additional_resource_type)
     end
 
+    def run_reverse_chain_search_test
+      skip_if !any_valid_search_params
+
+      skip_if resources.empty?, "No resources found TODO:REPLACE MESSAGE"
+    end
+
     def run_search_test
       # TODO: skip if not supported?
       skip_if !any_valid_search_params?(all_search_params), unable_to_resolve_params_message

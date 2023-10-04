@@ -44,6 +44,7 @@ module DaVinciPDEXPlanNetTestKit
       # TODO: generate_history_tests
       generate_include_search_tests
       generate_revinclude_search_tests
+      generate_reverse_chain_search_tests
       generate_validation_tests
       generate_must_support_tests
       generate_reference_resolution_tests
@@ -108,6 +109,12 @@ module DaVinciPDEXPlanNetTestKit
 
     def generate_revinclude_search_tests
       RevincludeSearchTestGenerator.generate(ig_metadata, base_output_dir)
+    end
+
+    def generate_reverse_chain_search_tests
+      examples = File.read('custom_groups/examples.json')
+      examples_hash = JSON.parse(examples)
+      ReverseChainSearchTestGenerator.generate(ig_metadata, examples_hash, base_output_dir)
     end
 
     def generate_groups

@@ -1,0 +1,60 @@
+{
+    "Practitioner": [
+    {
+        "source_resource": "PractitionerRole",
+        "target_param": "practitioner",
+        "constraining_param": "location"
+    },
+    {
+        "source_resource": "PractitionerRole",
+        "target_param": "practitioner",
+        "constraining_param": "network"
+    },
+    {
+        "source_resource": "PractitionerRole",
+        "target_param": "practitioner",
+        "constraining_param": "speciality"
+    },
+    {
+        "source_resource": "PractitionerRole",
+        "target_param": "practitioner",
+        "constraining_param": "role"
+    }
+    ],
+    "Organization": [
+    {
+        "source_resource": "OrganizationAffiliation",
+        "target_param": "participating-organization",
+        "constraining_param": "location"
+    },
+    {
+        "source_resource": "OrganizationAffiliation",
+        "target_param": "participating-organization",
+        "constraining_param": "network"
+    },
+    {
+        "source_resource": "OrganizationAffiliation",
+        "target_param": "participating-organization",
+        "constraining_param": "speciality"
+    },
+    {
+        "source_resource": "InsurancePlan",
+        "target_param": "owned-by",
+        "constraining_param": "coverage-area"
+    }
+    ],
+    "Location": [
+    {
+        "source_resource": "InsurancePlan",
+        "target_param": "coverage-area",
+        "constraining_param": "owned-by"
+    }
+    ],
+    "Network": [
+    {
+        "source_resource": "PractitionerRole",
+        "target_param": "network",
+        "constraining_param": "location"
+    }
+    ]
+}
