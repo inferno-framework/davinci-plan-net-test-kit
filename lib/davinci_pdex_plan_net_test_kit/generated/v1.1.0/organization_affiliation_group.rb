@@ -10,12 +10,32 @@ require_relative 'organization_affiliation/organization_affiliation_role_search_
 require_relative 'organization_affiliation/organization_affiliation_specialty_search_test'
 require_relative 'organization_affiliation/organization_affiliation_id_search_test'
 require_relative 'organization_affiliation/organization_affiliation_lastupdated_search_test'
-require_relative 'organization_affiliation/organization_affiliation_organization_affiliation_primary_organization_include_search_test'
-require_relative 'organization_affiliation/organization_affiliation_organization_affiliation_participating_organization_include_search_test'
-require_relative 'organization_affiliation/organization_affiliation_organization_affiliation_location_include_search_test'
-require_relative 'organization_affiliation/organization_affiliation_organization_affiliation_service_include_search_test'
-require_relative 'organization_affiliation/organization_affiliation_organization_affiliation_endpoint_include_search_test'
-require_relative 'organization_affiliation/organization_affiliation_organization_affiliation_network_include_search_test'
+require_relative 'organization_affiliation/organization_affiliation_include_organization_affiliation_primary_organization_search_test'
+require_relative 'organization_affiliation/organization_affiliation_include_organization_affiliation_participating_organization_search_test'
+require_relative 'organization_affiliation/organization_affiliation_include_organization_affiliation_location_search_test'
+require_relative 'organization_affiliation/organization_affiliation_include_organization_affiliation_service_search_test'
+require_relative 'organization_affiliation/organization_affiliation_include_organization_affiliation_endpoint_search_test'
+require_relative 'organization_affiliation/organization_affiliation_include_organization_affiliation_network_search_test'
+require_relative 'organization_affiliation/organization_affiliation_forward_chain_primary_organization_type_search_test'
+require_relative 'organization_affiliation/organization_affiliation_forward_chain_primary_organization_address_search_test'
+require_relative 'organization_affiliation/organization_affiliation_forward_chain_primary_organization_name_search_test'
+require_relative 'organization_affiliation/organization_affiliation_forward_chain_primary_organization_partof_search_test'
+require_relative 'organization_affiliation/organization_affiliation_forward_chain_participating_organization_type_search_test'
+require_relative 'organization_affiliation/organization_affiliation_forward_chain_participating_organization_address_search_test'
+require_relative 'organization_affiliation/organization_affiliation_forward_chain_participating_organization_name_search_test'
+require_relative 'organization_affiliation/organization_affiliation_forward_chain_participating_organization_partof_search_test'
+require_relative 'organization_affiliation/organization_affiliation_forward_chain_location_address_search_test'
+require_relative 'organization_affiliation/organization_affiliation_forward_chain_location_address_postalcode_search_test'
+require_relative 'organization_affiliation/organization_affiliation_forward_chain_location_address_city_search_test'
+require_relative 'organization_affiliation/organization_affiliation_forward_chain_location_address_state_search_test'
+require_relative 'organization_affiliation/organization_affiliation_forward_chain_location_organization_search_test'
+require_relative 'organization_affiliation/organization_affiliation_forward_chain_location_type_search_test'
+require_relative 'organization_affiliation/organization_affiliation_forward_chain_service_service_category_search_test'
+require_relative 'organization_affiliation/organization_affiliation_forward_chain_service_organization_search_test'
+require_relative 'organization_affiliation/organization_affiliation_forward_chain_service_location_search_test'
+require_relative 'organization_affiliation/organization_affiliation_forward_chain_network_name_search_test'
+require_relative 'organization_affiliation/organization_affiliation_forward_chain_network_partof_search_test'
+require_relative 'organization_affiliation/organization_affiliation_forward_chain_endpoint_organization_search_test'
 require_relative 'organization_affiliation/organization_affiliation_validation_test'
 require_relative 'organization_affiliation/organization_affiliation_must_support_test'
 require_relative 'organization_affiliation/organization_affiliation_reference_resolution_test'
@@ -115,6 +135,22 @@ The return is scanned to find any of the expected additional resource.
 
 
 
+## Forward Chaining Requirement Testing
+This test sequence will perform each required forward chaining search for each of 
+the search parameters that specify chaining capabilities.  This sequence will perform searches with the
+following chaining parameters:
+
+| Search Parameters | Chain Requirements |
+| --- | --- |
+| primary-organization | type, address, name, partof |
+| participating-organization | type, address, name, partof |
+| location | address, address-postalcode, address-city, address-state, organization, type |
+| service | service-category, organization, location |
+| network | name, partof |
+| endpoint | organization |
+
+
+
 
 ## Must Support
 Each profile contains elements marked as "must support". This test
@@ -159,12 +195,32 @@ read succeeds.
       test from: :davinci_pdex_plan_net_v110_organization_affiliation_specialty_search_test
       test from: :davinci_pdex_plan_net_v110_organization_affiliation__id_search_test
       test from: :davinci_pdex_plan_net_v110_organization_affiliation__lastUpdated_search_test
-      test from: :davinci_plan_net_v110_organization_affiliation_organization_affiliation_primary_organization_include_search_test
-      test from: :davinci_plan_net_v110_organization_affiliation_organization_affiliation_participating_organization_include_search_test
-      test from: :davinci_plan_net_v110_organization_affiliation_organization_affiliation_location_include_search_test
-      test from: :davinci_plan_net_v110_organization_affiliation_organization_affiliation_service_include_search_test
-      test from: :davinci_plan_net_v110_organization_affiliation_organization_affiliation_endpoint_include_search_test
-      test from: :davinci_plan_net_v110_organization_affiliation_organization_affiliation_network_include_search_test
+      test from: :davinci_plan_net_v110_include_organization_affiliation_organization_affiliation_primary_organization_search_test
+      test from: :davinci_plan_net_v110_include_organization_affiliation_organization_affiliation_participating_organization_search_test
+      test from: :davinci_plan_net_v110_include_organization_affiliation_organization_affiliation_location_search_test
+      test from: :davinci_plan_net_v110_include_organization_affiliation_organization_affiliation_service_search_test
+      test from: :davinci_plan_net_v110_include_organization_affiliation_organization_affiliation_endpoint_search_test
+      test from: :davinci_plan_net_v110_include_organization_affiliation_organization_affiliation_network_search_test
+      test from: :davinci_plan_net_v110_forward_chain_primary_organization_type_search_test
+      test from: :davinci_plan_net_v110_forward_chain_primary_organization_address_search_test
+      test from: :davinci_plan_net_v110_forward_chain_primary_organization_name_search_test
+      test from: :davinci_plan_net_v110_forward_chain_primary_organization_partof_search_test
+      test from: :davinci_plan_net_v110_forward_chain_participating_organization_type_search_test
+      test from: :davinci_plan_net_v110_forward_chain_participating_organization_address_search_test
+      test from: :davinci_plan_net_v110_forward_chain_participating_organization_name_search_test
+      test from: :davinci_plan_net_v110_forward_chain_participating_organization_partof_search_test
+      test from: :davinci_plan_net_v110_forward_chain_location_address_search_test
+      test from: :davinci_plan_net_v110_forward_chain_location_address_postalcode_search_test
+      test from: :davinci_plan_net_v110_forward_chain_location_address_city_search_test
+      test from: :davinci_plan_net_v110_forward_chain_location_address_state_search_test
+      test from: :davinci_plan_net_v110_forward_chain_location_organization_search_test
+      test from: :davinci_plan_net_v110_forward_chain_location_type_search_test
+      test from: :davinci_plan_net_v110_forward_chain_service_service_category_search_test
+      test from: :davinci_plan_net_v110_forward_chain_service_organization_search_test
+      test from: :davinci_plan_net_v110_forward_chain_service_location_search_test
+      test from: :davinci_plan_net_v110_forward_chain_network_name_search_test
+      test from: :davinci_plan_net_v110_forward_chain_network_partof_search_test
+      test from: :davinci_plan_net_v110_forward_chain_endpoint_organization_search_test
       test from: :davinci_pdex_plan_net_v110_organization_affiliation_validation_test
       test from: :davinci_pdex_plan_net_v110_organization_affiliation_must_support_test
       test from: :davinci_pdex_plan_net_v110_organization_affiliation_reference_resolution_test

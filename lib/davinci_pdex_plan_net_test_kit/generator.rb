@@ -14,6 +14,7 @@ require_relative 'generator/search_test_generator'
 require_relative 'generator/search_no_params_test_generator'
 require_relative 'generator/suite_generator'
 require_relative 'generator/validation_test_generator'
+require_relative 'generator/forward_chain_test_generator'
 require_relative 'generator/special_cases'
 
 module DaVinciPDEXPlanNetTestKit
@@ -44,6 +45,7 @@ module DaVinciPDEXPlanNetTestKit
       # TODO: generate_history_tests
       generate_include_search_tests
       generate_revinclude_search_tests
+      generate_forward_chain_search_tests
       generate_validation_tests
       generate_must_support_tests
       generate_reference_resolution_tests
@@ -110,6 +112,10 @@ module DaVinciPDEXPlanNetTestKit
       RevincludeSearchTestGenerator.generate(ig_metadata, base_output_dir)
     end
 
+    def generate_forward_chain_search_tests
+      ForwardChainSearchTestGenerator.generate(ig_metadata, base_output_dir)
+    end
+    
     def generate_groups
       GroupGenerator.generate(ig_metadata, base_output_dir)
     end

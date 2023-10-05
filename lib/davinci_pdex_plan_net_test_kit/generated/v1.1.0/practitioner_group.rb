@@ -5,7 +5,7 @@ require_relative 'practitioner/practitioner_id_search_test'
 require_relative 'practitioner/practitioner_lastupdated_search_test'
 require_relative 'practitioner/practitioner_family_search_test'
 require_relative 'practitioner/practitioner_given_search_test'
-require_relative 'practitioner/practitioner_practitioner_role_practitioner_revinclude_search_test'
+require_relative 'practitioner/practitioner_revinclude_practitioner_role_practitioner_search_test'
 require_relative 'practitioner/practitioner_validation_test'
 require_relative 'practitioner/practitioner_must_support_test'
 require_relative 'practitioner/practitioner_reference_resolution_test'
@@ -99,6 +99,7 @@ If running from the profile level, input boxes are provided for these tests upon
 
 
 
+
 ## Must Support
 Each profile contains elements marked as "must support". This test
 sequence expects to see each of these elements populated at least once. If at
@@ -137,7 +138,7 @@ read succeeds.
       test from: :davinci_pdex_plan_net_v110_practitioner__lastUpdated_search_test
       test from: :davinci_pdex_plan_net_v110_practitioner_family_search_test
       test from: :davinci_pdex_plan_net_v110_practitioner_given_search_test
-      test from: :davinci_plan_net_v110_practitioner_practitioner_role_practitioner_revinclude_search_test
+      test from: :davinci_plan_net_v110_revinclude_practitioner_practitioner_role_practitioner_search_test
       test from: :davinci_pdex_plan_net_v110_practitioner_validation_test
       test from: :davinci_pdex_plan_net_v110_practitioner_must_support_test
       test from: :davinci_pdex_plan_net_v110_practitioner_reference_resolution_test
