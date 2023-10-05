@@ -795,7 +795,7 @@ module DaVinciPDEXPlanNetTestKit
           when FHIR::Address
             element.text || element.city || element.state || element.postalCode || element.country
           when FHIR::Extension
-            element.valueReference.reference #Should this be more flexible? Does it need to read for any value[x]?  PDEX only
+            element.valueReference.reference #Should this be more flexible? Does it need to read for any value[x]?  PDEX Plan Net only
           else
             element
           end
