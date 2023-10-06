@@ -122,7 +122,6 @@ following includes:
 * InsurancePlan:owned-by
 * OrganizationAffiliation:primary-organization
 * PractitionerRole:organization
-* PractitionerRole:network
 * OrganizationAffiliation:participating-organization
 
 All _revinclude searches will look for candidate IDs from the results of 

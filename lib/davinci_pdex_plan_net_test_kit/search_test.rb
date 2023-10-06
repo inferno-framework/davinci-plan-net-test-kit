@@ -95,16 +95,26 @@ module DaVinciPDEXPlanNetTestKit
             perform_search_with_status(params, resource_id) if response[:status] == 400 && possible_status_search?
         
             check_search_response
+            
+            base_resources = matching_resources = fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
+              .select { |resource| resource.resourceType == resource_type }
 
-            fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
+            matching_resources = fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
               .select { |resource| resource.resourceType == additional_resource_type }
-              .reject { |resource| resource.id == params[:_id]} 
+              .reject { |resource| resource.id == params[:_id] }
+
+            # Verify that the returned resources are expected from given parameters.
+            # See run_revinclude_search_test for more info on this next line.  We may want to make changes to check_resource_against_params to account for both "resource/reference" as well as just "reference" field values.
+            expected_reference = search_param_value(inc_param_sp, base_resources.first).split('/')[1]
+            matching_resources.each { |resource| check_resource_against_params(resource, {_id: expected_reference}) }
+            matching_resources 
+            #Tested by hardcoding in something in place of expected reference and it does catch mismatches, but we should probably add this to something to unit test
           end
         end
 
       save_delayed_references(resources, additional_resource_type)
-
       skip_if resources.empty?, no_resources_skip_message(additional_resource_type)
+
     end
 
     def run_revinclude_search_test
@@ -117,9 +127,13 @@ module DaVinciPDEXPlanNetTestKit
 
             check_search_response
 
-            fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
+            matching_resources = fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
               .select { |resource| resource.resourceType == additional_resource_type }
-              .reject { |resource| resource.id == "#{self.send(input_name)}" }
+              .reject { |resource| resource.id == params[:_id] }
+            # Not sure if this is the best way to handle this -- may want to make changes within the check_resource_against_params to allow for both 
+            # resource/reference reference.  Currently manually attaching the "resource/" part
+            matching_resources.each { |resource| check_resource_against_params(resource, {"#{rev_param_sp}": "#{resource_type}/#{params[:_id]}"}) }
+            matching_resources
           end
         end
 
@@ -764,13 +778,13 @@ module DaVinciPDEXPlanNetTestKit
       params.each do |name, escaped_search_value|
         #unescape search value
         search_value = escaped_search_value&.gsub('\\,', ',')
-        paths = search_param_paths(name)
+        paths = search_param_paths(name, resource.resourceType)
 
         match_found = false
         values_found = []
-
+        resource_metadata = resource.resourceType == resource_type ? metadata : revinclude_metadata
         paths.each do |path|
-          type = metadata.search_definitions[name.to_sym][:type]
+          type = resource_metadata.search_definitions[name.to_sym][:type]
           values_found =
             resolve_path(resource, path)
               .map do |value|

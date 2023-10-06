@@ -110,14 +110,7 @@ This test sequence will perform each required _revinclude search associated
 with this resource. This sequence will perform searches with the
 following includes:
 
-* Endpoint:organization
-* HealthcareService:organization
-* InsurancePlan:administered-by
-* InsurancePlan:owned-by
-* OrganizationAffiliation:primary-organization
-* PractitionerRole:organization
 * PractitionerRole:network
-* OrganizationAffiliation:participating-organization
 
 All _revinclude searches will look for candidate IDs from the results of 
 instance gathering _only_ if tests are ran from the suite level.  Each search 
