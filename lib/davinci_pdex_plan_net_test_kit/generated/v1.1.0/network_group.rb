@@ -137,6 +137,14 @@ following chaining parameters:
 
 
 
+## Reverse Chaining Requirement Testing
+This test sequence will perform each required reverse chaining search for each of 
+the search parameters that specify chaining capabilities.  This sequence will perform searches with the
+following chaining parameters:
+
+* Practitionerrole:network:location
+
+
 
 ## Must Support
 Each profile contains elements marked as "must support". This test

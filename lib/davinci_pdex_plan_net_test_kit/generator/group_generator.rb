@@ -164,6 +164,21 @@ module DaVinciPDEXPlanNetTestKit
         chain_table
       end
 
+      def reverse_chain_string
+        # Placeholder until we have a more clear way of inferring reverse requirements
+        test_id_list
+          .select {|test_id| test_id.include?('reverse_chain')}
+          .map do |name| 
+            "* #{name
+                  .gsub(/(.*)reverse_chain_(.*?)_search_test/, '\2') #Pull Params
+                  .gsub(/_(.)(?=.*_(?=.*_))/) {|match| match[1]} # I can't get this to capitalize? Handles multiple word resources
+                  .gsub(/_/, ':')
+                  .capitalize
+                }"
+          end
+          .join("\n")
+      end
+
       def search_description
         return '' if required_searches.blank?
 
@@ -249,6 +264,20 @@ module DaVinciPDEXPlanNetTestKit
         FORWARD_CHAINING_DESCRIPTION
       end
 
+      def reverse_chain_description
+        return '' if !test_id_list.any? {|test_id| test_id.include?('reverse_chain')}
+        <<~REVERSE_CHAINING_DESCRIPTION
+        ## Reverse Chaining Requirement Testing
+        This test sequence will perform each required reverse chaining search for each of 
+        the search parameters that specify chaining capabilities.  This sequence will perform searches with the
+        following chaining parameters:
+
+        #{reverse_chain_string}
+        
+        REVERSE_CHAINING_DESCRIPTION
+      end
+
+
       def description
         <<~DESCRIPTION
         # Background
@@ -291,6 +320,7 @@ module DaVinciPDEXPlanNetTestKit
         #{include_description}
         #{revinclude_description}
         #{forward_chain_description}
+        #{reverse_chain_description}
 
         ## Must Support
         Each profile contains elements marked as "must support". This test

@@ -103,6 +103,17 @@ If running from the profile level, input boxes are provided for these tests upon
 
 
 
+## Reverse Chaining Requirement Testing
+This test sequence will perform each required reverse chaining search for each of 
+the search parameters that specify chaining capabilities.  This sequence will perform searches with the
+following chaining parameters:
+
+* Practitionerrole:practitioner:location
+* Practitionerrole:practitioner:network
+* Practitionerrole:practitioner:specialty
+* Practitionerrole:practitioner:role
+
+
 
 ## Must Support
 Each profile contains elements marked as "must support". This test

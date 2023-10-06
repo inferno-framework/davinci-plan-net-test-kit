@@ -6,12 +6,15 @@ module DaVinciPDEXPlanNetTestKit
     class OrganizationReverseChainOrganizationAffiliationParticipatingOrganizationSpecialtySearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Example Test of _has:OrganizationAffiliation:participating-organization:specialty'
+      title 'Server capable of reverse chaining through OrganizationAffiliation\'s specialty field'
       description %(
-        Placeholder test for reverse chaining
+        A server SHALL support reverse chaining.
+
+        Test will use the query _has:OrganizationAffiliation:participating-organization:specialty to test
+        the server for reverse chaining capability.  The test will pass if any Organization instances are
+        returned.
       )
       
-      id :davinci_plan_net_v110_organization_reverse_chain_organization_affiliation_participating_organization_specialty_search_test
       id :davinci_plan_net_v110_organization_reverse_chain_organization_affiliation_participating_organization_specialty_search_test
       input :organization_affiliation_participating_organization_specialty_input,
         title: 'specialty field value for OrganizationAffiliation',

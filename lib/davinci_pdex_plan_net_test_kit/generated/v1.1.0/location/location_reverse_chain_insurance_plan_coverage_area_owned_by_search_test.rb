@@ -6,12 +6,15 @@ module DaVinciPDEXPlanNetTestKit
     class LocationReverseChainInsurancePlanCoverageAreaOwnedBySearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Example Test of _has:InsurancePlan:coverage-area:owned-by'
+      title 'Server capable of reverse chaining through InsurancePlan\'s owned-by field'
       description %(
-        Placeholder test for reverse chaining
+        A server SHALL support reverse chaining.
+
+        Test will use the query _has:InsurancePlan:coverage-area:owned-by to test
+        the server for reverse chaining capability.  The test will pass if any Location instances are
+        returned.
       )
       
-      id :davinci_plan_net_v110_location_reverse_chain_insurance_plan_coverage_area_owned_by_search_test
       id :davinci_plan_net_v110_location_reverse_chain_insurance_plan_coverage_area_owned_by_search_test
       input :insurance_plan_coverage_area_owned_by_input,
         title: 'owned-by field value for InsurancePlan',

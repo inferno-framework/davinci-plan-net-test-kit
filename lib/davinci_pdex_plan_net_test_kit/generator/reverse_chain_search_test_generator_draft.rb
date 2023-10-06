@@ -7,9 +7,11 @@ module DaVinciPDEXPlanNetTestKit
       class << self
         def generate(ig_metadata, examples_hash, base_output_dir)
           examples_hash.keys.each do |group|
-            group_to_add_to = ig_metadata.groups.find { |ig_meta_group| ig_meta_group.name == "plannet_#{group}"}
-              examples_hash[group].each { |rev_chain_example| new(group_to_add_to, group_to_add_to.searches.first, base_output_dir, rev_chain_example).generate }
+            examples_hash[group].each do |rev_chain_example| 
+              group_to_add_to = ig_metadata.groups.find { |ig_meta_group| ig_meta_group.name == "plannet_#{group}"}
+              new(group_to_add_to, group_to_add_to.searches.first, base_output_dir, rev_chain_example).generate
             end
+          end
         end
       end
 

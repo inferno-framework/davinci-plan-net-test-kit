@@ -6,12 +6,15 @@ module DaVinciPDEXPlanNetTestKit
     class PractitionerReverseChainPractitionerRolePractitionerRoleSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Example Test of _has:PractitionerRole:practitioner:role'
+      title 'Server capable of reverse chaining through PractitionerRole\'s role field'
       description %(
-        Placeholder test for reverse chaining
+        A server SHALL support reverse chaining.
+
+        Test will use the query _has:PractitionerRole:practitioner:role to test
+        the server for reverse chaining capability.  The test will pass if any Practitioner instances are
+        returned.
       )
       
-      id :davinci_plan_net_v110_practitioner_reverse_chain_practitioner_role_practitioner_role_search_test
       id :davinci_plan_net_v110_practitioner_reverse_chain_practitioner_role_practitioner_role_search_test
       input :practitioner_role_practitioner_role_input,
         title: 'role field value for PractitionerRole',

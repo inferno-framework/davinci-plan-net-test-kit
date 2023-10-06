@@ -6,12 +6,15 @@ module DaVinciPDEXPlanNetTestKit
     class NetworkReverseChainPractitionerRoleNetworkLocationSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Example Test of _has:PractitionerRole:network:location'
+      title 'Server capable of reverse chaining through PractitionerRole\'s location field'
       description %(
-        Placeholder test for reverse chaining
+        A server SHALL support reverse chaining.
+
+        Test will use the query _has:PractitionerRole:network:location to test
+        the server for reverse chaining capability.  The test will pass if any Organization instances are
+        returned.
       )
       
-      id :davinci_plan_net_v110_network_reverse_chain_practitioner_role_network_location_search_test
       id :davinci_plan_net_v110_network_reverse_chain_practitioner_role_network_location_search_test
       input :practitioner_role_network_location_input,
         title: 'location field value for PractitionerRole',
