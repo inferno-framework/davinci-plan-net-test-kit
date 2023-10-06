@@ -161,6 +161,7 @@ module DaVinciPDEXPlanNetTestKit
         end
 
       save_delayed_references(resources, additional_resource_type)
+      revinclude_scratch_resources.concat(resources).uniq!
 
       skip_if resources.empty?, no_resources_skip_message(additional_resource_type)
     end
@@ -506,6 +507,10 @@ module DaVinciPDEXPlanNetTestKit
 
     def include_scratch_resources
       scratch_include_resources[:all] ||= []
+    end
+
+    def revinclude_scratch_resources
+      scratch_revinclude_resources[:all] ||= []
     end
 
     def chain_scratch_resources
