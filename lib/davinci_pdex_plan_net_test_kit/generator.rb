@@ -58,8 +58,8 @@ module DaVinciPDEXPlanNetTestKit
     def extract_metadata
       self.ig_metadata = IGMetadataExtractor.new(ig_resources).extract
       
-      # Corrects the lists for revinclude requirements on the shared profiles
-      SpecialCases.fix_revincludes_for_organization(ig_metadata)
+      # Specific corrections 
+      SpecialCases.run_special_cases(ig_metadata)
 
       FileUtils.mkdir_p(base_output_dir)
       File.open(File.join(base_output_dir, 'metadata.yml'), 'w') do |file|
