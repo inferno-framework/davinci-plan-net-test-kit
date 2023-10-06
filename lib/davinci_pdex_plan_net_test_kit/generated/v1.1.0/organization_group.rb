@@ -157,10 +157,10 @@ This test sequence will perform each required reverse chaining search for each o
 the search parameters that specify chaining capabilities.  This sequence will perform searches with the
 following chaining parameters:
 
-* Organizationaffiliationparticipating:organization:location
-* Organizationaffiliationparticipating:organization:network
-* Organizationaffiliationparticipating:organization:specialty
-* Insuranceplanownedby:coverage:area
+* OrganizationAffiliation:participating-organization:location
+* OrganizationAffiliation:participating-organization:network
+* OrganizationAffiliation:participating-organization:specialty
+* InsurancePlan:owned-by:coverage-area
 
 
 

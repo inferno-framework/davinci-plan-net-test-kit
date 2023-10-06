@@ -166,16 +166,9 @@ module DaVinciPDEXPlanNetTestKit
 
       def reverse_chain_string
         # Placeholder until we have a more clear way of inferring reverse requirements
-        test_id_list
-          .select {|test_id| test_id.include?('reverse_chain')}
-          .map do |name| 
-            "* #{name
-                  .gsub(/(.*)reverse_chain_(.*?)_search_test/, '\2') #Pull Params
-                  .gsub(/_(.)(?=.*_(?=.*_))/) {|match| match[1]} # I can't get this to capitalize? Handles multiple word resources
-                  .gsub(/_/, ':')
-                  .capitalize
-                }"
-          end
+        examples = File.read('lib/davinci_pdex_plan_net_test_kit/custom_groups/reverse_chain_tests/examples.json')
+        examples_hash = JSON.parse(examples)[Naming.upper_camel_case_for_profile(group_metadata)]
+          .map { |test_example| "* #{test_example['source_resource']}:#{test_example['target_param']}:#{test_example['constraining_param']}" }
           .join("\n")
       end
 

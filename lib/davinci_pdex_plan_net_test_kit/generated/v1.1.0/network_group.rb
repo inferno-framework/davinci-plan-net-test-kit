@@ -142,7 +142,7 @@ This test sequence will perform each required reverse chaining search for each o
 the search parameters that specify chaining capabilities.  This sequence will perform searches with the
 following chaining parameters:
 
-* Practitionerrole:network:location
+* PractitionerRole:network:location
 
 
 
