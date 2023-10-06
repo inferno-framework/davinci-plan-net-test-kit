@@ -178,13 +178,7 @@
   :extensions:
   - :id: Organization.extension:location-reference
     :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/location-reference
-  :slices:
-  - :name: Organization.identifier:NPI
-    :path: identifier
-    :discriminator:
-      :type: patternIdentifier
-      :path: ''
-      :system: http://hl7.org/fhir/sid/us-npi
+  :slices: []
   :elements:
   - :path: identifier
   - :path: identifier.type
@@ -280,14 +274,22 @@
   :file_name: network_type_search_test.rb
 - :id: davinci_pdex_plan_net_v110_network_coverage_area_search_test
   :file_name: network_coverage_area_search_test.rb
-- :id: davinci_plan_net_v110_network_organization_partof_include_search_test
-  :file_name: network_organization_partof_include_search_test.rb
-- :id: davinci_plan_net_v110_network_organization_endpoint_include_search_test
-  :file_name: network_organization_endpoint_include_search_test.rb
-- :id: davinci_plan_net_v110_network_organization_coverage_area_include_search_test
-  :file_name: network_organization_coverage_area_include_search_test.rb
-- :id: davinci_plan_net_v110_network_practitioner_role_network_revinclude_search_test
-  :file_name: network_practitioner_role_network_revinclude_search_test.rb
+- :id: davinci_plan_net_v110_include_network_organization_partof_search_test
+  :file_name: network_include_organization_partof_search_test.rb
+- :id: davinci_plan_net_v110_include_network_organization_endpoint_search_test
+  :file_name: network_include_organization_endpoint_search_test.rb
+- :id: davinci_plan_net_v110_include_network_organization_coverage_area_search_test
+  :file_name: network_include_organization_coverage_area_search_test.rb
+- :id: davinci_plan_net_v110_revinclude_network_practitioner_role_network_search_test
+  :file_name: network_revinclude_practitioner_role_network_search_test.rb
+- :id: davinci_plan_net_v110_forward_chain_partof_name_search_test
+  :file_name: network_forward_chain_partof_name_search_test.rb
+- :id: davinci_plan_net_v110_forward_chain_partof_address_search_test
+  :file_name: network_forward_chain_partof_address_search_test.rb
+- :id: davinci_plan_net_v110_forward_chain_partof_type_search_test
+  :file_name: network_forward_chain_partof_type_search_test.rb
+- :id: davinci_plan_net_v110_forward_chain_endpoint_organization_search_test
+  :file_name: network_forward_chain_endpoint_organization_search_test.rb
 - :id: davinci_pdex_plan_net_v110_network_validation_test
   :file_name: network_validation_test.rb
 - :id: davinci_pdex_plan_net_v110_network_must_support_test

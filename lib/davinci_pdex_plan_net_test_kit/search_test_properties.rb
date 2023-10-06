@@ -7,6 +7,8 @@ module DaVinciPDEXPlanNetTestKit
       :rev_param_sp,
       :include_param,
       :inc_param_sp,
+      :chain_param,
+      :chain_param_base,
       :additional_resource_type,
       :input_name,
       :first_search,

@@ -3,7 +3,11 @@ require_relative 'endpoint/endpoint_read_test'
 require_relative 'endpoint/endpoint_organization_search_test'
 require_relative 'endpoint/endpoint_id_search_test'
 require_relative 'endpoint/endpoint_lastupdated_search_test'
-require_relative 'endpoint/endpoint_endpoint_organization_include_search_test'
+require_relative 'endpoint/endpoint_include_endpoint_organization_search_test'
+require_relative 'endpoint/endpoint_forward_chain_organization_name_search_test'
+require_relative 'endpoint/endpoint_forward_chain_organization_address_search_test'
+require_relative 'endpoint/endpoint_forward_chain_organization_partof_search_test'
+require_relative 'endpoint/endpoint_forward_chain_organization_type_search_test'
 require_relative 'endpoint/endpoint_validation_test'
 require_relative 'endpoint/endpoint_must_support_test'
 require_relative 'endpoint/endpoint_reference_resolution_test'
@@ -91,6 +95,17 @@ The return is scanned to find any of the expected additional resource.
 
 
 
+## Forward Chaining Requirement Testing
+This test sequence will perform each required forward chaining search for each of 
+the search parameters that specify chaining capabilities.  This sequence will perform searches with the
+following chaining parameters:
+
+| Search Parameters | Chain Requirements |
+| --- | --- |
+| organization | name, address, partof, type |
+
+
+
 
 ## Must Support
 Each profile contains elements marked as "must support". This test
@@ -128,7 +143,11 @@ read succeeds.
       test from: :davinci_pdex_plan_net_v110_endpoint_organization_search_test
       test from: :davinci_pdex_plan_net_v110_endpoint__id_search_test
       test from: :davinci_pdex_plan_net_v110_endpoint__lastUpdated_search_test
-      test from: :davinci_plan_net_v110_endpoint_endpoint_organization_include_search_test
+      test from: :davinci_plan_net_v110_include_endpoint_endpoint_organization_search_test
+      test from: :davinci_plan_net_v110_forward_chain_organization_name_search_test
+      test from: :davinci_plan_net_v110_forward_chain_organization_address_search_test
+      test from: :davinci_plan_net_v110_forward_chain_organization_partof_search_test
+      test from: :davinci_plan_net_v110_forward_chain_organization_type_search_test
       test from: :davinci_pdex_plan_net_v110_endpoint_validation_test
       test from: :davinci_pdex_plan_net_v110_endpoint_must_support_test
       test from: :davinci_pdex_plan_net_v110_endpoint_reference_resolution_test

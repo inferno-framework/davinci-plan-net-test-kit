@@ -10,6 +10,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/inferno_framework/davinci_pdex_plan_net_test_kit'
   spec.license       = 'Apache-2.0'
   spec.add_runtime_dependency 'inferno_core', '>= 0.4.2'
+  #gem 'inferno_core', path: 'temp-core/inferno_core'
   spec.add_runtime_dependency 'tls_test_kit', '~> 0.2.0'
   spec.add_development_dependency 'database_cleaner-sequel', '~> 1.8'
   spec.add_development_dependency 'factory_bot', '~> 6.1'

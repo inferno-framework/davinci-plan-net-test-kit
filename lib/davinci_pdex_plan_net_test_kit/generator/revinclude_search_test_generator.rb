@@ -49,7 +49,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def test_id
-        "davinci_plan_net_#{group_metadata.reformatted_version}_#{profile_identifier}_#{search_identifier}_revinclude_search_test"
+        "davinci_plan_net_#{group_metadata.reformatted_version}_revinclude_#{profile_identifier}_#{search_identifier}_search_test"
       end
 
       def search_identifier
@@ -61,7 +61,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def class_name
-        "#{Naming.upper_camel_case_for_profile(group_metadata)}#{search_title}RevincludeSearchTest"
+        "#{Naming.upper_camel_case_for_profile(group_metadata)}Revinclude#{search_title}SearchTest"
       end
 
       def module_name
