@@ -136,10 +136,20 @@ module DaVinciPDEXPlanNetTestKit
             perform_search_with_status(params, resource_id) if response[:status] == 400 && possible_status_search?
         
             check_search_response
+            
+            base_resources = matching_resources = fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
+              .select { |resource| resource.resourceType == resource_type }
 
-            fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
+            matching_resources = fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
               .select { |resource| resource.resourceType == additional_resource_type }
-              .reject { |resource| resource.id == params[:_id]} 
+              .reject { |resource| resource.id == params[:_id] }
+
+            # Verify that the returned resources are expected from given parameters.
+            # See run_revinclude_search_test for more info on this next line.  We may want to make changes to check_resource_against_params to account for both "resource/reference" as well as just "reference" field values.
+            expected_reference = search_param_value(inc_param_sp, base_resources.first)
+            matching_resources.each { |resource| check_resource_against_params(resource, {_id: expected_reference}) }
+            matching_resources 
+            #Tested by hardcoding in something in place of expected reference and it does catch mismatches, but we should probably add this to something to unit test
           end
         end
 
@@ -147,6 +157,7 @@ module DaVinciPDEXPlanNetTestKit
       include_scratch_resources.concat(resources).uniq!
 
       skip_if resources.empty?, no_resources_skip_message(additional_resource_type)
+
     end
 
     def run_revinclude_search_test
@@ -159,9 +170,11 @@ module DaVinciPDEXPlanNetTestKit
 
             check_search_response
 
-            fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
+            matching_resources = fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
               .select { |resource| resource.resourceType == additional_resource_type }
-              .reject { |resource| resource.id == "#{self.send(input_name)}" }
+              .reject { |resource| resource.id == params[:_id] }
+            matching_resources.each { |resource| check_resource_against_params(resource, {"#{rev_param_sp}": "#{params[:_id]}"}) }
+            matching_resources
           end
         end
 
@@ -545,7 +558,7 @@ module DaVinciPDEXPlanNetTestKit
     end
 
     def references_to_save(resource_type = nil)
-      reference_metadata = resource_type == 'Provenance' ? revinclude_metadata : metadata
+      reference_metadata = resource_type == 'Provenance' ? additional_metadata : metadata
       reference_metadata.delayed_references
     end
 
@@ -860,21 +873,21 @@ module DaVinciPDEXPlanNetTestKit
       params.each do |name, escaped_search_value|
         #unescape search value
         search_value = escaped_search_value&.gsub('\\,', ',')
-        paths = search_param_paths(name)
+        paths = search_param_paths(name, resource.resourceType)
 
         match_found = false
         values_found = []
-
+        resource_metadata = resource.resourceType == resource_type ? metadata : additional_metadata
         paths.each do |path|
-          type = metadata.search_definitions[name.to_sym][:type]
+          type = resource_metadata.search_definitions[name.to_sym][:type]
           values_found =
             resolve_path(resource, path)
-              .map do |value|
+              .flat_map do |value|
                 case value
                 when FHIR::Reference
-                  value.reference
+                  [value.reference, value.reference.split('/')[1]]
                 when FHIR::Extension
-                  value.valueReference.reference
+                  [value.valueReference.reference, value.valueReference.reference.split('/')[1]]
                 else
                   value
                 end
@@ -933,11 +946,13 @@ module DaVinciPDEXPlanNetTestKit
               end
             when 'string'
               searched_values = search_value.downcase.split(/(?<!\\\\),/).map{ |string| string.gsub('\\,', ',') }
+              searched_values << search_value.split('/')[1]
               values_found.any? do |value_found|
                 searched_values.any? { |searched_value| value_found.downcase.starts_with? searched_value }
               end
             else
               search_values = search_value.split(/(?<!\\\\),/).map { |string| string.gsub('\\,', ',') }
+              search_values << search_value.split('/')[1]
               values_found.any? { |value_found| search_values.include? value_found }
             end
 
