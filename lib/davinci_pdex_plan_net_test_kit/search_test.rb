@@ -56,7 +56,6 @@ module DaVinciPDEXPlanNetTestKit
     def find_forward_chain_resource
       # Look through return from relevant include test
       # If it is in chain_scratch_resources, it was put there from an _include/_revinclude test
-      # so do not need to verify if it also references a base resource
       chain_candidate = chain_scratch_resources
         .find { |resource| !search_param_value(chain_param, resource).nil?}
       skip_if chain_candidate.nil?, no_forward_chain_resource_found_message
@@ -65,7 +64,6 @@ module DaVinciPDEXPlanNetTestKit
     end
 
     def find_reverse_chain_resource
-      
       chain_candidate = chain_scratch_resources
         .reject { |resource| search_param_value(reverse_chain_target, resource).nil?}
         .find { |resource| !search_param_value(reverse_chain_param, resource).nil?}
@@ -239,7 +237,17 @@ module DaVinciPDEXPlanNetTestKit
 
             check_search_response
 
-            fetch_all_bundled_resources
+            returned_resources = fetch_all_bundled_resources
+
+            # Verification step -- Find the additional resource where the field was pulled from, check it's ID, see if
+            # returned resources reference that ID in the expected spot.
+            candidate_ids = chain_scratch_resources
+              .select { |additional_resource| search_param_value(chain_param, additional_resource) == params.values.first }
+              .map { |matching_resource| matching_resource.id }
+            skip_if !(returned_resources.any? do |resource| 
+              resource_fields_conform_to_params?(resource, {"#{chain_param_base}": candidate_ids.join(", ")}) 
+            end) forward_chain_conformance_error_message
+            returned_resources
           end
         end
         skip_if resources.empty?, no_resources_skip_message
@@ -656,6 +664,11 @@ module DaVinciPDEXPlanNetTestKit
       from suite level or provide specific field values."
     end
 
+    def forward_chain_conformance_error_message
+      "Unable to find any returned #{resource_type} instances that reference #{additional_resource_type} instances
+      where the #{chain_param} field is populated with the value used in the request."
+    end
+
     def empty_search_params_message(empty_search_params)
       "Could not find values for the search parameters #{array_of_codes(empty_search_params.keys)}"
     end
@@ -868,6 +881,98 @@ module DaVinciPDEXPlanNetTestKit
     end
 
     #### RESULT CHECKING ####
+    def resource_fields_conform_to_params?(resource, params)
+      params.all? do |name, escaped_search_value|
+        #unescape search value
+        search_value = escaped_search_value&.gsub('\\,', ',')
+        paths = search_param_paths(name, resource.resourceType)
+
+        match_found = false
+        values_found = []
+        resource_metadata = resource.resourceType == resource_type ? metadata : additional_metadata
+        paths.each do |path|
+          type = resource_metadata.search_definitions[name.to_sym][:type]
+          values_found =
+            resolve_path(resource, path)
+              .flat_map do |value|
+                case value
+                when FHIR::Reference
+                  [value.reference, value.reference.split('/')[1]]
+                when FHIR::Extension
+                  [value.valueReference.reference, value.valueReference.reference.split('/')[1]]
+                else
+                  value
+                end
+              end
+
+          match_found =
+            case type
+            when 'Period', 'date', 'instant', 'dateTime'
+              values_found.any? { |date| validate_date_search(search_value, date) }
+            when 'HumanName'
+              # When a string search parameter refers to the types HumanName and Address,
+              # the search covers the elements of type string, and does not cover elements such as use and period
+              # https://www.hl7.org/fhir/search.html#string
+              search_value_downcase = search_value.downcase
+              values_found.any? do |name|
+                name&.text&.downcase&.start_with?(search_value_downcase) ||
+                  name&.family&.downcase&.start_with?(search_value_downcase) ||
+                  name&.given&.any? { |given| given.downcase.start_with?(search_value_downcase) } ||
+                  name&.prefix&.any? { |prefix| prefix.downcase.start_with?(search_value_downcase) } ||
+                  name&.suffix&.any? { |suffix| suffix.downcase.start_with?(search_value_downcase) }
+              end
+            when 'Address'
+              search_value_downcase = search_value.downcase
+              values_found.any? do |address|
+                address&.text&.downcase&.start_with?(search_value_downcase) ||
+                address&.city&.downcase&.start_with?(search_value_downcase) ||
+                address&.state&.downcase&.start_with?(search_value_downcase) ||
+                address&.postalCode&.downcase&.start_with?(search_value_downcase) ||
+                address&.country&.downcase&.start_with?(search_value_downcase)
+              end
+            when 'CodeableConcept'
+              # FHIR token search (https://www.hl7.org/fhir/search.html#token): "When in doubt, servers SHOULD
+              # treat tokens in a case-insensitive manner, on the grounds that including undesired data has
+              # less safety implications than excluding desired behavior".
+              codings = values_found.flat_map(&:coding)
+              if search_value.include? '|'
+                system = search_value.split('|').first
+                code = search_value.split('|').last
+                codings&.any? { |coding| coding.system == system && coding.code&.casecmp?(code) }
+              else
+                codings&.any? { |coding| coding.code&.casecmp?(search_value) }
+              end
+            when 'Coding'
+              if search_value.include? '|'
+                system = search_value.split('|').first
+                code = search_value.split('|').last
+                values_found.any? { |coding| coding.system == system && coding.code&.casecmp?(code) }
+              else
+                values_found.any? { |coding| coding.code&.casecmp?(search_value) }
+              end
+            when 'Identifier'
+              if search_value.include? '|'
+                values_found.any? { |identifier| "#{identifier.system}|#{identifier.value}" == search_value }
+              else
+                values_found.any? { |identifier| identifier.value == search_value }
+              end
+            when 'string'
+              searched_values = search_value.downcase.split(/(?<!\\\\),/).map{ |string| string.gsub('\\,', ',') }
+              searched_values << search_value.split('/')[1]
+              values_found.any? do |value_found|
+                searched_values.any? { |searched_value| value_found.downcase.starts_with? searched_value }
+              end
+            else
+              search_values = search_value.split(/(?<!\\\\),/).map { |string| string.gsub('\\,', ',') }
+              search_values << search_value.split('/')[1]
+              values_found.any? { |value_found| search_values.include? value_found }
+            end
+
+          break if match_found
+        end
+        match_found
+      end
+    end
 
     def check_resource_against_params(resource, params)
       params.each do |name, escaped_search_value|
@@ -965,6 +1070,8 @@ module DaVinciPDEXPlanNetTestKit
                "* Found: #{values_found.map(&:inspect).join(', ')}"
       end
     end
+
+
     ### PARSING (Remove if methods exist elsewhere already)
     def param_to_method(param)
       param = param.split('-').collect(&:capitalize).join
