@@ -8,8 +8,6 @@ module DaVinciPDEXPlanNetTestKit
       ```
       The Plan Net Server SHALL:
       1. Support all profiles defined in this Implementation Guide.
-
-      In order to support USCDI, servers must support all USCDI resources.
       ```
     )
     uses_request :capability_statement
@@ -18,24 +16,23 @@ module DaVinciPDEXPlanNetTestKit
       assert_resource_type(:capability_statement)
       capability_statement = resource
 
-      supported_resources =
+      supported_profiles =
         capability_statement.rest
-          &.each_with_object([]) do |rest, resources|
-            rest.resource.each { |resource| resources << resource.type }
+          &.each_with_object([]) do |rest, profiles|
+            rest.resource.each { |resource| profiles.concat(resource.supportedProfile) }
           end.uniq
 
+      davinci_pdex_plan_net_profiles = config.options[:davinci_pdex_plan_net_profiles]
 
-      if config.options[:required_resources].present?
-        missing_resources = config.options[:required_resources] - supported_resources
+      missing_profiles = davinci_pdex_plan_net_profiles - supported_profiles
 
-        missing_resource_list =
-          missing_resources
+      missing_profiles_list =
+        missing_profiles
           .map { |resource| "`#{resource}`" }
           .join(', ')
 
-        assert missing_resources.empty?,
-               "The CapabilityStatement did not list support for the following resources: #{missing_resource_list}"
-      end
+      assert missing_profiles.empty?,
+        "The CapabilityStatement did not list support for the following profiles: #{missing_profiles_list}"
     end
   end
 end

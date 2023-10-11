@@ -67,7 +67,7 @@ module DaVinciPDEXPlanNetTestKit
 
       test from: :davinci_pdex_plan_net_profile_support do
         config(
-          options: { davinci_pdex_plan_net_resources: PROFILES.keys }
+          options: { davinci_pdex_plan_net_profiles: PROFILES.values.flatten }
         )
       end
     end
