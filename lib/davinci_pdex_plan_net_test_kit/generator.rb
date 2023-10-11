@@ -6,7 +6,7 @@ require_relative 'generator/ig_metadata_extractor'
 require_relative 'generator/group_generator'
 require_relative 'generator/must_support_test_generator'
 require_relative 'generator/revinclude_search_test_generator'
-require_relative 'generator/reverse_chain_search_test_generator_draft' #TODO: remove draft when reverse chaining is more defined
+require_relative 'generator/reverse_chain_search_test_generator'
 require_relative 'generator/include_search_test_generator'
 require_relative 'generator/read_test_generator'
 require_relative 'generator/reference_resolution_test_generator'

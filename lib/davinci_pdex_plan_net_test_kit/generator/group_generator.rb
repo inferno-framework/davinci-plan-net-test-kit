@@ -261,9 +261,8 @@ module DaVinciPDEXPlanNetTestKit
         return '' if !test_id_list.any? {|test_id| test_id.include?('reverse_chain')}
         <<~REVERSE_CHAINING_DESCRIPTION
         ## Reverse Chaining Requirement Testing
-        This test sequence will perform each required reverse chaining search for each of 
-        the search parameters that specify chaining capabilities.  This sequence will perform searches with the
-        following chaining parameters:
+        This test sequence will perform reverse chaining search for the following combination
+        of search parameters:
 
         #{reverse_chain_string}
         
