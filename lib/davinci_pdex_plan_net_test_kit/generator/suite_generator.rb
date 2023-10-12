@@ -87,6 +87,7 @@ module DaVinciPDEXPlanNetTestKit
       def capability_statement_group_id
         "davinci_pdex_plan_net_#{ig_metadata.reformatted_version}_capability_statement"
       end
+
     end
   end
 end

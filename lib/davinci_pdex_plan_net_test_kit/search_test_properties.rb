@@ -10,6 +10,8 @@ module DaVinciPDEXPlanNetTestKit
       :chain_param,
       :chain_param_base,
       :additional_resource_type,
+      :reverse_chain_param,
+      :reverse_chain_target,
       :input_name,
       :first_search,
       :fixed_value_search,

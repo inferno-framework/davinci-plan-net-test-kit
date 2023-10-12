@@ -6,6 +6,7 @@ require_relative 'generator/ig_metadata_extractor'
 require_relative 'generator/group_generator'
 require_relative 'generator/must_support_test_generator'
 require_relative 'generator/revinclude_search_test_generator'
+require_relative 'generator/reverse_chain_search_test_generator'
 require_relative 'generator/include_search_test_generator'
 require_relative 'generator/read_test_generator'
 require_relative 'generator/reference_resolution_test_generator'
@@ -46,6 +47,7 @@ module DaVinciPDEXPlanNetTestKit
       generate_include_search_tests
       generate_revinclude_search_tests
       generate_forward_chain_search_tests
+      generate_reverse_chain_search_tests
       generate_validation_tests
       generate_must_support_tests
       generate_reference_resolution_tests
@@ -110,6 +112,12 @@ module DaVinciPDEXPlanNetTestKit
 
     def generate_revinclude_search_tests
       RevincludeSearchTestGenerator.generate(ig_metadata, base_output_dir)
+    end
+
+    def generate_reverse_chain_search_tests
+      examples = File.read('lib/davinci_pdex_plan_net_test_kit/custom_groups/reverse_chain_tests/examples.json')
+      examples_hash = JSON.parse(examples)
+      ReverseChainSearchTestGenerator.generate(ig_metadata, examples_hash, base_output_dir)
     end
 
     def generate_forward_chain_search_tests

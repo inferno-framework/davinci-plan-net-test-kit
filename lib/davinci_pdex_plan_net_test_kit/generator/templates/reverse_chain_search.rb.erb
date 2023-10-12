@@ -1,0 +1,51 @@
+require_relative '../../../search_test'
+require_relative '../../../generator/group_metadata'
+
+module DaVinciPDEXPlanNetTestKit
+  module <%= module_name %>
+    class <%= class_name %> < Inferno::Test
+      include DaVinciPDEXPlanNetTestKit::SearchTest
+
+      title 'Server capable of reverse chaining through <%= source_resource %>\'s <%= constraining_param %> field'
+      description %(
+        A server SHALL support reverse chaining.
+
+        Test will use the query <%= "_has:#{source_resource}:#{target_param}:#{constraining_param}" %> to test
+        the server for reverse chaining capability.  This test does not validate returned resources at this time.
+      )
+      
+      id :<%= test_id %>
+      input :<%= input_name %>,
+        title: '<%= constraining_param %> field value for <%= source_resource %>',
+        description: 'Value from the <%= constraining_param %> field of <%= a_or_an(source_resource) %>
+        that also references a <%= resource_type %> instance in its <%= target_param %> field',
+        optional: true
+
+      def properties
+        @properties ||= SearchTestProperties.new(
+  <%= search_test_properties_string %>
+        )
+      end
+
+      def self.metadata
+        @metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, 'metadata.yml')))
+      end
+
+      def self.additional_metadata
+        @additional_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', '<%= source_resource.underscore %>', 'metadata.yml'), aliases: true))
+      end
+
+      def scratch_resources
+        scratch[:<%= profile_identifier %>_resources] ||= {}
+      end
+
+      def scratch_chain_resources
+        scratch[:<%= source_resource.underscore %>_resources] ||= {}
+      end
+
+      run do
+        run_reverse_chain_search_test
+      end
+    end
+  end
+end
