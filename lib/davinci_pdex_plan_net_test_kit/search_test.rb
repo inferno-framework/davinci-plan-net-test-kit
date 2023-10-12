@@ -239,8 +239,6 @@ module DaVinciPDEXPlanNetTestKit
 
             returned_resources = fetch_all_bundled_resources
 
-            # Verification step -- Find the additional resource where the field was pulled from, check it's ID, see if
-            # returned resources reference that ID in the expected spot.
             candidate_ids = chain_scratch_resources
               .select { |additional_resource| search_param_value(chain_param, additional_resource) == params.values.first }
               .map { |matching_resource| matching_resource.id }
