@@ -26,11 +26,10 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
         input :url
       end
     end
-    let(:test_scratch) { {} }
     let (:endpoint_1) {
       FHIR::Endpoint.new(
         id: 'endpoint-local-reference',
-        managingOrganizaton: {
+        managingOrganization: {
           reference: "Organization/acme"
         }
       )
@@ -38,7 +37,7 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
     let (:endpoint_2) {
       FHIR::Endpoint.new(
         id: 'endpoint-url',
-        managingOrganizaton: {
+        managingOrganization: {
           reference: "http://example.com/Organization/ecorp"
         }
       )
@@ -66,20 +65,108 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
         ]
       )
     }
+    let(:test_scratch) { {
+      all: [endpoint_1, endpoint_2]
+    } }
 
     before do
-      allow_any_instance_of(test_class).to receive(:scratch).and_return(test_scratch)
+      allow_any_instance_of(test_class).to receive(:scratch_resources).and_return(test_scratch)
       stub_request(:get, "#{url}/Endpoint")
         .to_return(status: 200, body: FHIR::Bundle.new.to_json)
     end
 
     it 'passes when references and included Resources are exact match' do
-      bundle.entry.concat([ {resource: organization_1 }, {resource: organization_2}])
-      stub_request(:get, "#{url}/Endpoint?_include=Endpoint:organization")
+      bundle.entry.concat([ {resource: organization_1 }])
+      stub_request(:get, "#{url}/Endpoint?_id=#{endpoint_1.id}&_include=Endpoint:organization")
         .to_return(status: 200, body: bundle.to_json)
 
       result = run(test_class, url: url)
       expect(result.result).to eq('pass')
+    end
+
+    it 'fails when returned additional resources are not referenced' do
+      bundle.entry.concat([ {resource: organization_3 }])
+      stub_request(:get, "#{url}/Endpoint?_id=#{endpoint_1.id}&_include=Endpoint:organization")
+        .to_return(status: 200, body: bundle.to_json)
+
+      result = run(test_class, url: url)
+      expect(result.result).to eq('fail')
+    end
+  end
+
+  describe '_revinclude search' do
+    let (:test_class) do 
+      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::OrganizationRevincludeEndpointOrganizationSearchTest) do
+        fhir_client {url :url}
+        input :url
+      end
+    end
+    let (:endpoint_1) {
+      FHIR::Endpoint.new(
+        id: 'endpoint-local-reference',
+        managingOrganization: {
+          reference: "Organization/acme"
+        }
+      )
+    }
+    let (:endpoint_2) {
+      FHIR::Endpoint.new(
+        id: 'endpoint-url',
+        managingOrganization: {
+          reference: "http://example.com/Organization/ecorp"
+        }
+      )
+    }
+    let (:organization_1) {
+      FHIR::Organization.new(
+        id: 'acme'
+      )
+    }
+    let (:organization_2) {
+      FHIR::Organization.new(
+        id: 'ecorp'
+      )
+    }
+    let (:organization_3) {
+      FHIR::Organization.new(
+        id: 'org-3'
+      )
+    }
+    let (:bundle ) {
+      FHIR::Bundle.new(
+        entry: [
+          { resource: organization_1 },
+          { resource: organization_2 },
+          { resource: organization_3 }
+        ]
+      )
+    }
+    let(:test_scratch) { {
+      all: [endpoint_1, endpoint_2]
+    } }
+
+    before do
+      allow_any_instance_of(test_class).to receive(:scratch_revinclude_resources).and_return(test_scratch)
+      stub_request(:get, "#{url}/Organization")
+        .to_return(status: 200, body: FHIR::Bundle.new.to_json)
+    end
+
+    it 'passes when references and included Resources are exact match' do
+      bundle.entry.concat([ {resource: endpoint_1 }])
+      stub_request(:get, "#{url}/Organization?_id=Organization/#{organization_1.id}&_revinclude=Endpoint:organization")
+        .to_return(status: 200, body: bundle.to_json)
+
+      result = run(test_class, url: url)
+      expect(result.result).to eq('pass')
+    end
+
+    it 'fails when returned additional resources are not referenced' do
+      bundle.entry.concat([ {resource: endpoint_2 }])
+      stub_request(:get, "#{url}/Organization?_id=Organization/#{organization_1.id}&_revinclude=Endpoint:organization")
+        .to_return(status: 200, body: bundle.to_json)
+
+      result = run(test_class, url: url)
+      expect(result.result).to eq('fail')
     end
   end
 end
