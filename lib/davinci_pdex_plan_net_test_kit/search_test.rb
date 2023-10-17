@@ -868,7 +868,8 @@ module DaVinciPDEXPlanNetTestKit
 
     def is_reference_match? (reference, local_reference)
       regex_pattern = /^(#{Regexp.escape(local_reference)}|\S+\/#{Regexp.escape(local_reference)}(?:[\/|]\S+)*)$/
-      reference.match?(regex_pattern)
+      regex_pattern_local = /^(#{Regexp.escape(reference)}|\S+\/#{Regexp.escape(reference)}(?:[\/|]\S+)*)$/
+      reference.match?(regex_pattern) || local_reference.match?(regex_pattern_local)
     end
 
 
