@@ -164,6 +164,14 @@ module DaVinciPDEXPlanNetTestKit
         chain_table
       end
 
+      def reverse_chain_string
+        # Placeholder until we have a more clear way of inferring reverse requirements
+        examples = File.read('lib/davinci_pdex_plan_net_test_kit/custom_groups/reverse_chain_tests/examples.json')
+        examples_hash = JSON.parse(examples)[Naming.upper_camel_case_for_profile(group_metadata)]
+          .map { |test_example| "* #{test_example['source_resource']}:#{test_example['target_param']}:#{test_example['constraining_param']}" }
+          .join("\n")
+      end
+
       def search_description
         return '' if required_searches.blank?
 
@@ -249,6 +257,20 @@ module DaVinciPDEXPlanNetTestKit
         FORWARD_CHAINING_DESCRIPTION
       end
 
+      def reverse_chain_description
+        return '' if !test_id_list.any? {|test_id| test_id.include?('reverse_chain')}
+        <<~REVERSE_CHAINING_DESCRIPTION
+        ## Reverse Chaining Requirement Testing
+        This test sequence will perform each required reverse chaining search for each of 
+        the search parameters that specify chaining capabilities.  This sequence will perform searches with the
+        following chaining parameters:
+
+        #{reverse_chain_string}
+        
+        REVERSE_CHAINING_DESCRIPTION
+      end
+
+
       def description
         <<~DESCRIPTION
         # Background
@@ -291,6 +313,7 @@ module DaVinciPDEXPlanNetTestKit
         #{include_description}
         #{revinclude_description}
         #{forward_chain_description}
+        #{reverse_chain_description}
 
         ## Must Support
         Each profile contains elements marked as "must support". This test

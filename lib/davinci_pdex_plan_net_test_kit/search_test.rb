@@ -20,6 +20,9 @@ module DaVinciPDEXPlanNetTestKit
                    :chain_param,
                    :chain_param_base,
                    :additional_resource_type,
+                   :additional_resource,
+                   :reverse_chain_param,
+                   :reverse_chain_target,
                    :input_name,
                    :saves_delayed_references?,
                    :first_search?,
@@ -73,16 +76,26 @@ module DaVinciPDEXPlanNetTestKit
       is_include ? base_resource.id : search_param_value(search_param, base_resource)
     end
 
-    def find_chain_resource
+    def find_forward_chain_value
       # Look through return from relevant include test
       # If it is in chain_scratch_resources, it was put there from an _include/_revinclude test
-      # so do not need to verify if it also references a base resource
-      chain_candidate = chain_scratch_resources.find { |resource| !search_param_value(chain_param, resource).nil?}
-      skip_if chain_candidate.nil?, no_chain_resource_found_message
+      chain_candidate = chain_scratch_resources
+        .find { |resource| !search_param_value(chain_param, resource).nil?}
+      skip_if chain_candidate.nil?, no_forward_chain_resource_found_message
       chain_field_value = search_param_value(chain_param, chain_candidate)
+      #TODO figure out how to store a candidate in the additional_field that I've added to test properties.
+      set_additional_resource(chain_candidate)
       chain_field_value
     end
 
+    def find_reverse_chain_resource
+      chain_candidate = chain_scratch_resources
+        .reject { |resource| search_param_value(reverse_chain_target, resource).nil?}
+        .find { |resource| !search_param_value(reverse_chain_param, resource).nil?}
+      skip_if chain_candidate.nil?, no_reverse_chain_resource_found_message
+      chain_field_value = search_param_value(reverse_chain_param, chain_candidate)
+      chain_field_value
+    end
 
     def all_search_params
       @all_search_params ||=
@@ -117,10 +130,18 @@ module DaVinciPDEXPlanNetTestKit
         end
     end
 
+    def all_reverse_chain_search_params
+      @all_revchain_search_params ||=
+        all_search_params.transform_values! do |params_list|
+          field_value = given_input? ? self.send(input_name) : find_reverse_chain_resource
+          params_list.map { |params| {"_has:#{additional_resource_type}:#{reverse_chain_target}:#{reverse_chain_param}": field_value}}
+        end
+    end
+
     def all_forward_chain_search_params
       @all_forward_chain_search_params ||=
         all_search_params.transform_values! do |params_list|
-          params_list.map { |params| {"#{chain_param_base}.#{chain_param}": find_chain_resource} }
+          params_list.map { |params| {"#{chain_param_base}.#{chain_param}": find_forward_chain_value} }
         end
     end
 
@@ -138,11 +159,13 @@ module DaVinciPDEXPlanNetTestKit
             perform_search_with_status(params, resource_id) if response[:status] == 400 && possible_status_search?
         
             check_search_response
+
+            returned_resources = fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
             
-            base_resources = matching_resources = fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
+            base_resources = returned_resources
               .select { |resource| resource.resourceType == resource_type }
 
-            matching_resources = fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
+            matching_resources = returned_resources 
               .select { |resource| resource.resourceType == additional_resource_type }
 
             expected_reference = additional_resource(inc_param_sp)
@@ -182,6 +205,7 @@ module DaVinciPDEXPlanNetTestKit
 
       save_delayed_references(resources, additional_resource_type)
       revinclude_scratch_resources.concat(resources).uniq!
+
       skip_if resources.empty?, no_resources_skip_message(additional_resource_type)
     end
 
@@ -260,10 +284,38 @@ module DaVinciPDEXPlanNetTestKit
 
             check_search_response
 
-            fetch_all_bundled_resources
+            returned_resources = fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
+            base_resources = returned_resources
+              .select { |res| res.resourceType == resource_type }
+            
+            contextual_resources = run_search_on_additional_resource_type
+            # Check that all references within the Base point to one of the resources in scratch currently.
+            base_resources.each do |base_res| 
+              reference_value = search_param_value(chain_param_base, base_res)
+              assert (contextual_resources.any? do |res| 
+                is_reference_match?(reference_value, search_param_value("_id", res))
+              end), forward_chaining_incorrect_reference_error_message(base_res)
+            end  
+            base_resources
           end
         end
         skip_if resources.empty?, no_resources_skip_message
+    end
+
+    def run_reverse_chain_search_test
+      resources =
+        all_reverse_chain_search_params.flat_map do |_resource_id, params_list|
+          params_list.flat_map do |params|
+            fhir_search resource_type, params: params
+            perform_search_with_status(params, resource_id) if response[:status] == 400 && possible_status_search?
+
+            check_search_response
+
+            fetch_all_bundled_resources
+          end
+        end
+        
+      skip_if resources.empty?, "No resources found TODO:REPLACE MESSAGE"
     end
 
     def perform_search(params, resource_id)
@@ -620,6 +672,8 @@ module DaVinciPDEXPlanNetTestKit
 
     def search_param_paths(name, resource = resource_type)
       resource_metadata = resource == resource_type ? metadata : additional_metadata
+      info "called with #{name} and #{resource}"
+      #assert !chain_param, "#{resource}, \n\n\n #{name}, \n\n\n #{resource_metadata.search_definitions[name.to_sym][:paths]}"
       paths = resource_metadata.search_definitions[name.to_sym][:paths]
       if paths.first =='class'
         paths[0] = 'local_class'
@@ -650,9 +704,26 @@ module DaVinciPDEXPlanNetTestKit
       \"Run All Tests\" from suite level"
     end
 
-    def no_chain_resource_found_message
+    def no_forward_chain_resource_found_message
       "Unable to find any previously returned #{additional_resource_type} instances with the 
       #{chain_param} field populated."
+    end
+
+    def no_reverse_chain_resource_found_message
+      "Unable to find any previously returned #{additional_resource_type} instances with both
+      #{reverse_chain_param} and #{reverse_chain_target} fields populated.  Please \"Run All Tests\"
+      from suite level or provide specific field values."
+    end
+
+    def forward_chain_conformance_error_message
+      "Unable to find any returned #{resource_type} instances that reference #{additional_resource_type} instances
+      where the #{chain_param} field is populated with the value used in the request."
+    end
+
+    def forward_chaining_incorrect_reference_error_message(violating_resource)
+      "#{resource_type} instance #{search_param_value("_id", violating_resource)} references 
+      #{search_param_value(chain_param_base, violating_resource)} which does not have #{chain_param} value 
+      #{search_param_value(chain_param, additional_resource)}"
     end
 
     def empty_search_params_message(empty_search_params)
@@ -807,7 +878,7 @@ module DaVinciPDEXPlanNetTestKit
           when FHIR::Address
             element.text || element.city || element.state || element.postalCode || element.country
           when FHIR::Extension
-            element.valueReference.reference #Should this be more flexible? Does it need to read for any value[x]?  PDEX only
+            element.valueReference.reference #Should this be more flexible? Does it need to read for any value[x]?  PDEX Plan Net only
           else
             element
           end
@@ -866,17 +937,9 @@ module DaVinciPDEXPlanNetTestKit
       end
     end
 
-    def is_reference_match? (reference, local_reference)
-      regex_pattern = /^(#{Regexp.escape(local_reference)}|\S+\/#{Regexp.escape(local_reference)}(?:[\/|]\S+)*)$/
-      regex_pattern_local = /^(#{Regexp.escape(reference)}|\S+\/#{Regexp.escape(reference)}(?:[\/|]\S+)*)$/
-      reference.match?(regex_pattern) || local_reference.match?(regex_pattern_local)
-    end
-
-
     #### RESULT CHECKING ####
-
-    def check_resource_against_params(resource, params)
-      params.each do |name, escaped_search_value|
+    def resource_fields_conform_to_params?(resource, params)
+      params.all? do |name, escaped_search_value|
         #unescape search value
         search_value = escaped_search_value&.gsub('\\,', ',')
         paths = search_param_paths(name, resource.resourceType)
@@ -960,7 +1023,98 @@ module DaVinciPDEXPlanNetTestKit
               values_found.any? do |value_found| 
                 search_values.any? { |search_val| value_found == search_values || is_reference_match?(search_val, value_found) } 
               end
+            end
 
+          break if match_found
+        end
+        match_found
+      end
+    end
+
+    def check_resource_against_params(resource, params)
+      params.each do |name, escaped_search_value|
+        #unescape search value
+        search_value = escaped_search_value&.gsub('\\,', ',')
+        paths = search_param_paths(name, resource.resourceType)
+
+        match_found = false
+        values_found = []
+        resource_metadata = resource.resourceType == resource_type ? metadata : additional_metadata
+        paths.each do |path|
+          type = resource_metadata.search_definitions[name.to_sym][:type]
+          values_found =
+            resolve_path(resource, path)
+              .flat_map do |value|
+                case value
+                when FHIR::Reference
+                  value.reference
+                when FHIR::Extension
+                  value.valueReference.reference
+                else
+                  value
+                end
+              end
+
+          match_found =
+            case type
+            when 'Period', 'date', 'instant', 'dateTime'
+              values_found.any? { |date| validate_date_search(search_value, date) }
+            when 'HumanName'
+              # When a string search parameter refers to the types HumanName and Address,
+              # the search covers the elements of type string, and does not cover elements such as use and period
+              # https://www.hl7.org/fhir/search.html#string
+              search_value_downcase = search_value.downcase
+              values_found.any? do |name|
+                name&.text&.downcase&.start_with?(search_value_downcase) ||
+                  name&.family&.downcase&.start_with?(search_value_downcase) ||
+                  name&.given&.any? { |given| given.downcase.start_with?(search_value_downcase) } ||
+                  name&.prefix&.any? { |prefix| prefix.downcase.start_with?(search_value_downcase) } ||
+                  name&.suffix&.any? { |suffix| suffix.downcase.start_with?(search_value_downcase) }
+              end
+            when 'Address'
+              search_value_downcase = search_value.downcase
+              values_found.any? do |address|
+                address&.text&.downcase&.start_with?(search_value_downcase) ||
+                address&.city&.downcase&.start_with?(search_value_downcase) ||
+                address&.state&.downcase&.start_with?(search_value_downcase) ||
+                address&.postalCode&.downcase&.start_with?(search_value_downcase) ||
+                address&.country&.downcase&.start_with?(search_value_downcase)
+              end
+            when 'CodeableConcept'
+              # FHIR token search (https://www.hl7.org/fhir/search.html#token): "When in doubt, servers SHOULD
+              # treat tokens in a case-insensitive manner, on the grounds that including undesired data has
+              # less safety implications than excluding desired behavior".
+              codings = values_found.flat_map(&:coding)
+              if search_value.include? '|'
+                system = search_value.split('|').first
+                code = search_value.split('|').last
+                codings&.any? { |coding| coding.system == system && coding.code&.casecmp?(code) }
+              else
+                codings&.any? { |coding| coding.code&.casecmp?(search_value) }
+              end
+            when 'Coding'
+              if search_value.include? '|'
+                system = search_value.split('|').first
+                code = search_value.split('|').last
+                values_found.any? { |coding| coding.system == system && coding.code&.casecmp?(code) }
+              else
+                values_found.any? { |coding| coding.code&.casecmp?(search_value) }
+              end
+            when 'Identifier'
+              if search_value.include? '|'
+                values_found.any? { |identifier| "#{identifier.system}|#{identifier.value}" == search_value }
+              else
+                values_found.any? { |identifier| identifier.value == search_value }
+              end
+            when 'string'
+              searched_values = search_value.downcase.split(/(?<!\\\\),/).map{ |string| string.gsub('\\,', ',') }
+              values_found.any? do |value_found|
+                searched_values.any? { |searched_value| value_found.downcase.starts_with? searched_value || is_reference_match?(searched_value, value_found) }
+              end
+            else
+              search_values = search_value.split(/(?<!\\\\),/).map { |string| string.gsub('\\,', ',') }
+              search_values << search_value.split('/')[1]
+              values_found.any? { |value_found| search_values.include? value_found }
             end
 
           break if match_found
@@ -972,6 +1126,8 @@ module DaVinciPDEXPlanNetTestKit
                "* Found: #{values_found.map(&:inspect).join(', ')}"
       end
     end
+
+
     ### PARSING (Remove if methods exist elsewhere already)
     def param_to_method(param)
       param = param.split('-').collect(&:capitalize).join
