@@ -631,7 +631,6 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
         .to_return(status: 200, body: counselor_practitioner_bundle.to_json)
       
       result = run(reverse_chain_test, url: url)
-      binding.pry
       expect(result.result).to eq('pass')
     end
 

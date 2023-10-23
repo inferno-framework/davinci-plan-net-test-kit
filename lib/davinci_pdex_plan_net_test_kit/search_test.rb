@@ -326,13 +326,13 @@ module DaVinciPDEXPlanNetTestKit
             base_resources.each do |base_res| 
               assert (contextual_resources.any? do |res| 
                 reference_value = search_param_value(reverse_chain_target, res)
-                is_reference_match?(reference_value, search_param_value("_id", base_res))
+                reference_value.nil? ? false : is_reference_match?(reference_value, search_param_value("_id", base_res))
               end), reverse_chaining_incorrect_reference_error_message(base_res)
             end  
             base_resources
           end
         end
-      skip_if resources.empty?, "No #{resource_type} resources found"
+      skip_if resources.empty?, "No #{resource_type} resources found."
     end
 
     def perform_search(params, resource_id)
