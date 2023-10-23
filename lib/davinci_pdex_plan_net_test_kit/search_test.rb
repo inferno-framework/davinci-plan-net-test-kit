@@ -168,14 +168,16 @@ module DaVinciPDEXPlanNetTestKit
             returned_resources = fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
             
             base_resources = returned_resources
-              .select { |resource| resource.resourceType == resource_type }
+              .select { |res| res.resourceType == resource_type }
 
             matching_resources = returned_resources 
-              .select { |resource| resource.resourceType == additional_resource_type }
+              .select { |res| res.resourceType == additional_resource_type }
+              
+            matching_resources.reject! { |res| res.id == params[:_id]} if inc_param_sp == 'partof'
 
             expected_reference = additional_resource(inc_param_sp)
-            matching_resources.each { |resource| 
-              check_resource_against_params(resource, {_id: expected_reference}) 
+            matching_resources.each { |res| 
+              check_resource_against_params(res, {_id: expected_reference})
             }
             matching_resources 
           end
@@ -199,11 +201,11 @@ module DaVinciPDEXPlanNetTestKit
             check_search_response
 
             matching_resources = fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
-              .select { |resource| resource.resourceType == additional_resource_type }
-              .reject { |resource| resource.id == params[:_id] }
+              .select { |res| res.resourceType == additional_resource_type }
+              .reject { |res| res.id == params[:_id] }
 
             
-            matching_resources.each { |resource| check_resource_against_params(resource, {"#{rev_param_sp}": "#{params[:_id]}"}) }
+            matching_resources.each { |res| check_resource_against_params(res, {"#{rev_param_sp}": "#{params[:_id]}"}) }
             matching_resources
           end
         end
@@ -772,7 +774,7 @@ module DaVinciPDEXPlanNetTestKit
 
     def fetch_all_bundled_resources(
           reply_handler: nil,
-          max_pages: 20,
+          max_pages: 0,
           additional_resource_types: [],
           resource_type: self.resource_type
         )
@@ -781,7 +783,7 @@ module DaVinciPDEXPlanNetTestKit
       bundle = resource
       resources += bundle&.entry&.map { |entry| entry&.resource }
 
-      until bundle.nil? || page_count == max_pages
+      until bundle.nil? || (page_count == max_pages && max_pages != 0)
         
         next_bundle_link = bundle&.link&.find { |link| link.relation == 'next' }&.url
         reply_handler&.call(response)
