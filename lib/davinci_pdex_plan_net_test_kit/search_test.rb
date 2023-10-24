@@ -122,6 +122,11 @@ module DaVinciPDEXPlanNetTestKit
         end
     end
 
+    def all_combination_search_params
+      @all_combination_search_params ||=
+        all_search_params
+    end
+
 
     def any_valid_search_params?(search_params)
       search_params.any? { |_resource_id, params| params.present? }
@@ -247,6 +252,22 @@ module DaVinciPDEXPlanNetTestKit
         
       skip_if resources.empty?, "No resources found TODO:REPLACE MESSAGE"
     end
+
+    def run_combination_search_test
+      resources =
+        all_combination_search_params.flat_map do |_resource_id, params_list|
+          params_list.flat_map do |params|
+            fhir_search resource_type, params: params
+            perform_search_with_status(params, resource_id) if response[:status] == 400 && possible_status_search?
+
+            check_search_response
+
+            fetch_all_bundled_resources
+          end
+        end
+        
+      skip_if resources.empty?, "No resources found TODO:REPLACE MESSAGE"
+
 
     def perform_search(params, resource_id)
       fhir_search resource_type, params: params

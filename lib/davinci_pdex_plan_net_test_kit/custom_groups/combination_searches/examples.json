@@ -1,0 +1,16 @@
+{
+  "PractitionerRole": [
+  {
+      "base_search_params": ["specialty", "location"],
+      "include_param": "PractitionerRole:practitioner",
+      "inc_param_sp": "practitioner",
+      "revinclude_param": {},
+      "rev_param_sp": {},
+      "chain_param": {},
+      "chain_param_base": {},
+      "reverse_chain_param": {},
+      "reverse_chain_target": {},
+      "additional_resource_type": "Practitioner"
+  }
+  ]
+}
