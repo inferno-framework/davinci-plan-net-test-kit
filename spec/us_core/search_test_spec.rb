@@ -143,6 +143,16 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
       expect(result.result).to eq('fail')
     end
 
+    it 'Fails when server returns a non 200 status code and resulting message displays returned status code' do
+      bundle.entry.concat([ { resource: endpoint_local }, {resource: organization_local }, {resource: organization_unreferenced}])
+      stub_request(:get, "#{url}/Endpoint?_id=#{endpoint_local.id}&_include=Endpoint:organization")
+        .to_return(status: 400, body: bundle.to_json)
+
+      result = run(include_test, url: url)
+      expect(result.result).to eq('fail')
+      expect(result.result_message).to eq('Unexpected response status: expected 200, but received 400')
+    end
+
     it 'skips when no additional resources are returned' do
       bundle.entry.concat([ { resource: endpoint_local } ])
       stub_request(:get, "#{url}/Endpoint?_id=#{endpoint_local.id}&_include=Endpoint:organization")
@@ -294,6 +304,16 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
 
       result = run(revinclude_test, url: url)
       expect(result.result).to eq('fail')
+    end
+
+    it 'Fails when server returns a non 200 status code and resulting message displays returned status code' do
+      bundle.entry.concat([ {resource: organization_local }, {resource: endpoint_local }])
+      stub_request(:get, "#{url}/Organization?_id=Organization/#{organization_local.id}&_revinclude=Endpoint:organization")
+        .to_return(status: 400, body: bundle.to_json)
+
+      result = run(revinclude_test, url: url)
+      expect(result.result).to eq('fail')
+      expect(result.result_message).to eq('Unexpected response status: expected 200, but received 400')
     end
 
     it 'skips when no additional resources are returned' do
@@ -488,6 +508,16 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
       result = run(forward_chain_test_non_prvgrp_type, url: url)
       expect(result.result).to eq('fail')
     end
+
+    it 'Fails when server returns a non 200 status code and resulting message displays returned status code' do
+      bundle.entry.concat([ {resource: endpoint_local }, {resource: endpoint_url }])
+      stub_request(:get, "#{url}/Endpoint?organization.type=prvgrp")
+        .to_return(status: 400, body: bundle.to_json)
+
+      result = run(forward_chain_test, url: url)
+      expect(result.result).to eq('fail')
+      expect(result.result_message).to eq('Unexpected response status: expected 200, but received 400')
+    end
     
     it 'Skips if server returns nothing' do
       stub_request(:get, "#{url}/Endpoint?organization.type=prvgrp")
@@ -659,6 +689,15 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
 
       result = run(reverse_chain_test, url: url)
       expect(result.result).to eq('fail')
+    end
+
+    it 'Fails when server returns a non 200 status code and resulting message displays returned status code' do
+      stub_request(:get, "#{url}/Practitioner?_has:PractitionerRole:practitioner:specialty=COUNSELOR")
+        .to_return(status: 400, body: counselor_practitioner_bundle.to_json)
+      
+      result = run(reverse_chain_test, url: url)
+      expect(result.result).to eq('fail')
+      expect(result.result_message).to eq('Unexpected response status: expected 200, but received 400')
     end
 
     it 'Skips if scratch is empty and not given input from user' do
