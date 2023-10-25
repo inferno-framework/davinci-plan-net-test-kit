@@ -83,8 +83,8 @@ module DaVinciPDEXPlanNetTestKit
 
     def find_forward_chain_value
       # Look through return from relevant include test
-      # If it is in chain_scratch_resources, it was put there from an _include/_revinclude test
-      chain_candidate = chain_scratch_resources
+      # If it is in additional_scratch_resources, it was put there from an _include/_revinclude test
+      chain_candidate = additional_scratch_resources
         .find { |resource| !search_param_value(chain_param, resource).nil?}
       skip_if chain_candidate.nil?, no_forward_chain_resource_found_message
       chain_field_value = search_param_value(chain_param, chain_candidate)
@@ -93,7 +93,7 @@ module DaVinciPDEXPlanNetTestKit
     end
 
     def find_reverse_chain_resource
-      chain_candidate = chain_scratch_resources
+      chain_candidate = additional_scratch_resources
         .reject { |resource| search_param_value(reverse_chain_target, resource).nil?}
         .find { |resource| !search_param_value(reverse_chain_param, resource).nil?}
       skip_if chain_candidate.nil?, no_reverse_chain_resource_found_message
@@ -103,6 +103,7 @@ module DaVinciPDEXPlanNetTestKit
     end
 
     def all_search_params
+      #TODO: add functionality for grabbing multiple params from the same resource
       @all_search_params ||=
         resource_id_list.each_with_object({}) do |resource_id, params|
           params[resource_id] ||= []
@@ -153,7 +154,8 @@ module DaVinciPDEXPlanNetTestKit
     def all_combination_search_params
       @all_combination_search_params ||=
         all_search_params.transform_values! do |params_list|
-          params_list.map { |params| params.merge!(_include: include_param) } if include_param
+          params_list = include_param ? params_list.map { |params| params.merge(_include: include_param) } : params_list
+          #TODO: Fill with the rest of advanced searches once more combination tests are ready
         end
     end
 
@@ -191,7 +193,7 @@ module DaVinciPDEXPlanNetTestKit
         end
 
       save_delayed_references(resources, additional_resource_type)
-      include_scratch_resources.concat(resources).uniq!
+      additional_scratch_resources.concat(resources).uniq!
 
       skip_if resources.empty?, no_resources_skip_message(additional_resource_type)
 
@@ -218,7 +220,7 @@ module DaVinciPDEXPlanNetTestKit
         end
 
       save_delayed_references(resources, additional_resource_type)
-      revinclude_scratch_resources.concat(resources).uniq!
+      additional_scratch_resources.concat(resources).uniq!
 
       skip_if resources.empty?, no_resources_skip_message(additional_resource_type)
     end
@@ -282,7 +284,7 @@ module DaVinciPDEXPlanNetTestKit
       additional_resources.each { |res| check_resource_against_params(res, additional_resource_params) }
 
       save_delayed_references(additional_resources, additional_resource_type)
-      chain_scratch_resources.concat(additional_resources).uniq!
+      additional_scratch_resources.concat(additional_resources).uniq!
 
       skip_if additional_resources.empty?, "Search on #{additional_resource_type}'s #{param} failed to retrieve any resources."
       additional_resources
@@ -353,11 +355,12 @@ module DaVinciPDEXPlanNetTestKit
 
             check_search_response
 
-            fetch_all_bundled_resources
+            returned_resources = fetch_all_bundled_resources
           end
         end
         
       skip_if resources.empty?, "No #{resource_type} resources found"
+    end
 
 
     def perform_search(params, resource_id)
@@ -638,16 +641,8 @@ module DaVinciPDEXPlanNetTestKit
       scratch_resources[:all] ||= []
     end
 
-    def include_scratch_resources
-      scratch_include_resources[:all] ||= []
-    end
-
-    def revinclude_scratch_resources
-      scratch_revinclude_resources[:all] ||= []
-    end
-
-    def chain_scratch_resources
-      scratch_chain_resources[:all] ||= []
+    def additional_scratch_resources
+      scratch_additional_resources[:all] ||= []
     end
 
     def scratch_resources_for_resource(resource_id)

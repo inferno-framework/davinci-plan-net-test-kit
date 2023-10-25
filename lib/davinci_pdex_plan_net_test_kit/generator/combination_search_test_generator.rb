@@ -181,6 +181,7 @@ module DaVinciPDEXPlanNetTestKit
           properties[:inc_param_sp] ="'#{test_data['inc_param_sp']}'"
           properties[:possible_status_search] = 'true' if possible_status_search?
           properties[:additional_resource_type] = "'#{additional_resource_type}'"
+          properties[:combination_search] = 'true'
         end
       end
 

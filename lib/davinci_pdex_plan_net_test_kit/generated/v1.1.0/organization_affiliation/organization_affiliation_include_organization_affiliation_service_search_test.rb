@@ -38,7 +38,7 @@ module DaVinciPDEXPlanNetTestKit
         scratch[:organization_affiliation_resources] ||= {}
       end
 
-      def scratch_include_resources
+      def scratch_additional_resources
         scratch[:healthcare_service_resources] ||= {}
       end
 

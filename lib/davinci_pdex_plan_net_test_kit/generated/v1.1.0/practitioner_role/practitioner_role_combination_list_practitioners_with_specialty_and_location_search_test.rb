@@ -16,7 +16,7 @@ module DaVinciPDEXPlanNetTestKit
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'PractitionerRole',
-          search_param_names: [],
+          search_param_names: ['specialty', 'location'],
           input_name: 'combination_list_practitioners_with_specialty_and_location_input',
           include_param: 'PractitionerRole:practitioner',
           inc_param_sp: 'practitioner',

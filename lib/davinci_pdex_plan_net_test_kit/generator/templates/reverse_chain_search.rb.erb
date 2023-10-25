@@ -39,7 +39,7 @@ module DaVinciPDEXPlanNetTestKit
         scratch[:<%= profile_identifier %>_resources] ||= {}
       end
 
-      def scratch_chain_resources
+      def scratch_additional_resources
         scratch[:<%= source_resource.underscore %>_resources] ||= {}
       end
 
