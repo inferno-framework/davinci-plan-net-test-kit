@@ -173,7 +173,7 @@ module DaVinciPDEXPlanNetTestKit
             matching_resources = returned_resources 
               .select { |res| res.resourceType == additional_resource_type }
               
-            matching_resources.reject! { |res| res.id == params[:_id]} if inc_param_sp == 'partof'
+            matching_resources.reject! { |res| res.id == params[:_id]} if additional_resource_type == resource_type
 
             expected_reference = additional_resource(inc_param_sp)
             matching_resources.each { |res| 
