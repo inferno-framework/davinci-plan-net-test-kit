@@ -6,14 +6,11 @@ module DaVinciPDEXPlanNetTestKit
     class <%= class_name %> < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server returns <%= include_param_resource %> resources from <%= resource_type %> search with <%= include_param_string %>'
+      title 'Server capable of combination search, e.g. being able to <%= test_goal %>'
       description %(
-        A server SHALL be capable of supporting _includes for <%= include_param %>.
-
-        This test will perform a search with <%= include_param_string %> and
-        will pass if a <%= include_param_resource %> resource is found in the response.
+        A server SHALL support searching with a combination of parameters.  <%= test_description %>
       )
-
+      
       id :<%= test_id %>
 
       def properties
@@ -27,7 +24,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def self.additional_metadata
-        @additional_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', '<%= include_param_resource.underscore %>', 'metadata.yml'), aliases: true))
+        @additional_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', '<%= additional_resource_type.underscore %>', 'metadata.yml'), aliases: true))
       end
 
       def scratch_resources
@@ -35,11 +32,11 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def scratch_additional_resources
-        scratch[:<%= include_param_resource.underscore %>_resources] ||= {}
+        scratch[:<%= additional_resource_type.underscore %>_resources] ||= {}
       end
 
       run do
-        run_include_search_test
+        run_combination_search_test
       end
     end
   end

@@ -152,7 +152,9 @@ module DaVinciPDEXPlanNetTestKit
 
     def all_combination_search_params
       @all_combination_search_params ||=
-        all_search_params
+        all_search_params.transform_values! do |params_list|
+          params_list.map { |params| params.merge!(_include: include_param) } if include_param
+        end
     end
 
 
@@ -355,7 +357,7 @@ module DaVinciPDEXPlanNetTestKit
           end
         end
         
-      skip_if resources.empty?, "No resources found TODO:REPLACE MESSAGE"
+      skip_if resources.empty?, "No #{resource_type} resources found"
 
 
     def perform_search(params, resource_id)

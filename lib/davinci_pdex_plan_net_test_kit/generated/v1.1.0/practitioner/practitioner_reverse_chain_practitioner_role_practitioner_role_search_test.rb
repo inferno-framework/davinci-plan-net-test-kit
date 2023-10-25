@@ -11,8 +11,7 @@ module DaVinciPDEXPlanNetTestKit
         A server SHALL support reverse chaining.
 
         Test will use the query _has:PractitionerRole:practitioner:role to test
-        the server for reverse chaining capability.  The test will pass if any Practitioner instances are
-        returned.
+        the server for reverse chaining capability.  This test does not validate returned resources at this time.
       )
       
       id :davinci_plan_net_v110_practitioner_reverse_chain_practitioner_role_practitioner_role_search_test

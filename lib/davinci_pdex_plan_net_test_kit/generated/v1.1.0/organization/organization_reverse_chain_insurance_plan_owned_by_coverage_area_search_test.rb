@@ -11,8 +11,7 @@ module DaVinciPDEXPlanNetTestKit
         A server SHALL support reverse chaining.
 
         Test will use the query _has:InsurancePlan:owned-by:coverage-area to test
-        the server for reverse chaining capability.  The test will pass if any Organization instances are
-        returned.
+        the server for reverse chaining capability.  This test does not validate returned resources at this time.
       )
       
       id :davinci_plan_net_v110_organization_reverse_chain_insurance_plan_owned_by_coverage_area_search_test

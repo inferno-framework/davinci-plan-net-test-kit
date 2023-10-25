@@ -11,8 +11,7 @@ module DaVinciPDEXPlanNetTestKit
         A server SHALL support reverse chaining.
 
         Test will use the query _has:OrganizationAffiliation:participating-organization:specialty to test
-        the server for reverse chaining capability.  The test will pass if any Organization instances are
-        returned.
+        the server for reverse chaining capability.  This test does not validate returned resources at this time.
       )
       
       id :davinci_plan_net_v110_organization_reverse_chain_organization_affiliation_participating_organization_specialty_search_test

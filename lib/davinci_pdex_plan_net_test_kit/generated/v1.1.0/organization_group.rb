@@ -153,9 +153,8 @@ following chaining parameters:
 
 
 ## Reverse Chaining Requirement Testing
-This test sequence will perform each required reverse chaining search for each of 
-the search parameters that specify chaining capabilities.  This sequence will perform searches with the
-following chaining parameters:
+This test sequence will perform reverse chaining search for the following combination
+of search parameters:
 
 * OrganizationAffiliation:participating-organization:location
 * OrganizationAffiliation:participating-organization:network

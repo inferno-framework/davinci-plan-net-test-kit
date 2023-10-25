@@ -35,6 +35,7 @@ require_relative 'practitioner_role/practitioner_role_forward_chain_network_addr
 require_relative 'practitioner_role/practitioner_role_forward_chain_network_partof_search_test'
 require_relative 'practitioner_role/practitioner_role_forward_chain_network_type_search_test'
 require_relative 'practitioner_role/practitioner_role_forward_chain_endpoint_organization_search_test'
+require_relative 'practitioner_role/practitioner_role_combination_list_practitioners_with_specialty_and_location_search_test'
 require_relative 'practitioner_role/practitioner_role_validation_test'
 require_relative 'practitioner_role/practitioner_role_must_support_test'
 require_relative 'practitioner_role/practitioner_role_reference_resolution_test'
@@ -220,6 +221,7 @@ read succeeds.
       test from: :davinci_plan_net_v110_forward_chain_network_partof_search_test
       test from: :davinci_plan_net_v110_forward_chain_network_type_search_test
       test from: :davinci_plan_net_v110_forward_chain_endpoint_organization_search_test
+      test from: :davinci_plan_net_v110_practitioner_role_combination_list_practitioners_with_specialty_and_location_search_test
       test from: :davinci_pdex_plan_net_v110_practitioner_role_validation_test
       test from: :davinci_pdex_plan_net_v110_practitioner_role_must_support_test
       test from: :davinci_pdex_plan_net_v110_practitioner_role_reference_resolution_test

@@ -3,31 +3,29 @@ require_relative 'special_cases'
 
 module DaVinciPDEXPlanNetTestKit
   class Generator
-    class ReverseChainSearchTestGenerator
+    class CombinationSearchTestGenerator
       class << self
         def generate(ig_metadata, examples_hash, base_output_dir)
           examples_hash.keys.each do |group|
-            examples_hash[group].each do |rev_chain_example| 
+            examples_hash[group].each do |combination_example| 
               group_to_add_to = ig_metadata.groups.find { |ig_meta_group| ig_meta_group.name == "plannet_#{group}"}
-              new(group_to_add_to, group_to_add_to.searches.first, base_output_dir, rev_chain_example).generate
+              new(group_to_add_to, group_to_add_to.searches.first, base_output_dir, combination_example).generate
             end
           end
         end
       end
 
-      attr_accessor :group_metadata, :search_metadata, :base_output_dir, :base_search_params, :include_param, :constraining_param
+      attr_accessor :group_metadata, :search_metadata, :base_output_dir, :test_data
 
-      def initialize(group_metadata, search_metadata, base_output_dir, rev_chain_example)
+      def initialize(group_metadata, search_metadata, base_output_dir, combination_example)
         self.group_metadata = group_metadata
         self.search_metadata = search_metadata
         self.base_output_dir = base_output_dir
-        self.base_search_params = rev_chain_example["source_resource"]
-        self.include_param = rev_chain_example["target_param"]
-        self.constraining_param = rev_chain_example["constraining_param"]
+        self.test_data = combination_example
       end
 
       def template
-        @template ||= File.read(File.join(__dir__, 'templates', 'reverse_chain_search.rb.erb'))
+        @template ||= File.read(File.join(__dir__, 'templates', 'combination_search_test.rb.erb'))
       end
 
       def output
@@ -51,11 +49,11 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def test_id
-        "davinci_plan_net_#{group_metadata.reformatted_version}_#{profile_identifier}_reverse_chain_#{search_identifier}_search_test"
+        "davinci_plan_net_#{group_metadata.reformatted_version}_#{profile_identifier}_#{search_identifier}_search_test"
       end
 
       def search_identifier
-        "#{source_resource}_#{target_param}_#{constraining_param}".gsub(/[-:]/, '_').underscore
+        test_data['name'].gsub(/[-:]/, '_').underscore
       end
 
       def search_title
@@ -63,7 +61,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def class_name
-        "#{Naming.upper_camel_case_for_profile(group_metadata)}ReverseChain#{search_title}SearchTest"
+        "#{Naming.upper_camel_case_for_profile(group_metadata)}#{search_title}SearchTest"
       end
 
       def module_name
@@ -74,9 +72,21 @@ module DaVinciPDEXPlanNetTestKit
         group_metadata.resource
       end
 
+      def additional_resource_type
+        test_data['additional_resource_type']
+      end
+
+      def test_description
+        test_data['description']
+      end
+
+      def test_goal
+        test_data['goal']
+      end
+
       def search_params
         @search_params ||=
-          search_metadata[:names].map do |name|
+          test_data['base_search_params'].map do |name|
             {
               name: name,
               path: search_definition(name)[:path]
@@ -165,12 +175,12 @@ module DaVinciPDEXPlanNetTestKit
         {}.tap do |properties|
           properties[:fixed_value_search] = 'true' if fixed_value_search?
           properties[:resource_type] = "'#{resource_type}'"
-          properties[:search_param_names] = []
+          properties[:search_param_names] = search_param_names_array
           properties[:input_name] = "'#{input_name}'"
-          properties[:reverse_chain_param] = "'#{constraining_param}'"
-          properties[:reverse_chain_target] = "'#{target_param}'"
+          properties[:include_param] ="'#{test_data['include_param']}'"
+          properties[:inc_param_sp] ="'#{test_data['inc_param_sp']}'"
           properties[:possible_status_search] = 'true' if possible_status_search?
-          properties[:additional_resource_type] = "'#{source_resource}'"
+          properties[:additional_resource_type] = "'#{additional_resource_type}'"
         end
       end
 
