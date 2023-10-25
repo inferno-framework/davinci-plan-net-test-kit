@@ -1,5 +1,5 @@
 RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
-  let(:suite) { Inferno::Repositories::TestSuites.new.find('us_core_v311') }
+  let(:suite) { Inferno::Repositories::TestSuites.new.find('davinci_pdex_plan_net_v110') }
   let(:session_data_repo) { Inferno::Repositories::SessionData.new }
   let(:test_session) { repo_create(:test_session, test_suite_id: suite.id) }
   let(:url) { 'http://example.com/fhir' }
@@ -19,1032 +19,695 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
     Inferno::TestRunner.new(test_session: test_session, test_run: test_run).run(runnable)
   end
 
-  describe 'search requiring status' do
-    let(:status_search_test) do
-      Class.new(Inferno::Test) do
-        include DaVinciPDEXPlanNetTestKit::SearchTest
-
-        def properties
-          @properties ||= DaVinciPDEXPlanNetTestKit::SearchTestProperties.new(
-            resource_type: 'Observation',
-            search_param_names: ['patient'],
-            possible_status_search: true
-          )
-        end
-
-        def self.metadata
-          @metadata ||=
-            DaVinciPDEXPlanNetTestKit::Generator::GroupMetadata.new(
-              YAML.load_file(
-                File.join(
-                  __dir__,
-                  '..',
-                  'fixtures',
-                  'status_search_metadata.yml'
-                )
-              )
-            )
-        end
-
-        def scratch_resources
-          scratch[:bodyheight_resources] ||= {}
-        end
-
-        fhir_client { url :url }
-        input :url, :patient_ids
-
-        run do
-          run_search_test
-        end
+  describe '_include search' do
+    let (:include_test) do 
+      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::EndpointIncludeEndpointOrganizationSearchTest) do
+        fhir_client {url :url}
+        input :url
       end
     end
-    let(:patient_id) { '123' }
-    let(:observation) do
-      FHIR::Observation.new(
-        status: 'final',
-        category: [
-          {
-            coding: [
-              {
-                system: 'http://terminology.hl7.org/CodeSystem/observation-category',
-                code: 'vital-signs'
-              }
-            ]
-          }],
-        code: [
-          {
-            coding: [
-              {
-                system: 'http://loinc.org',
-                code: '8302-2'
-              }
-            ]
-          }],
-        subject: {
-          reference: "Patient/#{patient_id}"
-        },
+    let (:include_test_no_scratch) do 
+      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::EndpointIncludeEndpointOrganizationSearchTest) do
+        fhir_client {url :url}
+        input :url
+      end
+    end
+    let (:include_test_no_reference) do 
+      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::EndpointIncludeEndpointOrganizationSearchTest) do
+        fhir_client {url :url}
+        input :url
+      end
+    end
+    let (:include_test_only_url) do 
+      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::EndpointIncludeEndpointOrganizationSearchTest) do
+        fhir_client {url :url}
+        input :url
+      end
+    end
+    let (:endpoint_local) {
+      FHIR::Endpoint.new(
+        id: 'endpoint-local-reference',
+        managingOrganization: {
+          reference: "Organization/acme"
+        }
       )
-    end
-    let(:bundle) do
-      FHIR::Bundle.new(entry: [{resource: observation}])
-    end
+    }
+    let (:endpoint_url) {
+      FHIR::Endpoint.new(
+        id: 'endpoint-url',
+        managingOrganization: {
+          reference: "http://example.com/Organization/ecorp"
+        }
+      )
+    }
+    let (:endpoint_no_reference) {
+      FHIR::Endpoint.new(
+        id: 'endpoint-no-reference',
+      )
+    }
+    let (:organization_local) {
+      FHIR::Organization.new(
+        id: 'acme'
+      )
+    }
+    let (:organization_url) {
+      FHIR::Organization.new(
+        id: 'ecorp'
+      )
+    }
+    let (:organization_unreferenced) {
+      FHIR::Organization.new(
+        id: 'org-3'
+      )
+    }
+    let (:bundle ) {
+      FHIR::Bundle.new(
+        entry: []
+      )
+    }
+    let (:test_scratch) { {
+      all: [endpoint_local, endpoint_url]
+    } }
+    let (:only_url_scratch) { {
+      all: [endpoint_url]
+    } }
+    let (:empty_scratch) { {
+      all: []
+    }}
+    let (:no_reference_scratch){ {
+      all: [endpoint_no_reference]
+    }}
 
     before do
-      Inferno::Repositories::Tests.new.insert(status_search_test)
-      allow_any_instance_of(status_search_test)
-        .to receive(:scratch_resources).and_return(
-              {
-                all: [observation],
-                patient_id => [observation]
-              }
-            )
+      allow_any_instance_of(include_test).to receive(:scratch_resources).and_return(test_scratch)
+      allow_any_instance_of(include_test_no_scratch).to receive(:scratch_resources).and_return(empty_scratch)
+      allow_any_instance_of(include_test_no_reference).to receive(:scratch_resources).and_return(no_reference_scratch)
+      allow_any_instance_of(include_test_only_url).to receive(:scratch_resources).and_return(only_url_scratch)
+      stub_request(:get, "#{url}/Endpoint")
+        .to_return(status: 200, body: FHIR::Bundle.new.to_json)
     end
 
-    it 'passes if a 200 is received' do
-      stub_request(:get, "#{url}/Observation?patient=#{patient_id}")
+    it 'passes when references and included Resources are exact match' do
+      bundle.entry.concat([ { resource: endpoint_local }, {resource: organization_local }])
+      stub_request(:get, "#{url}/Endpoint?_id=#{endpoint_local.id}&_include=Endpoint:organization")
         .to_return(status: 200, body: bundle.to_json)
 
-      result = run(status_search_test, patient_ids: patient_id, url: url)
+      result = run(include_test, url: url)
       expect(result.result).to eq('pass')
     end
 
-    it 'fails if a 400 is received with no OperationOutcome' do
-      stub_request(:get, "#{url}/Observation?patient=#{patient_id}")
+    it 'passes when references are a url and included resources are exact match' do
+      bundle.entry.concat([ { resource: endpoint_url }, {resource: organization_url }])
+      stub_request(:get, "#{url}/Endpoint?_id=#{endpoint_url.id}&_include=Endpoint:organization")
+        .to_return(status: 200, body: bundle.to_json)
+
+      result = run(include_test_only_url, url: url)
+      expect(result.result).to eq('pass')
+    end
+
+    it 'fails when returned additional resources are not referenced' do
+      bundle.entry.concat([ { resource: endpoint_local }, {resource: organization_url }])
+      stub_request(:get, "#{url}/Endpoint?_id=#{endpoint_local.id}&_include=Endpoint:organization")
+        .to_return(status: 200, body: bundle.to_json)
+
+      result = run(include_test, url: url)
+      expect(result.result).to eq('fail')
+    end
+
+    it 'fails when returning both referenced and unreferenced resources' do
+      bundle.entry.concat([ { resource: endpoint_local }, {resource: organization_local }, {resource: organization_unreferenced}])
+      stub_request(:get, "#{url}/Endpoint?_id=#{endpoint_local.id}&_include=Endpoint:organization")
+        .to_return(status: 200, body: bundle.to_json)
+
+      result = run(include_test, url: url)
+      expect(result.result).to eq('fail')
+    end
+
+    it 'Fails when server returns a non 200 status code and resulting message displays returned status code' do
+      bundle.entry.concat([ { resource: endpoint_local }, {resource: organization_local }, {resource: organization_unreferenced}])
+      stub_request(:get, "#{url}/Endpoint?_id=#{endpoint_local.id}&_include=Endpoint:organization")
         .to_return(status: 400, body: bundle.to_json)
 
-      result = run(status_search_test, patient_ids: patient_id, url: url)
-
+      result = run(include_test, url: url)
       expect(result.result).to eq('fail')
-      expect(result.result_message).to eq('Server returned a status of 400 without an OperationOutcome')
+      expect(result.result_message).to eq('Unexpected response status: expected 200, but received 400')
     end
 
-    it 'succeeds if a 400 is received with an OperationOutcome and the status search succeeds' do
-      statuses = 'registered,preliminary,final,amended,corrected,cancelled,entered-in-error,unknown'
-      stub_request(:get, "#{url}/Observation?patient=#{patient_id}")
-        .to_return(status: 400, body: FHIR::OperationOutcome.new.to_json)
-      stub_request(:get, "#{url}/Observation?patient=#{patient_id}&status=#{statuses}")
+    it 'skips when no additional resources are returned' do
+      bundle.entry.concat([ { resource: endpoint_local } ])
+      stub_request(:get, "#{url}/Endpoint?_id=#{endpoint_local.id}&_include=Endpoint:organization")
         .to_return(status: 200, body: bundle.to_json)
 
-      result = run(status_search_test, patient_ids: patient_id, url: url)
-
-      expect(result.result).to eq('pass')
-    end
-  end
-
-  describe 'search with Encounter status with optional multiple-or requirement' do
-    let(:patient_id) { '123' }
-    let(:test_class) do
-      Class.new(DaVinciPDEXPlanNetTestKit::USCoreV400::EncounterDatePatientSearchTest) do
-        fhir_client { url :url }
-        input :url, :patient_ids
-      end
-    end
-    let(:encounter) do
-      FHIR::Encounter.new(
-        status: 'finished',
-        period: {
-          start: '2021-12-08T16:35:11.000Z',
-          end: '2022-02-07T17:51:00.000Z'
-        },
-        subject: {
-          reference: "Patient/#{patient_id}"
-        }
-      )
-    end
-    let(:bundle) do
-      FHIR::Bundle.new(entry: [{resource: encounter}])
-    end
-
-    before do
-      allow_any_instance_of(test_class)
-        .to receive(:scratch_resources).and_return(
-              {
-                all: [encounter],
-                patient_id => [encounter]
-              }
-            )
-    end
-
-    it 'succeeds if a 400 is received with an OperationOutcome and the status search succeeds' do
-      requests = []
-      requests << stub_request(:get, "#{url}/Encounter?patient=#{patient_id}&date=gt2021-12-07T16:35:11%2B00:00")
-        .to_return(status: 400, body: FHIR::OperationOutcome.new.to_json)
-      requests << stub_request(:get, "#{url}/Encounter?patient=#{patient_id}&date=gt2021-12-07T16:35:11%2B00:00&status=planned")
-        .to_return(status: 200, body: FHIR::Bundle.new.to_json)
-      requests << stub_request(:get, "#{url}/Encounter?patient=#{patient_id}&date=gt2021-12-07T16:35:11%2B00:00&status=arrived")
-        .to_return(status: 200, body: FHIR::Bundle.new.to_json)
-      requests << stub_request(:get, "#{url}/Encounter?patient=#{patient_id}&date=gt2021-12-07T16:35:11%2B00:00&status=triaged")
-        .to_return(status: 200, body: FHIR::Bundle.new.to_json)
-      requests << stub_request(:get, "#{url}/Encounter?patient=#{patient_id}&date=gt2021-12-07T16:35:11%2B00:00&status=in-progress")
-        .to_return(status: 200, body: FHIR::Bundle.new.to_json)
-      requests << stub_request(:get, "#{url}/Encounter?patient=#{patient_id}&date=gt2021-12-07T16:35:11%2B00:00&status=onleave")
-        .to_return(status: 200, body: FHIR::Bundle.new.to_json)
-      requests << stub_request(:get, "#{url}/Encounter?patient=#{patient_id}&date=gt2021-12-07T16:35:11%2B00:00&status=finished")
-        .to_return(status: 200, body: FHIR::Bundle.new.to_json)
-      requests << stub_request(:get, "#{url}/Encounter?patient=#{patient_id}&date=gt2021-12-07T16:35:11%2B00:00&status=cancelled")
-        .to_return(status: 200, body: FHIR::Bundle.new.to_json)
-      requests << stub_request(:get, "#{url}/Encounter?patient=#{patient_id}&date=gt2021-12-07T16:35:11%2B00:00&status=entered-in-error")
-        .to_return(status: 200, body: FHIR::Bundle.new.to_json)
-      requests << stub_request(:get, "#{url}/Encounter?patient=#{patient_id}&date=gt2021-12-07T16:35:11%2B00:00&status=unknown")
-        .to_return(status: 200, body: FHIR::Bundle.new.to_json)
-
-      result = run(test_class, patient_ids: patient_id, url: url)
-
+      result = run(include_test, url: url)
       expect(result.result).to eq('skip')
-      expect(requests).to all(have_been_made.once)
+    end
+
+    it 'skips when scratch is empty' do
+      result = run(include_test_no_scratch, url: url)
+      expect(result.result).to eq('skip')
+    end
+
+    it 'skips when scratch does not contain base resources that have desired reference' do
+      result = run(include_test_no_reference, url: url)
+      expect(result.result).to eq('skip')
     end
   end
 
-  describe 'search with medication inclusion' do
-    context 'when the medication resources are contained' do
-      let(:patient_id) { '123' }
-      let(:medication_id) { '#abc' }
-      let(:medication) { FHIR::Medication.new(id: medication_id) }
-      let(:medication_request) do
-        FHIR::MedicationRequest.new(
-          id: 'def',
-          medicationReference: {
-            reference: medication_id
-          },
-          subject: {
-            reference: "Patient/#{patient_id}"
-          },
-          contained: [
-            medication
-          ]
-        )
-      end
-      let(:medication_request_search_test) do
-        Class.new(Inferno::Test) do
-          include DaVinciPDEXPlanNetTestKit::SearchTest
-
-          def properties
-            @properties ||= DaVinciPDEXPlanNetTestKit::SearchTestProperties.new(
-              resource_type: 'MedicationRequest',
-              search_param_names: ['patient'],
-              possible_status_search: true,
-              test_medication_inclusion: true,
-            )
-          end
-
-          def self.metadata
-            @metadata ||=
-              DaVinciPDEXPlanNetTestKit::Generator::GroupMetadata.new(
-                YAML.load_file(
-                  File.join(
-                    __dir__,
-                    '..',
-                    'fixtures',
-                    'medication_inclusion_metadata.yml'
-                  )
-                )
-              )
-          end
-
-          def scratch_resources
-            scratch[:medication_request_resources] ||= {}
-          end
-
-          fhir_client { url :url }
-          input :url, :patient_ids
-
-          run do
-            run_search_test
-          end
-        end
-      end
-      let(:bundle) do
-        FHIR::Bundle.new(entry: [{resource: medication_request}])
-      end
-      let(:test_scratch) { {} }
-
-      before do
-        Inferno::Repositories::Tests.new.insert(medication_request_search_test)
-        allow_any_instance_of(medication_request_search_test)
-          .to receive(:scratch).and_return(test_scratch)
-      end
-
-      it 'passes without performing an _include search' do
-        # Match any request that doesn't contain '_include'
-        stub_request(:get, /^((?!_include).)*$/)
-          .to_return(status: 200, body: bundle.to_json)
-
-        result = run(medication_request_search_test, patient_ids: patient_id, url: url)
-        expect(result.result).to eq('pass')
-        expect(test_scratch[:medication_resources][:all]).to include(medication)
-        expect(test_scratch[:medication_resources][:contained]).to include(medication)
-        expect(test_scratch[:medication_resources][patient_id]).to include(medication)
+  describe '_revinclude search' do
+    let (:revinclude_test) do 
+      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::OrganizationRevincludeEndpointOrganizationSearchTest) do
+        fhir_client {url :url}
+        input :url
       end
     end
-  end
-
-  describe 'search with device filtering' do
-    context 'when a list of codes is provided' do
-      let(:patient_id) { '123' }
-      let(:implantable_device_code1) { 'code1' }
-      let(:implantable_device_code2) { 'code2' }
-      let(:non_implantable_device_code) { 'code3' }
-      let(:device_codes) { [implantable_device_code1, implantable_device_code2, non_implantable_device_code] }
-      let(:devices) do
-        device_codes.map do |code|
-          FHIR::Device.new(
-            id: 'abc',
-            patient: {
-              reference: "Patient/#{patient_id}"
-            },
-            type: {
-              coding: [{ code: code }]
-            }
-          )
-        end
-      end
-      let(:test_class) do
-        Class.new(DaVinciPDEXPlanNetTestKit::USCoreV311::DevicePatientSearchTest) do
-          fhir_client { url :url }
-          input :url, :patient_ids, :implantable_device_codes
-        end
-      end
-      let(:bundle) do
-        entries = devices.map do |device|
-          { resource: device }
-        end
-        FHIR::Bundle.new(entry: entries)
-      end
-      let(:test_scratch) { {} }
-
-      before do
-        allow_any_instance_of(test_class)
-          .to receive(:scratch).and_return(test_scratch)
-
-        stub_request(:get, "#{url}/Device?patient=#{patient_id}")
-          .to_return(status: 200, body: bundle.to_json)
-        stub_request(:get, "#{url}/Device?patient=Patient/#{patient_id}")
-          .to_return(status: 200, body: bundle.to_json)
-        stub_request(:post, "#{url}/Device/_search")
-          .with(body: {"patient"=>patient_id})
-          .to_return(status: 200, body: bundle.to_json)
-      end
-
-      it 'only stores devices matching those codes' do
-        implantable_devices = devices[0..1]
-        non_implantable_device = devices.last
-        code_input = "#{implantable_device_code1}, #{implantable_device_code2}"
-        result = run(test_class, patient_ids: patient_id, url: url, implantable_device_codes: code_input)
-
-        expect(result.result).to eq('pass')
-        expect(test_scratch[:device_resources][:all]).to eq(implantable_devices)
-        expect(test_scratch[:device_resources][:all]).to_not include(non_implantable_device)
-      end
-
-      it 'skips if no device matches code input' do
-        code_input = 'something_else'
-        result = run(test_class, patient_ids: patient_id, url: url, implantable_device_codes: code_input)
-
-        expect(result.result).to eq('skip')
-        expect(result.result_message).to include('Device Type Code filter: something_else')
+    let (:revinclude_test_no_scratch) do 
+      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::OrganizationRevincludeEndpointOrganizationSearchTest) do
+        fhir_client {url :url}
+        input :url
       end
     end
-  end
-
-  describe 'search multiple-or' do
-    let(:multiple_or_search_test) do
-      Class.new(Inferno::Test) do
-        include DaVinciPDEXPlanNetTestKit::SearchTest
-
-        def properties
-          @properties ||= DaVinciPDEXPlanNetTestKit::SearchTestProperties.new(
-            resource_type: 'MedicationRequest',
-            search_param_names: ['patient', 'intent'],
-            multiple_or_search_params: ['intent']
-          )
-        end
-
-        def self.metadata
-          @metadata ||=
-            DaVinciPDEXPlanNetTestKit::Generator::GroupMetadata.new(
-              YAML.load_file(
-                File.join(
-                  __dir__,
-                  '..',
-                  'fixtures',
-                  'medication_inclusion_metadata.yml'
-                )
-              )
-            )
-        end
-
-        def scratch_resources
-          scratch[:medication_request] ||= {}
-        end
-
-        fhir_client { url :url }
-        input :url, :patient_ids
-
-        run do
-          run_search_test
-        end
+    let (:revinclude_test_no_reference) do 
+      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::OrganizationRevincludeEndpointOrganizationSearchTest) do
+        fhir_client {url :url}
+        input :url
       end
     end
-    let(:patient_id) { '123' }
-    let(:intent_1) { 'order' }
-    let(:intent_2) { 'plan' }
-    let(:medication_request_1) do
-      FHIR::MedicationRequest.new(
-        status: 'active',
-        intent: intent_1,
-        subject: {
-          reference: "Patient/#{patient_id}"
+    let (:revinclude_test_only_url) do 
+      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::OrganizationRevincludeEndpointOrganizationSearchTest) do
+        fhir_client {url :url}
+        input :url
+      end
+    end
+    let (:endpoint_local) {
+      FHIR::Endpoint.new(
+        id: 'endpoint-local-reference',
+        managingOrganization: {
+          reference: "Organization/acme"
         }
       )
-    end
-    let(:medication_request_2) do
-      FHIR::MedicationRequest.new(
-        status: 'active',
-        intent: intent_2,
-        subject: {
-          reference: "Patient/#{patient_id}"
+    }
+    let (:endpoint_url) {
+      FHIR::Endpoint.new(
+        id: 'endpoint-url',
+        managingOrganization: {
+          reference: "http://example.com/Organization/ecorp"
         }
       )
-    end
-    let(:bundle_1) do
-      FHIR::Bundle.new(entry: [{resource: medication_request_1}])
-    end
-    let(:bundle_2) do
-      FHIR::Bundle.new(entry: [{resource: medication_request_2}])
-    end
+    }
+    let (:endpoint_no_reference) {
+      FHIR::Endpoint.new(
+        id: 'endpoint-no-reference',
+      )
+    }
+    let (:organization_local) {
+      FHIR::Organization.new(
+        id: 'acme'
+      )
+    }
+    let (:organization_url) {
+      FHIR::Organization.new(
+        id: 'ecorp'
+      )
+    }
+    let (:organization_unreferenced) {
+      FHIR::Organization.new(
+        id: 'org-3'
+      )
+    }
+    let (:bundle ) {
+      FHIR::Bundle.new(
+        entry: []
+      )
+    }
+    let (:test_scratch) { {
+      all: [endpoint_local, endpoint_url]
+    } }
+    let (:only_url_scratch) { {
+      all: [endpoint_url]
+    } }
+    let (:empty_scratch) { {
+      all: []
+    }}
+    let (:no_reference_scratch){ {
+      all: [endpoint_no_reference]
+    }}
 
     before do
-      Inferno::Repositories::Tests.new.insert(multiple_or_search_test)
-      allow_any_instance_of(multiple_or_search_test)
-        .to receive(:scratch_resources).and_return(
-              {
-                all: [medication_request_1, medication_request_2],
-                patient_id => [medication_request_1, medication_request_2]
-              }
-            )
+      allow_any_instance_of(revinclude_test).to receive(:scratch_revinclude_resources).and_return(test_scratch)
+      allow_any_instance_of(revinclude_test_no_scratch).to receive(:scratch_revinclude_resources).and_return(empty_scratch)
+      allow_any_instance_of(revinclude_test_no_reference).to receive(:scratch_revinclude_resources).and_return(no_reference_scratch)
+      allow_any_instance_of(revinclude_test_only_url).to receive(:scratch_revinclude_resources).and_return(only_url_scratch)
+      stub_request(:get, "#{url}/Organization")
+        .to_return(status: 200, body: FHIR::Bundle.new.to_json)
     end
 
-    it 'fails if multiple-or search test does not return all existing values' do
-      stub_request(:get, "#{url}/MedicationRequest?patient=#{patient_id}&intent=#{intent_1}")
-        .to_return(status: 200, body: bundle_1.to_json)
-      stub_request(:get, "#{url}/MedicationRequest?patient=#{patient_id}&intent=proposal,plan,order,original-order,reflex-order,filler-order,instance-order,option")
-        .to_return(status: 200, body: bundle_2.to_json)
-      result = run(multiple_or_search_test, patient_ids: patient_id, url: url)
+    it 'passes when references and included Resources are exact match' do
+      bundle.entry.concat([ {resource: organization_local }, {resource: endpoint_local }])
+      stub_request(:get, "#{url}/Organization?_id=Organization/#{organization_local.id}&_revinclude=Endpoint:organization")
+        .to_return(status: 200, body: bundle.to_json)
 
+      result = run(revinclude_test, url: url)
+      expect(result.result).to eq('pass')
+    end
+
+    it 'passes when references are a url and included resources are exact match' do
+      bundle.entry.concat([ { resource: endpoint_url }, {resource: organization_url }])
+      stub_request(:get, "#{url}/Organization?_id=#{endpoint_url.managingOrganization.reference}&_revinclude=Endpoint:organization")
+        .to_return(status: 200, body: bundle.to_json)
+
+      result = run(revinclude_test_only_url, url: url)
+      expect(result.result).to eq('pass')
+    end
+
+    it 'passes with empty scratch but given an input by user for revinclude base' do
+      bundle.entry.concat([ { resource: endpoint_url }, {resource: organization_url }])
+      stub_request(:get, "#{url}/Organization?_id=#{organization_url.id}&_revinclude=Endpoint:organization")
+        .to_return(status: 200, body: bundle.to_json)
+
+      result = run(revinclude_test_no_scratch, url: url, endpoint_organization_input: organization_url.id)
+      expect(result.result).to eq('pass')
+    end
+
+    it 'fails when returned additional resources are not referenced' do
+      bundle.entry.concat([ {resource: organization_local }, {resource: endpoint_url}])
+      stub_request(:get, "#{url}/Organization?_id=Organization/#{organization_local.id}&_revinclude=Endpoint:organization")
+        .to_return(status: 200, body: bundle.to_json)
+
+      result = run(revinclude_test, url: url)
       expect(result.result).to eq('fail')
-      expect(result.result_message).to eq("Could not find order values from intent in any of the resources returned for Patient/#{patient_id}")
+    end
+
+    it 'fails when returning both referenced and unreferenced resources' do
+      bundle.entry.concat([ { resource: endpoint_local }, {resource: organization_local }, {resource: endpoint_url}])
+      stub_request(:get, "#{url}/Organization?_id=Organization/#{organization_local.id}&_revinclude=Endpoint:organization")
+        .to_return(status: 200, body: bundle.to_json)
+
+      result = run(revinclude_test, url: url)
+      expect(result.result).to eq('fail')
+    end
+
+    it 'Fails when server returns a non 200 status code and resulting message displays returned status code' do
+      bundle.entry.concat([ {resource: organization_local }, {resource: endpoint_local }])
+      stub_request(:get, "#{url}/Organization?_id=Organization/#{organization_local.id}&_revinclude=Endpoint:organization")
+        .to_return(status: 400, body: bundle.to_json)
+
+      result = run(revinclude_test, url: url)
+      expect(result.result).to eq('fail')
+      expect(result.result_message).to eq('Unexpected response status: expected 200, but received 400')
+    end
+
+    it 'skips when no additional resources are returned' do
+      stub_request(:get, "#{url}/Organization?_id=Organization/#{organization_local.id}&_revinclude=Endpoint:organization")
+        .to_return(status: 200, body: bundle.to_json)
+
+      result = run(revinclude_test, url: url)
+      expect(result.result).to eq('skip')
+    end
+
+    it 'skips when scratch is empty and no input given' do
+      result = run(revinclude_test_no_scratch, url: url)
+      expect(result.result).to eq('skip')
+    end
+
+    it 'skips when scratch does not contain base resources that have desired reference' do
+      result = run(revinclude_test_no_reference, url: url)
+      expect(result.result).to eq('skip')
     end
   end
 
-  describe 'search date/dateTime precision' do
-    let(:patient_id) { '123' }
-    context 'with date precision' do
-      let(:test_class) do
-        Class.new(DaVinciPDEXPlanNetTestKit::USCoreV400::GoalPatientTargetDateSearchTest) do
-          fhir_client { url :url }
-          input :url
-        end
-      end
-      let(:goal_year) do
-        FHIR::Goal.new(
-          id: 'year',
-          subject: {
-            reference: "Patient/#{patient_id}"
-          },
-          target: [
-            { dueDate: '2020' }
-          ]
-        )
-      end
-      let(:goal_date) do
-        FHIR::Goal.new(
-          id: 'date',
-          subject: {
-            reference: "Patient/#{patient_id}"
-          },
-          target: [
-            { dueDate: '2020-03-04' }
-          ]
-        )
-      end
-      let(:goal_datetime) do
-          FHIR::Goal.new(
-            id: 'datetime',
-            subject: {
-              reference: "Patient/#{patient_id}"
-            },
-            target: [
-              { dueDate: '2020-03-04T13:01:01-04:00' }
-            ]
-          )
-      end
-
-      let(:bundle_year) { FHIR::Bundle.new(entry: [ {resource: goal_year} ]) }
-      let(:bundle_date) { FHIR::Bundle.new(entry: [ {resource: goal_date} ]) }
-      let(:bundle_datetime) { FHIR::Bundle.new(entry: [ {resource: goal_datetime} ]) }
-
-      it 'uses comparator search if value is year' do
-        allow_any_instance_of(test_class)
-          .to receive(:scratch_resources).and_return(
-            {
-              all: [goal_year],
-              patient_id => [goal_year]
-            }
-          )
-
-        request = stub_request(:get, "#{url}/Goal?patient=#{patient_id}&target-date=2020")
-          .to_return(status: 200, body: bundle_year.to_json)
-
-        stub_request(:get, "#{url}/Goal?patient=#{patient_id}&target-date=gt2019-12-31T00:00:00%2B00:00")
-          .to_return(status: 200, body: bundle_year.to_json)
-        stub_request(:get, "#{url}/Goal?patient=#{patient_id}&target-date=ge2019-12-31T00:00:00%2B00:00")
-          .to_return(status: 200, body: bundle_year.to_json)
-        stub_request(:get, "#{url}/Goal?patient=#{patient_id}&target-date=lt2020-01-02T00:00:00%2B00:00")
-          .to_return(status: 200, body: bundle_year.to_json)
-        stub_request(:get, "#{url}/Goal?patient=#{patient_id}&target-date=le2020-01-02T00:00:00%2B00:00")
-          .to_return(status: 200, body: bundle_year.to_json)
-
-        result = run(test_class, patient_ids: patient_id, url: url)
-        expect(request).not_to have_been_made
-        expect(result.result).to eq('pass')
-      end
-
-      it 'searches date if value is date' do
-        allow_any_instance_of(test_class)
-          .to receive(:scratch_resources).and_return(
-            {
-              all: [goal_date],
-              patient_id => [goal_date]
-            }
-          )
-
-        request = stub_request(:get, "#{url}/Goal?patient=#{patient_id}&target-date=2020-03-04")
-          .to_return(status: 200, body: bundle_date.to_json)
-
-        stub_request(:get, "#{url}/Goal?patient=#{patient_id}&target-date=gt2020-03-03T00:00:00%2B00:00")
-          .to_return(status: 200, body: bundle_date.to_json)
-        stub_request(:get, "#{url}/Goal?patient=#{patient_id}&target-date=ge2020-03-03T00:00:00%2B00:00")
-          .to_return(status: 200, body: bundle_date.to_json)
-        stub_request(:get, "#{url}/Goal?patient=#{patient_id}&target-date=lt2020-03-05T00:00:00%2B00:00")
-          .to_return(status: 200, body: bundle_date.to_json)
-        stub_request(:get, "#{url}/Goal?patient=#{patient_id}&target-date=le2020-03-05T00:00:00%2B00:00")
-          .to_return(status: 200, body: bundle_date.to_json)
-
-        result = run(test_class, patient_ids: patient_id, url: url)
-        expect(request).to have_been_made.once
-        expect(result.result).to eq('pass')
-      end
-
-      it 'searches second+offset if value is dateTime' do
-        allow_any_instance_of(test_class)
-          .to receive(:scratch_resources).and_return(
-            {
-              all: [goal_datetime],
-              patient_id => [goal_datetime]
-            }
-          )
-
-        request = stub_request(:get, "#{url}/Goal?patient=#{patient_id}&target-date=2020-03-04T13:01:01-04:00")
-          .to_return(status: 200, body: bundle_datetime.to_json)
-
-        stub_request(:get, "#{url}/Goal?patient=#{patient_id}&target-date=gt2020-03-03T13:01:01-04:00")
-          .to_return(status: 200, body: bundle_datetime.to_json)
-        stub_request(:get, "#{url}/Goal?patient=#{patient_id}&target-date=ge2020-03-03T13:01:01-04:00")
-          .to_return(status: 200, body: bundle_datetime.to_json)
-        stub_request(:get, "#{url}/Goal?patient=#{patient_id}&target-date=lt2020-03-05T13:01:01-04:00")
-          .to_return(status: 200, body: bundle_datetime.to_json)
-        stub_request(:get, "#{url}/Goal?patient=#{patient_id}&target-date=le2020-03-05T13:01:01-04:00")
-          .to_return(status: 200, body: bundle_datetime.to_json)
-
-        result = run(test_class, patient_ids: patient_id, url: url)
-        expect(request).to have_been_made.once
-        expect(result.result).to eq('pass')
+  describe 'forward chaining tests' do
+    let (:forward_chain_test) do 
+      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::EndpointForwardChainOrganizationTypeSearchTest) do
+        fhir_client {url :url}
+        input :url
       end
     end
-
-    context 'with dateTime precision' do
-      let(:test_class) do
-        Class.new(DaVinciPDEXPlanNetTestKit::USCoreV400::ImmunizationPatientDateSearchTest) do
-          fhir_client { url :url }
-          input :url
-        end
-      end
-      let(:immunization_year) do
-        FHIR::Immunization.new(
-          id: 'year',
-          patient: {
-            reference: "Patient/#{patient_id}"
-          },
-          occurrenceDateTime: '2020'
-        )
-      end
-      let(:immunization_date) do
-        FHIR::Immunization.new(
-          id: 'date',
-          patient: {
-            reference: "Patient/#{patient_id}"
-          },
-          occurrenceDateTime: '2020-03-04'
-        )
-      end
-      let(:immunization_datetime) do
-          FHIR::Immunization.new(
-            id: 'datetime',
-            patient: {
-              reference: "Patient/#{patient_id}"
-            },
-            occurrenceDateTime: '2020-03-04T13:01:01-04:00'
-          )
-      end
-
-      let(:bundle_year) { FHIR::Bundle.new(entry: [ {resource: immunization_year} ]) }
-      let(:bundle_date) { FHIR::Bundle.new(entry: [ {resource: immunization_date} ]) }
-      let(:bundle_datetime) { FHIR::Bundle.new(entry: [ {resource: immunization_datetime} ]) }
-
-      it 'uses comparator search if value is year' do
-        allow_any_instance_of(test_class)
-          .to receive(:scratch_resources).and_return(
-            {
-              all: [immunization_year],
-              patient_id => [immunization_year]
-            }
-          )
-
-        request = stub_request(:get, "#{url}/Immunization?patient=#{patient_id}&date=2020")
-          .to_return(status: 200, body: bundle_year.to_json)
-
-        stub_request(:get, "#{url}/Immunization?patient=#{patient_id}&date=gt2019-12-31T00:00:00%2B00:00")
-          .to_return(status: 200, body: bundle_year.to_json)
-        stub_request(:get, "#{url}/Immunization?patient=#{patient_id}&date=ge2019-12-31T00:00:00%2B00:00")
-          .to_return(status: 200, body: bundle_year.to_json)
-        stub_request(:get, "#{url}/Immunization?patient=#{patient_id}&date=lt2020-01-02T00:00:00%2B00:00")
-          .to_return(status: 200, body: bundle_year.to_json)
-        stub_request(:get, "#{url}/Immunization?patient=#{patient_id}&date=le2020-01-02T00:00:00%2B00:00")
-          .to_return(status: 200, body: bundle_year.to_json)
-
-        result = run(test_class, patient_ids: patient_id, url: url)
-        expect(request).not_to have_been_made
-        expect(result.result).to eq('pass')
-      end
-
-      it 'uses comparator search if value is date' do
-        allow_any_instance_of(test_class)
-          .to receive(:scratch_resources).and_return(
-            {
-              all: [immunization_date],
-              patient_id => [immunization_date]
-            }
-          )
-
-        request = stub_request(:get, "#{url}/Immunization?patient=#{patient_id}&date=2020-03-04")
-          .to_return(status: 200, body: bundle_date.to_json)
-
-        stub_request(:get, "#{url}/Immunization?patient=#{patient_id}&date=gt2020-03-03T00:00:00%2B00:00")
-          .to_return(status: 200, body: bundle_date.to_json)
-        stub_request(:get, "#{url}/Immunization?patient=#{patient_id}&date=ge2020-03-03T00:00:00%2B00:00")
-          .to_return(status: 200, body: bundle_date.to_json)
-        stub_request(:get, "#{url}/Immunization?patient=#{patient_id}&date=lt2020-03-05T00:00:00%2B00:00")
-          .to_return(status: 200, body: bundle_date.to_json)
-        stub_request(:get, "#{url}/Immunization?patient=#{patient_id}&date=le2020-03-05T00:00:00%2B00:00")
-          .to_return(status: 200, body: bundle_date.to_json)
-
-        result = run(test_class, patient_ids: patient_id, url: url)
-        expect(request).not_to have_been_made.once
-        expect(result.result).to eq('pass')
-      end
-
-      it 'searches second+offset if value is dateTime' do
-        allow_any_instance_of(test_class)
-          .to receive(:scratch_resources).and_return(
-            {
-              all: [immunization_datetime],
-              patient_id => [immunization_datetime]
-            }
-          )
-
-        request = stub_request(:get, "#{url}/Immunization?patient=#{patient_id}&date=2020-03-04T13:01:01-04:00")
-          .to_return(status: 200, body: bundle_datetime.to_json)
-
-        stub_request(:get, "#{url}/Immunization?patient=#{patient_id}&date=gt2020-03-03T13:01:01-04:00")
-          .to_return(status: 200, body: bundle_datetime.to_json)
-        stub_request(:get, "#{url}/Immunization?patient=#{patient_id}&date=ge2020-03-03T13:01:01-04:00")
-          .to_return(status: 200, body: bundle_datetime.to_json)
-        stub_request(:get, "#{url}/Immunization?patient=#{patient_id}&date=lt2020-03-05T13:01:01-04:00")
-          .to_return(status: 200, body: bundle_datetime.to_json)
-        stub_request(:get, "#{url}/Immunization?patient=#{patient_id}&date=le2020-03-05T13:01:01-04:00")
-          .to_return(status: 200, body: bundle_datetime.to_json)
-
-        result = run(test_class, patient_ids: patient_id, url: url)
-        expect(request).to have_been_made.once
-        expect(result.result).to eq('pass')
+    let (:forward_chain_test_no_scratch) do 
+      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::EndpointForwardChainOrganizationTypeSearchTest) do
+        fhir_client {url :url}
+        input :url
       end
     end
-  end
-
-  describe '#all_search_params' do
-    let(:test_class) { DaVinciPDEXPlanNetTestKit::USCoreV311::DocumentReferencePatientCategoryDateSearchTest }
-    let(:test) { test_class.new }
-    let(:patient_id) {'123'}
-    let(:patient_no_resource) {'no-resource'}
-    let(:category_code) {'clinical-note'}
-    let(:date) {'2020-05-14T11:02:00+05:00'}
-    let(:resource_with_category_date) {
-      FHIR::DocumentReference.new(
-        subject: {
-          reference: "Patient/#{patient_id}"
-        },
-        category: [
-          {
-            coding: [
-              {
-                code: category_code
-              }
-            ]
-          }
-        ],
-        date: date
+    let (:forward_chain_test_no_type) do 
+      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::EndpointForwardChainOrganizationTypeSearchTest) do
+        fhir_client {url :url}
+        input :url
+      end
+    end
+    let (:forward_chain_test_non_prvgrp_type) do 
+      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::EndpointForwardChainOrganizationTypeSearchTest) do
+        fhir_client {url :url}
+        input :url
+      end
+    end
+    let (:endpoint_local) {
+      FHIR::Endpoint.new(
+        id: 'endpoint-local-reference',
+        managingOrganization: {
+          reference: "Organization/acme"
+        }
       )
     }
+    let (:endpoint_url) {
+      FHIR::Endpoint.new(
+        id: 'endpoint-url',
+        managingOrganization: {
+          reference: "http://example.com/Organization/ecorp"
+        }
+      )
+    }
+    let (:endpoint_local_references_non_prvgrp) {
+      FHIR::Endpoint.new(
+        id: 'endpoint-local-non-prvgrp',
+        managingOrganization: {
+          reference: "Organization/not-prvgrp"
+        }
+      )
+    }
+    let (:endpoint_url_references_non_prvgrp) {
+      FHIR::Endpoint.new(
+        id: 'endpoint-url-non-prvgrp',
+        managingOrganization: {
+          reference: "http://example.com/Organization/not-prvgrp"
+        }
+      )
+    }
+    let (:endpoint_referencing_organization_without_type) {
+      FHIR::Endpoint.new(
+        id: 'endpoint-reference-org-without-type',
+        managingOrganization: {
+          reference: "Organization/no-type"
+        }
+      )
+    }
+    let (:organization_acme_type_prvgrp) {
+      FHIR::Organization.new(
+        id: 'acme',
+        type: [ { 
+          coding: [ {
+            system: 'http://hl7.org/fhir/us/davinci-pdex-plan-net/CodeSystem/OrgTypeCS',
+            code: 'prvgrp',
+            display: 'Provider Group'
+          } ]
+        } ]
+      )
+    }
+    let (:organization_ecorp_type_prvgrp) {
+      FHIR::Organization.new(
+        id: 'ecorp',
+        type: [ { 
+          coding: [ {
+            system: 'http://hl7.org/fhir/us/davinci-pdex-plan-net/CodeSystem/OrgTypeCS',
+            code: 'prvgrp',
+            display: 'Provider Group'
+          } ]
+        } ]
+      )
+    }
+    let (:organization_type_anomaly) {
+      FHIR::Organization.new(
+        id: 'not-prvgrp',
+        type: [ { 
+          coding: [ {
+            system: 'http://hl7.org/fhir/us/davinci-pdex-plan-net/CodeSystem/OrgTypeCS',
+            code: 'anomaly',
+            display: 'Not a real group'
+          } ]
+        } ]
+      )
+    }
+    let (:organization_no_type) {
+      FHIR::Organization.new(
+        id: 'no-type',
+        name: 'Typeless Organization'
+      )
+    }
+    let (:bundle) {
+      FHIR::Bundle.new(
+        entry: []
+      )
+    }
+    let (:prvgrp_bundle) {
+      FHIR::Bundle.new(
+        entry: [{resource: organization_acme_type_prvgrp}, {resource: organization_ecorp_type_prvgrp}]
+      )
+    }
+    let (:organization_bundle_with_multiple_types) {
+      FHIR::Bundle.new(
+        entry: [{resource: organization_acme_type_prvgrp}, {resource: organization_type_anomaly}]
+      )
+    }
+    let (:test_scratch) { {
+      all: [organization_acme_type_prvgrp, organization_ecorp_type_prvgrp]
+    } }
+    let (:only_non_prvgrp_scratch) { {
+      all: [organization_type_anomaly]
+    } }
+    let (:empty_scratch) { {
+      all: []
+    }}
+    let (:no_reference_with_type_scratch){ {
+      all: [organization_no_type]
+    }}
 
     before do
-      allow_any_instance_of(test_class)
-        .to receive(:scratch_resources).and_return(
-          {
-            patient_no_resource => [],
-            patient_id => [resource_with_category_date]
-          }
-        )
-      allow_any_instance_of(test_class)
-        .to receive(:patient_id_list).and_return([patient_no_resource, patient_id])
+      allow_any_instance_of(forward_chain_test).to receive(:scratch_chain_resources).and_return(test_scratch)
+      allow_any_instance_of(forward_chain_test_no_scratch).to receive(:scratch_chain_resources).and_return(empty_scratch)
+      allow_any_instance_of(forward_chain_test_no_type).to receive(:scratch_chain_resources).and_return(no_reference_with_type_scratch)
+      allow_any_instance_of(forward_chain_test_non_prvgrp_type).to receive(:scratch_chain_resources).and_return(only_non_prvgrp_scratch)
+      stub_request(:get, "#{url}/Organization?type=prvgrp")
+        .to_return(status: 200, body: prvgrp_bundle.to_json)
     end
 
-    it 'handles patient with or without resources' do
-      params = test.all_search_params
-
-      expect(params).not_to be_empty
-      expect(params[patient_no_resource]).to be_empty
-      expect(params[patient_id]).not_to be_empty
+    it 'Passes when server returns all base resources that reference Additional resource locally AND/OR url with matching field value' do
+      bundle.entry.concat([ {resource: endpoint_local }, {resource: endpoint_url }])
+      stub_request(:get, "#{url}/Endpoint?organization.type=prvgrp")
+        .to_return(status: 200, body: bundle.to_json)
+      
+      result = run(forward_chain_test, url: url)
+      expect(result.result).to eq('pass')
     end
-  end
+    
+    it 'Fails when server returns base resources with references to additional resource without matching field value' do
+      bundle.entry.concat([ {resource: endpoint_local }, {resource: endpoint_url }, {resource: endpoint_local_references_non_prvgrp}, {resource: endpoint_url_references_non_prvgrp}])
+      stub_request(:get, "#{url}/Endpoint?organization.type=prvgrp")
+        .to_return(status: 200, body: bundle.to_json)
 
-  describe '#search_params_with_values' do
-    let(:test_class) { DaVinciPDEXPlanNetTestKit::USCoreV311::DocumentReferencePatientCategoryDateSearchTest }
-    let(:test) { test_class.new }
-    let(:patient_id) {'123'}
-    let(:patient_no_resource) {'456'}
-    let(:category_code) {'something-else'}
-    let(:date) {'2020-05-14T11:02:00+05:00'}
-    let(:resource_with_category) {
-      FHIR::DocumentReference.new(
-        subject: {
-          reference: "Patient/#{patient_id}"
-        },
-        category: [
-          {
-            coding: [
-              {
-                code: 'clinical-note'
-              }
-            ]
-          }
-        ]
-      )
-    }
-    let(:resource_with_category_date) {
-      FHIR::DocumentReference.new(
-        subject: {
-          reference: "Patient/#{patient_id}"
-        },
-        category: [
-          {
-            coding: [
-              {
-                code: category_code
-              }
-            ]
-          }
-        ],
-        date: date
-      )
-    }
-
-    it 'returns search values from the same resource' do
-      allow_any_instance_of(test_class)
-        .to receive(:scratch_resources_for_patient).and_return([
-          resource_with_category,
-          resource_with_category_date
-        ])
-
-      params = test.search_params_with_values(test.search_param_names, patient_id)
-
-      expect(params).not_to be_empty
-      expect(params['patient']).to eq(patient_id)
-      expect(params['category']).to eq(category_code)
-      expect(params['date']).to eq(date)
+      result = run(forward_chain_test, url: url)
+      expect(result.result).to eq('fail')
     end
 
-    it 'handles patient without resources' do
-      allow_any_instance_of(test_class)
-        .to receive(:scratch_resources_for_patient).and_return([])
+    it 'Fails when collection of additional resources returns additional resource with incorrect value in desired field' do
+      bundle.entry.concat([ {resource: endpoint_local_references_non_prvgrp }, {resource: endpoint_url_references_non_prvgrp}])
+      stub_request(:get, "#{url}/Endpoint?organization.type=anomaly")
+        .to_return(status: 200, body: bundle.to_json)
 
-      patient_id = 'no_resource'
+      stub_request(:get, "#{url}/Organization?type=anomaly")
+        .to_return(status: 200, body: organization_bundle_with_multiple_types.to_json)
 
-      params = test.search_params_with_values(test.search_param_names, patient_id)
+      result = run(forward_chain_test_non_prvgrp_type, url: url)
+      expect(result.result).to eq('fail')
+    end
 
-      expect(params).not_to be_empty
-      expect(params['patient']).to eq(patient_id)
-      expect(params['category']).to be_nil
-      expect(params['date']).to be_nil
+    it 'Fails when server returns a non 200 status code and resulting message displays returned status code' do
+      bundle.entry.concat([ {resource: endpoint_local }, {resource: endpoint_url }])
+      stub_request(:get, "#{url}/Endpoint?organization.type=prvgrp")
+        .to_return(status: 400, body: bundle.to_json)
+
+      result = run(forward_chain_test, url: url)
+      expect(result.result).to eq('fail')
+      expect(result.result_message).to eq('Unexpected response status: expected 200, but received 400')
+    end
+    
+    it 'Skips if server returns nothing' do
+      stub_request(:get, "#{url}/Endpoint?organization.type=prvgrp")
+        .to_return(status: 200, body: bundle.to_json)
+
+      result = run(forward_chain_test, url: url)
+      expect(result.result).to eq('skip')
+    end
+
+    # contextual call returning nothing is not tested.  I don't think this can happen (would be skipped once no
+    # resource could be found to populate the field, basically the two cases below this comment)
+    it 'Skips if scratch is empty' do
+      result = run(forward_chain_test_no_scratch, url: url)
+      expect(result.result).to eq('skip')
+    end
+    it 'Skips if scratch has no additional resources with desired field populated' do
+      result = run(forward_chain_test_no_type, url: url)
+      expect(result.result).to eq('skip')
     end
   end
 
-  describe '#search_param_value' do
-    context 'Array element having DAR extension' do
-      let(:test_class) { DaVinciPDEXPlanNetTestKit::USCoreV311::PatientNameSearchTest }
-      let(:test) { test_class.new }
-      let(:search_value) {'family_name'}
-      let(:patient) {
-        FHIR::Patient.new(
-          name: [
-            {
-              extension: [
-                {
-                  url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
-                  valueCode: 'unknown'
-                }
-              ]
-            },
-            {
-              family: search_value,
-              given: [
-                'first_name'
-              ]
-            }
-          ]
-        )
-      }
-
-      it 'returns search value from the first none-DAR name of name array' do
-        element = test.search_param_value('name', Array.wrap(patient))
-
-        expect(element).to eq(search_value)
-      end
-    end
-
-    context 'CodeablcConcept with text only' do
-      let(:test_class) { DaVinciPDEXPlanNetTestKit::USCoreV311::DiagnosticReportLabPatientCategorySearchTest }
-      let(:test) { test_class.new }
-
-      it 'returns nil if category has text only' do
-        diagnostic_report = FHIR::DiagnosticReport.new(
-          category: [
-            {
-              text: 'Lab Report'
-            }
-          ]
-        )
-
-        element = test.search_param_value('category', Array.wrap(diagnostic_report))
-
-        expect(element).to be_nil
-      end
-
-      it 'returns code value if category has one coding with code' do
-        diagnostic_report = FHIR::DiagnosticReport.new(
-          category: [
-            {
-              text: 'This is a display text'
-            },
-            {
-              coding: [
-                {
-                  display: 'This is a display text'
-                },
-                {
-                  code: 'LAB',
-                  system: 'http://terminology.hl7.org/CodeSystem/v2-0074'
-                }
-              ]
-            }
-          ]
-        )
-
-        element = test.search_param_value('category', Array.wrap(diagnostic_report))
-        element_with_system = test.search_param_value('category', Array.wrap(diagnostic_report), include_system: true)
-
-        expect(element).to eq('LAB')
-        expect(element_with_system).to eq('http://terminology.hl7.org/CodeSystem/v2-0074|LAB')
-      end
-    end
-  end
-
-  describe '#perform_comparator_searches' do
-    let(:test_class) do
-      Class.new(DaVinciPDEXPlanNetTestKit::USCoreV311::ImmunizationPatientDateSearchTest) do
-        fhir_client { url :url }
+  describe 'reverse chaining tests' do
+    let(:reverse_chain_test) do 
+      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::PractitionerReverseChainPractitionerRolePractitionerSpecialtySearchTest) do
+        fhir_client {url :url}
         input :url
       end
     end
-    let(:test) { test_class.new }
-    let(:patient_id) { '85' }
-    let(:immunization) {
-      FHIR::Immunization.new(
-        id: 'datetime',
-        patient: {
-          reference: "Patient/#{patient_id}"
-        },
-        occurrenceDateTime: '2020-03-04T13:01:01-04:00'
-      )
-    }
-    let(:bundle) {
-      FHIR::Bundle.new(
-        entry: [
-          { resource: immunization },
-          { resource: FHIR::OperationOutcome.new }
-        ]
-      )
-    }
-
-    it 'passes with additional OperationOutcome entry' do
-      allow_any_instance_of(test_class)
-        .to receive(:scratch_resources_for_patient)
-        .and_return([immunization])
-
-      stub_request(:get, "#{url}/Immunization?patient=#{patient_id}&date=2020-03-04T13:01:01-04:00")
-        .to_return(status: 200, body: bundle.to_json)
-      stub_request(:get, "#{url}/Immunization?patient=#{patient_id}&date=gt2020-03-03T13:01:01-04:00")
-        .to_return(status: 200, body: bundle.to_json)
-      stub_request(:get, "#{url}/Immunization?patient=#{patient_id}&date=ge2020-03-03T13:01:01-04:00")
-        .to_return(status: 200, body: bundle.to_json)
-      stub_request(:get, "#{url}/Immunization?patient=#{patient_id}&date=lt2020-03-05T13:01:01-04:00")
-        .to_return(status: 200, body: bundle.to_json)
-      stub_request(:get, "#{url}/Immunization?patient=#{patient_id}&date=le2020-03-05T13:01:01-04:00")
-        .to_return(status: 200, body: bundle.to_json)
-
-      result = run(test_class, patient_ids: patient_id, url: url)
-      expect(result.result).to eq('pass')
-    end
-  end
-
-  describe 'search_value contains comma' do
-    let(:test_class) do
-      Class.new(DaVinciPDEXPlanNetTestKit::USCoreV311::DiagnosticReportNotePatientCategoryDateSearchTest) do
-        fhir_client { url :url }
+    let(:reverse_chain_test_no_scratch) do 
+      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::PractitionerReverseChainPractitionerRolePractitionerSpecialtySearchTest) do
+        fhir_client {url :url}
         input :url
       end
     end
-    let(:test) { test_class.new }
-    let(:patient_id) { '85' }
-    let(:diagnostic_report) {
-      FHIR::DiagnosticReport.new(
-        id: '1',
-        subject: {
-          reference: "Patient/#{patient_id}"
-        },
-        category: [
-          {
-            "coding":
-            [
-              {
-                "system": "urn:oid:1.2.840.114350.1.13.1545.1.7.10.798268.30",
-                "code": "Path,Cyt"
-              }
-            ]
-          }
-        ],
-        effectiveDateTime: '2021-11-24T15:55:00Z',
-      )
-    }
-    let(:bundle) {
-      FHIR::Bundle.new(
-        entry: [
-          { resource: diagnostic_report }
-        ]
-      )
-    }
-
-    it 'passes with comma in search value' do
-      allow_any_instance_of(test_class)
-        .to receive(:scratch_resources_for_patient)
-        .and_return([diagnostic_report])
-
-      stub_request(:get, "#{url}/DiagnosticReport?patient=#{patient_id}&category=Path%5C,Cyt&date=2021-11-24T15:55:00Z")
-        .to_return(status: 200, body: bundle.to_json)
-      stub_request(:get, "#{url}/DiagnosticReport?patient=#{patient_id}&category=Path%5C,Cyt&date=gt2021-11-23T15:55:00%2B00:00")
-        .to_return(status: 200, body: bundle.to_json)
-      stub_request(:get, "#{url}/DiagnosticReport?patient=#{patient_id}&category=Path%5C,Cyt&date=ge2021-11-23T15:55:00%2B00:00")
-        .to_return(status: 200, body: bundle.to_json)
-      stub_request(:get, "#{url}/DiagnosticReport?patient=#{patient_id}&category=Path%5C,Cyt&date=lt2021-11-25T15:55:00%2B00:00")
-        .to_return(status: 200, body: bundle.to_json)
-      stub_request(:get, "#{url}/DiagnosticReport?patient=#{patient_id}&category=Path%5C,Cyt&date=le2021-11-25T15:55:00%2B00:00")
-        .to_return(status: 200, body: bundle.to_json)
-      stub_request(:get, "#{url}/DiagnosticReport?patient=#{patient_id}&category=urn:oid:1.2.840.114350.1.13.1545.1.7.10.798268.30%7CPath%5C,Cyt&date=2021-11-24T15:55:00Z")
-        .to_return(status: 200, body: bundle.to_json)
-
-      result = run(test_class, patient_ids: patient_id, url: url)
-      expect(result.result).to eq('pass')
-    end
-  end
-
-  describe 'search extension' do
-    let(:test_class) do
-      Class.new(DaVinciPDEXPlanNetTestKit::USCoreV501::ConditionEncounterDiagnosisPatientAssertedDateSearchTest) do
-        fhir_client { url :url }
+    let(:reverse_chain_test_no_specialty) do 
+      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::PractitionerReverseChainPractitionerRolePractitionerSpecialtySearchTest) do
+        fhir_client {url :url}
         input :url
       end
     end
-    let(:test) { test_class.new }
-    let(:patient_id) { '85' }
-    let(:condition) {
-      FHIR::Condition.new(
-        id: '1',
-        extension: [
-          {
-            url: 'http://hl7.org/fhir/StructureDefinition/condition-assertedDate',
-            valueDateTime: '2021-11-24T15:55:00Z'
-          }
-        ],
-        subject: {
-          reference: "Patient/#{patient_id}"
+    let (:practitioner_referenced_by_counselor) {
+      FHIR::Practitioner.new(
+        id: 'referenced-practitioner'
+      )
+    }
+    let (:practitioner_unreferenced) {
+      FHIR::Practitioner.new(
+        id: 'unreferenced-practitioner'
+      )
+    }
+    let (:practitioner_referenced_by_else) {
+      FHIR::Practitioner.new(
+        id: 'referenced-practitioner-else'
+      )
+    }
+    let (:practitionerrole_with_reference_counselor) {
+      FHIR::PractitionerRole.new(
+        id: 'practitionerrole-with-reference-counselor',
+        practitioner: {
+          reference: 'Practitioner/referenced-practitioner'
         },
-        category: [
-          {
-            coding: [
-              {
-                system: 'http://terminology.hl7.org/CodeSystem/condition-category',
-                code: 'encounter-diagnosis'
-              }
-            ]
-          }
-        ]
+        specialty: [ {
+          coding: [ {
+            system: "http://nucc.org/provider-taxonomy",
+            code: "COUNSELOR",
+            display: "Professional Counselor"
+          } ]
+        } ]
       )
     }
-    let(:bundle) {
+    let (:practitionerrole_with_reference_else) {
+      FHIR::PractitionerRole.new(
+        id: 'practitionerrole-with-reference-else',
+        practitioner: {
+          reference: 'Practitioner/referenced-practitioner-else'
+        },
+        specialty: [ {
+          coding: [ {
+            system: "http://nucc.org/provider-taxonomy",
+            code: "ELSE",
+            display: "Professional Counselor"
+          } ]
+        } ]
+      )
+    }
+    let (:practitionerrole_with_no_specialty) {
+      FHIR::PractitionerRole.new(
+        id: 'practitionerrole-no-specialty'
+      )
+    }
+    let (:bundle) {
       FHIR::Bundle.new(
-        entry: [
-          { resource: condition }
-        ]
+        entry: []
       )
     }
+    let (:counselor_practitioner_bundle) {
+      FHIR::Bundle.new(
+        entry: [{resource: practitioner_referenced_by_counselor}]
+      )
+    }
+    let (:counselor_practitionerrole_bundle) {
+      FHIR::Bundle.new(
+        entry: [{resource: practitionerrole_with_reference_counselor}]
+      )
+    }
+    let (:mixed_specialty_practitioner_bundle) {
+      FHIR::Bundle.new(
+        entry: [{resource: practitioner_referenced_by_counselor}, {resource: practitioner_referenced_by_else}]
+      )
+    }
+    let (:mixed_specialty_practitionerrole_bundle) {
+      FHIR::Bundle.new(
+        entry: [{resource: practitionerrole_with_reference_counselor}, {resource: practitionerrole_with_reference_else}]
+      )
+    }
+    let (:bundle_with_unreferenced_practitioner){
+      FHIR::Bundle.new(
+        entry: [{resource: practitioner_referenced_by_counselor}, {resource: practitioner_unreferenced}]
+      )
+    }
+    let (:test_scratch) { {
+      all: [practitionerrole_with_reference_counselor]
+    } }
+    let (:empty_scratch) { {
+      all: []
+    } }
+    let (:no_specialty_scratch) { {
+      all: [practitionerrole_with_no_specialty]
+    } }
 
-    it 'allows searching in extension' do
-      allow_any_instance_of(test_class)
-        .to receive(:scratch_resources_for_patient)
-        .and_return([condition])
+    before do
+      allow_any_instance_of(reverse_chain_test).to receive(:scratch_chain_resources).and_return(test_scratch)
+      allow_any_instance_of(reverse_chain_test_no_scratch).to receive(:scratch_chain_resources).and_return(empty_scratch)
+      allow_any_instance_of(reverse_chain_test_no_specialty).to receive(:scratch_chain_resources).and_return(no_specialty_scratch)
+      stub_request(:get, "#{url}/PractitionerRole?specialty=COUNSELOR")
+        .to_return(status: 200, body: counselor_practitionerrole_bundle.to_json)
+    end
 
-        stub_request(:get, "#{url}/Condition?patient=#{patient_id}&asserted-date=2021-11-24T15:55:00Z")
-        .to_return(status: 200, body: bundle.to_json)
-      stub_request(:get, "#{url}/Condition?patient=#{patient_id}&asserted-date=gt2021-11-23T15:55:00%2B00:00")
-        .to_return(status: 200, body: bundle.to_json)
-      stub_request(:get, "#{url}/Condition?patient=#{patient_id}&asserted-date=ge2021-11-23T15:55:00%2B00:00")
-        .to_return(status: 200, body: bundle.to_json)
-      stub_request(:get, "#{url}/Condition?patient=#{patient_id}&asserted-date=lt2021-11-25T15:55:00%2B00:00")
-        .to_return(status: 200, body: bundle.to_json)
-      stub_request(:get, "#{url}/Condition?patient=#{patient_id}&asserted-date=le2021-11-25T15:55:00%2B00:00")
-        .to_return(status: 200, body: bundle.to_json)
-
-      result = run(test_class, patient_ids: patient_id, url: url)
+    it 'Passes when server returns all base resources that populate the desired field of an additional resource' do
+      stub_request(:get, "#{url}/Practitioner?_has:PractitionerRole:practitioner:specialty=COUNSELOR")
+        .to_return(status: 200, body: counselor_practitioner_bundle.to_json)
+      
+      result = run(reverse_chain_test, url: url)
       expect(result.result).to eq('pass')
+    end
+
+    it 'Passes when scratch is empty but user provides valid input' do
+      stub_request(:get, "#{url}/Practitioner?_has:PractitionerRole:practitioner:specialty=COUNSELOR")
+        .to_return(status: 200, body: counselor_practitioner_bundle.to_json)
+      
+      result = run(reverse_chain_test_no_scratch, url: url, practitioner_role_practitioner_specialty_input: 'COUNSELOR')
+      expect(result.result).to eq('pass')
+    end
+
+    it 'Fails when server returns a base resource that is not referenced by relevant additional resources' do
+      stub_request(:get, "#{url}/Practitioner?_has:PractitionerRole:practitioner:specialty=COUNSELOR")
+        .to_return(status: 200, body: mixed_specialty_practitioner_bundle.to_json)
+      
+      result = run(reverse_chain_test, url: url)
+      expect(result.result).to eq('fail')
+    end
+
+    it 'Fails when collection of additional resources returns additional resource with incorrect value in desired field' do
+      stub_request(:get, "#{url}/Practitioner?_has:PractitionerRole:practitioner:specialty=COUNSELOR")
+        .to_return(status: 200, body: counselor_practitioner_bundle.to_json)
+
+      stub_request(:get, "#{url}/PractitionerRole?specialty=COUNSELOR")
+        .to_return(status: 200, body: mixed_specialty_practitionerrole_bundle.to_json)
+
+      result = run(reverse_chain_test, url: url)
+      expect(result.result).to eq('fail')
+    end
+
+    it 'Fails when server returns a non 200 status code and resulting message displays returned status code' do
+      stub_request(:get, "#{url}/Practitioner?_has:PractitionerRole:practitioner:specialty=COUNSELOR")
+        .to_return(status: 400, body: counselor_practitioner_bundle.to_json)
+      
+      result = run(reverse_chain_test, url: url)
+      expect(result.result).to eq('fail')
+      expect(result.result_message).to eq('Unexpected response status: expected 200, but received 400')
+    end
+
+    it 'Skips if scratch is empty and not given input from user' do
+      result = run(reverse_chain_test_no_scratch, url: url)
+      expect(result.result).to eq('skip')
+    end
+
+    it 'Skips if scratch does not contain any resources that can be used and given no input from user' do
+      result = run(reverse_chain_test_no_specialty, url: url)
+      expect(result.result).to eq('skip')
     end
   end
 end
