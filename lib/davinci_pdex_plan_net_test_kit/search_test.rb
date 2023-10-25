@@ -38,6 +38,15 @@ module DaVinciPDEXPlanNetTestKit
       !(self.send(:"#{input_name}").nil? || self.send(:"#{input_name}").empty?)
     end
 
+    def input_based_skip_assert(message)
+      if given_input?
+        skip_if resources.empty?, "#{message} Please try a different input"
+      else
+        assert !resources.empty?, message
+      end
+    end
+
+
     def set_additional_resource(additional_resource)
       scratch[:additional_resource_for_test] ||= {}
       scratch[:additional_resource_for_test][:resource] = additional_resource
@@ -186,7 +195,7 @@ module DaVinciPDEXPlanNetTestKit
       save_delayed_references(resources, additional_resource_type)
       include_scratch_resources.concat(resources).uniq!
 
-      skip_if resources.empty?, no_resources_skip_message(additional_resource_type)
+      assert resources.empty?, no_resources_skip_message(additional_resource_type)
 
     end
 
@@ -213,7 +222,7 @@ module DaVinciPDEXPlanNetTestKit
       save_delayed_references(resources, additional_resource_type)
       revinclude_scratch_resources.concat(resources).uniq!
 
-      skip_if resources.empty?, no_resources_skip_message(additional_resource_type)
+      input_based_skip_assert(no_resources_skip_message(resource_type))
     end
 
     def run_search_test
@@ -224,7 +233,7 @@ module DaVinciPDEXPlanNetTestKit
           params_list.flat_map { |params| perform_search(params, resource_id) }
         end
 
-      skip_if resources_returned.empty?, no_resources_skip_message
+      assert !resources_returned.empty?, no_resources_skip_message
 
       perform_multiple_or_search_test if multiple_or_search_params.present?
     end
@@ -277,7 +286,7 @@ module DaVinciPDEXPlanNetTestKit
       save_delayed_references(additional_resources, additional_resource_type)
       chain_scratch_resources.concat(additional_resources).uniq!
 
-      skip_if additional_resources.empty?, "Search on #{additional_resource_type}'s #{param} failed to retrieve any resources."
+      assert !additional_resources.empty?, "Search on #{additional_resource_type}'s #{param} failed to retrieve any resources."
       additional_resources
     end
 
@@ -292,7 +301,7 @@ module DaVinciPDEXPlanNetTestKit
             check_search_response
 
             returned_resources = fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
-            skip_if returned_resources.empty?, "No #{resource_type} resources returned"
+            assert !returned_resources.empty?, "No #{resource_type} resources returned"
             base_resources = returned_resources
               .select { |res| res.resourceType == resource_type }
             
@@ -307,7 +316,7 @@ module DaVinciPDEXPlanNetTestKit
             base_resources
           end
         end
-        skip_if resources.empty?, no_resources_skip_message
+        assert !resources.empty?, no_resources_skip_message
     end
 
     def run_reverse_chain_search_test
@@ -320,7 +329,7 @@ module DaVinciPDEXPlanNetTestKit
             check_search_response
 
             returned_resources = fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
-            skip_if returned_resources.empty?, "No #{resource_type} resources returned"
+            input_based_skip_assert("No resources found.")
             base_resources = returned_resources
               .select { |res| res.resourceType == resource_type }
 
@@ -334,7 +343,7 @@ module DaVinciPDEXPlanNetTestKit
             base_resources
           end
         end
-      skip_if resources.empty?, "No #{resource_type} resources found."
+        input_based_skip_assert("No resources found.")
     end
 
     def perform_search(params, resource_id)
@@ -756,7 +765,7 @@ module DaVinciPDEXPlanNetTestKit
       msg = "No #{resource_type} resources appear to be available"
 
       if ((self.resource_type == additional_resource_type) && (!revinclude_param.nil? || !include_param.nil?))
-        if !input_name.nil?
+        if given_input?
           msg.concat(" (excluding #{self.send(input_name)}, which was used as the base).")
         end
       end
