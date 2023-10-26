@@ -38,7 +38,7 @@ module DaVinciPDEXPlanNetTestKit
       !(self.send(:"#{input_name}").nil? || self.send(:"#{input_name}").empty?)
     end
 
-    def input_based_skip_assert(message)
+    def input_based_skip_assert(resources, message)
       if given_input?
         skip_if resources.empty?, "#{message} Please try a different input"
       else
@@ -195,7 +195,7 @@ module DaVinciPDEXPlanNetTestKit
       save_delayed_references(resources, additional_resource_type)
       include_scratch_resources.concat(resources).uniq!
 
-      assert resources.empty?, no_resources_skip_message(additional_resource_type)
+      assert !resources.empty?, no_resources_skip_message(additional_resource_type)
 
     end
 
@@ -212,7 +212,6 @@ module DaVinciPDEXPlanNetTestKit
             matching_resources = fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
               .select { |res| res.resourceType == additional_resource_type }
               .reject { |res| res.id == params[:_id] }
-
             
             matching_resources.each { |res| check_resource_against_params(res, {"#{rev_param_sp}": "#{params[:_id]}"}) }
             matching_resources
@@ -222,7 +221,7 @@ module DaVinciPDEXPlanNetTestKit
       save_delayed_references(resources, additional_resource_type)
       revinclude_scratch_resources.concat(resources).uniq!
 
-      input_based_skip_assert(no_resources_skip_message(resource_type))
+      input_based_skip_assert(resources, no_resources_skip_message(resource_type))
     end
 
     def run_search_test
@@ -329,7 +328,7 @@ module DaVinciPDEXPlanNetTestKit
             check_search_response
 
             returned_resources = fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
-            input_based_skip_assert("No resources found.")
+            input_based_skip_assert(returned_resources, "No resources found.")
             base_resources = returned_resources
               .select { |res| res.resourceType == resource_type }
 
@@ -343,7 +342,7 @@ module DaVinciPDEXPlanNetTestKit
             base_resources
           end
         end
-        input_based_skip_assert("No resources found.")
+        input_based_skip_assert(resources, "No resources found.")
     end
 
     def perform_search(params, resource_id)
