@@ -32,7 +32,8 @@ module DaVinciPDEXPlanNetTestKit
                    :token_search_params,
                    :test_reference_variants?,
                    :params_with_comparators,
-                   :multiple_or_search_params
+                   :multiple_or_search_params,
+                   :combination_search?
 
     def given_input?
       !(self.send(:"#{input_name}").nil? || self.send(:"#{input_name}").empty?)
@@ -66,19 +67,17 @@ module DaVinciPDEXPlanNetTestKit
       end
     end
 
-    def find_base_id(desired_resource, search_param)
+    def find_base_resource(desired_resource, search_param, resources)
       # Access correct scratch based on what base you are looking for
       is_include = desired_resource == resource_type
-      scratch_for_base = is_include ? all_scratch_resources : scratch_revinclude_resources[:all]
-      skip_if scratch_for_base.nil?, no_instance_gathering_message
-      base_resource = scratch_for_base
+      skip_if resources.nil?, no_instance_gathering_message
+      base_resource = resources
         .select { |resource| resource.resourceType == desired_resource }
         .reject { |resource| search_param_value(search_param, resource).nil? }
         .first
       skip_if base_resource.nil?, unable_to_find_base_message(desired_resource, search_param)
       set_additional_resource(base_resource)
-      # If revinclude test, make sure you grab the id of base, not revincluded resource
-      is_include ? base_resource.id : additional_resource(search_param)
+      base_resource
     end
 
     def find_forward_chain_value
@@ -103,7 +102,6 @@ module DaVinciPDEXPlanNetTestKit
     end
 
     def all_search_params
-      #TODO: add functionality for grabbing multiple params from the same resource
       @all_search_params ||=
         resource_id_list.each_with_object({}) do |resource_id, params|
           params[resource_id] ||= []
@@ -123,7 +121,8 @@ module DaVinciPDEXPlanNetTestKit
     def all_revinclude_search_params
       @all_revinclude_search_params ||=
         all_search_params.transform_values! do |params_list|
-          base_id = given_input? ? self.send(input_name) : find_base_id(additional_resource_type, rev_param_sp)
+          find_base_resource(additional_resource_type, rev_param_sp, additional_scratch_resources) if given_input?
+          base_id = given_input? ? self.send(input_name) : additional_resource(rev_param_sp)
           params_list.map { |params| {_id: base_id}.merge(_revinclude: revinclude_param) }
         end
     end
@@ -132,7 +131,8 @@ module DaVinciPDEXPlanNetTestKit
       @all_include_search_params ||=
         all_search_params.transform_values! do |params_list|
           # No input needed for includes so can just pass into the map
-          params_list.map { |params| {_id: find_base_id(resource_type, inc_param_sp)}.merge(_include: include_param) }
+          find_base_resource(resource_type, inc_param_sp, all_scratch_resources)
+          params_list.map { |params| {_id: additional_resource(:id)}.merge(_include: include_param) }
         end
     end
 
@@ -153,10 +153,16 @@ module DaVinciPDEXPlanNetTestKit
 
     def all_combination_search_params
       @all_combination_search_params ||=
-        all_search_params.transform_values! do |params_list|
-          params_list = include_param ? params_list.map { |params| params.merge(_include: include_param) } : params_list
-          #TODO: Fill with the rest of advanced searches once more combination tests are ready
-        end
+        #First get resource pool that can be used for populating base resources
+        resource_pool = resources_with_all_search_params_with_values(search_param_names)
+        #Then find a reference to one from this pool
+        find_base_resource(resource_type, inc_param_sp, resource_pool)
+        #After all references have been confirmed, populate it with elements of the resource that meets all requirements
+        # For now, don't 'pre-verify' that the server actually should return something.
+        params_list = search_param_values_from_same_resource(search_param_names, additional_resource)
+        params_list = include_param ? params_list.merge(_include: include_param) : params_list
+        #TODO: Fill with the rest of advanced searches once more combination tests are ready
+        params_list
     end
 
 
@@ -347,19 +353,14 @@ module DaVinciPDEXPlanNetTestKit
     end
 
     def run_combination_search_test
-      resources =
-        all_combination_search_params.flat_map do |_resource_id, params_list|
-          params_list.flat_map do |params|
-            fhir_search resource_type, params: params
-            perform_search_with_status(params, resource_id) if response[:status] == 400 && possible_status_search?
+      fhir_search resource_type, params: all_combination_search_params
+      perform_search_with_status(params, resource_id) if response[:status] == 400 && possible_status_search?
 
-            check_search_response
+      check_search_response
 
-            returned_resources = fetch_all_bundled_resources
-          end
-        end
+      returned_resources = fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
         
-      skip_if resources.empty?, "No #{resource_type} resources found"
+      skip_if returned_resources.empty?, "No #{resource_type} resources found"
     end
 
 
@@ -692,6 +693,25 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       params_with_partial_value
+    end
+
+    def resources_with_all_search_params_with_values(search_param_names)
+      resources = all_scratch_resources
+
+      candidate_resources = resources.select do |resource| 
+        search_param_names.all? { |param| !search_param_value(param, resource).nil?}
+      end
+      skip_if candidate_resources.empty?, "No resources populate all base search parameters."
+      candidate_resources
+    end
+
+    def search_param_values_from_same_resource(search_param_names, resource)
+      param_hash = search_param_names.each_with_object({}) do |name, params|
+        value = search_param_value(name, resource)
+        params[name] = value
+      end
+      info param_hash.to_s
+      param_hash
     end
 
     def resource_id_list

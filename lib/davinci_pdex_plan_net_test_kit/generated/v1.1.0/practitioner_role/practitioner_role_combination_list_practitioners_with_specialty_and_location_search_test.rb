@@ -20,7 +20,8 @@ module DaVinciPDEXPlanNetTestKit
           input_name: 'combination_list_practitioners_with_specialty_and_location_input',
           include_param: 'PractitionerRole:practitioner',
           inc_param_sp: 'practitioner',
-          additional_resource_type: 'Practitioner'
+          additional_resource_type: 'Practitioner',
+          combination_search: true
         )
       end
 

@@ -21,7 +21,7 @@ module DaVinciPDEXPlanNetTestKit
       :test_reference_variants,
       :params_with_comparators,
       :multiple_or_search_params,
-      :test_post_search
+      :test_post_search,
       :combination_search
     ].freeze
 
