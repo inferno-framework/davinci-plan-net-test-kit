@@ -763,12 +763,6 @@ module DaVinciPDEXPlanNetTestKit
     def no_resources_skip_message(resource_type = self.resource_type)
       msg = "No #{resource_type} resources appear to be available"
 
-      if ((self.resource_type == additional_resource_type) && (!revinclude_param.nil? || !include_param.nil?))
-        if given_input?
-          msg.concat(" (excluding #{self.send(input_name)}, which was used as the base).")
-        end
-      end
-
       if (!revinclude_param.nil? && include_param.nil?)
         msg.concat(" Please choose a base resource that is referenced by a #{additional_resource_type}")
       end
