@@ -20,6 +20,7 @@ module DaVinciPDEXPlanNetTestKit
                    :chain_param,
                    :chain_param_base,
                    :additional_resource_type,
+                   :additional_resource,
                    :reverse_chain_param,
                    :reverse_chain_target,
                    :input_name,
@@ -37,40 +38,76 @@ module DaVinciPDEXPlanNetTestKit
       !(self.send(:"#{input_name}").nil? || self.send(:"#{input_name}").empty?)
     end
 
+    def input_based_skip_assert(resources, message)
+      if given_input?
+        skip_if resources.empty?, "#{message} Please try a different input"
+      else
+        assert !resources.empty?, message
+      end
+    end
+
+
+    def set_additional_resource(additional_resource)
+      scratch[:additional_resource_for_test] ||= {}
+      scratch[:additional_resource_for_test][:resource] = additional_resource
+      scratch[:additional_resource_for_test][:id] = search_param_value("_id", additional_resource)
+      scratch[:additional_resource_for_test][:"#{chain_param}"] = search_param_value(chain_param, additional_resource) if chain_param
+      scratch[:additional_resource_for_test][:"#{inc_param_sp}"] = search_param_value(inc_param_sp, additional_resource) if inc_param_sp
+      scratch[:additional_resource_for_test][:"#{rev_param_sp}"] = search_param_value(rev_param_sp, additional_resource) if rev_param_sp
+      scratch[:additional_resource_for_test][:"#{reverse_chain_param}"] = search_param_value(reverse_chain_param, additional_resource) if reverse_chain_param
+    end
+
+    def additional_resource(field = nil)
+      field = field&.to_sym if field.class != Symbol
+      case field
+      when nil
+        scratch[:additional_resource_for_test][:resource]
+      when :id
+        scratch[:additional_resource_for_test][:id]
+      when :"#{chain_param}"
+        scratch[:additional_resource_for_test][:"#{chain_param}"]
+      when :"#{inc_param_sp}"
+        scratch[:additional_resource_for_test][:"#{inc_param_sp}"]
+      when :"#{rev_param_sp}"
+        scratch[:additional_resource_for_test][:"#{rev_param_sp}"]
+      when :"#{reverse_chain_param}"
+        given_input? ? self.send(:"#{input_name}") : scratch[:additional_resource_for_test][:"#{reverse_chain_param}"]
+      end
+    end
+
     def find_base_id(desired_resource, search_param)
       # Access correct scratch based on what base you are looking for
       is_include = desired_resource == resource_type
       scratch_for_base = is_include ? all_scratch_resources : scratch_revinclude_resources[:all]
-
       skip_if scratch_for_base.nil?, no_instance_gathering_message
-
       base_resource = scratch_for_base
         .select { |resource| resource.resourceType == desired_resource }
         .reject { |resource| search_param_value(search_param, resource).nil? }
         .first
       skip_if base_resource.nil?, unable_to_find_base_message(desired_resource, search_param)
+      set_additional_resource(base_resource)
       # If revinclude test, make sure you grab the id of base, not revincluded resource
-      is_include ? base_resource.id : search_param_value(search_param, base_resource)
+      is_include ? base_resource.id : additional_resource(search_param)
     end
 
-    def find_forward_chain_resource
+    def find_forward_chain_value
       # Look through return from relevant include test
       # If it is in chain_scratch_resources, it was put there from an _include/_revinclude test
-      # so do not need to verify if it also references a base resource
       chain_candidate = chain_scratch_resources
         .find { |resource| !search_param_value(chain_param, resource).nil?}
       skip_if chain_candidate.nil?, no_forward_chain_resource_found_message
       chain_field_value = search_param_value(chain_param, chain_candidate)
+      set_additional_resource(chain_candidate)
       chain_field_value
     end
 
     def find_reverse_chain_resource
-      
       chain_candidate = chain_scratch_resources
         .reject { |resource| search_param_value(reverse_chain_target, resource).nil?}
         .find { |resource| !search_param_value(reverse_chain_param, resource).nil?}
       skip_if chain_candidate.nil?, no_reverse_chain_resource_found_message
       chain_field_value = search_param_value(reverse_chain_param, chain_candidate)
+      set_additional_resource(chain_candidate)
       chain_field_value
     end
 
@@ -118,7 +155,7 @@ module DaVinciPDEXPlanNetTestKit
     def all_forward_chain_search_params
       @all_forward_chain_search_params ||=
         all_search_params.transform_values! do |params_list|
-          params_list.map { |params| {"#{chain_param_base}.#{chain_param}": find_forward_chain_resource} }
+          params_list.map { |params| {"#{chain_param_base}.#{chain_param}": find_forward_chain_value} }
         end
     end
 
@@ -137,20 +174,33 @@ module DaVinciPDEXPlanNetTestKit
         
             check_search_response
 
-            fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
-              .select { |resource| resource.resourceType == additional_resource_type }
-              .reject { |resource| resource.id == params[:_id]} 
+            returned_resources = fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
+            
+            base_resources = returned_resources
+              .select { |res| res.resourceType == resource_type }
+
+            matching_resources = returned_resources 
+              .select { |res| res.resourceType == additional_resource_type }
+              
+            matching_resources.reject! { |res| res.id == params[:_id]} if additional_resource_type == resource_type
+
+            expected_reference = additional_resource(inc_param_sp)
+            matching_resources.each { |res| 
+              check_resource_against_params(res, {_id: expected_reference})
+            }
+            matching_resources 
           end
         end
 
       save_delayed_references(resources, additional_resource_type)
       include_scratch_resources.concat(resources).uniq!
 
-      skip_if resources.empty?, no_resources_skip_message(additional_resource_type)
+      assert !resources.empty?, no_resources_skip_message(additional_resource_type)
+
     end
 
     def run_revinclude_search_test
-      skip_if !any_valid_search_params?(all_revinclude_search_params), "Invalid Params"
+      skip_if !any_valid_search_params?(all_revinclude_search_params), "Invalid parameter.  Please provide a different ID for revinclude testing"
       resources =
         all_revinclude_search_params.flat_map do |_resource_id, params_list|
           params_list.flat_map do |params|
@@ -159,16 +209,19 @@ module DaVinciPDEXPlanNetTestKit
 
             check_search_response
 
-            fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
-              .select { |resource| resource.resourceType == additional_resource_type }
-              .reject { |resource| resource.id == "#{self.send(input_name)}" }
+            matching_resources = fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
+              .select { |res| res.resourceType == additional_resource_type }
+              .reject { |res| res.id == params[:_id] }
+            
+            matching_resources.each { |res| check_resource_against_params(res, {"#{rev_param_sp}": "#{params[:_id]}"}) }
+            matching_resources
           end
         end
 
       save_delayed_references(resources, additional_resource_type)
       revinclude_scratch_resources.concat(resources).uniq!
 
-      skip_if resources.empty?, no_resources_skip_message(additional_resource_type)
+      input_based_skip_assert(resources, no_resources_skip_message(resource_type))
     end
 
     def run_search_test
@@ -179,7 +232,7 @@ module DaVinciPDEXPlanNetTestKit
           params_list.flat_map { |params| perform_search(params, resource_id) }
         end
 
-      skip_if resources_returned.empty?, no_resources_skip_message
+      assert !resources_returned.empty?, no_resources_skip_message
 
       perform_multiple_or_search_test if multiple_or_search_params.present?
     end
@@ -217,6 +270,26 @@ module DaVinciPDEXPlanNetTestKit
 
     end
 
+    def run_search_on_additional_resource_type(param)
+      additional_resource_params = {"#{param}": additional_resource(param.to_sym)}
+      skip_if !any_valid_search_params?(additional_resource_params), "Invalid Params"
+        
+      fhir_search additional_resource_type, params: additional_resource_params
+
+      check_search_response
+      additional_resources = fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
+        .select { |res| res.resourceType == additional_resource_type }
+
+      additional_resources.each { |res| check_resource_against_params(res, additional_resource_params) }
+
+      save_delayed_references(additional_resources, additional_resource_type)
+      chain_scratch_resources.concat(additional_resources).uniq!
+
+      assert !additional_resources.empty?, "Search on #{additional_resource_type}'s #{param} failed to retrieve any resources."
+      additional_resources
+    end
+
+
     def run_forward_chain_search_test
       resources =
         all_forward_chain_search_params.flat_map do |_resource_id, params_list|
@@ -226,10 +299,23 @@ module DaVinciPDEXPlanNetTestKit
 
             check_search_response
 
-            fetch_all_bundled_resources
+            returned_resources = fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
+            assert !returned_resources.empty?, "No #{resource_type} resources returned"
+            base_resources = returned_resources
+              .select { |res| res.resourceType == resource_type }
+            
+            contextual_resources = run_search_on_additional_resource_type(chain_param)
+            # Check that all references within the Base point to one of the resources in scratch currently.
+            base_resources.each do |base_res| 
+              reference_value = search_param_value(chain_param_base, base_res)
+              assert (contextual_resources.any? do |res| 
+                is_reference_match?(reference_value, search_param_value("_id", res))
+              end), forward_chaining_incorrect_reference_error_message(base_res)
+            end  
+            base_resources
           end
         end
-        skip_if resources.empty?, no_resources_skip_message
+        assert !resources.empty?, no_resources_skip_message
     end
 
     def run_reverse_chain_search_test
@@ -241,11 +327,22 @@ module DaVinciPDEXPlanNetTestKit
 
             check_search_response
 
-            fetch_all_bundled_resources
+            returned_resources = fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
+            input_based_skip_assert(returned_resources, "No resources found.")
+            base_resources = returned_resources
+              .select { |res| res.resourceType == resource_type }
+
+            contextual_resources = run_search_on_additional_resource_type(reverse_chain_param)
+            base_resources.each do |base_res| 
+              assert (contextual_resources.any? do |res| 
+                reference_value = search_param_value(reverse_chain_target, res)
+                reference_value.nil? ? false : is_reference_match?(reference_value, search_param_value("_id", base_res))
+              end), reverse_chaining_incorrect_reference_error_message(base_res)
+            end  
+            base_resources
           end
         end
-        
-      skip_if resources.empty?, "No resources found TODO:REPLACE MESSAGE"
+        input_based_skip_assert(resources, "No resources found.")
     end
 
     def perform_search(params, resource_id)
@@ -545,7 +642,7 @@ module DaVinciPDEXPlanNetTestKit
     end
 
     def references_to_save(resource_type = nil)
-      reference_metadata = resource_type == 'Provenance' ? revinclude_metadata : metadata
+      reference_metadata = resource_type == 'Provenance' ? additional_metadata : metadata
       reference_metadata.delayed_references
     end
 
@@ -643,18 +740,28 @@ module DaVinciPDEXPlanNetTestKit
       from suite level or provide specific field values."
     end
 
+    def forward_chain_conformance_error_message
+      "Unable to find any returned #{resource_type} instances that reference #{additional_resource_type} instances
+      where the #{chain_param} field is populated with the value used in the request."
+    end
+
+    def forward_chaining_incorrect_reference_error_message(violating_resource)
+      "#{resource_type} instance #{search_param_value("_id", violating_resource)} references 
+      #{search_param_value(chain_param_base, violating_resource)} which does not have #{chain_param} value 
+      #{additional_resource(chain_param)}"
+    end
+
+    def reverse_chaining_incorrect_reference_error_message(violating_resource)
+      "Found #{resource_type} instance #{search_param_value("_id", violating_resource)} that is not referenced by any 
+      #{additional_resource_type} that have a #{reverse_chain_param} value of #{additional_resource(reverse_chain_param)}"
+    end
+
     def empty_search_params_message(empty_search_params)
       "Could not find values for the search parameters #{array_of_codes(empty_search_params.keys)}"
     end
 
     def no_resources_skip_message(resource_type = self.resource_type)
       msg = "No #{resource_type} resources appear to be available"
-
-      if ((self.resource_type == additional_resource_type) && (!revinclude_param.nil? || !include_param.nil?))
-        if !input_name.nil?
-          msg.concat(" (excluding #{self.send(input_name)}, which was used as the base).")
-        end
-      end
 
       if (!revinclude_param.nil? && include_param.nil?)
         msg.concat(" Please choose a base resource that is referenced by a #{additional_resource_type}")
@@ -669,7 +776,7 @@ module DaVinciPDEXPlanNetTestKit
 
     def fetch_all_bundled_resources(
           reply_handler: nil,
-          max_pages: 20,
+          max_pages: 0,
           additional_resource_types: [],
           resource_type: self.resource_type
         )
@@ -678,7 +785,7 @@ module DaVinciPDEXPlanNetTestKit
       bundle = resource
       resources += bundle&.entry&.map { |entry| entry&.resource }
 
-      until bundle.nil? || page_count == max_pages
+      until bundle.nil? || (page_count == max_pages && max_pages != 0)
         
         next_bundle_link = bundle&.link&.find { |link| link.relation == 'next' }&.url
         reply_handler&.call(response)
@@ -855,21 +962,20 @@ module DaVinciPDEXPlanNetTestKit
     end
 
     #### RESULT CHECKING ####
-
-    def check_resource_against_params(resource, params)
-      params.each do |name, escaped_search_value|
+    def resource_fields_conform_to_params?(resource, params)
+      params.all? do |name, escaped_search_value|
         #unescape search value
         search_value = escaped_search_value&.gsub('\\,', ',')
-        paths = search_param_paths(name)
+        paths = search_param_paths(name, resource.resourceType)
 
         match_found = false
         values_found = []
-
+        resource_metadata = resource.resourceType == resource_type ? metadata : additional_metadata
         paths.each do |path|
-          type = metadata.search_definitions[name.to_sym][:type]
+          type = resource_metadata.search_definitions[name.to_sym][:type]
           values_found =
             resolve_path(resource, path)
-              .map do |value|
+              .flat_map do |value|
                 case value
                 when FHIR::Reference
                   value.reference
@@ -934,11 +1040,107 @@ module DaVinciPDEXPlanNetTestKit
             when 'string'
               searched_values = search_value.downcase.split(/(?<!\\\\),/).map{ |string| string.gsub('\\,', ',') }
               values_found.any? do |value_found|
-                searched_values.any? { |searched_value| value_found.downcase.starts_with? searched_value }
+                searched_values.any? { |searched_value| value_found.downcase.starts_with? searched_value || is_reference_match?(searched_value, value_found) }
               end
             else
               search_values = search_value.split(/(?<!\\\\),/).map { |string| string.gsub('\\,', ',') }
-              values_found.any? { |value_found| search_values.include? value_found }
+              values_found.any? do |value_found| 
+                search_values.any? { |search_val| value_found == search_values || is_reference_match?(search_val, value_found) } 
+              end
+            end
+
+          break if match_found
+        end
+        match_found
+      end
+    end
+
+    def check_resource_against_params(resource, params)
+      params.each do |name, escaped_search_value|
+        #unescape search value
+        search_value = escaped_search_value&.gsub('\\,', ',')
+        paths = search_param_paths(name, resource.resourceType)
+
+        match_found = false
+        values_found = []
+        resource_metadata = resource.resourceType == resource_type ? metadata : additional_metadata
+        paths.each do |path|
+          type = resource_metadata.search_definitions[name.to_sym][:type]
+          values_found =
+            resolve_path(resource, path)
+              .flat_map do |value|
+                case value
+                when FHIR::Reference
+                  value.reference
+                when FHIR::Extension
+                  value.valueReference.reference
+                else
+                  value
+                end
+              end
+
+          match_found =
+            case type
+            when 'Period', 'date', 'instant', 'dateTime'
+              values_found.any? { |date| validate_date_search(search_value, date) }
+            when 'HumanName'
+              # When a string search parameter refers to the types HumanName and Address,
+              # the search covers the elements of type string, and does not cover elements such as use and period
+              # https://www.hl7.org/fhir/search.html#string
+              search_value_downcase = search_value.downcase
+              values_found.any? do |name|
+                name&.text&.downcase&.start_with?(search_value_downcase) ||
+                  name&.family&.downcase&.start_with?(search_value_downcase) ||
+                  name&.given&.any? { |given| given.downcase.start_with?(search_value_downcase) } ||
+                  name&.prefix&.any? { |prefix| prefix.downcase.start_with?(search_value_downcase) } ||
+                  name&.suffix&.any? { |suffix| suffix.downcase.start_with?(search_value_downcase) }
+              end
+            when 'Address'
+              search_value_downcase = search_value.downcase
+              values_found.any? do |address|
+                address&.text&.downcase&.start_with?(search_value_downcase) ||
+                address&.city&.downcase&.start_with?(search_value_downcase) ||
+                address&.state&.downcase&.start_with?(search_value_downcase) ||
+                address&.postalCode&.downcase&.start_with?(search_value_downcase) ||
+                address&.country&.downcase&.start_with?(search_value_downcase)
+              end
+            when 'CodeableConcept'
+              # FHIR token search (https://www.hl7.org/fhir/search.html#token): "When in doubt, servers SHOULD
+              # treat tokens in a case-insensitive manner, on the grounds that including undesired data has
+              # less safety implications than excluding desired behavior".
+              codings = values_found.flat_map(&:coding)
+              if search_value.include? '|'
+                system = search_value.split('|').first
+                code = search_value.split('|').last
+                codings&.any? { |coding| coding.system == system && coding.code&.casecmp?(code) }
+              else
+                codings&.any? { |coding| coding.code&.casecmp?(search_value) }
+              end
+            when 'Coding'
+              if search_value.include? '|'
+                system = search_value.split('|').first
+                code = search_value.split('|').last
+                values_found.any? { |coding| coding.system == system && coding.code&.casecmp?(code) }
+              else
+                values_found.any? { |coding| coding.code&.casecmp?(search_value) }
+              end
+            when 'Identifier'
+              if search_value.include? '|'
+                values_found.any? { |identifier| "#{identifier.system}|#{identifier.value}" == search_value }
+              else
+                values_found.any? { |identifier| identifier.value == search_value }
+              end
+            when 'string'
+              searched_values = search_value.downcase.split(/(?<!\\\\),/).map{ |string| string.gsub('\\,', ',') }
+              values_found.any? do |value_found|
+                searched_values.any? { |searched_value| value_found.downcase.starts_with? searched_value || is_reference_match?(searched_value, value_found) }
+              end
+            else
+              search_values = search_value.split(/(?<!\\\\),/).map { |string| string.gsub('\\,', ',') }
+              values_found.any? do |value_found| 
+                search_values.any? { |search_val| value_found == search_values || is_reference_match?(search_val, value_found) } 
+              end
+
             end
 
           break if match_found
@@ -950,6 +1152,15 @@ module DaVinciPDEXPlanNetTestKit
                "* Found: #{values_found.map(&:inspect).join(', ')}"
       end
     end
+
+
+    def is_reference_match? (reference, local_reference)
+      regex_pattern = /^(#{Regexp.escape(local_reference)}|\S+\/#{Regexp.escape(local_reference)}(?:[\/|]\S+)*)$/
+      regex_pattern_local = /^(#{Regexp.escape(reference)}|\S+\/#{Regexp.escape(reference)}(?:[\/|]\S+)*)$/
+      reference.match?(regex_pattern) || local_reference.match?(regex_pattern_local)
+    end
+
+
     ### PARSING (Remove if methods exist elsewhere already)
     def param_to_method(param)
       param = param.split('-').collect(&:capitalize).join
