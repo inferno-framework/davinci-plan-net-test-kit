@@ -159,10 +159,15 @@ module DaVinciPDEXPlanNetTestKit
         find_base_resource(resource_type, inc_param_sp, resource_pool)
         #After all references have been confirmed, populate it with elements of the resource that meets all requirements
         # For now, don't 'pre-verify' that the server actually should return something.
-        params_list = search_param_values_from_same_resource(search_param_names, additional_resource)
+        params_list = base_combination_search_params
         params_list = include_param ? params_list.merge(_include: include_param) : params_list
         #TODO: Fill with the rest of advanced searches once more combination tests are ready
         params_list
+    end
+
+    def base_combination_search_params
+      @base_combination_search_params ||=
+        search_param_values_from_same_resource(search_param_names, additional_resource)
     end
 
 
@@ -354,13 +359,33 @@ module DaVinciPDEXPlanNetTestKit
 
     def run_combination_search_test
       fhir_search resource_type, params: all_combination_search_params
-      perform_search_with_status(params, resource_id) if response[:status] == 400 && possible_status_search?
+      perform_search_with_status(all_combination_search_params, resource_id) if response[:status] == 400 && possible_status_search?
 
       check_search_response
 
       returned_resources = fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
-        
-      skip_if returned_resources.empty?, "No #{resource_type} resources found"
+      assert !returned_resources.empty?, "No #{resource_type} resources found"
+
+      base_resources = returned_resources
+        .select { |res| res.resourceType == resource_type }
+
+      matching_resources = returned_resources 
+        .select { |res| res.resourceType == additional_resource_type }
+      skip_if matching_resources.empty?, "Server did not return any #{additional_resource_type} resources"
+
+      base_resources.each { |res| check_resource_against_params(res, base_combination_search_params)}
+
+      if inc_param_sp
+        assert matching_resources.all? { |match_res| 
+          base_resources.any? { |base_res|
+            if search_param_value(inc_param_sp, base_res).nil?
+              false
+            else
+              resource_fields_conform_to_params?(base_res, {"#{inc_param_sp}": search_param_value("_id", match_res)})
+            end
+          }
+        }, "Server returned a #{additional_resource_type} resource that was not referenced by any matching #{resource_type} instances"
+      end
     end
 
 

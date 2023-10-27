@@ -253,10 +253,10 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
     }}
 
     before do
-      allow_any_instance_of(revinclude_test).to receive(:scratch_revinclude_resources).and_return(test_scratch)
-      allow_any_instance_of(revinclude_test_no_scratch).to receive(:scratch_revinclude_resources).and_return(empty_scratch)
-      allow_any_instance_of(revinclude_test_no_reference).to receive(:scratch_revinclude_resources).and_return(no_reference_scratch)
-      allow_any_instance_of(revinclude_test_only_url).to receive(:scratch_revinclude_resources).and_return(only_url_scratch)
+      allow_any_instance_of(revinclude_test).to receive(:scratch_additional_resources).and_return(test_scratch)
+      allow_any_instance_of(revinclude_test_no_scratch).to receive(:scratch_additional_resources).and_return(empty_scratch)
+      allow_any_instance_of(revinclude_test_no_reference).to receive(:scratch_additional_resources).and_return(no_reference_scratch)
+      allow_any_instance_of(revinclude_test_only_url).to receive(:scratch_additional_resources).and_return(only_url_scratch)
       stub_request(:get, "#{url}/Organization")
         .to_return(status: 200, body: FHIR::Bundle.new.to_json)
     end
@@ -471,10 +471,10 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
     }}
 
     before do
-      allow_any_instance_of(forward_chain_test).to receive(:scratch_chain_resources).and_return(test_scratch)
-      allow_any_instance_of(forward_chain_test_no_scratch).to receive(:scratch_chain_resources).and_return(empty_scratch)
-      allow_any_instance_of(forward_chain_test_no_type).to receive(:scratch_chain_resources).and_return(no_reference_with_type_scratch)
-      allow_any_instance_of(forward_chain_test_non_prvgrp_type).to receive(:scratch_chain_resources).and_return(only_non_prvgrp_scratch)
+      allow_any_instance_of(forward_chain_test).to receive(:scratch_additional_resources).and_return(test_scratch)
+      allow_any_instance_of(forward_chain_test_no_scratch).to receive(:scratch_additional_resources).and_return(empty_scratch)
+      allow_any_instance_of(forward_chain_test_no_type).to receive(:scratch_additional_resources).and_return(no_reference_with_type_scratch)
+      allow_any_instance_of(forward_chain_test_non_prvgrp_type).to receive(:scratch_additional_resources).and_return(only_non_prvgrp_scratch)
       stub_request(:get, "#{url}/Organization?type=prvgrp")
         .to_return(status: 200, body: prvgrp_bundle.to_json)
     end
@@ -649,9 +649,9 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
     } }
 
     before do
-      allow_any_instance_of(reverse_chain_test).to receive(:scratch_chain_resources).and_return(test_scratch)
-      allow_any_instance_of(reverse_chain_test_no_scratch).to receive(:scratch_chain_resources).and_return(empty_scratch)
-      allow_any_instance_of(reverse_chain_test_no_specialty).to receive(:scratch_chain_resources).and_return(no_specialty_scratch)
+      allow_any_instance_of(reverse_chain_test).to receive(:scratch_additional_resources).and_return(test_scratch)
+      allow_any_instance_of(reverse_chain_test_no_scratch).to receive(:scratch_additional_resources).and_return(empty_scratch)
+      allow_any_instance_of(reverse_chain_test_no_specialty).to receive(:scratch_additional_resources).and_return(no_specialty_scratch)
       stub_request(:get, "#{url}/PractitionerRole?specialty=COUNSELOR")
         .to_return(status: 200, body: counselor_practitionerrole_bundle.to_json)
     end
