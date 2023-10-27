@@ -153,13 +153,13 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
       expect(result.result_message).to eq('Unexpected response status: expected 200, but received 400')
     end
 
-    it 'skips when no additional resources are returned' do
+    it 'fails when no additional resources are returned but query based on gathering' do
       bundle.entry.concat([ { resource: endpoint_local } ])
       stub_request(:get, "#{url}/Endpoint?_id=#{endpoint_local.id}&_include=Endpoint:organization")
         .to_return(status: 200, body: bundle.to_json)
 
       result = run(include_test, url: url)
-      expect(result.result).to eq('skip')
+      expect(result.result).to eq('fail')
     end
 
     it 'skips when scratch is empty' do
@@ -316,12 +316,12 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
       expect(result.result_message).to eq('Unexpected response status: expected 200, but received 400')
     end
 
-    it 'skips when no additional resources are returned' do
+    it 'fails when no additional resources are returned but query based on gathering' do
       stub_request(:get, "#{url}/Organization?_id=Organization/#{organization_local.id}&_revinclude=Endpoint:organization")
         .to_return(status: 200, body: bundle.to_json)
 
       result = run(revinclude_test, url: url)
-      expect(result.result).to eq('skip')
+      expect(result.result).to eq('fail')
     end
 
     it 'skips when scratch is empty and no input given' do
@@ -519,12 +519,12 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
       expect(result.result_message).to eq('Unexpected response status: expected 200, but received 400')
     end
     
-    it 'Skips if server returns nothing' do
+    it 'Fails if server returns nothing' do
       stub_request(:get, "#{url}/Endpoint?organization.type=prvgrp")
         .to_return(status: 200, body: bundle.to_json)
 
       result = run(forward_chain_test, url: url)
-      expect(result.result).to eq('skip')
+      expect(result.result).to eq('fail')
     end
 
     # contextual call returning nothing is not tested.  I don't think this can happen (would be skipped once no
