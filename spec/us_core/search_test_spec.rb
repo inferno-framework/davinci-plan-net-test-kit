@@ -710,4 +710,119 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
       expect(result.result).to eq('skip')
     end
   end
+
+  # Note that combination search tests can have any variant of advanced searching -- most likely, each test will need a different "let"
+  # and class in order to be tested
+  describe 'Combination search tests' do
+    let(:combination_chain_test_include) do 
+      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::PractitionerRoleCombinationListPractitionersWithSpecialtyAndLocationSearchTest) do
+        fhir_client {url :url}
+        input :url
+      end
+    end
+    let(:combination_chain_test_include_no_reference) do 
+      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::PractitionerRoleCombinationListPractitionersWithSpecialtyAndLocationSearchTest) do
+        fhir_client {url :url}
+        input :url
+      end
+    end
+    let(:pracrole_with_specialty_and_location) {
+      FHIR::PractitionerRole.new(
+        id: 'practitioner-role-with-specialty-and-location',
+        location: [
+          {
+            "reference": "Location/Loc1"
+          }
+        ],
+        specialty: [
+          {
+            coding: [
+              {
+                code: "Spec1",
+              }
+            ]
+          }
+        ],
+        practitioner: {
+          reference: "Practitioner/Prac1"
+        }
+      )
+    }
+    let(:matching_pracrole_no_reference) {
+      FHIR::PractitionerRole.new(
+        id: 'practitioner-role-with-specialty-and-location',
+        location: [
+          {
+            "reference": "Location/Loc1"
+          }
+        ],
+        specialty: [
+          {
+            coding: [
+              {
+                code: "Spec1",
+              }
+            ]
+          }
+        ]
+      )
+    }
+    let(:referenced_practitioner) {
+      FHIR::Practitioner.new(
+        id: 'Prac1'
+      )
+    }
+    let(:test_scratch) { 
+      {
+        all: [pracrole_with_specialty_and_location]
+      }
+    }
+    let(:no_reference_scratch) {
+      {
+        all: [matching_pracrole_no_reference]
+      }
+    }
+    let (:bundle) {
+      FHIR::Bundle.new(
+        entry: []
+      )
+    }
+
+    before do
+      allow_any_instance_of(combination_chain_test_include).to receive(:scratch_resources).and_return(test_scratch)
+      allow_any_instance_of(combination_chain_test_include_no_reference).to receive(:scratch_resources).and_return(no_reference_scratch)
+      #allow_any_instance_of(reverse_chain_test_no_specialty).to receive(:scratch_additional_resources).and_return(no_specialty_scratch)
+    end
+
+    it "Passes when server returns additional resources that are referenced by base resources matching expected field values" do
+      bundle.entry.concat([ {resource: pracrole_with_specialty_and_location }, {resource: referenced_practitioner }])
+      stub_request(:get, "#{url}/PractitionerRole?_include=PractitionerRole:practitioner&location=Location/Loc1&specialty=Spec1")
+        .to_return(status: 200, body: bundle.to_json)
+      
+      result = run(combination_chain_test_include, url: url)
+      expect(result.result).to eq('pass')
+    end
+
+    it "Fails when server does not return any base resources" do
+      stub_request(:get, "#{url}/PractitionerRole?_include=PractitionerRole:practitioner&location=Location/Loc1&specialty=Spec1")
+        .to_return(status: 200, body: bundle.to_json)
+
+      result = run(combination_chain_test_include, url: url)
+      expect(result.result).to eq('fail')
+    end 
+
+    it "Fails when server does not return any additional resources but a query was built from instance gathering" do
+      bundle.entry.concat([ {resource: pracrole_with_specialty_and_location } ])
+      stub_request(:get, "#{url}/PractitionerRole?_include=PractitionerRole:practitioner&location=Location/Loc1&specialty=Spec1")
+        .to_return(status: 200, body: bundle.to_json)
+
+      result = run(combination_chain_test_include, url: url)
+      expect(result.result).to eq('fail')
+    end
+
+    it "Skips when server cannot find any referencing resources" do
+      result = run(combination_chain_test_include_no_reference, url: url)
+      expect(result.result).to eq('skip')
+    end
+  end
 end

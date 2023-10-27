@@ -130,7 +130,7 @@ module DaVinciPDEXPlanNetTestKit
     def all_revinclude_search_params
       @all_revinclude_search_params ||=
         all_search_params.transform_values! do |params_list|
-          find_base_resource(additional_resource_type, rev_param_sp, additional_scratch_resources) if given_input?
+          find_base_resource(additional_resource_type, rev_param_sp, additional_scratch_resources) if !given_input?
           base_id = given_input? ? self.send(input_name) : additional_resource(rev_param_sp)
           params_list.map { |params| {_id: base_id}.merge(_revinclude: revinclude_param) }
         end
@@ -228,7 +228,7 @@ module DaVinciPDEXPlanNetTestKit
             perform_search_with_status(params, resource_id) if response[:status] == 400 && possible_status_search?
 
             check_search_response
-
+            
             matching_resources = fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
               .select { |res| res.resourceType == additional_resource_type }
               .reject { |res| res.id == params[:_id] }
@@ -237,7 +237,7 @@ module DaVinciPDEXPlanNetTestKit
             matching_resources
           end
         end
-
+      
       save_delayed_references(resources, additional_resource_type)
       additional_scratch_resources.concat(resources).uniq!
 
@@ -379,7 +379,7 @@ module DaVinciPDEXPlanNetTestKit
 
       matching_resources = returned_resources 
         .select { |res| res.resourceType == additional_resource_type }
-      skip_if matching_resources.empty?, "Server did not return any #{additional_resource_type} resources"
+      assert !matching_resources.empty?, "Server did not return any #{additional_resource_type} resources, but query was based on existing element"
 
       base_resources.each { |res| check_resource_against_params(res, base_combination_search_params)}
 
