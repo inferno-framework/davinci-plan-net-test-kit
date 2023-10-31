@@ -171,14 +171,24 @@ module DaVinciPDEXPlanNetTestKit
         "#{search_identifier}_input"
       end
 
+      def optional_input?
+        test_data['optional_input']
+      end
+
+      def input_description
+        test_data['input_description']
+      end
+
       def search_properties
         {}.tap do |properties|
           properties[:fixed_value_search] = 'true' if fixed_value_search?
           properties[:resource_type] = "'#{resource_type}'"
           properties[:search_param_names] = search_param_names_array
           properties[:input_name] = "'#{input_name}'"
-          properties[:include_param] ="'#{test_data['include_param']}'"
-          properties[:inc_param_sp] ="'#{test_data['inc_param_sp']}'"
+          properties[:include_param] ="'#{test_data['include_param']}'" if !test_data['include_param'].empty?
+          properties[:inc_param_sp] ="'#{test_data['inc_param_sp']}'" if !test_data['inc_param_sp'].empty?
+          properties[:reverse_chain_param] = "'#{test_data['reverse_chain_param']}'" if !test_data['reverse_chain_param'].empty?
+          properties[:reverse_chain_target] = "'#{test_data['reverse_chain_target']}'" if !test_data['reverse_chain_target'].empty?
           properties[:possible_status_search] = 'true' if possible_status_search?
           properties[:additional_resource_type] = "'#{additional_resource_type}'"
           properties[:combination_search] = 'true'

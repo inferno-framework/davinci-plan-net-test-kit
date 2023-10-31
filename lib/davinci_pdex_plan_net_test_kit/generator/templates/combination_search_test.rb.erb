@@ -19,6 +19,12 @@ module DaVinciPDEXPlanNetTestKit
         )
       end
 
+      <% if optional_input? %>
+      input :<%= input_name %>,
+        title: 'Combination Search Reverse Chain',
+        description: '<%= input_description %>',
+        optional: true
+      <% end %>
       def self.metadata
         @metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, 'metadata.yml')))
       end

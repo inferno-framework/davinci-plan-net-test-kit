@@ -25,6 +25,7 @@ module DaVinciPDEXPlanNetTestKit
         )
       end
 
+      
       def self.metadata
         @metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, 'metadata.yml')))
       end

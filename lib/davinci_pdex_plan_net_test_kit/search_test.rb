@@ -36,7 +36,7 @@ module DaVinciPDEXPlanNetTestKit
                    :combination_search?
 
     def given_input?
-      !(self.send(:"#{input_name}").nil? || self.send(:"#{input_name}").empty?)
+      !(self.send(input_name).nil? || self.send(input_name).empty?)
     end
 
     def input_based_skip_assert(resources, message)
@@ -165,18 +165,27 @@ module DaVinciPDEXPlanNetTestKit
         #First get resource pool that can be used for populating base resources
         resource_pool = resources_with_all_search_params_with_values(search_param_names)
         #Then find a reference to one from this pool
-        find_base_resource(resource_type, inc_param_sp, resource_pool)
+        
+        if inc_param_sp
+          find_base_resource(resource_type, inc_param_sp, resource_pool)
+          params_list = base_combination_search_params(additional_resource).dup
+          params_list = include_param ? params_list.merge(_include: include_param) : params_list
+        end
         #After all references have been confirmed, populate it with elements of the resource that meets all requirements
-        # For now, don't 'pre-verify' that the server actually should return something.
-        params_list = base_combination_search_params
-        params_list = include_param ? params_list.merge(_include: include_param) : params_list
+        # Revinclude
+        # Forward Chain
+        if reverse_chain_param
+          params_list = base_combination_search_params(resource_pool.first).dup
+          field_value = given_input? ? self.send(input_name) : find_reverse_chain_resource
+          params_list.merge!("_has:#{additional_resource_type}:#{reverse_chain_target}:#{reverse_chain_param}": field_value)
+        end
         #TODO: Fill with the rest of advanced searches once more combination tests are ready
         params_list
     end
 
-    def base_combination_search_params
+    def base_combination_search_params(resource = nil)
       @base_combination_search_params ||=
-        search_param_values_from_same_resource(search_param_names, additional_resource)
+        search_param_values_from_same_resource(search_param_names, resource)
     end
 
 
@@ -375,15 +384,16 @@ module DaVinciPDEXPlanNetTestKit
       assert !returned_resources.empty?, "No #{resource_type} resources found"
 
       base_resources = returned_resources
-        .select { |res| res.resourceType == resource_type }
-
-      matching_resources = returned_resources 
-        .select { |res| res.resourceType == additional_resource_type }
-      assert !matching_resources.empty?, "Server did not return any #{additional_resource_type} resources, but query was based on existing element"
-
+          .select { |res| res.resourceType == resource_type }
+      info "Got here"
+      info "Params currently set to #{base_combination_search_params}"
       base_resources.each { |res| check_resource_against_params(res, base_combination_search_params)}
 
       if inc_param_sp
+        matching_resources = returned_resources 
+          .select { |res| res.resourceType == additional_resource_type }
+        assert !matching_resources.empty?, "Server did not return any #{additional_resource_type} resources, but query was based on existing element"
+
         assert matching_resources.all? { |match_res| 
           base_resources.any? { |base_res|
             if search_param_value(inc_param_sp, base_res).nil?
@@ -393,6 +403,18 @@ module DaVinciPDEXPlanNetTestKit
             end
           }
         }, "Server returned a #{additional_resource_type} resource that was not referenced by any matching #{resource_type} instances"
+      end
+
+      if reverse_chain_param
+        input_based_skip_assert(returned_resources, "No resources found.")
+        contextual_resources = run_search_on_additional_resource_type(reverse_chain_param)
+        base_resources.each do |base_res| 
+          assert (contextual_resources.any? do |res| 
+            reference_value = search_param_value(reverse_chain_target, res)
+            reference_value.nil? ? false : is_reference_match?(reference_value, search_param_value("_id", base_res))
+          end), reverse_chaining_incorrect_reference_error_message(base_res)
+        end  
+        base_resources
       end
     end
 
@@ -743,7 +765,6 @@ module DaVinciPDEXPlanNetTestKit
         value = search_param_value(name, resource)
         params[name] = value
       end
-      info param_hash.to_s
       param_hash
     end
 

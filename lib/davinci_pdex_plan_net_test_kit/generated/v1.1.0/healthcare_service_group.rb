@@ -27,6 +27,7 @@ require_relative 'healthcare_service/healthcare_service_forward_chain_organizati
 require_relative 'healthcare_service/healthcare_service_forward_chain_organization_partof_search_test'
 require_relative 'healthcare_service/healthcare_service_forward_chain_organization_type_search_test'
 require_relative 'healthcare_service/healthcare_service_forward_chain_endpoint_organization_search_test'
+require_relative 'healthcare_service/healthcare_service_combination_list_specialty_covered_by_network_search_test'
 require_relative 'healthcare_service/healthcare_service_validation_test'
 require_relative 'healthcare_service/healthcare_service_must_support_test'
 require_relative 'healthcare_service/healthcare_service_reference_resolution_test'
@@ -214,6 +215,7 @@ read succeeds.
       test from: :davinci_plan_net_v110_forward_chain_organization_partof_search_test
       test from: :davinci_plan_net_v110_forward_chain_organization_type_search_test
       test from: :davinci_plan_net_v110_forward_chain_endpoint_organization_search_test
+      test from: :davinci_plan_net_v110_healthcare_service_combination_list_specialty_covered_by_network_search_test
       test from: :davinci_pdex_plan_net_v110_healthcare_service_validation_test
       test from: :davinci_pdex_plan_net_v110_healthcare_service_must_support_test
       test from: :davinci_pdex_plan_net_v110_healthcare_service_reference_resolution_test
