@@ -713,14 +713,14 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
 
   # Note that combination search tests can have any variant of advanced searching -- most likely, each test will need a different "let"
   # and class in order to be tested
-  describe 'Combination search tests' do
-    let(:combination_chain_test_include) do 
+  describe 'Combination include search tests' do
+    let(:combination_test_include) do 
       Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::PractitionerRoleCombinationListPractitionersWithSpecialtyAndLocationSearchTest) do
         fhir_client {url :url}
         input :url
       end
     end
-    let(:combination_chain_test_include_no_reference) do 
+    let(:combination_test_include_no_reference) do 
       Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::PractitionerRoleCombinationListPractitionersWithSpecialtyAndLocationSearchTest) do
         fhir_client {url :url}
         input :url
@@ -732,6 +732,28 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
         location: [
           {
             "reference": "Location/Loc1"
+          }
+        ],
+        specialty: [
+          {
+            coding: [
+              {
+                code: "Spec1",
+              }
+            ]
+          }
+        ],
+        practitioner: {
+          reference: "Practitioner/Prac1"
+        }
+      )
+    }
+    let(:pracrole_with_incorrect_location) {
+      FHIR::PractitionerRole.new(
+        id: 'practitioner-role-with-specialty-and-location',
+        location: [
+          {
+            "reference": "Location/Loc2"
           }
         ],
         specialty: [
@@ -789,8 +811,8 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
     }
 
     before do
-      allow_any_instance_of(combination_chain_test_include).to receive(:scratch_resources).and_return(test_scratch)
-      allow_any_instance_of(combination_chain_test_include_no_reference).to receive(:scratch_resources).and_return(no_reference_scratch)
+      allow_any_instance_of(combination_test_include).to receive(:scratch_resources).and_return(test_scratch)
+      allow_any_instance_of(combination_test_include_no_reference).to receive(:scratch_resources).and_return(no_reference_scratch)
       #allow_any_instance_of(reverse_chain_test_no_specialty).to receive(:scratch_additional_resources).and_return(no_specialty_scratch)
     end
 
@@ -799,7 +821,7 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
       stub_request(:get, "#{url}/PractitionerRole?_include=PractitionerRole:practitioner&location=Location/Loc1&specialty=Spec1")
         .to_return(status: 200, body: bundle.to_json)
       
-      result = run(combination_chain_test_include, url: url)
+      result = run(combination_test_include, url: url)
       expect(result.result).to eq('pass')
     end
 
@@ -807,21 +829,227 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
       stub_request(:get, "#{url}/PractitionerRole?_include=PractitionerRole:practitioner&location=Location/Loc1&specialty=Spec1")
         .to_return(status: 200, body: bundle.to_json)
 
-      result = run(combination_chain_test_include, url: url)
+      result = run(combination_test_include, url: url)
       expect(result.result).to eq('fail')
-    end 
+    end
+
+    it "Fails when server returns base resources that do not meet query requirements" do
+      bundle.entry.concat([ {resource: pracrole_with_incorrect_location }, {resource: referenced_practitioner }])
+      stub_request(:get, "#{url}/PractitionerRole?_include=PractitionerRole:practitioner&location=Location/Loc1&specialty=Spec1")
+        .to_return(status: 200, body: bundle.to_json)
+      
+      result = run(combination_test_include, url: url)
+      expect(result.result).to eq('fail')
+    end
 
     it "Fails when server does not return any additional resources but a query was built from instance gathering" do
       bundle.entry.concat([ {resource: pracrole_with_specialty_and_location } ])
       stub_request(:get, "#{url}/PractitionerRole?_include=PractitionerRole:practitioner&location=Location/Loc1&specialty=Spec1")
         .to_return(status: 200, body: bundle.to_json)
 
-      result = run(combination_chain_test_include, url: url)
+      result = run(combination_test_include, url: url)
       expect(result.result).to eq('fail')
     end
 
     it "Skips when server cannot find any referencing resources" do
-      result = run(combination_chain_test_include_no_reference, url: url)
+      result = run(combination_test_include_no_reference, url: url)
+      expect(result.result).to eq('skip')
+    end
+  end
+
+  describe "Combination reverse chain tests" do
+    let(:combination_test_reverse_chain) do
+      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::HealthcareServiceCombinationListSpecialtyCoveredByNetworkSearchTest) do
+        fhir_client {url :url}
+        input :url
+      end
+    end
+    let(:combination_test_reverse_chain_no_additional_scratch) do
+      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::HealthcareServiceCombinationListSpecialtyCoveredByNetworkSearchTest) do
+        fhir_client {url :url}
+        input :url
+      end
+    end
+    let(:combination_test_reverse_chain_no_scratch) do
+      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::HealthcareServiceCombinationListSpecialtyCoveredByNetworkSearchTest) do
+        fhir_client {url :url}
+        input :url
+      end
+    end
+    let(:healthcare_service_referenced) {
+      FHIR::HealthcareService.new(
+        id: "Service1",
+        specialty: [
+          {
+            coding: [
+              {
+                code: "Spec1",
+              }
+            ]
+          }
+        ]
+      )
+    }
+    let(:healthcare_service_not_referenced) {
+      FHIR::HealthcareService.new(
+        id: "Service2",
+        specialty: [
+          {
+            coding: [
+              {
+                code: "Spec1",
+              }
+            ]
+          }
+        ]
+      )
+    }
+    let(:healthcare_service_wrong_specialty) {
+      FHIR::HealthcareService.new(
+        id: "Service1",
+        specialty: [
+          {
+            coding: [
+              {
+                code: "Spec2",
+              }
+            ]
+          }
+        ]
+      )
+    }
+    let(:organization_affiliation_with_reference) {
+      FHIR::OrganizationAffiliation.new(
+        id: "ReferencingOrganizationAffiliation",
+        healthcareService: [ {
+          reference: "HealthcareService/Service1"
+        } ],
+        network: [ {
+          reference: "Organization/Network1"
+        } ]
+      )
+    }
+    let(:organization_affiliation_without_reference) {
+      FHIR::OrganizationAffiliation.new(
+        id: "NoReferenceOrganizationAffiliation",
+        network: [ {
+          reference: "Organization/Network1"
+        } ]
+      )
+    }
+    let(:organization_affiliation_wrong_network) {
+      FHIR::OrganizationAffiliation.new(
+        id: "OrganizationAffiliationWrongNetwork",
+        network: [ {
+          reference: "Organization/Network2"
+        } ]
+      )
+    }
+    let(:test_scratch) { 
+      {
+        all: [healthcare_service_referenced]
+      }
+    }
+    let(:additional_scratch) {
+      {
+        all: [organization_affiliation_with_reference]
+      }
+    }
+    let(:empty_scratch) {
+      {
+        all: []
+      }
+    }
+    let (:bundle) {
+      FHIR::Bundle.new(
+        entry: []
+      )
+    }
+    let (:organization_affiliation_bundle) {
+      FHIR::Bundle.new(
+        entry: [{resource: organization_affiliation_with_reference}, {resource: organization_affiliation_without_reference}]
+      )
+    }
+
+    before do
+      allow_any_instance_of(combination_test_reverse_chain).to receive(:scratch_resources).and_return(test_scratch)
+      allow_any_instance_of(combination_test_reverse_chain).to receive(:scratch_additional_resources).and_return(additional_scratch)
+      allow_any_instance_of(combination_test_reverse_chain_no_additional_scratch).to receive(:scratch_resources).and_return(test_scratch)
+      allow_any_instance_of(combination_test_reverse_chain_no_additional_scratch).to receive(:scratch_additional_resources).and_return(empty_scratch)
+      allow_any_instance_of(combination_test_reverse_chain_no_scratch).to receive(:scratch_resources).and_return(empty_scratch)
+      allow_any_instance_of(combination_test_reverse_chain_no_scratch).to receive(:scratch_additional_resources).and_return(empty_scratch)
+      stub_request(:get, "#{url}/OrganizationAffiliation?network=Organization/Network1")
+        .to_return(status: 200, body: organization_affiliation_bundle.to_json)
+    end
+
+
+    it "Passes when server returns base resources that match the given query" do
+      bundle.entry.concat([ {resource: healthcare_service_referenced}])
+      stub_request(:get, "#{url}/HealthcareService?_has:OrganizationAffiliation:service:network=Organization/Network1&specialty=Spec1")
+        .to_return(status: 200, body: bundle.to_json)
+
+      result = run(combination_test_reverse_chain, url: url)
+      expect(result.result).to eq('pass')
+    end
+
+    it "Passes when scratch is empty but user gives valid input and server responds with base resources that match the given query" do
+      bundle.entry.concat([ {resource: healthcare_service_referenced}])
+      stub_request(:get, "#{url}/HealthcareService?_has:OrganizationAffiliation:service:network=Network1&specialty=Spec1")
+        .to_return(status: 200, body: bundle.to_json)
+
+      stub_request(:get, "#{url}/OrganizationAffiliation?network=Network1")
+        .to_return(status: 200, body: organization_affiliation_bundle.to_json)
+      
+      result = run(combination_test_reverse_chain_no_additional_scratch, url: url, combination_list_specialty_covered_by_network_input: 'Network1')
+      expect(result.result).to eq('pass')
+    end
+
+    it "Fails when server returns base resources with fields that do not match what was searched upon" do
+      bundle.entry.concat([ {resource: healthcare_service_wrong_specialty}])
+      stub_request(:get, "#{url}/HealthcareService?_has:OrganizationAffiliation:service:network=Organization/Network1&specialty=Spec1")
+        .to_return(status: 200, body: bundle.to_json)
+
+      result = run(combination_test_reverse_chain, url: url)
+      expect(result.result).to eq('fail')
+    end
+
+    it "Fails when server does not return any base resources" do
+      stub_request(:get, "#{url}/HealthcareService?_has:OrganizationAffiliation:service:network=Organization/Network1&specialty=Spec1")
+        .to_return(status: 200, body: bundle.to_json)
+
+      result = run(combination_test_reverse_chain, url: url)
+      expect(result.result).to eq('fail')
+    end
+
+    it "Fails when server returns a base resource that is not referenced by relevant additional resources" do
+      bundle.entry.concat([ {resource: healthcare_service_not_referenced}])
+      stub_request(:get, "#{url}/HealthcareService?_has:OrganizationAffiliation:service:network=Organization/Network1&specialty=Spec1")
+        .to_return(status: 200, body: bundle.to_json)
+
+      result = run(combination_test_reverse_chain, url: url)
+      expect(result.result).to eq('fail')
+    end
+
+    it "Fails when collection of additional resources returns additional resource with incorrect value in desired field" do
+      bundle.entry.concat([ {resource: healthcare_service_referenced}])
+      stub_request(:get, "#{url}/HealthcareService?_has:OrganizationAffiliation:service:network=Organization/Network1&specialty=Spec1")
+        .to_return(status: 200, body: bundle.to_json)
+
+      organization_affiliation_bundle.entry.concat([{resource: organization_affiliation_wrong_network}])
+      stub_request(:get, "#{url}/OrganizationAffiliation?network=Organization/Network1")
+        .to_return(status: 200, body: organization_affiliation_bundle.to_json)
+
+      result = run(combination_test_reverse_chain, url: url)
+      expect(result.result).to eq('fail')
+    end
+
+    it 'Skips if scratch is empty' do
+      result = run(combination_test_reverse_chain_no_scratch, url: url)
+      expect(result.result).to eq('skip')
+    end
+
+    it 'Skips if additional scratch is empty and no input from user' do
+      result = run(combination_test_reverse_chain_no_additional_scratch, url: url)
       expect(result.result).to eq('skip')
     end
   end

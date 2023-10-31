@@ -385,8 +385,6 @@ module DaVinciPDEXPlanNetTestKit
 
       base_resources = returned_resources
           .select { |res| res.resourceType == resource_type }
-      info "Got here"
-      info "Params currently set to #{base_combination_search_params}"
       base_resources.each { |res| check_resource_against_params(res, base_combination_search_params)}
 
       if inc_param_sp
@@ -414,7 +412,6 @@ module DaVinciPDEXPlanNetTestKit
             reference_value.nil? ? false : is_reference_match?(reference_value, search_param_value("_id", base_res))
           end), reverse_chaining_incorrect_reference_error_message(base_res)
         end  
-        base_resources
       end
     end
 
