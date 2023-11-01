@@ -39,7 +39,7 @@ module DaVinciPDEXPlanNetTestKit
         scratch[:location_resources] ||= {}
       end
 
-      def scratch_chain_resources
+      def scratch_additional_resources
         scratch[:endpoint_resources] ||= {}
       end
 

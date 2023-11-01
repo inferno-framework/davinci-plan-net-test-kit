@@ -11,8 +11,7 @@ module DaVinciPDEXPlanNetTestKit
         A server SHALL support reverse chaining.
 
         Test will use the query _has:PractitionerRole:network:location to test
-        the server for reverse chaining capability.  The test will pass if any Organization instances are
-        returned.
+        the server for reverse chaining capability.  This test does not validate returned resources at this time.
       )
       
       id :davinci_plan_net_v110_network_reverse_chain_practitioner_role_network_location_search_test
@@ -45,7 +44,7 @@ module DaVinciPDEXPlanNetTestKit
         scratch[:network_resources] ||= {}
       end
 
-      def scratch_chain_resources
+      def scratch_additional_resources
         scratch[:practitioner_role_resources] ||= {}
       end
 

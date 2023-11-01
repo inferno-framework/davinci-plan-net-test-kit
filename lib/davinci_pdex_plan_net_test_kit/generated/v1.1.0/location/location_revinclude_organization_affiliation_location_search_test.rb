@@ -43,7 +43,7 @@ module DaVinciPDEXPlanNetTestKit
         scratch[:location_resources] ||= {}
       end
 
-      def scratch_revinclude_resources
+      def scratch_additional_resources
         scratch[:organization_affiliation_resources] ||= {}
       end
 

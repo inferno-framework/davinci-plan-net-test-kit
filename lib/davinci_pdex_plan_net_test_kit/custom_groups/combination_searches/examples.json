@@ -1,0 +1,40 @@
+{
+  "PractitionerRole": [
+  {
+      "name": "combination_list_practitioners_with_specialty_and_location",
+      "description": "This specific test will attempt to filter practitioners by specialty and location fields of the role that references them.",
+      "goal": "List all clinicians of a certain specialty within a location",
+      "base_search_params": ["specialty", "location"],
+      "include_param": "PractitionerRole:practitioner",
+      "inc_param_sp": "practitioner",
+      "revinclude_param": {},
+      "rev_param_sp": {},
+      "chain_param": {},
+      "chain_param_base": {},
+      "reverse_chain_param": {},
+      "reverse_chain_target": {},
+      "additional_resource_type": "Practitioner",
+      "optional_input": false,
+      "input_description": {}
+  }
+  ],
+  "HealthcareService": [
+    {
+      "name": "combination_list_specialty_covered_by_network",
+      "description": "This specific test will attempt to list all HealthcareService reosurces with a specific specialty covered under a specific network",
+      "goal": "List all instances of a specific specialty service covered under a network",
+      "base_search_params": ["specialty"],
+      "include_param": {},
+      "inc_param_sp": {},
+      "revinclude_param": {},
+      "rev_param_sp": {},
+      "chain_param": {},
+      "chain_param_base": {},
+      "reverse_chain_param": "network",
+      "reverse_chain_target": "service",
+      "additional_resource_type": "OrganizationAffiliation",
+      "optional_input": true,
+      "input_description": "Network value of an OrganizationAffiliation Resource that also references a HealthcareService resource in its service field"
+    }
+  ]
+}

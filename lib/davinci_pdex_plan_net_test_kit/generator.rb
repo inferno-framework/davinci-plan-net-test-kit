@@ -16,6 +16,7 @@ require_relative 'generator/search_no_params_test_generator'
 require_relative 'generator/suite_generator'
 require_relative 'generator/validation_test_generator'
 require_relative 'generator/forward_chain_test_generator'
+require_relative 'generator/combination_search_test_generator'
 require_relative 'generator/special_cases'
 
 module DaVinciPDEXPlanNetTestKit
@@ -48,6 +49,7 @@ module DaVinciPDEXPlanNetTestKit
       generate_revinclude_search_tests
       generate_forward_chain_search_tests
       generate_reverse_chain_search_tests
+      generate_combination_chain_search_tests
       generate_validation_tests
       generate_must_support_tests
       generate_reference_resolution_tests
@@ -122,6 +124,12 @@ module DaVinciPDEXPlanNetTestKit
 
     def generate_forward_chain_search_tests
       ForwardChainSearchTestGenerator.generate(ig_metadata, base_output_dir)
+    end
+
+    def generate_combination_chain_search_tests
+      examples = File.read('lib/davinci_pdex_plan_net_test_kit/custom_groups/combination_searches/examples.json')
+      examples_hash = JSON.parse(examples)
+      CombinationSearchTestGenerator.generate(ig_metadata, examples_hash, base_output_dir)
     end
     
     def generate_groups

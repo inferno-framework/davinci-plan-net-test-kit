@@ -1363,6 +1363,8 @@
   :file_name: healthcare_service_forward_chain_organization_type_search_test.rb
 - :id: davinci_plan_net_v110_forward_chain_endpoint_organization_search_test
   :file_name: healthcare_service_forward_chain_endpoint_organization_search_test.rb
+- :id: davinci_plan_net_v110_healthcare_service_combination_list_specialty_covered_by_network_search_test
+  :file_name: healthcare_service_combination_list_specialty_covered_by_network_search_test.rb
 - :id: davinci_pdex_plan_net_v110_healthcare_service_validation_test
   :file_name: healthcare_service_validation_test.rb
 - :id: davinci_pdex_plan_net_v110_healthcare_service_must_support_test

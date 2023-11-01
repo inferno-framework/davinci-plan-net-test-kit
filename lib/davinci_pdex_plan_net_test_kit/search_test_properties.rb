@@ -21,7 +21,8 @@ module DaVinciPDEXPlanNetTestKit
       :test_reference_variants,
       :params_with_comparators,
       :multiple_or_search_params,
-      :test_post_search
+      :test_post_search,
+      :combination_search
     ].freeze
 
     ATTRIBUTES.each { |name| attr_reader name }
@@ -52,6 +53,10 @@ module DaVinciPDEXPlanNetTestKit
 
     def test_reference_variants?
       !!test_reference_variants
+    end
+
+    def combination_search?
+      !!combination_search
     end
 
     def test_post_search?

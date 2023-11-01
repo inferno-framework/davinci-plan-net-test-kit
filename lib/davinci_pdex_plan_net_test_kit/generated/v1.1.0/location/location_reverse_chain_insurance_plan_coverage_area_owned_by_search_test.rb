@@ -11,8 +11,7 @@ module DaVinciPDEXPlanNetTestKit
         A server SHALL support reverse chaining.
 
         Test will use the query _has:InsurancePlan:coverage-area:owned-by to test
-        the server for reverse chaining capability.  The test will pass if any Location instances are
-        returned.
+        the server for reverse chaining capability.  This test does not validate returned resources at this time.
       )
       
       id :davinci_plan_net_v110_location_reverse_chain_insurance_plan_coverage_area_owned_by_search_test
@@ -45,7 +44,7 @@ module DaVinciPDEXPlanNetTestKit
         scratch[:location_resources] ||= {}
       end
 
-      def scratch_chain_resources
+      def scratch_additional_resources
         scratch[:insurance_plan_resources] ||= {}
       end
 
