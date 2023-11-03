@@ -8,10 +8,12 @@ module DaVinciPDEXPlanNetTestKit
 
       title 'Server returns Location resources from InsurancePlan search with _include=InsurancePlan:coverage-area'
       description %(
-        A server SHALL be capable of supporting _includes for InsurancePlan:coverage-area.
+        A server SHALL be capable of supporting _includes on search parameter InsurancePlan:coverage-area.
 
-        This test will perform a search with _include=InsurancePlan:coverage-area and
-        will pass if a Location resource is found in the response.
+        This test will perform a search on InsurancePlan with _include=InsurancePlan:coverage-area 
+        and the '_id' search parameter using an id with a reference to a Location
+        identified during instance gathering. The test will pass if at least one Location 
+        resource is found in the response and each instance that does is referenced by a returned InsurancePlan instance.
       )
 
       id :davinci_plan_net_v110_include_insurance_plan_insurance_plan_coverage_area_search_test

@@ -8,10 +8,12 @@ module DaVinciPDEXPlanNetTestKit
 
       title 'Server returns Organization resources from Endpoint search with _include=Endpoint:organization'
       description %(
-        A server SHALL be capable of supporting _includes for Endpoint:organization.
+        A server SHALL be capable of supporting _includes on search parameter Endpoint:organization.
 
-        This test will perform a search with _include=Endpoint:organization and
-        will pass if a Organization resource is found in the response.
+        This test will perform a search on Endpoint with _include=Endpoint:organization 
+        and the '_id' search parameter using an id with a reference to a Organization
+        identified during instance gathering. The test will pass if at least one Organization 
+        resource is found in the response and each instance that does is referenced by a returned Endpoint instance.
       )
 
       id :davinci_plan_net_v110_include_endpoint_endpoint_organization_search_test

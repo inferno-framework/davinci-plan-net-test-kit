@@ -8,10 +8,12 @@ module DaVinciPDEXPlanNetTestKit
 
       title 'Server returns Location resources from Location search with _include=Location:partof'
       description %(
-        A server SHALL be capable of supporting _includes for Location:partof.
+        A server SHALL be capable of supporting _includes on search parameter Location:partof.
 
-        This test will perform a search with _include=Location:partof and
-        will pass if a Location resource is found in the response.
+        This test will perform a search on Location with _include=Location:partof 
+        and the '_id' search parameter using an id with a reference to a Location
+        identified during instance gathering. The test will pass if at least one Location 
+        resource is found in the response and each instance that does is referenced by a returned Location instance.
       )
 
       id :davinci_plan_net_v110_include_location_location_partof_search_test

@@ -8,16 +8,21 @@ module DaVinciPDEXPlanNetTestKit
 
       title 'Server returns PractitionerRole resources from HealthcareService search with _revinclude=PractitionerRole:service'
       description %(
-        A server SHALL be capable of supporting _revIncludes for PractitionerRole:service.
+        A server SHALL be capable of supporting searches _revIncludes on search parameter PractitionerRole:service.
 
-        This test will perform a search with _revinclude=PractitionerRole:service and
-        will pass if a PractitionerRole resource is found in the response.
+        This test will perform a search on HealthcareService with _revinclude=PractitionerRole:service and the '_id'
+        search parameter using an id previoiusly identified when the whole test suite is run or an id provided
+        in the "HealthcareService instance ids referenced in PractitionerRole.service" input if run at the group level.
+        The test will pass if at least one PractitionerRole resource found in the response
+        and each instance that does includes a reference to the HealthcareService with the searched id.
       )
 
       id :davinci_plan_net_v110_revinclude_healthcare_service_practitioner_role_service_search_test
       input :practitioner_role_service_input,
-        title: 'PractitionerRole referenced HealthcareService IDs',
-        description: 'Comma separated list of HealthcareService  IDs that are referenced by a PractitionerRole',
+        title: 'HealthcareService instance ids referenced in PractitionerRole.service',
+        description: %(Comma separated list of HealthcareService instance ids that are referenced by a PractitionerRole
+        instance in its service element. Used for test "Server returns PractitionerRole resources from HealthcareService search with _revinclude=PractitionerRole:service"
+        when run at the group level.),
         optional: true
         
       def properties

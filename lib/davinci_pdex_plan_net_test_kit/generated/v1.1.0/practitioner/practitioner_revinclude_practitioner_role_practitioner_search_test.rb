@@ -8,16 +8,21 @@ module DaVinciPDEXPlanNetTestKit
 
       title 'Server returns PractitionerRole resources from Practitioner search with _revinclude=PractitionerRole:practitioner'
       description %(
-        A server SHALL be capable of supporting _revIncludes for PractitionerRole:practitioner.
+        A server SHALL be capable of supporting searches _revIncludes on search parameter PractitionerRole:practitioner.
 
-        This test will perform a search with _revinclude=PractitionerRole:practitioner and
-        will pass if a PractitionerRole resource is found in the response.
+        This test will perform a search on Practitioner with _revinclude=PractitionerRole:practitioner and the '_id'
+        search parameter using an id previoiusly identified when the whole test suite is run or an id provided
+        in the "Practitioner instance ids referenced in PractitionerRole.practitioner" input if run at the group level.
+        The test will pass if at least one PractitionerRole resource found in the response
+        and each instance that does includes a reference to the Practitioner with the searched id.
       )
 
       id :davinci_plan_net_v110_revinclude_practitioner_practitioner_role_practitioner_search_test
       input :practitioner_role_practitioner_input,
-        title: 'PractitionerRole referenced Practitioner IDs',
-        description: 'Comma separated list of Practitioner  IDs that are referenced by a PractitionerRole',
+        title: 'Practitioner instance ids referenced in PractitionerRole.practitioner',
+        description: %(Comma separated list of Practitioner instance ids that are referenced by a PractitionerRole
+        instance in its practitioner element. Used for test "Server returns PractitionerRole resources from Practitioner search with _revinclude=PractitionerRole:practitioner"
+        when run at the group level.),
         optional: true
         
       def properties

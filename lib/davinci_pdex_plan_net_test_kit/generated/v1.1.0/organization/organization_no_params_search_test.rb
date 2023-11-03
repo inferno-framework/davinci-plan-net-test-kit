@@ -8,24 +8,19 @@ module DaVinciPDEXPlanNetTestKit
 
       title 'Client can identify instances of Plan-Net Organization on the server'
       description %(
-A server SHALL support searching on the 
-Organization resource withough parameters. This test
-will pass if resources are returned. If none are returned, 
-the test is skipped.
-
-Because this is the first search of the sequence, resources in the
-response will be used for subsequent tests.
-
-[Plan Net Server CapabilityStatement](http://hl7.org/fhir/us/davinci-pdex-plan-net/CapabilityStatement/plan-net)
+This test gathers instances expected to conform to the target profile
+for use in the rest of the tests in this sequence. It will perform
+an unparameterized search and/or read instance ids provided by the tester
+as described in the "Instance Gathering" section of the group description above.
 
       )
 
       id :davinci_pdex_plan_net_v110_organization_no_params_search_test
 
       input :davinci_pdex_plan_net_v110_organization_no_params_search_test_ids,
-        title: 'Ids of instances of Plan-Net Organization',
+        title: 'ids of Plan-Net Organization instances',
         optional: true,
-        description: 'Required if parameterless searches not used.'
+        description: 'Required if parameterless searches are not being used for instance gathering.'
       input :no_param_search
       input :max_instances
       input :max_pages

@@ -11,8 +11,12 @@ module DaVinciPDEXPlanNetTestKit
         A server SHALL be capable of supporting chaining for partof through the search parameter participating-organization
         for the Organization_affiliation profile.
 
-        This test will perform a search with participating-organization.partof and
-        will pass if an OrganizationAffiliation resource is found in the response.
+        This test will perform a search with participating-organization.partof using a value
+        in the partof element on an instance found during _include tests executed
+        previously during this sequence. To validate the returned instances, the test will perform a search 
+        on the Organization resource type using the same partof search 
+        parameter and value and check that this search contains any instances referenced through the 
+        participating-organization element of instances returned by the tested search.
       )
 
       id :davinci_plan_net_v110_forward_chain_participating_organization_partof_search_test

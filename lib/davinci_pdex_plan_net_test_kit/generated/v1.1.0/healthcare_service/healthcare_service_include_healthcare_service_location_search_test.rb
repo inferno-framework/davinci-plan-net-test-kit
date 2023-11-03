@@ -8,10 +8,12 @@ module DaVinciPDEXPlanNetTestKit
 
       title 'Server returns Location resources from HealthcareService search with _include=HealthcareService:location'
       description %(
-        A server SHALL be capable of supporting _includes for HealthcareService:location.
+        A server SHALL be capable of supporting _includes on search parameter HealthcareService:location.
 
-        This test will perform a search with _include=HealthcareService:location and
-        will pass if a Location resource is found in the response.
+        This test will perform a search on HealthcareService with _include=HealthcareService:location 
+        and the '_id' search parameter using an id with a reference to a Location
+        identified during instance gathering. The test will pass if at least one Location 
+        resource is found in the response and each instance that does is referenced by a returned HealthcareService instance.
       )
 
       id :davinci_plan_net_v110_include_healthcare_service_healthcare_service_location_search_test

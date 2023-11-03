@@ -8,10 +8,12 @@ module DaVinciPDEXPlanNetTestKit
 
       title 'Server returns HealthcareService resources from PractitionerRole search with _include=PractitionerRole:service'
       description %(
-        A server SHALL be capable of supporting _includes for PractitionerRole:service.
+        A server SHALL be capable of supporting _includes on search parameter PractitionerRole:service.
 
-        This test will perform a search with _include=PractitionerRole:service and
-        will pass if a HealthcareService resource is found in the response.
+        This test will perform a search on PractitionerRole with _include=PractitionerRole:service 
+        and the '_id' search parameter using an id with a reference to a HealthcareService
+        identified during instance gathering. The test will pass if at least one HealthcareService 
+        resource is found in the response and each instance that does is referenced by a returned PractitionerRole instance.
       )
 
       id :davinci_plan_net_v110_include_practitioner_role_practitioner_role_service_search_test

@@ -2,7 +2,7 @@
   "PractitionerRole": [
   {
       "name": "combination_list_practitioners_with_specialty_and_location",
-      "description": "This specific test will attempt to filter practitioners by specialty and location fields of the role that references them.",
+      "description": "This specific test will attempt to filter practitioners by specialty and location elements of the role that references them.",
       "goal": "List all clinicians of a certain specialty within a location",
       "base_search_params": ["specialty", "location"],
       "include_param": "PractitionerRole:practitioner",
@@ -34,7 +34,7 @@
       "reverse_chain_target": "service",
       "additional_resource_type": "OrganizationAffiliation",
       "optional_input": true,
-      "input_description": "Network value of an OrganizationAffiliation Resource that also references a HealthcareService resource in its service field"
+      "input_description": "Network value of an OrganizationAffiliation instance that also references a HealthcareService instance in its service element"
     }
   ]
 }

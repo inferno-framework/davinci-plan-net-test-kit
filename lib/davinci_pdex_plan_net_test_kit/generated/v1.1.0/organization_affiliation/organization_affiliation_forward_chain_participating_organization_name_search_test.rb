@@ -11,8 +11,12 @@ module DaVinciPDEXPlanNetTestKit
         A server SHALL be capable of supporting chaining for name through the search parameter participating-organization
         for the Organization_affiliation profile.
 
-        This test will perform a search with participating-organization.name and
-        will pass if an OrganizationAffiliation resource is found in the response.
+        This test will perform a search with participating-organization.name using a value
+        in the name element on an instance found during _include tests executed
+        previously during this sequence. To validate the returned instances, the test will perform a search 
+        on the Organization resource type using the same name search 
+        parameter and value and check that this search contains any instances referenced through the 
+        participating-organization element of instances returned by the tested search.
       )
 
       id :davinci_plan_net_v110_forward_chain_participating_organization_name_search_test

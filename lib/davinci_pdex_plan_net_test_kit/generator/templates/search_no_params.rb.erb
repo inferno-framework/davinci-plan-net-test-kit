@@ -16,9 +16,9 @@ module DaVinciPDEXPlanNetTestKit
   <% end %>
 
       input :<%= test_id %>_ids,
-        title: 'Ids of instances of <%= profile_name %>',
+        title: 'ids of <%= profile_name %> instances',
         optional: true,
-        description: 'Required if parameterless searches not used.'
+        description: 'Required if parameterless searches are not being used for instance gathering.'
       input :no_param_search
       input :max_instances
       input :max_pages

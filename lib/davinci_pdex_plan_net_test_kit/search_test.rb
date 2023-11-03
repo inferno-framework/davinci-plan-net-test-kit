@@ -229,7 +229,7 @@ module DaVinciPDEXPlanNetTestKit
     end
 
     def run_revinclude_search_test
-      skip_if !any_valid_search_params?(all_revinclude_search_params), "Invalid parameter.  Please provide a different ID for revinclude testing"
+      skip_if !any_valid_search_params?(all_revinclude_search_params), "Invalid parameter.  Please provide a different id for revinclude testing"
       resources =
         all_revinclude_search_params.flat_map do |_resource_id, params_list|
           params_list.flat_map do |params|
@@ -806,7 +806,7 @@ module DaVinciPDEXPlanNetTestKit
     end
 
     def no_instance_gathering_message
-      "Unable to find previously gathered instances of #{additional_resource_type}, please provide IDs or
+      "Unable to find previously gathered instances of #{additional_resource_type}, please provide ids or
       \"Run All Tests\" from suite level"
     end
 

@@ -6,19 +6,25 @@ module DaVinciPDEXPlanNetTestKit
     class OrganizationReverseChainInsurancePlanOwnedByCoverageAreaSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server capable of reverse chaining through InsurancePlan\'s coverage-area field'
+      title 'Server capable of reverse chaining through InsurancePlan\'s coverage-area element'
       description %(
-        A server SHALL support reverse chaining.
-
-        Test will use the query _has:InsurancePlan:owned-by:coverage-area to test
-        the server for reverse chaining capability.  This test does not validate returned resources at this time.
+        Test will perform a search using the reverse chaining parameter 
+        _has:InsurancePlan:owned-by:coverage-area
+        using a value from either a previously identified InsurancePlan when 
+        run as a whole suite, or the "\'coverage-area\' value from an InsurancePlan 
+        instance with \'owned-by\' populated" input when run at the group level. To validate the 
+        returned instances, the test will perform a search 
+        on the InsurancePlan resource type using the same coverage-area search 
+        parameter and value and check that the instances returned by the tested search are all referenced
+        by the owned-by element of instances returned by the additional search.
       )
       
       id :davinci_plan_net_v110_organization_reverse_chain_insurance_plan_owned_by_coverage_area_search_test
       input :insurance_plan_owned_by_coverage_area_input,
-        title: 'coverage-area field value for InsurancePlan',
-        description: 'Value from the coverage-area field of an InsurancePlan
-        that also references a Organization instance in its owned-by field',
+        title: '\'coverage-area\' value from an InsurancePlan instance with \'owned-by\' populated',
+        description: 'Single value from the \'coverage-area\' element of an InsurancePlan
+        on an instance that also references an Organization instance in its \'owned-by\' element to be used for test 
+        \'Server capable of reverse chaining through InsurancePlan\'s coverage-area element\' when run at the group level.',
         optional: true
 
       def properties

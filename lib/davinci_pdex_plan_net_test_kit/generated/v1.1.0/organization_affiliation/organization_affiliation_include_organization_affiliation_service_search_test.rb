@@ -8,10 +8,12 @@ module DaVinciPDEXPlanNetTestKit
 
       title 'Server returns HealthcareService resources from OrganizationAffiliation search with _include=OrganizationAffiliation:service'
       description %(
-        A server SHALL be capable of supporting _includes for OrganizationAffiliation:service.
+        A server SHALL be capable of supporting _includes on search parameter OrganizationAffiliation:service.
 
-        This test will perform a search with _include=OrganizationAffiliation:service and
-        will pass if a HealthcareService resource is found in the response.
+        This test will perform a search on OrganizationAffiliation with _include=OrganizationAffiliation:service 
+        and the '_id' search parameter using an id with a reference to a HealthcareService
+        identified during instance gathering. The test will pass if at least one HealthcareService 
+        resource is found in the response and each instance that does is referenced by a returned OrganizationAffiliation instance.
       )
 
       id :davinci_plan_net_v110_include_organization_affiliation_organization_affiliation_service_search_test

@@ -28,7 +28,7 @@ module DaVinciPDEXPlanNetTestKit
       
       input :combination_list_specialty_covered_by_network_input,
         title: 'Combination Search Reverse Chain',
-        description: 'Network value of an OrganizationAffiliation Resource that also references a HealthcareService resource in its service field',
+        description: 'Network value of an OrganizationAffiliation instance that also references a HealthcareService instance in its service element',
         optional: true
       
       def self.metadata

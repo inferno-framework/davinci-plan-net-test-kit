@@ -1,92 +1,92 @@
-# davinci-pdex-plan-net-test-kit
+# DaVinci PDEX Plan Net v1.1.0 Test Kit
 
+The Plan Net STU 1.1.0 Server Test Kit validates the conformance of a server 
+implementation to the Plan Net STU 1.1.0 FHIR IG. Inferno will act as a client 
+and make a series of requests to the server under test. The responses will be 
+checked for conformance to the Plan Net IG requirements individually and used 
+in aggregate to determine whether required features and functionality are present.
 
+This test kit is [open source](#license) and freely available for use or
+adoption by the health IT community including EHR vendors, health app
+developers, and testing labs. It is built using the [Inferno
+Framework](https://inferno-framework.github.io/). The Inferno Framework is
+designed for reuse and aims to make it easier to build test kits for any
+FHIR-based data exchange.
 
-## Getting started
+## Status
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+These tests are a **DRAFT** intended to allow Plan Net server implementers to perform 
+preliminary checks of their servers against Plan Net IG requirements and provide 
+feedback to ONC on the tests. Future versions of these tests may validate other 
+requirements and may change how these are tested.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+The test kit current tests the following requirements:
+- Support for Must Support Elements
+- json Support
+- Support for all Plan Net Profiles
+- Read Interaction
+- Individual Search Parameters
+- _include Searches
+- _revinclude Searches
+- Forward Chain Searches
+- Reverse Chain Searches
+- Search Parameters in Combination
 
-## Add your files
+See the test descriptions within the test kit for detail on the specific 
+validations performed as a part of testing these requirements. 
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+Additional details on the IG requirements that underlie this test, including those 
+that are not currently tested, can be found in [this spreadsheet](lib/davinci_pdex_plan_net_test_kit/igs/Plan%20Net%20Requirements%20Interpretation.xlsx). The spreadsheet includes
+- a list of requirements extracted from the IG
+- the requirements tested by this DRAFT test kit
+- an analysis of which requirements are testable, including areas where testable requirements are weak or unclear
+- the approach taken to testing each tested requirement
+- a map of requirements to test kit test ids
+- open questions for IG authors seeking to clarify the IG requirements
 
-```
-cd existing_repo
-git remote add origin https://gitlab.mitre.org/inferno/davinci-pdex-plan-net-test-kit.git
-git branch -M main
-git push -uf origin main
-```
+## How to Run
 
-## Integrate with your tools
+Use either of the following methods to run the test suite against a Plan Net server.
+If you would like to try out the tests but don’t have a Plan Net server implementation, 
+you can use the publicly available reference implementation available at FHIR URL 
+https://plan-net-ri.davinci.hl7.org/fhir.
 
-- [ ] [Set up project integrations](https://gitlab.mitre.org/inferno/davinci-pdex-plan-net-test-kit/-/settings/integrations)
+### ONC Hosted Instance
 
-## Collaborate with your team
+You can run these tests via the [ONC Inferno](https://inferno.healthit.gov/suites/) website by choosing the “DaVinci PDEX Plan Net v1.1.0” test suite.
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+### Local Inferno Instance
 
-## Test and Deploy
+- download the source code from this repository
+- Open a terminal in the directory containing the downloaded code
+- In the terminal, run `setup.sh`
+- In the terminal, run `run.sh`
+- Use a web browser to navigate to `http://localhost`
 
-Use the built-in continuous integration in GitLab.
+## Providing Feedback and Reporting Issues
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+We welcome feedback on the tests, including but not limited to the following areas:
+- Validation logic, such as potential bugs, lax checks, and unexpected failures.
+- Requirements coverage, such as requirements that have been missed, tests that necessitate features that the IG does not require, or other issues with the [interpretation](lib/davinci_pdex_plan_net_test_kit/igs/Plan%20Net%20Requirements%20Interpretation.xlsx) of the IG's requirements.
+- User experience, such as confusing or missing information in the test UI.
 
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+Please report any issues with this set of tests in the issues section of this repository.
 
 ## License
-For open source projects, say how it is licensed.
+Copyright 2023 The MITRE Corporation
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at
+```
+http://www.apache.org/licenses/LICENSE-2.0
+```
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License.
+
+## Trademark Notice
+
+HL7, FHIR and the FHIR [FLAME DESIGN] are the registered trademarks of Health
+Level Seven International and their use does not constitute endorsement by HL7.

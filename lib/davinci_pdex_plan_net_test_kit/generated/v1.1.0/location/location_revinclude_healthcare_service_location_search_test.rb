@@ -8,16 +8,21 @@ module DaVinciPDEXPlanNetTestKit
 
       title 'Server returns HealthcareService resources from Location search with _revinclude=HealthcareService:location'
       description %(
-        A server SHALL be capable of supporting _revIncludes for HealthcareService:location.
+        A server SHALL be capable of supporting searches _revIncludes on search parameter HealthcareService:location.
 
-        This test will perform a search with _revinclude=HealthcareService:location and
-        will pass if a HealthcareService resource is found in the response.
+        This test will perform a search on Location with _revinclude=HealthcareService:location and the '_id'
+        search parameter using an id previoiusly identified when the whole test suite is run or an id provided
+        in the "Location instance ids referenced in HealthcareService.location" input if run at the group level.
+        The test will pass if at least one HealthcareService resource found in the response
+        and each instance that does includes a reference to the Location with the searched id.
       )
 
       id :davinci_plan_net_v110_revinclude_location_healthcare_service_location_search_test
       input :healthcare_service_location_input,
-        title: 'HealthcareService referenced Location IDs',
-        description: 'Comma separated list of Location  IDs that are referenced by a HealthcareService',
+        title: 'Location instance ids referenced in HealthcareService.location',
+        description: %(Comma separated list of Location instance ids that are referenced by a HealthcareService
+        instance in its location element. Used for test "Server returns HealthcareService resources from Location search with _revinclude=HealthcareService:location"
+        when run at the group level.),
         optional: true
         
       def properties

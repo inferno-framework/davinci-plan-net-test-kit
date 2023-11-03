@@ -8,10 +8,12 @@ module DaVinciPDEXPlanNetTestKit
 
       title 'Server returns Organization resources from Organization search with _include=Organization:partof'
       description %(
-        A server SHALL be capable of supporting _includes for Organization:partof.
+        A server SHALL be capable of supporting _includes on search parameter Organization:partof.
 
-        This test will perform a search with _include=Organization:partof and
-        will pass if a Organization resource is found in the response.
+        This test will perform a search on Organization with _include=Organization:partof 
+        and the '_id' search parameter using an id with a reference to a Organization
+        identified during instance gathering. The test will pass if at least one Organization 
+        resource is found in the response and each instance that does is referenced by a returned Organization instance.
       )
 
       id :davinci_plan_net_v110_include_network_organization_partof_search_test

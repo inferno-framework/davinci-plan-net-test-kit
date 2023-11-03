@@ -11,8 +11,12 @@ module DaVinciPDEXPlanNetTestKit
         A server SHALL be capable of supporting chaining for <%= chain_param %> through the search parameter <%= chain_param_base %>
         for the <%= profile_identifier.capitalize %> profile.
 
-        This test will perform a search with <%= "#{chain_param_base}.#{chain_param}" %> and
-        will pass if <%= a_or_an(resource_type) %> resource is found in the response.
+        This test will perform a search with <%= "#{chain_param_base}.#{chain_param}" %> using a value
+        in the <%= "#{chain_param}" %> element on an instance found during _include tests executed
+        previously during this sequence. To validate the returned instances, the test will perform a search 
+        on the <%= "#{chained_resource}" %> resource type using the same <%= "#{chain_param}" %> search 
+        parameter and value and check that this search contains any instances referenced through the 
+        <%= "#{chain_param_base}" %> element of instances returned by the tested search.
       )
 
       id :<%= test_id %>

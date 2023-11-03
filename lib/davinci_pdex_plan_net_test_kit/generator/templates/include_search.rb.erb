@@ -8,10 +8,12 @@ module DaVinciPDEXPlanNetTestKit
 
       title 'Server returns <%= include_param_resource %> resources from <%= resource_type %> search with <%= include_param_string %>'
       description %(
-        A server SHALL be capable of supporting _includes for <%= include_param %>.
+        A server SHALL be capable of supporting _includes on search parameter <%= include_param %>.
 
-        This test will perform a search with <%= include_param_string %> and
-        will pass if a <%= include_param_resource %> resource is found in the response.
+        This test will perform a search on <%= resource_type %> with <%= include_param_string %> 
+        and the '_id' search parameter using an id with a reference to a <%= include_param_resource %>
+        identified during instance gathering. The test will pass if at least one <%= include_param_resource %> 
+        resource is found in the response and each instance that does is referenced by a returned <%= resource_type %> instance.
       )
 
       id :<%= test_id %>

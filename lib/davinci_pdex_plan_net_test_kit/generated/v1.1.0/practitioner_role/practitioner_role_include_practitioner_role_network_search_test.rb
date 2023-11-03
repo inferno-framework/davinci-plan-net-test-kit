@@ -8,10 +8,12 @@ module DaVinciPDEXPlanNetTestKit
 
       title 'Server returns Organization resources from PractitionerRole search with _include=PractitionerRole:network'
       description %(
-        A server SHALL be capable of supporting _includes for PractitionerRole:network.
+        A server SHALL be capable of supporting _includes on search parameter PractitionerRole:network.
 
-        This test will perform a search with _include=PractitionerRole:network and
-        will pass if a Organization resource is found in the response.
+        This test will perform a search on PractitionerRole with _include=PractitionerRole:network 
+        and the '_id' search parameter using an id with a reference to a Organization
+        identified during instance gathering. The test will pass if at least one Organization 
+        resource is found in the response and each instance that does is referenced by a returned PractitionerRole instance.
       )
 
       id :davinci_plan_net_v110_include_practitioner_role_practitioner_role_network_search_test

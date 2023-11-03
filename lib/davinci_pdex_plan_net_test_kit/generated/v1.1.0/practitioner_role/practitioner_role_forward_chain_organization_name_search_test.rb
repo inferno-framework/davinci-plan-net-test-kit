@@ -11,8 +11,12 @@ module DaVinciPDEXPlanNetTestKit
         A server SHALL be capable of supporting chaining for name through the search parameter organization
         for the Practitioner_role profile.
 
-        This test will perform a search with organization.name and
-        will pass if a PractitionerRole resource is found in the response.
+        This test will perform a search with organization.name using a value
+        in the name element on an instance found during _include tests executed
+        previously during this sequence. To validate the returned instances, the test will perform a search 
+        on the Organization resource type using the same name search 
+        parameter and value and check that this search contains any instances referenced through the 
+        organization element of instances returned by the tested search.
       )
 
       id :davinci_plan_net_v110_forward_chain_organization_name_search_test

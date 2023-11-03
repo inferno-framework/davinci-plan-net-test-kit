@@ -6,19 +6,25 @@ module DaVinciPDEXPlanNetTestKit
     class <%= class_name %> < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server capable of reverse chaining through <%= source_resource %>\'s <%= constraining_param %> field'
+      title 'Server capable of reverse chaining through <%= source_resource %>\'s <%= constraining_param %> element'
       description %(
-        A server SHALL support reverse chaining.
-
-        Test will use the query <%= "_has:#{source_resource}:#{target_param}:#{constraining_param}" %> to test
-        the server for reverse chaining capability.  This test does not validate returned resources at this time.
+        Test will perform a search using the reverse chaining parameter 
+        <%= "_has:#{source_resource}:#{target_param}:#{constraining_param}" %>
+        using a value from either a previously identified <%= "#{source_resource}" %> when 
+        run as a whole suite, or the "\'<%= "#{constraining_param}" %>\' value from <%= "#{a_or_an(source_resource)}" %> 
+        instance with \'<%= "#{target_param}" %>\' populated" input when run at the group level. To validate the 
+        returned instances, the test will perform a search 
+        on the <%= "#{source_resource}" %> resource type using the same <%= "#{constraining_param}" %> search 
+        parameter and value and check that the instances returned by the tested search are all referenced
+        by the <%= "#{target_param}" %> element of instances returned by the additional search.
       )
       
       id :<%= test_id %>
       input :<%= input_name %>,
-        title: '<%= constraining_param %> field value for <%= source_resource %>',
-        description: 'Value from the <%= constraining_param %> field of <%= a_or_an(source_resource) %>
-        that also references a <%= resource_type %> instance in its <%= target_param %> field',
+        title: '\'<%= "#{constraining_param}" %>\' value from <%= "#{a_or_an(source_resource)}" %> instance with \'<%= "#{target_param}" %>\' populated',
+        description: 'Single value from the \'<%= constraining_param %>\' element of <%= a_or_an(source_resource) %>
+        on an instance that also references <%= "#{a_or_an(resource_type)}" %> instance in its \'<%= target_param %>\' element to be used for test 
+        \'Server capable of reverse chaining through <%= source_resource %>\'s <%= constraining_param %> element\' when run at the group level.',
         optional: true
 
       def properties
