@@ -8,7 +8,7 @@ module DaVinciPDEXPlanNetTestKit
 
       title 'Server capable of combination search, e.g. being able to List all clinicians of a certain specialty within a location'
       description %(
-        A server SHALL support searching with a combination of parameters.  This specific test will attempt to filter practitioners by specialty and location fields of the role that references them.
+        A server SHALL support searching with a combination of parameters.  This specific test will attempt to filter practitioners by specialty and location elements of the role that references them.
       )
       
       id :davinci_plan_net_v110_practitioner_role_combination_list_practitioners_with_specialty_and_location_search_test

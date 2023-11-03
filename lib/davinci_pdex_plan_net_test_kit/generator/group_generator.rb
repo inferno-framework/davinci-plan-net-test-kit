@@ -178,28 +178,28 @@ module DaVinciPDEXPlanNetTestKit
         <<~SEARCH_DESCRIPTION
         
         ## Searching
-        This test sequence will perform each required search associated
-        with this resource. This sequence will perform searches with the
-        following parameters:
+        This test sequence will perform a search with each required search parameter
+        associated with this resource individually. Searches with the
+        following parameters will be performed:
 
         #{search_param_name_string}
 
         ### Search Parameters
-        The first search uses the selected #{profile_name}(s) from the prior launch
-        sequence. Any subsequent searches will look for its parameter values
-        from the results of the first search. For example, the `identifier`
-        search in the #{profile_name} sequence is performed by looking for an existing
-        `#{resource_type}.identifier` value from an instance identified during
-        the instance gathering step. If a value cannot be found this way, the search is skipped.
+        Each search will look for its parameter values
+        from the results of the instance gathering step. For example, for a search using
+        the `identifier` search parameter, the test searches the gathered instances
+        for one with the `identifier` element populated and then uses that value
+        as the queried `identifier` value. If a value cannot be found this way, 
+        the search test is skipped for that search parameter.
 
         ### Search Validation
-        Inferno will retrieve up to the first 20 bundle pages of the reply for
-        #{search_validation_resource_type}. Each of
-        these resources is then checked to see if it matches the searched
+        Inferno will retrieve all bundle pages of the reply for
+        #{search_validation_resource_type}. Each of the returned instances
+        is then checked to see if it matches the searched
         parameters in accordance with [FHIR search
         guidelines](https://www.hl7.org/fhir/search.html). The test will fail,
         for example, if a #{profile_name} search for `#{required_searches.first[:names].first}=X`
-        returns a #{profile_name} where `#{required_searches.first[:names].first}!=X`
+        returns a #{profile_name} instance where `#{required_searches.first[:names].first}!=X`
 
         SEARCH_DESCRIPTION
       end
@@ -209,15 +209,17 @@ module DaVinciPDEXPlanNetTestKit
 
         <<~INCLUDE_DESCRIPTION
         ## _include Requirement Testing
-        This test sequence will perform each required _include search associated
-        with this resource. This sequence will perform searches with the
+        This test sequence will perform a search with each required _include search 
+        parameter associated with this profile. This sequence will perform searches with the
         following includes:
 
         #{include_param_name_string}
 
-        All _include searches will look for candidate IDs from the results of 
-        instance gathering.  Each search will use a #{profile_name} ID and the include parameter.
-        The return is scanned to find any of the expected additional resource.
+        Each _include searches will look for a candidate id that has the target reference element
+        populated from the results of instance gathering.  Each search will use the identified 
+        #{profile_name} id and the include parameter.
+        The returned instances are checked to ensure that any instances of the included
+        type are referenced by returned instances of the searched resource type.
 
         INCLUDE_DESCRIPTION
       end
@@ -227,18 +229,23 @@ module DaVinciPDEXPlanNetTestKit
 
         <<~REVINCLUDE_DESCRIPTION
         ## _revinclude Requirement Testing
-        This test sequence will perform each required _revinclude search associated
-        with this resource. This sequence will perform searches with the
-        following includes:
+        This test sequence will perform a search with each required _revinclude search 
+        parameter associated with this resource. This sequence will perform searches with the
+        following revincludes:
 
         #{revinclude_param_name_string}
 
-        All _revinclude searches will look for candidate IDs from the results of 
+        All _revinclude searches will look for candidate ids from the results of 
         instance gathering _only_ if tests are ran from the suite level.  Each search 
-        will use a #{profile_name} ID that is referenced by an instance of the revincluded resource
-        and the revinclude parameter. The return is scanned to find any of the expected additional resource.
+        will use a #{profile_name} id that is referenced by an instance of the revincluded resource
+        in the element that is the target of the revinclude search parameter. The returned instances 
+        are checked to ensure that any 
+        instances of the revincluded type reference returned instances of the searched resource type.
 
-        If running from the profile level, input boxes are provided for these tests upon test start.
+        If running from the group level, inputs of the form 
+        "#{resource_type} instance ids referenced in \[referencing profile\].\[referencing element\]"
+        are provided for these tests. Enter ids of the #{resource_type} profile that
+        are referenced by the \[referencing element\] of an instance of the \[referencing profile\].
 
         REVINCLUDE_DESCRIPTION
       end
@@ -248,11 +255,21 @@ module DaVinciPDEXPlanNetTestKit
 
         <<~FORWARD_CHAINING_DESCRIPTION
         ## Forward Chaining Requirement Testing
-        This test sequence will perform each required forward chaining search for each of 
-        the search parameters that specify chaining capabilities.  This sequence will perform searches with the
-        following chaining parameters:
+        This test sequence will perform a search with each required combination of forward chaining 
+        search parameters. This sequence will perform searches with the following chaining parameters:
 
         #{forward_chain_table}
+
+        All forward chain searches will look for candidate instances of the resource being chained through
+        from the results of previously run _include tests.  Candidates are chosen from previously returned
+        instances that have the chain parameter element filled.  Each search test will use one of these values
+        to build the requests for the test.  The test will be skipped if no candidates can be found.
+
+        The test will first create and execute the forward chaining request.
+        The test will then perform a basic search test on the resource being chained through,
+        using the same value in the previous request.  Each resource returned in the first
+        request will then be checked, validating that the element being chained through is populated by
+        the id of _any_ of the resources returned by the second request.
         
         FORWARD_CHAINING_DESCRIPTION
       end
@@ -261,10 +278,29 @@ module DaVinciPDEXPlanNetTestKit
         return '' if !test_id_list.any? {|test_id| test_id.include?('reverse_chain')}
         <<~REVERSE_CHAINING_DESCRIPTION
         ## Reverse Chaining Requirement Testing
-        This test sequence will perform reverse chaining search for the following combination
-        of search parameters:
+        This test sequence will perform a search with each required combination of reverse chaining 
+        search parameters, including the following combinations:
 
         #{reverse_chain_string}
+
+        All reverse chain searches will look for candidate instances from the results of 
+        previous tests _only_ if tests are ran from the suite level.  Candidates are 
+        selected by checking they have both the second (reference element) and third (constraining element) elements
+        populated. The search value will be taken from the constraining element on the
+        identified candidate.
+
+        If running from the profile level, inputs of the form 
+        "\'\[constraining element\]\' value from a \[source resource type\] instance with \'\[reference element\]\' populated"
+        are provided for these tests upon test start. Enter a value from the \[constraining element\] element
+        of an instance of a \[source resource type\] resource that also contains a reference to
+        the tested #{resource_type} in its \[reference element\] element. The input will
+        be used as the search value.
+
+        The test will first create and execute a request with the chain parameter.
+        The test will then perform a search against the \[source resource type\] with
+        the \[constraining\] SeachParameter using the same search value.  Each resource returned in the first
+        request will then be checked, validating that the id of those resources is also referenced
+        by _any_ of the resources returned by the second request in its \[reference element\] element.
         
         REVERSE_CHAINING_DESCRIPTION
       end
@@ -284,29 +320,29 @@ module DaVinciPDEXPlanNetTestKit
         ## Instance Gathering
 
         Inferno will first identify and obtain a set of instances to use for the rest
-        of the tests, requiring at least one instances to be identified for the test to pass. 
+        of the tests, requiring at least one instance to be identified for the test to pass. 
         Instances to gather are indentified in two ways. One or both will be used,
         depending on user input.
 
         ### Parameterless searches 
         Instances can be gathered using a query requesting all instances of #{resource_type} 
-        (e.g., `GET [FHIR Endpoint]/#{resource_type}`). #{SpecialCases.has_parameterless_filter?(profile_name) ? SpecialCases.parameterless_filter_description(profile_name) : "" }Gathering through this method is controlled 
-        by the following input fields (used for all profiles):
-        - _Use parameterless searches to identify instances?_: 
-          parameterless searches can be disabled using this input field if, for example, 
+        (e.g., `GET [FHIR Endpoint]/#{resource_type}`). #{SpecialCases.has_parameterless_filter?(profile_name) ? SpecialCases.parameterless_filter_description(profile_name) : "" }
+        Gathering through this method is controlled by the following inputs (used for all profiles):
+        - "Use parameterless searches to identify instances?": 
+          parameterless searches can be disabled using this input if, for example, 
           the server under test does not support them, or not all instances on the server 
           should be expected to conform to Plan Net profiles. In this case the user **MUST**
           provide specific instance ids to gather.
-        - _Maximum number of instances to gather using parameterless searches_: sets an upper 
+        - "Maximum number of instances to gather using parameterless searches": sets an upper 
           bound on the number of instances Inferno will gather from parameterless searches.
-        - _Maximum pages of results to consider when using parameterless searches_: sets an upper bound 
+        - "Maximum pages of results to consider when using parameterless searches": sets an upper bound 
           on the number of pages of search results Inferno will load when gathering instances 
           using parameterless searches.
         
         ### User-provided instance ids
         
-        If ids are listed in the _Ids of instances of #{profile_name}_ optional input field, 
-        they will be read and included in the set of gathered instances.
+        If ids are listed in the "ids of #{profile_name} instances" optional input, 
+        they will be read and included at the start of the set of gathered instances.
 
         #{search_description}
         #{include_description}
@@ -314,21 +350,20 @@ module DaVinciPDEXPlanNetTestKit
         #{forward_chain_description}
         #{reverse_chain_description}
 
+        ## Profile Validation
+        Each resource identified during instance gathering and other queries run during this test sequence
+        is expected to conform to the [#{profile_name}](#{profile_url}). Each element is checked 
+        by the HL7 Validator against terminology binding and cardinality requirements. Elements with a 
+        required binding are validated against their bound ValueSet. If the code/system in the element 
+        is not part of the ValueSet, then the test will fail.
+
         ## Must Support
         Each profile contains elements marked as "must support". This test
-        sequence expects to see each of these elements populated at least once. If at
-        least one cannot be found, the test will fail. The test will look
-        through the #{profile_name} instances identified during instance gathering
-        for these elements.
-
-        ## Profile Validation
-        Each resource identified during instance gathering is expected to conform to
-        the [#{profile_name}](#{profile_url}). Each element is checked against
-        teminology binding and cardinality requirements.
-
-        Elements with a required binding are validated against their bound
-        ValueSet. If the code/system in the element is not part of the ValueSet,
-        then the test will fail.
+        sequence expects to see each of these elements populated at least once. 
+        The test will look through the #{profile_name} instances identified 
+        during instance gathering and other queries run during this test sequence.
+        If no populated instance can be found for any must support element, the test 
+        will fail. 
 
         ## Reference Validation
         At least one instance of each external reference in elements marked as

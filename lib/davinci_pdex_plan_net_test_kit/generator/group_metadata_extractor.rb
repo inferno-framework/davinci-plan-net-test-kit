@@ -163,11 +163,6 @@ module DaVinciPDEXPlanNetTestKit
 
       def title
         title = profile.title.gsub(/\s*Profile/, '').strip
-
-        if (Naming.resources_with_multiple_profiles.include?(resource)) && !title.start_with?(resource)
-          title = resource + ' ' + title.split(resource).map(&:strip).join(' ')
-        end
-
         title
       end
 

@@ -11,8 +11,12 @@ module DaVinciPDEXPlanNetTestKit
         A server SHALL be capable of supporting chaining for type through the search parameter location
         for the Organization_affiliation profile.
 
-        This test will perform a search with location.type and
-        will pass if an OrganizationAffiliation resource is found in the response.
+        This test will perform a search with location.type using a value
+        in the type element on an instance found during _include tests executed
+        previously during this sequence. To validate the returned instances, the test will perform a search 
+        on the Location resource type using the same type search 
+        parameter and value and check that this search contains any instances referenced through the 
+        location element of instances returned by the tested search.
       )
 
       id :davinci_plan_net_v110_forward_chain_location_type_search_test

@@ -8,16 +8,21 @@ module DaVinciPDEXPlanNetTestKit
 
       title 'Server returns Endpoint resources from Organization search with _revinclude=Endpoint:organization'
       description %(
-        A server SHALL be capable of supporting _revIncludes for Endpoint:organization.
+        A server SHALL be capable of supporting searches _revIncludes on search parameter Endpoint:organization.
 
-        This test will perform a search with _revinclude=Endpoint:organization and
-        will pass if a Endpoint resource is found in the response.
+        This test will perform a search on Organization with _revinclude=Endpoint:organization and the '_id'
+        search parameter using an id previoiusly identified when the whole test suite is run or an id provided
+        in the "Organization instance ids referenced in Endpoint.organization" input if run at the group level.
+        The test will pass if at least one Endpoint resource found in the response
+        and each instance that does includes a reference to the Organization with the searched id.
       )
 
       id :davinci_plan_net_v110_revinclude_organization_endpoint_organization_search_test
       input :endpoint_organization_input,
-        title: 'Endpoint referenced Organization IDs',
-        description: 'Comma separated list of Organization  IDs that are referenced by a Endpoint',
+        title: 'Organization instance ids referenced in Endpoint.organization',
+        description: %(Comma separated list of Organization instance ids that are referenced by an Endpoint
+        instance in its organization element. Used for test "Server returns Endpoint resources from Organization search with _revinclude=Endpoint:organization"
+        when run at the group level.),
         optional: true
         
       def properties

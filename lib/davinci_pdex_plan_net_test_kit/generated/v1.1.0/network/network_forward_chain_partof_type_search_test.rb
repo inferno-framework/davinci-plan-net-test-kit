@@ -11,8 +11,12 @@ module DaVinciPDEXPlanNetTestKit
         A server SHALL be capable of supporting chaining for type through the search parameter partof
         for the Network profile.
 
-        This test will perform a search with partof.type and
-        will pass if an Organization resource is found in the response.
+        This test will perform a search with partof.type using a value
+        in the type element on an instance found during _include tests executed
+        previously during this sequence. To validate the returned instances, the test will perform a search 
+        on the Organization resource type using the same type search 
+        parameter and value and check that this search contains any instances referenced through the 
+        partof element of instances returned by the tested search.
       )
 
       id :davinci_plan_net_v110_forward_chain_partof_type_search_test

@@ -6,19 +6,25 @@ module DaVinciPDEXPlanNetTestKit
     class OrganizationReverseChainOrganizationAffiliationParticipatingOrganizationLocationSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server capable of reverse chaining through OrganizationAffiliation\'s location field'
+      title 'Server capable of reverse chaining through OrganizationAffiliation\'s location element'
       description %(
-        A server SHALL support reverse chaining.
-
-        Test will use the query _has:OrganizationAffiliation:participating-organization:location to test
-        the server for reverse chaining capability.  This test does not validate returned resources at this time.
+        Test will perform a search using the reverse chaining parameter 
+        _has:OrganizationAffiliation:participating-organization:location
+        using a value from either a previously identified OrganizationAffiliation when 
+        run as a whole suite, or the "\'location\' value from an OrganizationAffiliation 
+        instance with \'participating-organization\' populated" input when run at the group level. To validate the 
+        returned instances, the test will perform a search 
+        on the OrganizationAffiliation resource type using the same location search 
+        parameter and value and check that the instances returned by the tested search are all referenced
+        by the participating-organization element of instances returned by the additional search.
       )
       
       id :davinci_plan_net_v110_organization_reverse_chain_organization_affiliation_participating_organization_location_search_test
       input :organization_affiliation_participating_organization_location_input,
-        title: 'location field value for OrganizationAffiliation',
-        description: 'Value from the location field of an OrganizationAffiliation
-        that also references a Organization instance in its participating-organization field',
+        title: '\'location\' value from an OrganizationAffiliation instance with \'participating-organization\' populated',
+        description: 'Single value from the \'location\' element of an OrganizationAffiliation
+        on an instance that also references an Organization instance in its \'participating-organization\' element to be used for test 
+        \'Server capable of reverse chaining through OrganizationAffiliation\'s location element\' when run at the group level.',
         optional: true
 
       def properties

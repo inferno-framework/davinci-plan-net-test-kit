@@ -95,15 +95,6 @@ module DaVinciPDEXPlanNetTestKit
         end
       end
 
-      def url_version
-        case group_metadata.version
-        when 'v3.1.1'
-          'STU3.1.1'
-        when 'v4.0.0'
-          'STU4'
-        end
-      end
-
       def search_test_properties_string
         search_properties
           .map { |key, value| "#{' ' * 8}#{key}: #{value}" }
@@ -120,38 +111,12 @@ module DaVinciPDEXPlanNetTestKit
         )
       end
 
-      def first_search_description
-        return '' unless first_search?
-
-        <<~FIRST_SEARCH_DESCRIPTION
-        Because this is the first search of the sequence, resources in the
-        response will be used for subsequent tests.
-        FIRST_SEARCH_DESCRIPTION
-      end
-
-
-      def post_search_description
-        return '' unless test_post_search?
-
-        <<~POST_SEARCH_DESCRIPTION
-        Additionally, this test will check that GET and POST search methods
-        return the same number of results. Search by POST is required by the
-        FHIR R4 specification, and these tests interpret search by GET as a
-        requirement of Plan Net #{group_metadata.version}.
-        POST_SEARCH_DESCRIPTION
-      end
-
       def description
         <<~DESCRIPTION.gsub(/\n{3,}/, "\n\n")
-        A server #{conformance_expectation} support searching on the 
-        #{resource_type} resource withough parameters. This test
-        will pass if resources are returned. If none are returned, 
-        the test is skipped.
-
-        #{first_search_description}
-        #{post_search_description}
-
-        [Plan Net Server CapabilityStatement](http://hl7.org/fhir/us/davinci-pdex-plan-net/CapabilityStatement/plan-net)
+        This test gathers instances expected to conform to the target profile
+        for use in the rest of the tests in this sequence. It will perform
+        an unparameterized search and/or read instance ids provided by the tester
+        as described in the "Instance Gathering" section of the group description above.
         DESCRIPTION
       end
     end

@@ -11,8 +11,12 @@ module DaVinciPDEXPlanNetTestKit
         A server SHALL be capable of supporting chaining for service-category through the search parameter service
         for the Practitioner_role profile.
 
-        This test will perform a search with service.service-category and
-        will pass if a PractitionerRole resource is found in the response.
+        This test will perform a search with service.service-category using a value
+        in the service-category element on an instance found during _include tests executed
+        previously during this sequence. To validate the returned instances, the test will perform a search 
+        on the HealthcareService resource type using the same service-category search 
+        parameter and value and check that this search contains any instances referenced through the 
+        service element of instances returned by the tested search.
       )
 
       id :davinci_plan_net_v110_forward_chain_service_service_category_search_test

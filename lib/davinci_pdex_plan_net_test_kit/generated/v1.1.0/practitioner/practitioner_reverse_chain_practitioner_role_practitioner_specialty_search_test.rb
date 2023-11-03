@@ -6,19 +6,25 @@ module DaVinciPDEXPlanNetTestKit
     class PractitionerReverseChainPractitionerRolePractitionerSpecialtySearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server capable of reverse chaining through PractitionerRole\'s specialty field'
+      title 'Server capable of reverse chaining through PractitionerRole\'s specialty element'
       description %(
-        A server SHALL support reverse chaining.
-
-        Test will use the query _has:PractitionerRole:practitioner:specialty to test
-        the server for reverse chaining capability.  This test does not validate returned resources at this time.
+        Test will perform a search using the reverse chaining parameter 
+        _has:PractitionerRole:practitioner:specialty
+        using a value from either a previously identified PractitionerRole when 
+        run as a whole suite, or the "\'specialty\' value from a PractitionerRole 
+        instance with \'practitioner\' populated" input when run at the group level. To validate the 
+        returned instances, the test will perform a search 
+        on the PractitionerRole resource type using the same specialty search 
+        parameter and value and check that the instances returned by the tested search are all referenced
+        by the practitioner element of instances returned by the additional search.
       )
       
       id :davinci_plan_net_v110_practitioner_reverse_chain_practitioner_role_practitioner_specialty_search_test
       input :practitioner_role_practitioner_specialty_input,
-        title: 'specialty field value for PractitionerRole',
-        description: 'Value from the specialty field of a PractitionerRole
-        that also references a Practitioner instance in its practitioner field',
+        title: '\'specialty\' value from a PractitionerRole instance with \'practitioner\' populated',
+        description: 'Single value from the \'specialty\' element of a PractitionerRole
+        on an instance that also references a Practitioner instance in its \'practitioner\' element to be used for test 
+        \'Server capable of reverse chaining through PractitionerRole\'s specialty element\' when run at the group level.',
         optional: true
 
       def properties

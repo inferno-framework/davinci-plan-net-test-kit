@@ -11,8 +11,12 @@ module DaVinciPDEXPlanNetTestKit
         A server SHALL be capable of supporting chaining for partof through the search parameter owned-by
         for the Insurance_plan profile.
 
-        This test will perform a search with owned-by.partof and
-        will pass if an InsurancePlan resource is found in the response.
+        This test will perform a search with owned-by.partof using a value
+        in the partof element on an instance found during _include tests executed
+        previously during this sequence. To validate the returned instances, the test will perform a search 
+        on the Organization resource type using the same partof search 
+        parameter and value and check that this search contains any instances referenced through the 
+        owned-by element of instances returned by the tested search.
       )
 
       id :davinci_plan_net_v110_forward_chain_owned_by_partof_search_test

@@ -34,11 +34,11 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def class_name
-        "DaVinciPDEXPlanNetTestSuite"
+        "DaVinciPDEXPlanNetServerTestSuite"
       end
 
       def module_name
-        "DaVinciPDEXPlanNet#{ig_metadata.reformatted_version.upcase}"
+        "DaVinciPDEXPlanNetServer#{ig_metadata.reformatted_version.upcase}"
       end
 
       def output_file_name
@@ -46,11 +46,11 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def suite_id
-        "davinci_pdex_plan_net_#{ig_metadata.reformatted_version}"
+        "davinci_pdex_plan_net_server_#{ig_metadata.reformatted_version}"
       end
 
       def title
-        "DaVinci PDEX Plan Net #{ig_metadata.ig_version}"
+        "DaVinci PDEX Plan Net #{ig_metadata.ig_version} Server Test Suite"
       end
 
       def validator_env_name
@@ -58,7 +58,7 @@ module DaVinciPDEXPlanNetTestKit
       end
 
       def ig_link
-        "https://hl7.org/fhir/us/davinci-pdex-plan-net"
+        "https://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1"
       end
 
       def generate

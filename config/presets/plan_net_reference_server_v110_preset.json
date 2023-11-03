@@ -1,0 +1,50 @@
+{
+  "title": "Da Vinci PDEX Plan Net Reference Server",
+  "id": "da_vinci_plan_net_reference_server_v110",
+  "test_suite_id": "davinci_pdex_plan_net_server_v110",
+  "inputs": [
+    {
+      "name": "url",
+      "description": "URL of the FHIR endpoint",
+      "title": "FHIR Endpoint",
+      "type": "text",
+      "value": "https://plan-net-ri.davinci.hl7.org/fhir"
+    },
+    {
+      "name": "no_param_search",
+      "default": "true",
+      "description": "If No, then the lists of ids by profile are required. If yes, the lists of ids by profile are optional.",
+      "options": {
+        "list_options": [
+          {
+            "label": "Yes",
+            "value": "true"
+          },
+          {
+            "label": "No",
+            "value": "false"
+          }
+        ]
+      },
+      "title": "Use parameterless searches to identify instances?",
+      "type": "radio",
+      "value": "true"
+    },
+    {
+      "name": "max_instances",
+      "default": "200",
+      "description": "Only used when parameterless searches are used. A higher number will evaluate more instances in the tests, if they are available. The test will stop looking when the page limit has been reached.",
+      "title": "Maximum number of instances to gather using parameterless searches",
+      "type": "text",
+      "value": "200"
+    },
+    {
+      "name": "max_pages",
+      "default": "20",
+      "description": "Only used when parameterless searches are used. A higher number will evaluate more instances in the tests, if they are available. The test will not consider further pages once the maximum number of instances has been reached.",
+      "title": "Maximum pages of results to consider when using parameterless searches",
+      "type": "text",
+      "value": "20"
+    }
+  ]
+}

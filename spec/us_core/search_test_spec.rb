@@ -1,5 +1,5 @@
 RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
-  let(:suite) { Inferno::Repositories::TestSuites.new.find('davinci_pdex_plan_net_v110') }
+  let(:suite) { Inferno::Repositories::TestSuites.new.find('davinci_pdex_plan_net_server_v110') }
   let(:session_data_repo) { Inferno::Repositories::SessionData.new }
   let(:test_session) { repo_create(:test_session, test_suite_id: suite.id) }
   let(:url) { 'http://example.com/fhir' }
@@ -479,7 +479,7 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
         .to_return(status: 200, body: prvgrp_bundle.to_json)
     end
 
-    it 'Passes when server returns all base resources that reference Additional resource locally AND/OR url with matching field value' do
+    it 'Passes when server returns all base resources that reference Additional resource locally AND/OR url with matching element value' do
       bundle.entry.concat([ {resource: endpoint_local }, {resource: endpoint_url }])
       stub_request(:get, "#{url}/Endpoint?organization.type=prvgrp")
         .to_return(status: 200, body: bundle.to_json)
@@ -488,7 +488,7 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
       expect(result.result).to eq('pass')
     end
     
-    it 'Fails when server returns base resources with references to additional resource without matching field value' do
+    it 'Fails when server returns base resources with references to additional resource without matching element value' do
       bundle.entry.concat([ {resource: endpoint_local }, {resource: endpoint_url }, {resource: endpoint_local_references_non_prvgrp}, {resource: endpoint_url_references_non_prvgrp}])
       stub_request(:get, "#{url}/Endpoint?organization.type=prvgrp")
         .to_return(status: 200, body: bundle.to_json)
@@ -497,7 +497,7 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
       expect(result.result).to eq('fail')
     end
 
-    it 'Fails when collection of additional resources returns additional resource with incorrect value in desired field' do
+    it 'Fails when collection of additional resources returns additional resource with incorrect value in desired element' do
       bundle.entry.concat([ {resource: endpoint_local_references_non_prvgrp }, {resource: endpoint_url_references_non_prvgrp}])
       stub_request(:get, "#{url}/Endpoint?organization.type=anomaly")
         .to_return(status: 200, body: bundle.to_json)
@@ -528,12 +528,12 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
     end
 
     # contextual call returning nothing is not tested.  I don't think this can happen (would be skipped once no
-    # resource could be found to populate the field, basically the two cases below this comment)
+    # resource could be found to populate the element, basically the two cases below this comment)
     it 'Skips if scratch is empty' do
       result = run(forward_chain_test_no_scratch, url: url)
       expect(result.result).to eq('skip')
     end
-    it 'Skips if scratch has no additional resources with desired field populated' do
+    it 'Skips if scratch has no additional resources with desired element populated' do
       result = run(forward_chain_test_no_type, url: url)
       expect(result.result).to eq('skip')
     end
@@ -656,7 +656,7 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
         .to_return(status: 200, body: counselor_practitionerrole_bundle.to_json)
     end
 
-    it 'Passes when server returns all base resources that populate the desired field of an additional resource' do
+    it 'Passes when server returns all base resources that populate the desired element of an additional resource' do
       stub_request(:get, "#{url}/Practitioner?_has:PractitionerRole:practitioner:specialty=COUNSELOR")
         .to_return(status: 200, body: counselor_practitioner_bundle.to_json)
       
@@ -680,7 +680,7 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
       expect(result.result).to eq('fail')
     end
 
-    it 'Fails when collection of additional resources returns additional resource with incorrect value in desired field' do
+    it 'Fails when collection of additional resources returns additional resource with incorrect value in desired element' do
       stub_request(:get, "#{url}/Practitioner?_has:PractitionerRole:practitioner:specialty=COUNSELOR")
         .to_return(status: 200, body: counselor_practitioner_bundle.to_json)
 
@@ -816,7 +816,7 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
       #allow_any_instance_of(reverse_chain_test_no_specialty).to receive(:scratch_additional_resources).and_return(no_specialty_scratch)
     end
 
-    it "Passes when server returns additional resources that are referenced by base resources matching expected field values" do
+    it "Passes when server returns additional resources that are referenced by base resources matching expected element values" do
       bundle.entry.concat([ {resource: pracrole_with_specialty_and_location }, {resource: referenced_practitioner }])
       stub_request(:get, "#{url}/PractitionerRole?_include=PractitionerRole:practitioner&location=Location/Loc1&specialty=Spec1")
         .to_return(status: 200, body: bundle.to_json)
@@ -1004,7 +1004,7 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
       expect(result.result).to eq('pass')
     end
 
-    it "Fails when server returns base resources with fields that do not match what was searched upon" do
+    it "Fails when server returns base resources with elements that do not match what was searched upon" do
       bundle.entry.concat([ {resource: healthcare_service_wrong_specialty}])
       stub_request(:get, "#{url}/HealthcareService?_has:OrganizationAffiliation:service:network=Organization/Network1&specialty=Spec1")
         .to_return(status: 200, body: bundle.to_json)
@@ -1030,7 +1030,7 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
       expect(result.result).to eq('fail')
     end
 
-    it "Fails when collection of additional resources returns additional resource with incorrect value in desired field" do
+    it "Fails when collection of additional resources returns additional resource with incorrect value in desired element" do
       bundle.entry.concat([ {resource: healthcare_service_referenced}])
       stub_request(:get, "#{url}/HealthcareService?_has:OrganizationAffiliation:service:network=Organization/Network1&specialty=Spec1")
         .to_return(status: 200, body: bundle.to_json)

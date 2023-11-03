@@ -11,8 +11,12 @@ module DaVinciPDEXPlanNetTestKit
         A server SHALL be capable of supporting chaining for organization through the search parameter service
         for the Organization_affiliation profile.
 
-        This test will perform a search with service.organization and
-        will pass if an OrganizationAffiliation resource is found in the response.
+        This test will perform a search with service.organization using a value
+        in the organization element on an instance found during _include tests executed
+        previously during this sequence. To validate the returned instances, the test will perform a search 
+        on the HealthcareService resource type using the same organization search 
+        parameter and value and check that this search contains any instances referenced through the 
+        service element of instances returned by the tested search.
       )
 
       id :davinci_plan_net_v110_forward_chain_service_organization_search_test

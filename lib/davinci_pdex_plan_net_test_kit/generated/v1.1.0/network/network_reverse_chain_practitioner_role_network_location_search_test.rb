@@ -6,19 +6,25 @@ module DaVinciPDEXPlanNetTestKit
     class NetworkReverseChainPractitionerRoleNetworkLocationSearchTest < Inferno::Test
       include DaVinciPDEXPlanNetTestKit::SearchTest
 
-      title 'Server capable of reverse chaining through PractitionerRole\'s location field'
+      title 'Server capable of reverse chaining through PractitionerRole\'s location element'
       description %(
-        A server SHALL support reverse chaining.
-
-        Test will use the query _has:PractitionerRole:network:location to test
-        the server for reverse chaining capability.  This test does not validate returned resources at this time.
+        Test will perform a search using the reverse chaining parameter 
+        _has:PractitionerRole:network:location
+        using a value from either a previously identified PractitionerRole when 
+        run as a whole suite, or the "\'location\' value from a PractitionerRole 
+        instance with \'network\' populated" input when run at the group level. To validate the 
+        returned instances, the test will perform a search 
+        on the PractitionerRole resource type using the same location search 
+        parameter and value and check that the instances returned by the tested search are all referenced
+        by the network element of instances returned by the additional search.
       )
       
       id :davinci_plan_net_v110_network_reverse_chain_practitioner_role_network_location_search_test
       input :practitioner_role_network_location_input,
-        title: 'location field value for PractitionerRole',
-        description: 'Value from the location field of a PractitionerRole
-        that also references a Organization instance in its network field',
+        title: '\'location\' value from a PractitionerRole instance with \'network\' populated',
+        description: 'Single value from the \'location\' element of a PractitionerRole
+        on an instance that also references an Organization instance in its \'network\' element to be used for test 
+        \'Server capable of reverse chaining through PractitionerRole\'s location element\' when run at the group level.',
         optional: true
 
       def properties

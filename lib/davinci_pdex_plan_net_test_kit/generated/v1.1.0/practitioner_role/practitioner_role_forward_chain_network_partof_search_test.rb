@@ -11,8 +11,12 @@ module DaVinciPDEXPlanNetTestKit
         A server SHALL be capable of supporting chaining for partof through the search parameter network
         for the Practitioner_role profile.
 
-        This test will perform a search with network.partof and
-        will pass if a PractitionerRole resource is found in the response.
+        This test will perform a search with network.partof using a value
+        in the partof element on an instance found during _include tests executed
+        previously during this sequence. To validate the returned instances, the test will perform a search 
+        on the Organization resource type using the same partof search 
+        parameter and value and check that this search contains any instances referenced through the 
+        network element of instances returned by the tested search.
       )
 
       id :davinci_plan_net_v110_forward_chain_network_partof_search_test
