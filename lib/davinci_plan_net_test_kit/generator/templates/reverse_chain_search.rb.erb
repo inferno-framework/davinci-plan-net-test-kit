@@ -1,0 +1,57 @@
+require_relative '../../../search_test'
+require_relative '../../../generator/group_metadata'
+
+module DaVinciPlanNetTestKit
+  module <%= module_name %>
+    class <%= class_name %> < Inferno::Test
+      include DaVinciPlanNetTestKit::SearchTest
+
+      title 'Server capable of reverse chaining through <%= source_resource %>\'s <%= constraining_param %> element'
+      description %(
+        Test will perform a search using the reverse chaining parameter 
+        <%= "_has:#{source_resource}:#{target_param}:#{constraining_param}" %>
+        using a value from either a previously identified <%= "#{source_resource}" %> when 
+        run as a whole suite, or the "\'<%= "#{constraining_param}" %>\' value from <%= "#{a_or_an(source_resource)}" %> 
+        instance with \'<%= "#{target_param}" %>\' populated" input when run at the group level. To validate the 
+        returned instances, the test will perform a search 
+        on the <%= "#{source_resource}" %> resource type using the same <%= "#{constraining_param}" %> search 
+        parameter and value and check that the instances returned by the tested search are all referenced
+        by the <%= "#{target_param}" %> element of instances returned by the additional search.
+      )
+      
+      id :<%= test_id %>
+      input :<%= input_name %>,
+        title: '\'<%= "#{constraining_param}" %>\' value from <%= "#{a_or_an(source_resource)}" %> instance with \'<%= "#{target_param}" %>\' populated',
+        description: 'Single value from the \'<%= constraining_param %>\' element of <%= a_or_an(source_resource) %>
+        on an instance that also references <%= "#{a_or_an(resource_type)}" %> instance in its \'<%= target_param %>\' element to be used for test 
+        \'Server capable of reverse chaining through <%= source_resource %>\'s <%= constraining_param %> element\' when run at the group level.',
+        optional: true
+
+      def properties
+        @properties ||= SearchTestProperties.new(
+  <%= search_test_properties_string %>
+        )
+      end
+
+      def self.metadata
+        @metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, 'metadata.yml')))
+      end
+
+      def self.additional_metadata
+        @additional_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', '<%= source_resource.underscore %>', 'metadata.yml'), aliases: true))
+      end
+
+      def scratch_resources
+        scratch[:<%= profile_identifier %>_resources] ||= {}
+      end
+
+      def scratch_additional_resources
+        scratch[:<%= source_resource.underscore %>_resources] ||= {}
+      end
+
+      run do
+        run_reverse_chain_search_test
+      end
+    end
+  end
+end

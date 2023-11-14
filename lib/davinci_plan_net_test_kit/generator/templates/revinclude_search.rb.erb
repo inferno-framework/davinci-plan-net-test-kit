@@ -1,0 +1,55 @@
+require_relative '../../../search_test'
+require_relative '../../../generator/group_metadata'
+
+module DaVinciPlanNetTestKit
+  module <%= module_name %>
+    class <%= class_name %> < Inferno::Test
+      include DaVinciPlanNetTestKit::SearchTest
+
+      title 'Server returns <%= revinclude_param_resource %> resources from <%= resource_type %> search with <%= revinclude_param_string %>'
+      description %(
+        A server SHALL be capable of supporting searches _revIncludes on search parameter <%= revinclude_param %>.
+
+        This test will perform a search on <%= resource_type %> with <%= revinclude_param_string %> and the '_id'
+        search parameter using an id previoiusly identified when the whole test suite is run or an id provided
+        in the "<%= resource_type %> instance ids referenced in <%= "#{revinclude_param_resource}.#{rev_param_sp}" %>" input if run at the group level.
+        The test will pass if at least one <%= revinclude_param_resource %> resource found in the response
+        and each instance that does includes a reference to the <%= resource_type %> with the searched id.
+      )
+
+      id :<%= test_id %>
+      input :<%= input_name %>,
+        title: '<%= resource_type %> instance ids referenced in <%= "#{revinclude_param_resource}.#{rev_param_sp}" %>',
+        description: %(Comma separated list of <%= resource_type %> instance ids that are referenced by <%= "#{a_or_an(revinclude_param_resource)}" %>
+        instance in its <%= "#{rev_param_sp}" %> element. Used for test "Server returns <%= revinclude_param_resource %> resources from <%= resource_type %> search with <%= revinclude_param_string %>"
+        when run at the group level.),
+        optional: true
+        
+      def properties
+        @properties ||= SearchTestProperties.new(
+  <%= search_test_properties_string %>
+        )
+      end
+
+      def self.metadata
+        @metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, 'metadata.yml')))
+      end
+
+      def self.additional_metadata
+        @additional_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', '<%= revinclude_param_resource.underscore %>', 'metadata.yml'), aliases: true))
+      end
+
+      def scratch_resources
+        scratch[:<%= profile_identifier %>_resources] ||= {}
+      end
+
+      def scratch_additional_resources
+        scratch[:<%= revinclude_param_resource.underscore %>_resources] ||= {}
+      end
+
+      run do
+        run_revinclude_search_test
+      end
+    end
+  end
+end
