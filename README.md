@@ -36,7 +36,7 @@ See the test descriptions within the test kit for detail on the specific
 validations performed as a part of testing these requirements. 
 
 Additional details on the IG requirements that underlie this test, including those 
-that are not currently tested, can be found in [this spreadsheet](lib/davinci_pdex_plan_net_test_kit/igs/Plan%20Net%20Requirements%20Interpretation.xlsx). The spreadsheet includes
+that are not currently tested, can be found in [this spreadsheet](lib/davinci_plan_net_test_kit/igs/Plan%20Net%20Requirements%20Interpretation.xlsx). The spreadsheet includes
 - a list of requirements extracted from the IG
 - the requirements tested by this DRAFT test kit
 - an analysis of which requirements are testable, including areas where testable requirements are weak or unclear
