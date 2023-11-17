@@ -23,7 +23,7 @@ module DaVinciPlanNetTestKit
 
         These tests are a **DRAFT** intended to allow Plan Net server implementers to perform 
         preliminary checks of their servers against Plan Net IG requirements and [provide 
-        feedback](https://github.com/inferno-framework/da-vinci-plan-net-test-kit/issues) 
+        feedback](https://github.com/inferno-framework/davinci-plan-net-test-kit/issues) 
         to ONC on the tests. Future versions of these tests may validate other 
         requirements and may change the test validation logic.
 
@@ -167,11 +167,11 @@ module DaVinciPlanNetTestKit
       links [
         {
           label: 'Report Issue',
-          url: 'https://github.com/inferno-framework/da-vinci-plan-net-test-kitissues'
+          url: 'https://github.com/inferno-framework/davinci-plan-net-test-kitissues'
         },
         {
           label: 'Source Code',
-          url: 'https://github.com/inferno-framework/da-vinci-plan-net-test-kit'
+          url: 'https://github.com/inferno-framework/davinci-plan-net-test-kit'
         }
       ]
 
