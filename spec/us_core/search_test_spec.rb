@@ -1,5 +1,5 @@
-RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
-  let(:suite) { Inferno::Repositories::TestSuites.new.find('davinci_pdex_plan_net_server_v110') }
+RSpec.describe DaVinciPlanNetTestKit::SearchTest do
+  let(:suite) { Inferno::Repositories::TestSuites.new.find('davinci_plan_net_server_v110') }
   let(:session_data_repo) { Inferno::Repositories::SessionData.new }
   let(:test_session) { repo_create(:test_session, test_suite_id: suite.id) }
   let(:url) { 'http://example.com/fhir' }
@@ -21,25 +21,25 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
 
   describe '_include search' do
     let (:include_test) do 
-      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::EndpointIncludeEndpointOrganizationSearchTest) do
+      Class.new(DaVinciPlanNetTestKit::DaVinciPlanNetV110::EndpointIncludeEndpointOrganizationSearchTest) do
         fhir_client {url :url}
         input :url
       end
     end
     let (:include_test_no_scratch) do 
-      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::EndpointIncludeEndpointOrganizationSearchTest) do
+      Class.new(DaVinciPlanNetTestKit::DaVinciPlanNetV110::EndpointIncludeEndpointOrganizationSearchTest) do
         fhir_client {url :url}
         input :url
       end
     end
     let (:include_test_no_reference) do 
-      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::EndpointIncludeEndpointOrganizationSearchTest) do
+      Class.new(DaVinciPlanNetTestKit::DaVinciPlanNetV110::EndpointIncludeEndpointOrganizationSearchTest) do
         fhir_client {url :url}
         input :url
       end
     end
     let (:include_test_only_url) do 
-      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::EndpointIncludeEndpointOrganizationSearchTest) do
+      Class.new(DaVinciPlanNetTestKit::DaVinciPlanNetV110::EndpointIncludeEndpointOrganizationSearchTest) do
         fhir_client {url :url}
         input :url
       end
@@ -175,25 +175,25 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
 
   describe '_revinclude search' do
     let (:revinclude_test) do 
-      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::OrganizationRevincludeEndpointOrganizationSearchTest) do
+      Class.new(DaVinciPlanNetTestKit::DaVinciPlanNetV110::OrganizationRevincludeEndpointOrganizationSearchTest) do
         fhir_client {url :url}
         input :url
       end
     end
     let (:revinclude_test_no_scratch) do 
-      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::OrganizationRevincludeEndpointOrganizationSearchTest) do
+      Class.new(DaVinciPlanNetTestKit::DaVinciPlanNetV110::OrganizationRevincludeEndpointOrganizationSearchTest) do
         fhir_client {url :url}
         input :url
       end
     end
     let (:revinclude_test_no_reference) do 
-      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::OrganizationRevincludeEndpointOrganizationSearchTest) do
+      Class.new(DaVinciPlanNetTestKit::DaVinciPlanNetV110::OrganizationRevincludeEndpointOrganizationSearchTest) do
         fhir_client {url :url}
         input :url
       end
     end
     let (:revinclude_test_only_url) do 
-      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::OrganizationRevincludeEndpointOrganizationSearchTest) do
+      Class.new(DaVinciPlanNetTestKit::DaVinciPlanNetV110::OrganizationRevincludeEndpointOrganizationSearchTest) do
         fhir_client {url :url}
         input :url
       end
@@ -337,25 +337,25 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
 
   describe 'forward chaining tests' do
     let (:forward_chain_test) do 
-      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::EndpointForwardChainOrganizationTypeSearchTest) do
+      Class.new(DaVinciPlanNetTestKit::DaVinciPlanNetV110::EndpointForwardChainOrganizationTypeSearchTest) do
         fhir_client {url :url}
         input :url
       end
     end
     let (:forward_chain_test_no_scratch) do 
-      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::EndpointForwardChainOrganizationTypeSearchTest) do
+      Class.new(DaVinciPlanNetTestKit::DaVinciPlanNetV110::EndpointForwardChainOrganizationTypeSearchTest) do
         fhir_client {url :url}
         input :url
       end
     end
     let (:forward_chain_test_no_type) do 
-      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::EndpointForwardChainOrganizationTypeSearchTest) do
+      Class.new(DaVinciPlanNetTestKit::DaVinciPlanNetV110::EndpointForwardChainOrganizationTypeSearchTest) do
         fhir_client {url :url}
         input :url
       end
     end
     let (:forward_chain_test_non_prvgrp_type) do 
-      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::EndpointForwardChainOrganizationTypeSearchTest) do
+      Class.new(DaVinciPlanNetTestKit::DaVinciPlanNetV110::EndpointForwardChainOrganizationTypeSearchTest) do
         fhir_client {url :url}
         input :url
       end
@@ -541,19 +541,19 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
 
   describe 'reverse chaining tests' do
     let(:reverse_chain_test) do 
-      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::PractitionerReverseChainPractitionerRolePractitionerSpecialtySearchTest) do
+      Class.new(DaVinciPlanNetTestKit::DaVinciPlanNetV110::PractitionerReverseChainPractitionerRolePractitionerSpecialtySearchTest) do
         fhir_client {url :url}
         input :url
       end
     end
     let(:reverse_chain_test_no_scratch) do 
-      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::PractitionerReverseChainPractitionerRolePractitionerSpecialtySearchTest) do
+      Class.new(DaVinciPlanNetTestKit::DaVinciPlanNetV110::PractitionerReverseChainPractitionerRolePractitionerSpecialtySearchTest) do
         fhir_client {url :url}
         input :url
       end
     end
     let(:reverse_chain_test_no_specialty) do 
-      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::PractitionerReverseChainPractitionerRolePractitionerSpecialtySearchTest) do
+      Class.new(DaVinciPlanNetTestKit::DaVinciPlanNetV110::PractitionerReverseChainPractitionerRolePractitionerSpecialtySearchTest) do
         fhir_client {url :url}
         input :url
       end
@@ -715,13 +715,13 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
   # and class in order to be tested
   describe 'Combination include search tests' do
     let(:combination_test_include) do 
-      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::PractitionerRoleCombinationListPractitionersWithSpecialtyAndLocationSearchTest) do
+      Class.new(DaVinciPlanNetTestKit::DaVinciPlanNetV110::PractitionerRoleCombinationListPractitionersWithSpecialtyAndLocationSearchTest) do
         fhir_client {url :url}
         input :url
       end
     end
     let(:combination_test_include_no_reference) do 
-      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::PractitionerRoleCombinationListPractitionersWithSpecialtyAndLocationSearchTest) do
+      Class.new(DaVinciPlanNetTestKit::DaVinciPlanNetV110::PractitionerRoleCombinationListPractitionersWithSpecialtyAndLocationSearchTest) do
         fhir_client {url :url}
         input :url
       end
@@ -859,19 +859,19 @@ RSpec.describe DaVinciPDEXPlanNetTestKit::SearchTest do
 
   describe "Combination reverse chain tests" do
     let(:combination_test_reverse_chain) do
-      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::HealthcareServiceCombinationListSpecialtyCoveredByNetworkSearchTest) do
+      Class.new(DaVinciPlanNetTestKit::DaVinciPlanNetV110::HealthcareServiceCombinationListSpecialtyCoveredByNetworkSearchTest) do
         fhir_client {url :url}
         input :url
       end
     end
     let(:combination_test_reverse_chain_no_additional_scratch) do
-      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::HealthcareServiceCombinationListSpecialtyCoveredByNetworkSearchTest) do
+      Class.new(DaVinciPlanNetTestKit::DaVinciPlanNetV110::HealthcareServiceCombinationListSpecialtyCoveredByNetworkSearchTest) do
         fhir_client {url :url}
         input :url
       end
     end
     let(:combination_test_reverse_chain_no_scratch) do
-      Class.new(DaVinciPDEXPlanNetTestKit::DaVinciPDEXPlanNetV110::HealthcareServiceCombinationListSpecialtyCoveredByNetworkSearchTest) do
+      Class.new(DaVinciPlanNetTestKit::DaVinciPlanNetV110::HealthcareServiceCombinationListSpecialtyCoveredByNetworkSearchTest) do
         fhir_client {url :url}
         input :url
       end

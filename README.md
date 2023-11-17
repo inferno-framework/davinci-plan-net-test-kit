@@ -1,4 +1,4 @@
-# DaVinci PDEX Plan Net v1.1.0 Test Kit
+# DaVinci Plan Net v1.1.0 Test Kit
 
 The Plan Net STU 1.1.0 Server Test Kit validates the conformance of a server 
 implementation to the Plan Net STU 1.1.0 FHIR IG. Inferno will act as a client 
@@ -36,7 +36,7 @@ See the test descriptions within the test kit for detail on the specific
 validations performed as a part of testing these requirements. 
 
 Additional details on the IG requirements that underlie this test, including those 
-that are not currently tested, can be found in [this spreadsheet](lib/davinci_pdex_plan_net_test_kit/igs/Plan%20Net%20Requirements%20Interpretation.xlsx). The spreadsheet includes
+that are not currently tested, can be found in [this spreadsheet](lib/davinci_plan_net_test_kit/igs/Plan%20Net%20Requirements%20Interpretation.xlsx). The spreadsheet includes
 - a list of requirements extracted from the IG
 - the requirements tested by this DRAFT test kit
 - an analysis of which requirements are testable, including areas where testable requirements are weak or unclear
@@ -53,7 +53,7 @@ https://plan-net-ri.davinci.hl7.org/fhir.
 
 ### ONC Hosted Instance
 
-You can run these tests via the [ONC Inferno](https://inferno.healthit.gov/suites/) website by choosing the “DaVinci PDEX Plan Net v1.1.0” test suite.
+You can run these tests via the [ONC Inferno](https://inferno.healthit.gov/suites/) website by choosing the “DaVinci Plan Net v1.1.0” test suite.
 
 ### Local Inferno Instance
 
@@ -67,7 +67,7 @@ You can run these tests via the [ONC Inferno](https://inferno.healthit.gov/suite
 
 We welcome feedback on the tests, including but not limited to the following areas:
 - Validation logic, such as potential bugs, lax checks, and unexpected failures.
-- Requirements coverage, such as requirements that have been missed, tests that necessitate features that the IG does not require, or other issues with the [interpretation](lib/davinci_pdex_plan_net_test_kit/igs/Plan%20Net%20Requirements%20Interpretation.xlsx) of the IG's requirements.
+- Requirements coverage, such as requirements that have been missed, tests that necessitate features that the IG does not require, or other issues with the [interpretation](lib/davinci_plan_net_test_kit/igs/Plan%20Net%20Requirements%20Interpretation.xlsx) of the IG's requirements.
 - User experience, such as confusing or missing information in the test UI.
 
 Please report any issues with this set of tests in the issues section of this repository.

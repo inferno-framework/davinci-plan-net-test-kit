@@ -1,6 +1,6 @@
-require_relative '../../../lib/davinci_pdex_plan_net_test_kit/generator/must_support_metadata_extractor.rb'
+require_relative '../../../lib/davinci_plan_net_test_kit/generator/must_support_metadata_extractor.rb'
 
-RSpec.describe DaVinciPDEXPlanNetTestKit::Generator::MustSupportMetadataExtractor do
+RSpec.describe DaVinciPlanNetTestKit::Generator::MustSupportMetadataExtractor do
   let(:profile) do
     profile = double("profile")
     allow(profile).to receive(:baseDefinition).and_return("baseDefinition")

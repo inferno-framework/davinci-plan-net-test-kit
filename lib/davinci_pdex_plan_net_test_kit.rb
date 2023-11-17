@@ -1,1 +1,0 @@
-require_relative 'davinci_pdex_plan_net_test_kit/generated/v1.1.0/davinci_pdex_plan_net_test_suite'

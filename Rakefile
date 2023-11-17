@@ -20,8 +20,8 @@ end
 namespace :plan_net do
   desc 'Generate tests'
   task :generate do
-    require_relative 'lib/davinci_pdex_plan_net_test_kit/generator'
+    require_relative 'lib/davinci_plan_net_test_kit/generator'
 
-    DaVinciPDEXPlanNetTestKit::Generator.generate
+    DaVinciPlanNetTestKit::Generator.generate
   end
 end

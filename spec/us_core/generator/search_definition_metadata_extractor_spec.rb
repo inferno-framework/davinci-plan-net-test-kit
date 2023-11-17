@@ -1,6 +1,6 @@
-require_relative '../../../lib/davinci_pdex_plan_net_test_kit/generator/search_metadata_extractor.rb'
+require_relative '../../../lib/davinci_plan_net_test_kit/generator/search_metadata_extractor.rb'
 
-RSpec.describe DaVinciPDEXPlanNetTestKit::Generator::SearchDefinitionMetadataExtractor do
+RSpec.describe DaVinciPlanNetTestKit::Generator::SearchDefinitionMetadataExtractor do
 
   # really slime the subject here because we don't care about interactions
   # if this test file grows, this will likely break and more stubbing and setup will be required
