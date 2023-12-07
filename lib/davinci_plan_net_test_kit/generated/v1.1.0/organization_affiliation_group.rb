@@ -142,7 +142,7 @@ This test sequence will perform a search with each required combination of forwa
 search parameters. This sequence will perform searches with the following chaining parameters:
 
 | Search Parameters | Chain Requirements |
-| --- | --- |
+| :---: | :---: |
 | primary-organization | type, address, name, partof |
 | participating-organization | type, address, name, partof |
 | location | address, address-postalcode, address-city, address-state, organization, type |

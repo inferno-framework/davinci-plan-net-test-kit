@@ -128,8 +128,8 @@ module DaVinciPlanNetTestKit
         have access to instances identified while running other groups. Thus, when running at the group level, 
         two additional inputs are required to allow the tests to identify appropriate search values:
         - "[target profile] instance ids referenced in [referencing profile].[reference element]": 
-          used by `_revinclude` tests on `target profile` when run as a group to identify 
-          instances the `target profile` that have instances of `referencing profile` that reference it.
+          used by `_revinclude` tests on [target profile] when run as a group to identify 
+          instances the [target profile] that have instances of [referencing profile] that reference it.
         - "'[constraining element]' value from a [referencing profile] instance with '[reference element]' populated": used by reverse chaining tests 
           on the [target profile] referenced in the [reference element] element when run as a single group 
           to identify the value to use when performing the reverse chain search.
@@ -167,7 +167,7 @@ module DaVinciPlanNetTestKit
       links [
         {
           label: 'Report Issue',
-          url: 'https://github.com/inferno-framework/davinci-plan-net-test-kitissues'
+          url: 'https://github.com/inferno-framework/davinci-plan-net-test-kit/issues'
         },
         {
           label: 'Source Code',

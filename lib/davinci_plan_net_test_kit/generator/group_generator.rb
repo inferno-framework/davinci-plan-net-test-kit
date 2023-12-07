@@ -154,7 +154,7 @@ module DaVinciPlanNetTestKit
       end
 
       def forward_chain_table
-        chain_table = "| Search Parameters | Chain Requirements |\n| --- | --- |\n"
+        chain_table = "| Search Parameters | Chain Requirements |\n| :---: | :---: |\n"
         # Iterate through the chain requirements and add to table
         chainable_parameters.each do |chain_param|
           chain_requirement_list = chain_requirement_list_for_param(chain_param).map { |chain| chain[:chain]}

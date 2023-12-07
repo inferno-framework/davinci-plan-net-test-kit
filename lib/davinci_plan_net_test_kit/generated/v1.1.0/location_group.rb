@@ -151,7 +151,7 @@ This test sequence will perform a search with each required combination of forwa
 search parameters. This sequence will perform searches with the following chaining parameters:
 
 | Search Parameters | Chain Requirements |
-| --- | --- |
+| :---: | :---: |
 | partof | type, address, organization |
 | organization | name, address, partof, type |
 | endpoint | organization |
