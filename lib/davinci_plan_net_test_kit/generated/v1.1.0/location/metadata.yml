@@ -5,6 +5,7 @@
 :reformatted_version: v110
 :resource: Location
 :profile_url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Location
+:versioned_profile_url: http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/StructureDefinition/plannet-Location
 :profile_name: Plan-Net Location
 :profile_version: 1.1.0
 :title: Plan-Net Location

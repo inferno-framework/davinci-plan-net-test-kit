@@ -5,6 +5,7 @@
 :reformatted_version: v110
 :resource: InsurancePlan
 :profile_url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-InsurancePlan
+:versioned_profile_url: http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/StructureDefinition/plannet-InsurancePlan
 :profile_name: Plan-Net InsurancePlan
 :profile_version: 1.1.0
 :title: Plan-Net InsurancePlan

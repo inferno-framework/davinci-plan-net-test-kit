@@ -174,7 +174,7 @@ the id of _any_ of the resources returned by the second request.
 
 ## Profile Validation
 Each resource identified during instance gathering and other queries run during this test sequence
-is expected to conform to the [Plan-Net HealthcareService](http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-HealthcareService). Each element is checked 
+is expected to conform to the [Plan-Net HealthcareService](http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/StructureDefinition/plannet-HealthcareService). Each element is checked 
 by the HL7 Validator against terminology binding and cardinality requirements. Elements with a 
 required binding are validated against their bound ValueSet. If the code/system in the element 
 is not part of the ValueSet, then the test will fail.

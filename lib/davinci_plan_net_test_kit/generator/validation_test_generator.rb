@@ -125,12 +125,12 @@ module DaVinciPlanNetTestKit
         if resource_type == 'Medication'
           <<~MEDICATION_INTRO
           This test verifies resources returned from previous tests conform to
-          the [#{profile_name}](#{profile_url}).
+          the [#{profile_name}](#{group_metadata.versioned_profile_url}).
           MEDICATION_INTRO
         else
           <<~GENERIC_INTRO
           This test verifies resources returned from the first search conform to
-          the [#{profile_name}](#{profile_url}).
+          the [#{profile_name}](#{group_metadata.versioned_profile_url}).
           Systems must demonstrate at least one valid example in order to pass this test.
           GENERIC_INTRO
         end

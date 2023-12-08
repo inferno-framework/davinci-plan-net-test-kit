@@ -268,7 +268,7 @@ module DaVinciPlanNetTestKit
         #{first_search_description}
         #{post_search_description}
 
-        [Plan Net Server CapabilityStatement](http://hl7.org/fhir/us/davinci-pdex-plan-net/CapabilityStatement/plan-net)
+        [Plan Net Server CapabilityStatement](http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/CapabilityStatement/plan-net)
         DESCRIPTION
       end
     end

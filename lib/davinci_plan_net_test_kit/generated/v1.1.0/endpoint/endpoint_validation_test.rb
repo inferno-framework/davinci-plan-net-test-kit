@@ -9,7 +9,7 @@ module DaVinciPlanNetTestKit
       title 'Endpoint resources returned during previous tests conform to the Plan-Net Endpoint'
       description %(
 This test verifies resources returned from the first search conform to
-the [Plan-Net Endpoint](http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Endpoint).
+the [Plan-Net Endpoint](http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/StructureDefinition/plannet-Endpoint).
 Systems must demonstrate at least one valid example in order to pass this test.
 
 It verifies the presence of mandatory elements and that elements with

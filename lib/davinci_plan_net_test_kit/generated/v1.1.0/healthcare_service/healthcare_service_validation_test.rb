@@ -9,7 +9,7 @@ module DaVinciPlanNetTestKit
       title 'HealthcareService resources returned during previous tests conform to the Plan-Net HealthcareService'
       description %(
 This test verifies resources returned from the first search conform to
-the [Plan-Net HealthcareService](http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-HealthcareService).
+the [Plan-Net HealthcareService](http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/StructureDefinition/plannet-HealthcareService).
 Systems must demonstrate at least one valid example in order to pass this test.
 
 It verifies the presence of mandatory elements and that elements with

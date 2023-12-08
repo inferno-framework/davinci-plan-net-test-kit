@@ -5,6 +5,7 @@
 :reformatted_version: v110
 :resource: OrganizationAffiliation
 :profile_url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-OrganizationAffiliation
+:versioned_profile_url: http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/StructureDefinition/plannet-OrganizationAffiliation
 :profile_name: Plan-Net OrganizationAffiliation
 :profile_version: 1.1.0
 :title: Plan-Net OrganizationAffiliation

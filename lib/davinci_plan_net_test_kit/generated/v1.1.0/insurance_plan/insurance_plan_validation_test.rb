@@ -9,7 +9,7 @@ module DaVinciPlanNetTestKit
       title 'InsurancePlan resources returned during previous tests conform to the Plan-Net InsurancePlan'
       description %(
 This test verifies resources returned from the first search conform to
-the [Plan-Net InsurancePlan](http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-InsurancePlan).
+the [Plan-Net InsurancePlan](http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/StructureDefinition/plannet-InsurancePlan).
 Systems must demonstrate at least one valid example in order to pass this test.
 
 It verifies the presence of mandatory elements and that elements with
