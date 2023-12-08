@@ -9,7 +9,7 @@ module DaVinciPlanNetTestKit
       title 'Location resources returned during previous tests conform to the Plan-Net Location'
       description %(
 This test verifies resources returned from the first search conform to
-the [Plan-Net Location](http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Location).
+the [Plan-Net Location](http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/StructureDefinition/plannet-Location).
 Systems must demonstrate at least one valid example in order to pass this test.
 
 It verifies the presence of mandatory elements and that elements with

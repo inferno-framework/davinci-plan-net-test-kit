@@ -13,7 +13,7 @@ plan-type on the InsurancePlan resource. This test
 will pass if resources are returned and match the search criteria. If
 none are returned, the test is skipped.
 
-[Plan Net Server CapabilityStatement](http://hl7.org/fhir/us/davinci-pdex-plan-net/CapabilityStatement/plan-net)
+[Plan Net Server CapabilityStatement](http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/CapabilityStatement/plan-net)
 
       )
 

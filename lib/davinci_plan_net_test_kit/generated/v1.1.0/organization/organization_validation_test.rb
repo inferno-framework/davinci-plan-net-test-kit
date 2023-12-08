@@ -9,7 +9,7 @@ module DaVinciPlanNetTestKit
       title 'Organization resources returned during previous tests conform to the Plan-Net Organization'
       description %(
 This test verifies resources returned from the first search conform to
-the [Plan-Net Organization](http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Organization).
+the [Plan-Net Organization](http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/StructureDefinition/plannet-Organization).
 Systems must demonstrate at least one valid example in order to pass this test.
 
 It verifies the presence of mandatory elements and that elements with

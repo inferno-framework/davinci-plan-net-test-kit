@@ -31,6 +31,7 @@ module DaVinciPlanNetTestKit
             # test_id_prefix: test_id_prefix,
             resource: resource,
             profile_url: profile_url,
+            versioned_profile_url: profile_url.gsub(/davinci-pdex-plan-net\/StructureDefinition\//, 'davinci-pdex-plan-net/STU1.1/StructureDefinition/'),
             profile_name: profile_name,
             profile_version: profile_version,
             title: title,

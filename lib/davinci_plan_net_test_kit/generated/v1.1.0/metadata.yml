@@ -7,6 +7,7 @@
   :reformatted_version: v110
   :resource: Endpoint
   :profile_url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Endpoint
+  :versioned_profile_url: http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/StructureDefinition/plannet-Endpoint
   :profile_name: Plan-Net Endpoint
   :profile_version: 1.1.0
   :title: Plan-Net Endpoint
@@ -147,6 +148,7 @@
   :reformatted_version: v110
   :resource: HealthcareService
   :profile_url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-HealthcareService
+  :versioned_profile_url: http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/StructureDefinition/plannet-HealthcareService
   :profile_name: Plan-Net HealthcareService
   :profile_version: 1.1.0
   :title: Plan-Net HealthcareService
@@ -1453,6 +1455,7 @@
   :reformatted_version: v110
   :resource: InsurancePlan
   :profile_url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-InsurancePlan
+  :versioned_profile_url: http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/StructureDefinition/plannet-InsurancePlan
   :profile_name: Plan-Net InsurancePlan
   :profile_version: 1.1.0
   :title: Plan-Net InsurancePlan
@@ -1774,6 +1777,7 @@
   :reformatted_version: v110
   :resource: Location
   :profile_url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Location
+  :versioned_profile_url: http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/StructureDefinition/plannet-Location
   :profile_name: Plan-Net Location
   :profile_version: 1.1.0
   :title: Plan-Net Location
@@ -2102,6 +2106,7 @@
   :reformatted_version: v110
   :resource: Organization
   :profile_url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Network
+  :versioned_profile_url: http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/StructureDefinition/plannet-Network
   :profile_name: Plan-Net Network
   :profile_version: 1.1.0
   :title: Plan-Net Network
@@ -2357,6 +2362,7 @@
   :reformatted_version: v110
   :resource: Organization
   :profile_url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Organization
+  :versioned_profile_url: http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/StructureDefinition/plannet-Organization
   :profile_name: Plan-Net Organization
   :profile_version: 1.1.0
   :title: Plan-Net Organization
@@ -2671,6 +2677,7 @@
   :reformatted_version: v110
   :resource: OrganizationAffiliation
   :profile_url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-OrganizationAffiliation
+  :versioned_profile_url: http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/StructureDefinition/plannet-OrganizationAffiliation
   :profile_name: Plan-Net OrganizationAffiliation
   :profile_version: 1.1.0
   :title: Plan-Net OrganizationAffiliation
@@ -3880,6 +3887,7 @@
   :reformatted_version: v110
   :resource: Practitioner
   :profile_url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Practitioner
+  :versioned_profile_url: http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/StructureDefinition/plannet-Practitioner
   :profile_name: Plan-Net Practitioner
   :profile_version: 1.1.0
   :title: Plan-Net Practitioner
@@ -4098,6 +4106,7 @@
   :reformatted_version: v110
   :resource: PractitionerRole
   :profile_url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-PractitionerRole
+  :versioned_profile_url: http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/StructureDefinition/plannet-PractitionerRole
   :profile_name: Plan-Net PractitionerRole
   :profile_version: 1.1.0
   :title: Plan-Net PractitionerRole

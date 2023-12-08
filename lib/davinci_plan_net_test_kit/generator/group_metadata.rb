@@ -8,6 +8,7 @@ module DaVinciPlanNetTestKit
         :reformatted_version,
         :resource,
         :profile_url,
+        :versioned_profile_url,
         :profile_name,
         :profile_version,
         :title,

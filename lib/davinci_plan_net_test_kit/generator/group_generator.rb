@@ -352,7 +352,7 @@ module DaVinciPlanNetTestKit
 
         ## Profile Validation
         Each resource identified during instance gathering and other queries run during this test sequence
-        is expected to conform to the [#{profile_name}](#{profile_url}). Each element is checked 
+        is expected to conform to the [#{profile_name}](#{group_metadata.versioned_profile_url}). Each element is checked 
         by the HL7 Validator against terminology binding and cardinality requirements. Elements with a 
         required binding are validated against their bound ValueSet. If the code/system in the element 
         is not part of the ValueSet, then the test will fail.

@@ -5,6 +5,7 @@
 :reformatted_version: v110
 :resource: Endpoint
 :profile_url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Endpoint
+:versioned_profile_url: http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/StructureDefinition/plannet-Endpoint
 :profile_name: Plan-Net Endpoint
 :profile_version: 1.1.0
 :title: Plan-Net Endpoint

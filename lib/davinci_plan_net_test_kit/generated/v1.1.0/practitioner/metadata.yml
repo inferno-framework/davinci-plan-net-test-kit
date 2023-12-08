@@ -5,6 +5,7 @@
 :reformatted_version: v110
 :resource: Practitioner
 :profile_url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Practitioner
+:versioned_profile_url: http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/StructureDefinition/plannet-Practitioner
 :profile_name: Plan-Net Practitioner
 :profile_version: 1.1.0
 :title: Plan-Net Practitioner
