@@ -39,16 +39,16 @@ module DaVinciPlanNetTestKit
       run_as_group
 
       PROFILES = {
-        'Endpoint' => ['http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/StructureDefinition/plannet-Endpoint'].freeze,
-        'HealthcareService' => ['http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/StructureDefinition/plannet-HealthcareService'].freeze,
-        'Location' => ['http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/StructureDefinition/plannet-Location'].freeze,
+        'Endpoint' => ['http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Endpoint'].freeze,
+        'HealthcareService' => ['http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-HealthcareService'].freeze,
+        'Location' => ['http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Location'].freeze,
         'Organization' => [
-          'http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/StructureDefinition/plannet-Network',
-          'http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/StructureDefinition/plannet-Organization'
+          'http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Network',
+          'http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Organization'
         ].freeze,
-        'OrganizationAffiliation' => ['http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/StructureDefinition/plannet-OrganizationAffiliation'].freeze,
-        'Practitioner' => ['http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/StructureDefinition/plannet-Practitioner'].freeze,
-        'PractitionerRole' => ['http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/StructureDefinition/plannet-PractitionerRole'].freeze
+        'OrganizationAffiliation' => ['http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-OrganizationAffiliation'].freeze,
+        'Practitioner' => ['http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Practitioner'].freeze,
+        'PractitionerRole' => ['http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-PractitionerRole'].freeze
       }.freeze
 
       test from: :tls_version_test,
