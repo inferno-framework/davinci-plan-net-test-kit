@@ -73,7 +73,6 @@ We welcome feedback on the tests, including but not limited to the following are
 Please report any issues with this set of tests in the issues section of this repository.
 
 ## License
-Copyright 2023 The MITRE Corporation
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use
 this file except in compliance with the License. You may obtain a copy of the
