@@ -45,7 +45,7 @@ module DaVinciPlanNetTestKit
         the base FHIR URL of the server under test. To run in this mode
         1. Click the `RUN ALL TESTS` button in the upper right
         2. Provide the URL for the server in the first "FHIR Endpoint (required)" input
-        3. Click the `Submit` buttom in the lower right of the input display
+        3. Click the `Submit` button in the lower right of the input display
         4. Wait for Inferno to run the tests (will take several minutes)
         5. Expand tests with failures to determine the reason.
 
