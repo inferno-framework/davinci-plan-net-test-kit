@@ -11,7 +11,7 @@ module DaVinciPlanNetTestKit
         Test will perform a search using the reverse chaining parameter 
         <%= "_has:#{source_resource}:#{target_param}:#{constraining_param}" %>
         using a value from either a previously identified <%= "#{source_resource}" %> when 
-        run as a whole suite, or the "\'<%= "#{constraining_param}" %>\' value from <%= "#{a_or_an(source_resource)}" %> 
+        run from the suite level, or the "\'<%= "#{constraining_param}" %>\' value from <%= "#{a_or_an(source_resource)}" %> 
         instance with \'<%= "#{target_param}" %>\' populated" input when run at the group level. To validate the 
         returned instances, the test will perform a search 
         on the <%= "#{source_resource}" %> resource type using the same <%= "#{constraining_param}" %> search 

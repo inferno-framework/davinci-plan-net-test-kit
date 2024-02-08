@@ -17,7 +17,7 @@ module DaVinciPlanNetTestKit
         Statement](https://www.hl7.org/fhir/capabilitystatement.html) resource.
         The features described in the Capability Statement must be consistent with
         the required capabilities of a Plan Net server.  This test also expects
-        that APIs state support for all resources types applicable to PDEX v1.1.0.
+        that APIs state support for all resource types applicable to PDEX v1.1.0.
 
         # Test Methodology
 

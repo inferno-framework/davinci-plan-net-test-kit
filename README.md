@@ -20,7 +20,7 @@ preliminary checks of their servers against Plan Net IG requirements and provide
 feedback to ONC on the tests. Future versions of these tests may validate other 
 requirements and may change how these are tested.
 
-The test kit current tests the following requirements:
+The test kit currently tests the following requirements:
 - Support for Must Support Elements
 - json Support
 - Support for all Plan Net Profiles
@@ -32,10 +32,10 @@ The test kit current tests the following requirements:
 - Reverse Chain Searches
 - Search Parameters in Combination
 
-See the test descriptions within the test kit for detail on the specific 
+See the test descriptions within the test kit for details on the specific 
 validations performed as a part of testing these requirements. 
 
-Additional details on the IG requirements that underlie this test, including those 
+Additional details on the IG requirements that underlie this test kit, including those 
 that are not currently tested, can be found in [this spreadsheet](lib/davinci_plan_net_test_kit/igs/Plan%20Net%20Requirements%20Interpretation.xlsx). The spreadsheet includes
 - a list of requirements extracted from the IG
 - the requirements tested by this DRAFT test kit
@@ -57,7 +57,7 @@ You can run these tests via the [ONC Inferno](https://inferno.healthit.gov/suite
 
 ### Local Inferno Instance
 
-- download the source code from this repository
+- Download the source code from this repository
 - Open a terminal in the directory containing the downloaded code
 - In the terminal, run `setup.sh`
 - In the terminal, run `run.sh`
