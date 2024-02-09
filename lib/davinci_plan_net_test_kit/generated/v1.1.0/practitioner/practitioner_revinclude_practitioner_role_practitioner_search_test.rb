@@ -8,10 +8,10 @@ module DaVinciPlanNetTestKit
 
       title 'Server returns PractitionerRole resources from Practitioner search with _revinclude=PractitionerRole:practitioner'
       description %(
-        A server SHALL be capable of supporting searches _revIncludes on search parameter PractitionerRole:practitioner.
+        A server SHALL be capable of supporting searches _revincludes on search parameter PractitionerRole:practitioner.
 
         This test will perform a search on Practitioner with _revinclude=PractitionerRole:practitioner and the '_id'
-        search parameter using an id previoiusly identified when the whole test suite is run or an id provided
+        search parameter using an id previously identified during a suite level run or an id provided
         in the "Practitioner instance ids referenced in PractitionerRole.practitioner" input if run at the group level.
         The test will pass if at least one PractitionerRole resource found in the response
         and each instance that does includes a reference to the Practitioner with the searched id.

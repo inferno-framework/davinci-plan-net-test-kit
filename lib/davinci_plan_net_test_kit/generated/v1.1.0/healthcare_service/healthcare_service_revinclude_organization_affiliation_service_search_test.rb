@@ -8,10 +8,10 @@ module DaVinciPlanNetTestKit
 
       title 'Server returns OrganizationAffiliation resources from HealthcareService search with _revinclude=OrganizationAffiliation:service'
       description %(
-        A server SHALL be capable of supporting searches _revIncludes on search parameter OrganizationAffiliation:service.
+        A server SHALL be capable of supporting searches _revincludes on search parameter OrganizationAffiliation:service.
 
         This test will perform a search on HealthcareService with _revinclude=OrganizationAffiliation:service and the '_id'
-        search parameter using an id previoiusly identified when the whole test suite is run or an id provided
+        search parameter using an id previously identified during a suite level run or an id provided
         in the "HealthcareService instance ids referenced in OrganizationAffiliation.service" input if run at the group level.
         The test will pass if at least one OrganizationAffiliation resource found in the response
         and each instance that does includes a reference to the HealthcareService with the searched id.

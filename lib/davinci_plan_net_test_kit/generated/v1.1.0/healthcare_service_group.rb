@@ -119,7 +119,7 @@ following includes:
 * HealthcareService:organization
 * HealthcareService:endpoint
 
-Each _include searches will look for a candidate id that has the target reference element
+Each _include search will look for a candidate id that has the target reference element
 populated from the results of instance gathering.  Each search will use the identified 
 Plan-Net HealthcareService id and the include parameter.
 The returned instances are checked to ensure that any instances of the included

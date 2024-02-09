@@ -11,7 +11,7 @@ module DaVinciPlanNetTestKit
         A server SHALL be capable of supporting _includes on search parameter OrganizationAffiliation:primary-organization.
 
         This test will perform a search on OrganizationAffiliation with _include=OrganizationAffiliation:primary-organization 
-        and the '_id' search parameter using an id with a reference to a Organization
+        and the '_id' search parameter using an id with a reference to an Organization
         identified during instance gathering. The test will pass if at least one Organization 
         resource is found in the response and each instance that does is referenced by a returned OrganizationAffiliation instance.
       )

@@ -34,7 +34,7 @@ module DaVinciPlanNetTestKit
         for use by later tests:
 
         * List of resources supported
-        * List of queries parameters supported
+        * List of query parameters supported
       )
       run_as_group
 

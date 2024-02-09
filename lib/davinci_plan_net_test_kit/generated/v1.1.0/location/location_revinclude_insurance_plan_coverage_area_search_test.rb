@@ -8,10 +8,10 @@ module DaVinciPlanNetTestKit
 
       title 'Server returns InsurancePlan resources from Location search with _revinclude=InsurancePlan:coverage-area'
       description %(
-        A server SHALL be capable of supporting searches _revIncludes on search parameter InsurancePlan:coverage-area.
+        A server SHALL be capable of supporting searches _revincludes on search parameter InsurancePlan:coverage-area.
 
         This test will perform a search on Location with _revinclude=InsurancePlan:coverage-area and the '_id'
-        search parameter using an id previoiusly identified when the whole test suite is run or an id provided
+        search parameter using an id previously identified during a suite level run or an id provided
         in the "Location instance ids referenced in InsurancePlan.coverage-area" input if run at the group level.
         The test will pass if at least one InsurancePlan resource found in the response
         and each instance that does includes a reference to the Location with the searched id.
