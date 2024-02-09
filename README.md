@@ -37,12 +37,12 @@ validations performed as a part of testing these requirements.
 
 Additional details on the IG requirements that underlie this test kit, including those 
 that are not currently tested, can be found in [this spreadsheet](lib/davinci_plan_net_test_kit/igs/Plan%20Net%20Requirements%20Interpretation.xlsx). The spreadsheet includes
-- a list of requirements extracted from the IG
-- the requirements tested by this DRAFT test kit
-- an analysis of which requirements are testable, including areas where testable requirements are weak or unclear
-- the approach taken to testing each tested requirement
-- a map of requirements to test kit test ids
-- open questions for IG authors seeking to clarify the IG requirements
+- a list of requirements extracted from the IG.
+- the requirements tested by this DRAFT test kit.
+- an analysis of which requirements are testable, including areas where testable requirements are weak or unclear.
+- the approach taken to testing each tested requirement.
+- a map of requirements to test kit test ids.
+- open questions for IG authors seeking to clarify the IG requirements.
 
 ## How to Run
 
@@ -57,11 +57,11 @@ You can run these tests via the [ONC Inferno](https://inferno.healthit.gov/suite
 
 ### Local Inferno Instance
 
-- Download the source code from this repository
-- Open a terminal in the directory containing the downloaded code
-- In the terminal, run `setup.sh`
-- In the terminal, run `run.sh`
-- Use a web browser to navigate to `http://localhost`
+- Download the source code from this repository.
+- Open a terminal in the directory containing the downloaded code.
+- In the terminal, run `setup.sh`.
+- In the terminal, run `run.sh`.
+- Use a web browser to navigate to `http://localhost`.
 
 ## Providing Feedback and Reporting Issues
 
