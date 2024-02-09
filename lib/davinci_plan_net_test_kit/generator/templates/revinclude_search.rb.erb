@@ -8,10 +8,10 @@ module DaVinciPlanNetTestKit
 
       title 'Server returns <%= revinclude_param_resource %> resources from <%= resource_type %> search with <%= revinclude_param_string %>'
       description %(
-        A server SHALL be capable of supporting searches _revIncludes on search parameter <%= revinclude_param %>.
+        A server SHALL be capable of supporting searches _revincludes on search parameter <%= revinclude_param %>.
 
         This test will perform a search on <%= resource_type %> with <%= revinclude_param_string %> and the '_id'
-        search parameter using an id previoiusly identified when the whole test suite is run or an id provided
+        search parameter using an id previously identified during a suite level run or an id provided
         in the "<%= resource_type %> instance ids referenced in <%= "#{revinclude_param_resource}.#{rev_param_sp}" %>" input if run at the group level.
         The test will pass if at least one <%= revinclude_param_resource %> resource found in the response
         and each instance that does includes a reference to the <%= resource_type %> with the searched id.

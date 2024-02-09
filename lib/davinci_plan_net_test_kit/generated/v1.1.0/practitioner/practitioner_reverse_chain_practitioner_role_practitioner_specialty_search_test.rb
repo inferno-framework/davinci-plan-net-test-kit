@@ -11,7 +11,7 @@ module DaVinciPlanNetTestKit
         Test will perform a search using the reverse chaining parameter 
         _has:PractitionerRole:practitioner:specialty
         using a value from either a previously identified PractitionerRole when 
-        run as a whole suite, or the "\'specialty\' value from a PractitionerRole 
+        run from the suite level, or the "\'specialty\' value from a PractitionerRole 
         instance with \'practitioner\' populated" input when run at the group level. To validate the 
         returned instances, the test will perform a search 
         on the PractitionerRole resource type using the same specialty search 

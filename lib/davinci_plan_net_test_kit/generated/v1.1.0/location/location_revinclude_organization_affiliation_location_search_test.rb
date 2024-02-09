@@ -8,10 +8,10 @@ module DaVinciPlanNetTestKit
 
       title 'Server returns OrganizationAffiliation resources from Location search with _revinclude=OrganizationAffiliation:location'
       description %(
-        A server SHALL be capable of supporting searches _revIncludes on search parameter OrganizationAffiliation:location.
+        A server SHALL be capable of supporting searches _revincludes on search parameter OrganizationAffiliation:location.
 
         This test will perform a search on Location with _revinclude=OrganizationAffiliation:location and the '_id'
-        search parameter using an id previoiusly identified when the whole test suite is run or an id provided
+        search parameter using an id previously identified during a suite level run or an id provided
         in the "Location instance ids referenced in OrganizationAffiliation.location" input if run at the group level.
         The test will pass if at least one OrganizationAffiliation resource found in the response
         and each instance that does includes a reference to the Location with the searched id.

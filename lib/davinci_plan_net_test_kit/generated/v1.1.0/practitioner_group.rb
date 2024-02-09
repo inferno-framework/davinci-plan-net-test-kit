@@ -133,7 +133,7 @@ be used as the search value.
 The test will first create and execute a request with the chain parameter.
 The test will then perform a search against the [source resource type] with
 the [constraining] SeachParameter using the same search value.  Each resource returned in the first
-request will then be checked, validating that the id of those resources is also referenced
+request will then be checked, validating that the ids of those resources are also referenced
 by _any_ of the resources returned by the second request in its [reference element] element.
 
 

@@ -105,7 +105,7 @@ following includes:
 * Organization:endpoint
 * Organization:coverage-area
 
-Each _include searches will look for a candidate id that has the target reference element
+Each _include search will look for a candidate id that has the target reference element
 populated from the results of instance gathering.  Each search will use the identified 
 Plan-Net Network id and the include parameter.
 The returned instances are checked to ensure that any instances of the included
@@ -176,7 +176,7 @@ be used as the search value.
 The test will first create and execute a request with the chain parameter.
 The test will then perform a search against the [source resource type] with
 the [constraining] SeachParameter using the same search value.  Each resource returned in the first
-request will then be checked, validating that the id of those resources is also referenced
+request will then be checked, validating that the ids of those resources are also referenced
 by _any_ of the resources returned by the second request in its [reference element] element.
 
 

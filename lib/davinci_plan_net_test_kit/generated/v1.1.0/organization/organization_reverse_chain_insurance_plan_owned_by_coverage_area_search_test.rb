@@ -11,7 +11,7 @@ module DaVinciPlanNetTestKit
         Test will perform a search using the reverse chaining parameter 
         _has:InsurancePlan:owned-by:coverage-area
         using a value from either a previously identified InsurancePlan when 
-        run as a whole suite, or the "\'coverage-area\' value from an InsurancePlan 
+        run from the suite level, or the "\'coverage-area\' value from an InsurancePlan 
         instance with \'owned-by\' populated" input when run at the group level. To validate the 
         returned instances, the test will perform a search 
         on the InsurancePlan resource type using the same coverage-area search 

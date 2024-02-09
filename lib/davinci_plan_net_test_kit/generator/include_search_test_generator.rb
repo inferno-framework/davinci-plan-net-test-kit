@@ -165,6 +165,10 @@ module DaVinciPlanNetTestKit
         "[#{quoted_strings.join(', ')}]"
       end
 
+      def a_or_an(name)
+        ['a','e','i','o','u'].include?(name.first.downcase) ? "an #{name}" : "a #{name}"
+      end
+
       def input_name
         "#{search_identifier.downcase}_input"
       end

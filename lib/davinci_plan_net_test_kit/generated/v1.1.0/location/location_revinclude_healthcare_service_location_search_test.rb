@@ -8,10 +8,10 @@ module DaVinciPlanNetTestKit
 
       title 'Server returns HealthcareService resources from Location search with _revinclude=HealthcareService:location'
       description %(
-        A server SHALL be capable of supporting searches _revIncludes on search parameter HealthcareService:location.
+        A server SHALL be capable of supporting searches _revincludes on search parameter HealthcareService:location.
 
         This test will perform a search on Location with _revinclude=HealthcareService:location and the '_id'
-        search parameter using an id previoiusly identified when the whole test suite is run or an id provided
+        search parameter using an id previously identified during a suite level run or an id provided
         in the "Location instance ids referenced in HealthcareService.location" input if run at the group level.
         The test will pass if at least one HealthcareService resource found in the response
         and each instance that does includes a reference to the Location with the searched id.

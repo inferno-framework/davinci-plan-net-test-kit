@@ -42,12 +42,12 @@ module DaVinciPlanNetTestKit
         ### Quick Start
 
         The tests are designed to be runnable with a single input from the user: 
-        the base FHIR URL of the server under test. To run in this mode
+        the base FHIR URL of the server under test. To run in this mode:
         1. Click the `RUN ALL TESTS` button in the upper right
         2. Provide the URL for the server in the first "FHIR Endpoint (required)" input
         3. Click the `Submit` button in the lower right of the input display
         4. Wait for Inferno to run the tests (will take several minutes)
-        5. Expand tests with failures to determine the reason.
+        5. Expand tests with failures to determine the reason
 
         If you would like to try out the tests but don't have a Plan Net server implementation, 
         you can use the publicly available reference implementation available at URL 
@@ -121,15 +121,15 @@ module DaVinciPlanNetTestKit
         ### Determination of Search Values When Running Single Groups
 
         Validation of search parameters requires Inferno to identify values that are expected 
-        to return instances. By default, inferno does this by examining gathered instances of each profile 
+        to return instances. By default, Inferno does this by examining gathered instances of each profile 
         to identify search values that should return results when performed against the server under
         test. For `_revinclude` and reverse chaining tests, Inferno needs access to instances of other profiles
-        in order to determin appropriate search values. When test groups are run individually, Inferno will not 
+        in order to determine appropriate search values. When test groups are run individually, Inferno will not 
         have access to instances identified while running other groups. Thus, when running at the group level, 
         two additional inputs are required to allow the tests to identify appropriate search values:
         - "[target profile] instance ids referenced in [referencing profile].[reference element]": 
           used by `_revinclude` tests on [target profile] when run as a group to identify 
-          instances the [target profile] that have instances of [referencing profile] that reference it.
+          instances of the [target profile] that have instances of [referencing profile] that reference it.
         - "'[constraining element]' value from a [referencing profile] instance with '[reference element]' populated": used by reverse chaining tests 
           on the [target profile] referenced in the [reference element] element when run as a single group 
           to identify the value to use when performing the reverse chain search.
