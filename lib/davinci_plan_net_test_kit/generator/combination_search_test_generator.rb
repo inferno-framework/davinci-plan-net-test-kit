@@ -53,7 +53,7 @@ module DaVinciPlanNetTestKit
       end
 
       def search_identifier
-        test_data['name'].gsub(/[-:]/, '_').underscore
+        test_data['name'].gsub(/[-:]/, '_').underscore.gsub("organization_affiliation", "org_affil")
       end
 
       def search_title

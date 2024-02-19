@@ -13,6 +13,7 @@ module DaVinciPlanNetTestKit
 
         def snake_case_for_profile(group_metadata)
           resource = group_metadata.resource
+          return "org_affil" if resource == "OrganizationAffiliation" 
           return resource.underscore unless resource_has_multiple_profiles?(resource)
 
           # Networks and Organizations need to be separated

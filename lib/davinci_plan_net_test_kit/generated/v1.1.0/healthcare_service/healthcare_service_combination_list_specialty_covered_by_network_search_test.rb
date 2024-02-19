@@ -36,7 +36,7 @@ module DaVinciPlanNetTestKit
       end
 
       def self.additional_metadata
-        @additional_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', 'organization_affiliation', 'metadata.yml'), aliases: true))
+        @additional_metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, '..', 'org_affil', 'metadata.yml'), aliases: true))
       end
 
       def scratch_resources

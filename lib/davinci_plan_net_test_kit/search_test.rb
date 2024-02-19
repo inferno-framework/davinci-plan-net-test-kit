@@ -404,6 +404,7 @@ module DaVinciPlanNetTestKit
       end
 
       if reverse_chain_param
+        binding.pry
         input_based_skip_assert(returned_resources, "No resources found.")
         contextual_resources = run_search_on_additional_resource_type(reverse_chain_param)
         base_resources.each do |base_res| 
