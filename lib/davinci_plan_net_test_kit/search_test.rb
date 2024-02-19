@@ -171,7 +171,7 @@ module DaVinciPlanNetTestKit
           params_list = base_combination_search_params(additional_resource).dup
           params_list = include_param ? params_list.merge(_include: include_param) : params_list
         end
-        #After all references have been confirmed, populate it with elements of the resource that meets all requirements
+        # After all references have been confirmed, populate it with elements of the resource that meets all requirements
         # Revinclude
         # Forward Chain
         if reverse_chain_param

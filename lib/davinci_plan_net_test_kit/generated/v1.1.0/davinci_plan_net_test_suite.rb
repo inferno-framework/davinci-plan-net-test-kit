@@ -3,7 +3,7 @@ require_relative '../../version'
 require_relative '../../custom_groups/v1.1.0/capability_statement_group'
 require_relative 'endpoint_group'
 require_relative 'insurance_plan_group'
-require_relative 'organization_affiliation_group'
+require_relative 'org_affil_group'
 require_relative 'practitioner_role_group'
 require_relative 'practitioner_group'
 require_relative 'healthcare_service_group'
@@ -219,7 +219,7 @@ module DaVinciPlanNetTestKit
   
       group from: :davinci_plan_net_v110_endpoint
       group from: :davinci_plan_net_v110_insurance_plan
-      group from: :davinci_plan_net_v110_organization_affiliation
+      group from: :davinci_plan_net_v110_org_affil
       group from: :davinci_plan_net_v110_practitioner_role
       group from: :davinci_plan_net_v110_practitioner
       group from: :davinci_plan_net_v110_healthcare_service

@@ -55,7 +55,7 @@ module DaVinciPlanNetTestKit
       end
 
       def search_identifier
-        "#{source_resource}_#{target_param}_#{constraining_param}".gsub(/[-:]/, '_').underscore
+        "#{source_resource}_#{target_param}_#{constraining_param}".gsub(/[-:]/, '_').underscore.gsub("organization_affiliation", "org_affil")
       end
 
       def search_title
