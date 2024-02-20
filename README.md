@@ -53,7 +53,8 @@ https://plan-net-ri.davinci.hl7.org/fhir.
 
 ### ONC Hosted Instance
 
-You can run these tests via the [ONC Inferno](https://inferno.healthit.gov/suites/) website by choosing the “DaVinci Plan Net v1.1.0” test suite.
+You can run these tests via the [ONC Inferno
+website](https://inferno.healthit.gov/test-kits/davinci-plan-net/).
 
 ### Local Inferno Instance
 
