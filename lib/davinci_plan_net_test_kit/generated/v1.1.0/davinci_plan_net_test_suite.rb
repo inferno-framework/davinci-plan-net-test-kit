@@ -53,7 +53,8 @@ module DaVinciPlanNetTestKit
         you can use the publicly available reference implementation available at URL 
         https://plan-net-ri.davinci.hl7.org/fhir. Select this endpoint by using that URL as the
         "FHIR Endpoint (required)" input or prepopulating it by selecting the 
-        `Da Vinci Plan Net Reference Server` preset in the upper left.
+        `Da Vinci Plan Net Reference Server` preset in the upper left. Note that this
+        system is not currently expected to pass all of the tests.
 
         The feedback provided may require
         - Configuration updates (see *Test Configuration Details* below) to better guide Inferno's test execution.
