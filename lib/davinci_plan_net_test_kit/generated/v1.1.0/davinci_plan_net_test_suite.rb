@@ -173,6 +173,10 @@ module DaVinciPlanNetTestKit
         {
           label: 'Source Code',
           url: 'https://github.com/inferno-framework/davinci-plan-net-test-kit'
+        },
+        {
+          label: 'Implementation Guide',
+          url: 'https://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1'
         }
       ]
 
