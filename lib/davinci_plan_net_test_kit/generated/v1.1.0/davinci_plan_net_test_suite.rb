@@ -141,6 +141,7 @@ module DaVinciPlanNetTestKit
         %r{Sub-extension url 'introspect' is not defined by the Extension http://fhir-registry\.smarthealthit\.org/StructureDefinition/oauth-uris},
         %r{Sub-extension url 'revoke' is not defined by the Extension http://fhir-registry\.smarthealthit\.org/StructureDefinition/oauth-uris},
         /Observation\.effective\.ofType\(Period\): .*us-core-1:/, # Invalid invariant in US Core v3.1.1
+        /\A\S+: \S+: URL value '.*' does not resolve/,
       ].freeze
 
       VERSION_SPECIFIC_MESSAGE_FILTERS = [].freeze
@@ -151,8 +152,11 @@ module DaVinciPlanNetTestKit
           end
       end
 
-      validator do
-        url ENV.fetch('V110_VALIDATOR_URL', 'http://validator_service:4567')
+      id :davinci_plan_net_server_v110
+
+      fhir_resource_validator do
+        igs 'hl7.fhir.us.davinci-pdex-plan-net#1.1.0'
+
         message_filters = VALIDATION_MESSAGE_FILTERS + VERSION_SPECIFIC_MESSAGE_FILTERS
 
         exclude_message do |message|
@@ -179,8 +183,6 @@ module DaVinciPlanNetTestKit
           url: 'https://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1'
         }
       ]
-
-      id :davinci_plan_net_server_v110
 
       input :url,
         title: 'FHIR Endpoint',
