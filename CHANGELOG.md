@@ -1,4 +1,4 @@
-# 0.9.2
+# 0.10.0
 * dependency updates 2024-06-05 by @Jammjammjamm in 
   https://github.com/inferno-framework/davinci-plan-net-test-kit/pull/8
 * bump core version in gemspec by @dehall in
