@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     davinci_plan_net_test_kit (0.9.1)
-      inferno_core (>= 0.4.21)
+      inferno_core (>= 0.4.37)
       tls_test_kit (~> 0.2.0)
 
 GEM
