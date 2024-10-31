@@ -19,7 +19,7 @@ module DaVinciPlanNetTestKit
         endpoint element of instances returned by the tested search.
       )
 
-      id :davinci_plan_net_v110_forward_chain_endpoint_organization_search_test
+      id :davinci_plan_net_v110_forward_chain_network_endpoint_organization_search_test
 
       def properties
         @properties ||= SearchTestProperties.new(

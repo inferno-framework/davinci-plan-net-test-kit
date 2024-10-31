@@ -225,10 +225,10 @@ read succeeds.
       test from: :davinci_plan_net_v110_include_network_organization_endpoint_search_test
       test from: :davinci_plan_net_v110_include_network_organization_coverage_area_search_test
       test from: :davinci_plan_net_v110_revinclude_network_practitioner_role_network_search_test
-      test from: :davinci_plan_net_v110_forward_chain_partof_name_search_test
-      test from: :davinci_plan_net_v110_forward_chain_partof_address_search_test
-      test from: :davinci_plan_net_v110_forward_chain_partof_type_search_test
-      test from: :davinci_plan_net_v110_forward_chain_endpoint_organization_search_test
+      test from: :davinci_plan_net_v110_forward_chain_network_partof_name_search_test
+      test from: :davinci_plan_net_v110_forward_chain_network_partof_address_search_test
+      test from: :davinci_plan_net_v110_forward_chain_network_partof_type_search_test
+      test from: :davinci_plan_net_v110_forward_chain_network_endpoint_organization_search_test
       test from: :davinci_plan_net_v110_network_reverse_chain_practitioner_role_network_location_search_test
       test from: :davinci_plan_net_v110_network_validation_test
       test from: :davinci_plan_net_v110_network_must_support_test

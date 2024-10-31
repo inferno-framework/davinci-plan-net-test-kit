@@ -19,7 +19,7 @@ module DaVinciPlanNetTestKit
         organization element of instances returned by the tested search.
       )
 
-      id :davinci_plan_net_v110_forward_chain_organization_name_search_test
+      id :davinci_plan_net_v110_forward_chain_healthcare_service_organization_name_search_test
 
       def properties
         @properties ||= SearchTestProperties.new(

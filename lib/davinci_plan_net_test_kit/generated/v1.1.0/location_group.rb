@@ -245,14 +245,14 @@ read succeeds.
       test from: :davinci_plan_net_v110_revinclude_location_insurance_plan_coverage_area_search_test
       test from: :davinci_plan_net_v110_revinclude_location_organization_affiliation_location_search_test
       test from: :davinci_plan_net_v110_revinclude_location_practitioner_role_location_search_test
-      test from: :davinci_plan_net_v110_forward_chain_partof_type_search_test
-      test from: :davinci_plan_net_v110_forward_chain_partof_address_search_test
-      test from: :davinci_plan_net_v110_forward_chain_partof_organization_search_test
-      test from: :davinci_plan_net_v110_forward_chain_organization_name_search_test
-      test from: :davinci_plan_net_v110_forward_chain_organization_address_search_test
-      test from: :davinci_plan_net_v110_forward_chain_organization_partof_search_test
-      test from: :davinci_plan_net_v110_forward_chain_organization_type_search_test
-      test from: :davinci_plan_net_v110_forward_chain_endpoint_organization_search_test
+      test from: :davinci_plan_net_v110_forward_chain_location_partof_type_search_test
+      test from: :davinci_plan_net_v110_forward_chain_location_partof_address_search_test
+      test from: :davinci_plan_net_v110_forward_chain_location_partof_organization_search_test
+      test from: :davinci_plan_net_v110_forward_chain_location_organization_name_search_test
+      test from: :davinci_plan_net_v110_forward_chain_location_organization_address_search_test
+      test from: :davinci_plan_net_v110_forward_chain_location_organization_partof_search_test
+      test from: :davinci_plan_net_v110_forward_chain_location_organization_type_search_test
+      test from: :davinci_plan_net_v110_forward_chain_location_endpoint_organization_search_test
       test from: :davinci_plan_net_v110_location_reverse_chain_insurance_plan_coverage_area_owned_by_search_test
       test from: :davinci_plan_net_v110_location_validation_test
       test from: :davinci_plan_net_v110_location_must_support_test

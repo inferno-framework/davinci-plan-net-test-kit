@@ -19,7 +19,7 @@ module DaVinciPlanNetTestKit
         location element of instances returned by the tested search.
       )
 
-      id :davinci_plan_net_v110_forward_chain_location_address_postalcode_search_test
+      id :davinci_plan_net_v110_forward_chain_practitioner_role_location_address_postalcode_search_test
 
       def properties
         @properties ||= SearchTestProperties.new(

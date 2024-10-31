@@ -5065,17 +5065,17 @@
     - :id: PractitionerRole.extension:qualification
       :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/qualification
     - :id: PractitionerRole.extension:qualification.extension:identifier
-      :url: 
+      :url:
     - :id: PractitionerRole.extension:qualification.extension:code
-      :url: 
+      :url:
     - :id: PractitionerRole.extension:qualification.extension:issuer
-      :url: 
+      :url:
     - :id: PractitionerRole.extension:qualification.extension:status
-      :url: 
+      :url:
     - :id: PractitionerRole.extension:qualification.extension:period
-      :url: 
+      :url:
     - :id: PractitionerRole.extension:qualification.extension:whereValid
-      :url: 
+      :url:
     - :id: PractitionerRole.telecom.extension:contactpoint-availabletime
       :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/contactpoint-availabletime
     - :id: PractitionerRole.telecom.extension:via-intermediary

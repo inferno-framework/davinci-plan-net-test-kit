@@ -220,17 +220,17 @@ read succeeds.
       test from: :davinci_plan_net_v110_include_healthcare_service_healthcare_service_endpoint_search_test
       test from: :davinci_plan_net_v110_revinclude_healthcare_service_practitioner_role_service_search_test
       test from: :davinci_plan_net_v110_revinclude_healthcare_service_organization_affiliation_service_search_test
-      test from: :davinci_plan_net_v110_forward_chain_location_address_search_test
-      test from: :davinci_plan_net_v110_forward_chain_location_address_postalcode_search_test
-      test from: :davinci_plan_net_v110_forward_chain_location_address_city_search_test
-      test from: :davinci_plan_net_v110_forward_chain_location_address_state_search_test
-      test from: :davinci_plan_net_v110_forward_chain_location_organization_search_test
-      test from: :davinci_plan_net_v110_forward_chain_location_type_search_test
-      test from: :davinci_plan_net_v110_forward_chain_organization_name_search_test
-      test from: :davinci_plan_net_v110_forward_chain_organization_address_search_test
-      test from: :davinci_plan_net_v110_forward_chain_organization_partof_search_test
-      test from: :davinci_plan_net_v110_forward_chain_organization_type_search_test
-      test from: :davinci_plan_net_v110_forward_chain_endpoint_organization_search_test
+      test from: :davinci_plan_net_v110_forward_chain_healthcare_service_location_address_search_test
+      test from: :davinci_plan_net_v110_forward_chain_healthcare_service_location_address_postalcode_search_test
+      test from: :davinci_plan_net_v110_forward_chain_healthcare_service_location_address_city_search_test
+      test from: :davinci_plan_net_v110_forward_chain_healthcare_service_location_address_state_search_test
+      test from: :davinci_plan_net_v110_forward_chain_healthcare_service_location_organization_search_test
+      test from: :davinci_plan_net_v110_forward_chain_healthcare_service_location_type_search_test
+      test from: :davinci_plan_net_v110_forward_chain_healthcare_service_organization_name_search_test
+      test from: :davinci_plan_net_v110_forward_chain_healthcare_service_organization_address_search_test
+      test from: :davinci_plan_net_v110_forward_chain_healthcare_service_organization_partof_search_test
+      test from: :davinci_plan_net_v110_forward_chain_healthcare_service_organization_type_search_test
+      test from: :davinci_plan_net_v110_forward_chain_healthcare_service_endpoint_organization_search_test
       test from: :davinci_plan_net_v110_healthcare_service_combination_list_specialty_covered_by_network_search_test
       test from: :davinci_plan_net_v110_healthcare_service_validation_test
       test from: :davinci_plan_net_v110_healthcare_service_must_support_test

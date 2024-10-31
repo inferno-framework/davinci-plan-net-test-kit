@@ -249,10 +249,10 @@ read succeeds.
       test from: :davinci_plan_net_v110_revinclude_organization_organization_affiliation_primary_organization_search_test
       test from: :davinci_plan_net_v110_revinclude_organization_practitioner_role_organization_search_test
       test from: :davinci_plan_net_v110_revinclude_organization_organization_affiliation_participating_organization_search_test
-      test from: :davinci_plan_net_v110_forward_chain_partof_name_search_test
-      test from: :davinci_plan_net_v110_forward_chain_partof_address_search_test
-      test from: :davinci_plan_net_v110_forward_chain_partof_type_search_test
-      test from: :davinci_plan_net_v110_forward_chain_endpoint_organization_search_test
+      test from: :davinci_plan_net_v110_forward_chain_organization_partof_name_search_test
+      test from: :davinci_plan_net_v110_forward_chain_organization_partof_address_search_test
+      test from: :davinci_plan_net_v110_forward_chain_organization_partof_type_search_test
+      test from: :davinci_plan_net_v110_forward_chain_organization_endpoint_organization_search_test
       test from: :davinci_plan_net_v110_organization_reverse_chain_org_affil_participating_organization_location_search_test
       test from: :davinci_plan_net_v110_organization_reverse_chain_org_affil_participating_organization_network_search_test
       test from: :davinci_plan_net_v110_organization_reverse_chain_org_affil_participating_organization_specialty_search_test

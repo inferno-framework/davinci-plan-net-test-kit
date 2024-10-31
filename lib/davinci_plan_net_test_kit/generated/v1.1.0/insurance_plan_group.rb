@@ -181,10 +181,10 @@ read succeeds.
       test from: :davinci_plan_net_v110_include_insurance_plan_insurance_plan_administered_by_search_test
       test from: :davinci_plan_net_v110_include_insurance_plan_insurance_plan_owned_by_search_test
       test from: :davinci_plan_net_v110_include_insurance_plan_insurance_plan_coverage_area_search_test
-      test from: :davinci_plan_net_v110_forward_chain_administered_by_name_search_test
-      test from: :davinci_plan_net_v110_forward_chain_administered_by_partof_search_test
-      test from: :davinci_plan_net_v110_forward_chain_owned_by_name_search_test
-      test from: :davinci_plan_net_v110_forward_chain_owned_by_partof_search_test
+      test from: :davinci_plan_net_v110_forward_chain_insurance_plan_administered_by_name_search_test
+      test from: :davinci_plan_net_v110_forward_chain_insurance_plan_administered_by_partof_search_test
+      test from: :davinci_plan_net_v110_forward_chain_insurance_plan_owned_by_name_search_test
+      test from: :davinci_plan_net_v110_forward_chain_insurance_plan_owned_by_partof_search_test
       test from: :davinci_plan_net_v110_insurance_plan_validation_test
       test from: :davinci_plan_net_v110_insurance_plan_must_support_test
       test from: :davinci_plan_net_v110_insurance_plan_reference_resolution_test

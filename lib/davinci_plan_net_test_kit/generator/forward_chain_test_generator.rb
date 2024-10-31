@@ -52,7 +52,7 @@ module DaVinciPlanNetTestKit
       end
 
       def test_id
-        "davinci_plan_net_#{group_metadata.reformatted_version}_forward_chain_#{search_identifier}_search_test"
+        "davinci_plan_net_#{group_metadata.reformatted_version}_forward_chain_#{profile_identifier}_#{search_identifier}_search_test"
       end
 
       def search_identifier
