@@ -19,7 +19,7 @@ module DaVinciPlanNetTestKit
         service element of instances returned by the tested search.
       )
 
-      id :davinci_plan_net_v110_forward_chain_service_service_category_search_test
+      id :davinci_plan_net_v110_forward_chain_practitioner_role_service_service_category_search_test
 
       def properties
         @properties ||= SearchTestProperties.new(

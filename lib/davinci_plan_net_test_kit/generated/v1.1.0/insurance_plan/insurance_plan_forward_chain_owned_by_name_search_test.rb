@@ -19,7 +19,7 @@ module DaVinciPlanNetTestKit
         owned-by element of instances returned by the tested search.
       )
 
-      id :davinci_plan_net_v110_forward_chain_owned_by_name_search_test
+      id :davinci_plan_net_v110_forward_chain_insurance_plan_owned_by_name_search_test
 
       def properties
         @properties ||= SearchTestProperties.new(

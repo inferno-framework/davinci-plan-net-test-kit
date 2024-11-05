@@ -156,10 +156,10 @@ read succeeds.
       test from: :davinci_plan_net_v110_endpoint__id_search_test
       test from: :davinci_plan_net_v110_endpoint__lastUpdated_search_test
       test from: :davinci_plan_net_v110_include_endpoint_endpoint_organization_search_test
-      test from: :davinci_plan_net_v110_forward_chain_organization_name_search_test
-      test from: :davinci_plan_net_v110_forward_chain_organization_address_search_test
-      test from: :davinci_plan_net_v110_forward_chain_organization_partof_search_test
-      test from: :davinci_plan_net_v110_forward_chain_organization_type_search_test
+      test from: :davinci_plan_net_v110_forward_chain_endpoint_organization_name_search_test
+      test from: :davinci_plan_net_v110_forward_chain_endpoint_organization_address_search_test
+      test from: :davinci_plan_net_v110_forward_chain_endpoint_organization_partof_search_test
+      test from: :davinci_plan_net_v110_forward_chain_endpoint_organization_type_search_test
       test from: :davinci_plan_net_v110_endpoint_validation_test
       test from: :davinci_plan_net_v110_endpoint_must_support_test
       test from: :davinci_plan_net_v110_endpoint_reference_resolution_test
