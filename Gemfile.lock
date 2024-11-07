@@ -1,8 +1,8 @@
 PATH
   remote: .
   specs:
-    davinci_plan_net_test_kit (0.10.0)
-      inferno_core (>= 0.4.37)
+    davinci_plan_net_test_kit (0.10.1)
+      inferno_core (>= 0.5.0)
       tls_test_kit (~> 0.2.0)
 
 GEM
@@ -122,7 +122,7 @@ GEM
       mustermann (~> 1.0)
       mustermann-contrib (~> 1.0)
       rack (~> 2.0)
-    hanami-utils (2.1.0)
+    hanami-utils (2.2.0)
       concurrent-ruby (~> 1.0)
       dry-core (~> 1.0, < 2)
       dry-transformer (~> 1.0, < 2)
@@ -133,7 +133,7 @@ GEM
       domain_name (~> 0.5)
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
-    inferno_core (0.4.44)
+    inferno_core (0.5.0)
       activesupport (~> 6.1.7.5)
       base62-rb (= 0.3.1)
       blueprinter (= 0.25.2)
@@ -173,7 +173,7 @@ GEM
     mime-types (3.6.0)
       logger
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2024.1001)
+    mime-types-data (3.2024.1105)
     mini_portile2 (2.8.7)
     minitest (5.25.1)
     multi_json (1.15.0)
@@ -265,7 +265,7 @@ GEM
     strings-ansi (0.2.0)
     thor (1.2.2)
     tilt (2.4.0)
-    tls_test_kit (0.2.2)
+    tls_test_kit (0.2.3)
       inferno_core (>= 0.4.2)
     tty-color (0.6.0)
     tty-markdown (0.7.2)
