@@ -7,3 +7,5 @@ gemspec
 group :development, :test do
   gem 'debug'
 end
+
+gem "rack-test", "~> 2.2", :groups => [:development, :test]
