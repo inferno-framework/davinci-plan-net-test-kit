@@ -203,7 +203,7 @@ module DaVinciPlanNetTestKit
         
             check_search_response
 
-            returned_resources = fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
+            returned_resources = fetch_all_bundled_resources(resource_type: self.resource_type, additional_resource_types: [additional_resource_type])
             
             base_resources = returned_resources
               .select { |res| res.resourceType == resource_type }
@@ -238,7 +238,7 @@ module DaVinciPlanNetTestKit
 
             check_search_response
             
-            matching_resources = fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
+            matching_resources = fetch_all_bundled_resources(resource_type: self.resource_type, additional_resource_types: [additional_resource_type])
               .select { |res| res.resourceType == additional_resource_type }
               .reject { |res| res.id == params[:_id] }
             
@@ -306,7 +306,7 @@ module DaVinciPlanNetTestKit
       fhir_search additional_resource_type, params: additional_resource_params
 
       check_search_response
-      additional_resources = fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
+      additional_resources = fetch_all_bundled_resources(resource_type: self.resource_type, additional_resource_types: [additional_resource_type])
         .select { |res| res.resourceType == additional_resource_type }
 
       additional_resources.each { |res| check_resource_against_params(res, additional_resource_params) }
@@ -328,7 +328,7 @@ module DaVinciPlanNetTestKit
 
             check_search_response
 
-            returned_resources = fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
+            returned_resources = fetch_all_bundled_resources(resource_type: self.resource_type, additional_resource_types: [additional_resource_type])
             assert !returned_resources.empty?, "No #{resource_type} resources returned"
             base_resources = returned_resources
               .select { |res| res.resourceType == resource_type }
@@ -356,7 +356,7 @@ module DaVinciPlanNetTestKit
 
             check_search_response
 
-            returned_resources = fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
+            returned_resources = fetch_all_bundled_resources(resource_type: self.resource_type, additional_resource_types: [additional_resource_type])
             input_based_skip_assert(returned_resources, "No resources found.")
             base_resources = returned_resources
               .select { |res| res.resourceType == resource_type }
@@ -380,7 +380,7 @@ module DaVinciPlanNetTestKit
 
       check_search_response
 
-      returned_resources = fetch_all_bundled_resources(additional_resource_types: [additional_resource_type])
+      returned_resources = fetch_all_bundled_resources(resource_type: self.resource_type, additional_resource_types: [additional_resource_type])
       assert !returned_resources.empty?, "No #{resource_type} resources found"
 
       base_resources = returned_resources
@@ -424,7 +424,7 @@ module DaVinciPlanNetTestKit
       check_search_response
 
       resources_returned =
-        fetch_all_bundled_resources.select { |resource| resource.resourceType == resource_type }
+        fetch_all_bundled_resources(resource_type: self.resource_type).select { |resource| resource.resourceType == resource_type }
 
       return [] if resources_returned.blank?
 
@@ -456,7 +456,7 @@ module DaVinciPlanNetTestKit
 
       check_search_response
 
-      post_search_resources = fetch_all_bundled_resources.select { |resource| resource.resourceType == resource_type }
+      post_search_resources = fetch_all_bundled_resources(resource_type: self.resource_type).select { |resource| resource.resourceType == resource_type }
 
       filter_conditions(post_search_resources) if resource_type == 'Condition' && metadata.version == 'v5.0.1'
       filter_devices(post_search_resources) if resource_type == 'Device'
@@ -562,7 +562,7 @@ module DaVinciPlanNetTestKit
 
           search_and_check_response(params_with_comparator)
 
-          fetch_all_bundled_resources.each do |resource|
+          fetch_all_bundled_resources(resource_type: self.resource_type).each do |resource|
             check_resource_against_params(resource, params_with_comparator) if resource.resourceType == resource_type
           end
         end
@@ -578,7 +578,7 @@ module DaVinciPlanNetTestKit
       new_search_params = params.merge(resource_type.underscore => "#{resource_type}/#{params['resource']}")
       search_and_check_response(new_search_params)
 
-      reference_with_type_resources = fetch_all_bundled_resources.select { |resource| resource.resourceType == resource_type }
+      reference_with_type_resources = fetch_all_bundled_resources(resource_type: self.resource_type).select { |resource| resource.resourceType == resource_type }
 
 
       new_resource_count = reference_with_type_resources.count
@@ -601,7 +601,7 @@ module DaVinciPlanNetTestKit
       search_and_check_response(search_params)
 
       resources_returned =
-        fetch_all_bundled_resources
+        fetch_all_bundled_resources(resource_type: self.resource_type)
           .select { |resource| resource.resourceType == resource_type }
 
       assert resources_returned.present?, "No resources were returned when searching by `system|code`"
@@ -672,7 +672,7 @@ module DaVinciPlanNetTestKit
         search_and_check_response(search_params)
 
         resources_returned =
-          fetch_all_bundled_resources
+          fetch_all_bundled_resources(resource_type: self.resource_type)
             .select { |resource| resource.resourceType == resource_type }
 
         multiple_or_search_params.each do |param_name|
@@ -855,53 +855,53 @@ module DaVinciPlanNetTestKit
       "#{msg}."
     end
 
-    def fetch_all_bundled_resources(
-          reply_handler: nil,
-          max_pages: 0,
-          additional_resource_types: [],
-          resource_type: self.resource_type
-        )
-      page_count = 1
-      resources = []
-      bundle = resource
-      resources += bundle&.entry&.map { |entry| entry&.resource }
-
-      until bundle.nil? || (page_count == max_pages && max_pages != 0)
-        
-        next_bundle_link = bundle&.link&.find { |link| link.relation == 'next' }&.url
-        reply_handler&.call(response)
-
-        break if next_bundle_link.blank?
-
-        reply = fhir_client.raw_read_url(next_bundle_link)
-
-        store_request('outgoing') { reply }
-        error_message = cant_resolve_next_bundle_message(next_bundle_link)
-
-        assert_response_status(200)
-        assert_valid_json(reply.body, error_message)
-
-        bundle = fhir_client.parse_reply(FHIR::Bundle, fhir_client.default_format, reply)
-        resources += bundle&.entry&.map { |entry| entry&.resource }
-
-        page_count += 1
-      end
-
-      valid_resource_types = [resource_type, 'OperationOutcome'].concat(additional_resource_types)
-
-      invalid_resource_types =
-        resources.reject { |entry| valid_resource_types.include? entry.resourceType }
-                 .map(&:resourceType)
-                 .uniq
-
-      if invalid_resource_types.any?
-        info "Received resource type(s) #{invalid_resource_types.join(', ')} in search bundle, " \
-             "but only expected resource types #{valid_resource_types.join(', ')}. " + \
-             "This is unusual but allowed if the server believes additional resource types are relevant."
-      end
-
-      resources
-    end
+#    def fetch_all_bundled_resources(
+#          reply_handler: nil,
+#          max_pages: 0,
+#          additional_resource_types: [],
+#          resource_type: self.resource_type
+#        )
+#      page_count = 1
+#      resources = []
+#      bundle = resource
+#      resources += bundle&.entry&.map { |entry| entry&.resource }
+#
+#      until bundle.nil? || (page_count == max_pages && max_pages != 0)
+#        
+#        next_bundle_link = bundle&.link&.find { |link| link.relation == 'next' }&.url
+#        reply_handler&.call(response)
+#
+#        break if next_bundle_link.blank?
+#
+#        reply = fhir_client.raw_read_url(next_bundle_link)
+#
+#        store_request('outgoing') { reply }
+#        error_message = cant_resolve_next_bundle_message(next_bundle_link)
+#
+#        assert_response_status(200)
+#        assert_valid_json(reply.body, error_message)
+#
+#        bundle = fhir_client.parse_reply(FHIR::Bundle, fhir_client.default_format, reply)
+#        resources += bundle&.entry&.map { |entry| entry&.resource }
+#
+#        page_count += 1
+#      end
+#
+#      valid_resource_types = [resource_type, 'OperationOutcome'].concat(additional_resource_types)
+#
+#      invalid_resource_types =
+#        resources.reject { |entry| valid_resource_types.include? entry.resourceType }
+#                 .map(&:resourceType)
+#                 .uniq
+#
+#      if invalid_resource_types.any?
+#        info "Received resource type(s) #{invalid_resource_types.join(', ')} in search bundle, " \
+#             "but only expected resource types #{valid_resource_types.join(', ')}. " + \
+#             "This is unusual but allowed if the server believes additional resource types are relevant."
+#      end
+#
+#      resources
+#    end
 
     def fetch_matching_bundled_resources(
           max_pages: 20,
