@@ -6,4 +6,6 @@ gemspec
 
 group :development, :test do
   gem 'debug'
+  gem 'rack-test', '~> 2.2'
 end
+

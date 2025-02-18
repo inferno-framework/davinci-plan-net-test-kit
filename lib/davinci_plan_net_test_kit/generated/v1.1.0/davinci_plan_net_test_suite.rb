@@ -135,7 +135,6 @@ module DaVinciPlanNetTestKit
           on the [target profile] referenced in the [reference element] element when run as a single group 
           to identify the value to use when performing the reverse chain search.
       )
-      version VERSION
 
       VALIDATION_MESSAGE_FILTERS = [
         %r{Sub-extension url 'introspect' is not defined by the Extension http://fhir-registry\.smarthealthit\.org/StructureDefinition/oauth-uris},
@@ -175,8 +174,12 @@ module DaVinciPlanNetTestKit
           url: 'https://github.com/inferno-framework/davinci-plan-net-test-kit/issues'
         },
         {
-          label: 'Source Code',
+          label: 'Open Source',
           url: 'https://github.com/inferno-framework/davinci-plan-net-test-kit'
+        },
+        {
+          label: 'Download',
+          url: 'https://github.com/inferno-framework/davinci-plan-net-test-kit/releases'
         },
         {
           label: 'Implementation Guide',
