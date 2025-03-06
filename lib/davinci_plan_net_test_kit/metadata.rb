@@ -1,3 +1,5 @@
+require_relative 'version'
+
 module DaVinciPlanNetTestKit
   class Metadata < Inferno::TestKit
     id :davinci_plan_net_test_kit
