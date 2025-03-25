@@ -95,6 +95,7 @@
   :must_supports:
     :extensions:
     - :id: Endpoint.extension:endpoint-usecase
+      :path: extension
       :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/endpoint-usecase
     :slices: []
     :elements:
@@ -105,6 +106,8 @@
     - :path: managingOrganization
       :types:
       - Reference
+      :target_profiles:
+      - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Organization
     - :path: contact
     - :path: contact.system
     - :path: contact.value
@@ -1336,12 +1339,16 @@
   :must_supports:
     :extensions:
     - :id: HealthcareService.extension:newpatients
+      :path: extension
       :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/newpatients
     - :id: HealthcareService.extension:deliverymethod
+      :path: extension
       :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/delivery-method
     - :id: HealthcareService.telecom.extension:contactpoint-availabletime
+      :path: telecom.extension
       :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/contactpoint-availabletime
     - :id: HealthcareService.telecom.extension:via-intermediary
+      :path: telecom.extension
       :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/via-intermediary
     :slices: []
     :elements:
@@ -1351,12 +1358,16 @@
     - :path: providedBy
       :types:
       - Reference
+      :target_profiles:
+      - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Organization
     - :path: category
     - :path: type
     - :path: specialty
     - :path: location
       :types:
       - Reference
+      :target_profiles:
+      - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Location
     - :path: name
     - :path: comment
     - :path: telecom
@@ -1365,6 +1376,8 @@
     - :path: coverageArea
       :types:
       - Reference
+      :target_profiles:
+      - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Location
     - :path: appointmentRequired
     - :path: availableTime
     - :path: availableTime.daysOfWeek
@@ -1378,6 +1391,8 @@
     - :path: endpoint
       :types:
       - Reference
+      :target_profiles:
+      - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Endpoint
   :mandatory_elements:
   - HealthcareService.meta.lastUpdated
   - HealthcareService.active
@@ -1687,12 +1702,18 @@
     - :path: ownedBy
       :types:
       - Reference
+      :target_profiles:
+      - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Organization
     - :path: administeredBy
       :types:
       - Reference
+      :target_profiles:
+      - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Organization
     - :path: coverageArea
       :types:
       - Reference
+      :target_profiles:
+      - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Location
     - :path: contact
     - :path: contact.name
     - :path: contact.name.text
@@ -1702,13 +1723,19 @@
     - :path: endpoint
       :types:
       - Reference
+      :target_profiles:
+      - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Endpoint
     - :path: network
       :types:
       - Reference
+      :target_profiles:
+      - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Network
     - :path: plan.type
     - :path: plan.coverageArea
       :types:
       - Reference
+      :target_profiles:
+      - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Location
   :mandatory_elements:
   - InsurancePlan.meta.lastUpdated
   - InsurancePlan.status
@@ -1988,14 +2015,19 @@
   :must_supports:
     :extensions:
     - :id: Location.extension:newpatients
+      :path: extension
       :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/newpatients
     - :id: Location.extension:accessibility
+      :path: extension
       :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/accessibility
     - :id: Location.extension:region
+      :path: extension
       :url: http://hl7.org/fhir/StructureDefinition/location-boundary-geojson
     - :id: Location.telecom.extension:contactpoint-availabletime
+      :path: telecom.extension
       :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/contactpoint-availabletime
     - :id: Location.telecom.extension:via-intermediary
+      :path: telecom.extension
       :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/via-intermediary
     :slices: []
     :elements:
@@ -2019,9 +2051,13 @@
     - :path: managingOrganization
       :types:
       - Reference
+      :target_profiles:
+      - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Organization
     - :path: partOf
       :types:
       - Reference
+      :target_profiles:
+      - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Location
     - :path: hoursOfOperation
     - :path: hoursOfOperation.daysOfWeek
     - :path: hoursOfOperation.allDay
@@ -2031,6 +2067,8 @@
     - :path: endpoint
       :types:
       - Reference
+      :target_profiles:
+      - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Endpoint
   :mandatory_elements:
   - Location.meta.lastUpdated
   - Location.status
@@ -2279,14 +2317,23 @@
   :must_supports:
     :extensions:
     - :id: Organization.extension:location-reference
+      :path: extension
       :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/location-reference
-    :slices: []
+    :slices:
+    - :slice_id: Organization.identifier:NPI
+      :slice_name: NPI
+      :path: identifier
+      :discriminator:
+        :type: patternIdentifier
+        :path: ''
+        :system: http://hl7.org/fhir/sid/us-npi
     :elements:
     - :path: identifier
     - :path: identifier.type
     - :path: identifier.system
     - :path: identifier.value
     - :path: active
+      :fixed_value: true
     - :path: type
     - :path: name
     - :path: telecom
@@ -2299,6 +2346,8 @@
     - :path: partOf
       :types:
       - Reference
+      :target_profiles:
+      - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Organization
     - :path: contact
     - :path: contact.name
     - :path: contact.telecom
@@ -2307,6 +2356,8 @@
     - :path: endpoint
       :types:
       - Reference
+      :target_profiles:
+      - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Endpoint
   :mandatory_elements:
   - Organization.meta.lastUpdated
   - Organization.active
@@ -2543,17 +2594,23 @@
   :must_supports:
     :extensions:
     - :id: Organization.extension:qualification
+      :path: extension
       :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/qualification
     - :id: Organization.extension:org-description
+      :path: extension
       :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/org-description
     - :id: Organization.telecom.extension:contactpoint-availabletime
+      :path: telecom.extension
       :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/contactpoint-availabletime
     - :id: Organization.telecom.extension:via-intermediary
+      :path: telecom.extension
       :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/via-intermediary
     - :id: Organization.address.extension:geolocation
+      :path: address.extension
       :url: http://hl7.org/fhir/StructureDefinition/geolocation
     :slices:
-    - :name: Organization.identifier:NPI
+    - :slice_id: Organization.identifier:NPI
+      :slice_name: NPI
       :path: identifier
       :discriminator:
         :type: patternIdentifier
@@ -2582,6 +2639,8 @@
     - :path: partOf
       :types:
       - Reference
+      :target_profiles:
+      - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Organization
     - :path: contact
     - :path: contact.telecom
     - :path: contact.telecom.system
@@ -3796,20 +3855,30 @@
     - :path: organization
       :types:
       - Reference
+      :target_profiles:
+      - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Organization
     - :path: participatingOrganization
       :types:
       - Reference
+      :target_profiles:
+      - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Organization
     - :path: network
       :types:
       - Reference
+      :target_profiles:
+      - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Network
     - :path: code
     - :path: specialty
     - :path: location
       :types:
       - Reference
+      :target_profiles:
+      - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Location
     - :path: healthcareService
       :types:
       - Reference
+      :target_profiles:
+      - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-HealthcareService
     - :path: telecom
     - :path: telecom.system
     - :path: telecom.value
@@ -3817,6 +3886,8 @@
     - :path: endpoint
       :types:
       - Reference
+      :target_profiles:
+      - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Endpoint
   :mandatory_elements:
   - OrganizationAffiliation.meta.lastUpdated
   - OrganizationAffiliation.active
@@ -3995,13 +4066,17 @@
   :must_supports:
     :extensions:
     - :id: Practitioner.address.extension:geolocation
+      :path: address.extension
       :url: http://hl7.org/fhir/StructureDefinition/geolocation
     - :id: Practitioner.qualification.extension:practitioner-qualification
+      :path: qualification.extension
       :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/practitioner-qualification
     - :id: Practitioner.communication.extension:communication-proficiency
+      :path: communication.extension
       :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/communication-proficiency
     :slices:
-    - :name: Practitioner.identifier:NPI
+    - :slice_id: Practitioner.identifier:NPI
+      :slice_name: NPI
       :path: identifier
       :discriminator:
         :type: patternIdentifier
@@ -5059,26 +5134,37 @@
   :must_supports:
     :extensions:
     - :id: PractitionerRole.extension:newpatients
+      :path: extension
       :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/newpatients
     - :id: PractitionerRole.extension:network-reference
+      :path: extension
       :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/network-reference
     - :id: PractitionerRole.extension:qualification
+      :path: extension
       :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/qualification
     - :id: PractitionerRole.extension:qualification.extension:identifier
+      :path: extension.extension
       :url:
     - :id: PractitionerRole.extension:qualification.extension:code
+      :path: extension.extension
       :url:
     - :id: PractitionerRole.extension:qualification.extension:issuer
+      :path: extension.extension
       :url:
     - :id: PractitionerRole.extension:qualification.extension:status
+      :path: extension.extension
       :url:
     - :id: PractitionerRole.extension:qualification.extension:period
+      :path: extension.extension
       :url:
     - :id: PractitionerRole.extension:qualification.extension:whereValid
+      :path: extension.extension
       :url:
     - :id: PractitionerRole.telecom.extension:contactpoint-availabletime
+      :path: telecom.extension
       :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/contactpoint-availabletime
     - :id: PractitionerRole.telecom.extension:via-intermediary
+      :path: telecom.extension
       :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/via-intermediary
     :slices: []
     :elements:
@@ -5089,17 +5175,25 @@
     - :path: practitioner
       :types:
       - Reference
+      :target_profiles:
+      - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Practitioner
     - :path: organization
       :types:
       - Reference
+      :target_profiles:
+      - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Organization
     - :path: code
     - :path: specialty
     - :path: location
       :types:
       - Reference
+      :target_profiles:
+      - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Location
     - :path: healthcareService
       :types:
       - Reference
+      :target_profiles:
+      - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-HealthcareService
     - :path: telecom
     - :path: telecom.system
     - :path: telecom.value
@@ -5115,6 +5209,8 @@
     - :path: endpoint
       :types:
       - Reference
+      :target_profiles:
+      - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Endpoint
   :mandatory_elements:
   - PractitionerRole.meta.lastUpdated
   - PractitionerRole.extension.extension

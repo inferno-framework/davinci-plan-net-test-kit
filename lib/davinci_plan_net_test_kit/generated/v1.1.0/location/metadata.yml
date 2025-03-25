@@ -216,14 +216,19 @@
 :must_supports:
   :extensions:
   - :id: Location.extension:newpatients
+    :path: extension
     :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/newpatients
   - :id: Location.extension:accessibility
+    :path: extension
     :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/accessibility
   - :id: Location.extension:region
+    :path: extension
     :url: http://hl7.org/fhir/StructureDefinition/location-boundary-geojson
   - :id: Location.telecom.extension:contactpoint-availabletime
+    :path: telecom.extension
     :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/contactpoint-availabletime
   - :id: Location.telecom.extension:via-intermediary
+    :path: telecom.extension
     :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/via-intermediary
   :slices: []
   :elements:
@@ -247,9 +252,13 @@
   - :path: managingOrganization
     :types:
     - Reference
+    :target_profiles:
+    - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Organization
   - :path: partOf
     :types:
     - Reference
+    :target_profiles:
+    - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Location
   - :path: hoursOfOperation
   - :path: hoursOfOperation.daysOfWeek
   - :path: hoursOfOperation.allDay
@@ -259,6 +268,8 @@
   - :path: endpoint
     :types:
     - Reference
+    :target_profiles:
+    - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Endpoint
 :mandatory_elements:
 - Location.meta.lastUpdated
 - Location.status
