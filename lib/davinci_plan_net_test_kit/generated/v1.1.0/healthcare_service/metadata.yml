@@ -1193,12 +1193,16 @@
 :must_supports:
   :extensions:
   - :id: HealthcareService.extension:newpatients
+    :path: extension
     :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/newpatients
   - :id: HealthcareService.extension:deliverymethod
+    :path: extension
     :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/delivery-method
   - :id: HealthcareService.telecom.extension:contactpoint-availabletime
+    :path: telecom.extension
     :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/contactpoint-availabletime
   - :id: HealthcareService.telecom.extension:via-intermediary
+    :path: telecom.extension
     :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/via-intermediary
   :slices: []
   :elements:
@@ -1208,12 +1212,16 @@
   - :path: providedBy
     :types:
     - Reference
+    :target_profiles:
+    - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Organization
   - :path: category
   - :path: type
   - :path: specialty
   - :path: location
     :types:
     - Reference
+    :target_profiles:
+    - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Location
   - :path: name
   - :path: comment
   - :path: telecom
@@ -1222,6 +1230,8 @@
   - :path: coverageArea
     :types:
     - Reference
+    :target_profiles:
+    - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Location
   - :path: appointmentRequired
   - :path: availableTime
   - :path: availableTime.daysOfWeek
@@ -1235,6 +1245,8 @@
   - :path: endpoint
     :types:
     - Reference
+    :target_profiles:
+    - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Endpoint
 :mandatory_elements:
 - HealthcareService.meta.lastUpdated
 - HealthcareService.active

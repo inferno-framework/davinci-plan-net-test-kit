@@ -113,13 +113,17 @@
 :must_supports:
   :extensions:
   - :id: Practitioner.address.extension:geolocation
+    :path: address.extension
     :url: http://hl7.org/fhir/StructureDefinition/geolocation
   - :id: Practitioner.qualification.extension:practitioner-qualification
+    :path: qualification.extension
     :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/practitioner-qualification
   - :id: Practitioner.communication.extension:communication-proficiency
+    :path: communication.extension
     :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/communication-proficiency
   :slices:
-  - :name: Practitioner.identifier:NPI
+  - :slice_id: Practitioner.identifier:NPI
+    :slice_name: NPI
     :path: identifier
     :discriminator:
       :type: patternIdentifier

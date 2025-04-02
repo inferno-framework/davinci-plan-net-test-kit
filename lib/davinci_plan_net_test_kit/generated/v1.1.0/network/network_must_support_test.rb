@@ -30,6 +30,7 @@ module DaVinciPlanNetTestKit
         * Organization.identifier.system
         * Organization.identifier.type
         * Organization.identifier.value
+        * Organization.identifier:NPI
         * Organization.name
         * Organization.partOf
         * Organization.telecom
