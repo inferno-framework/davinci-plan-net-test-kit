@@ -189,17 +189,23 @@
 :must_supports:
   :extensions:
   - :id: Organization.extension:qualification
+    :path: extension
     :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/qualification
   - :id: Organization.extension:org-description
+    :path: extension
     :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/org-description
   - :id: Organization.telecom.extension:contactpoint-availabletime
+    :path: telecom.extension
     :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/contactpoint-availabletime
   - :id: Organization.telecom.extension:via-intermediary
+    :path: telecom.extension
     :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/via-intermediary
   - :id: Organization.address.extension:geolocation
+    :path: address.extension
     :url: http://hl7.org/fhir/StructureDefinition/geolocation
   :slices:
-  - :name: Organization.identifier:NPI
+  - :slice_id: Organization.identifier:NPI
+    :slice_name: NPI
     :path: identifier
     :discriminator:
       :type: patternIdentifier
@@ -228,6 +234,8 @@
   - :path: partOf
     :types:
     - Reference
+    :target_profiles:
+    - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Organization
   - :path: contact
   - :path: contact.telecom
   - :path: contact.telecom.system

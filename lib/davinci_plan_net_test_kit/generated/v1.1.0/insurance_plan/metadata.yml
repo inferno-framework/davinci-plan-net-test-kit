@@ -237,12 +237,18 @@
   - :path: ownedBy
     :types:
     - Reference
+    :target_profiles:
+    - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Organization
   - :path: administeredBy
     :types:
     - Reference
+    :target_profiles:
+    - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Organization
   - :path: coverageArea
     :types:
     - Reference
+    :target_profiles:
+    - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Location
   - :path: contact
   - :path: contact.name
   - :path: contact.name.text
@@ -252,13 +258,19 @@
   - :path: endpoint
     :types:
     - Reference
+    :target_profiles:
+    - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Endpoint
   - :path: network
     :types:
     - Reference
+    :target_profiles:
+    - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Network
   - :path: plan.type
   - :path: plan.coverageArea
     :types:
     - Reference
+    :target_profiles:
+    - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Location
 :mandatory_elements:
 - InsurancePlan.meta.lastUpdated
 - InsurancePlan.status

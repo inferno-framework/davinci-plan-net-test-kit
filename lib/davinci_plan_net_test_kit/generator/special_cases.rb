@@ -51,7 +51,7 @@ module DaVinciPlanNetTestKit
           # and the Plan-Net requirements. However, the NPI and CLIA identifier types, which are Must-Support, are clearly 
           # intended for provider organizations only and are not expected to be populated for other organization types.
           network_group = ig_metadata.groups.find { |group| group.name == 'plannet_Network'}
-          adjusted_must_supports = network_group.must_supports[:slices].dup.delete_if {|slice| slice[:name] == 'Organization.identifier:NPI'}
+          adjusted_must_supports = network_group.must_supports[:slices].dup.delete_if {|slice| slice[:slice_id] == 'Organization.identifier:NPI'}
           network_group.must_supports[:slices] = adjusted_must_supports
         end
 

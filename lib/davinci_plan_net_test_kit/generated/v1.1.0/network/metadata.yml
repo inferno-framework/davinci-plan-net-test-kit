@@ -178,6 +178,7 @@
 :must_supports:
   :extensions:
   - :id: Organization.extension:location-reference
+    :path: extension
     :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/location-reference
   :slices: []
   :elements:
@@ -186,6 +187,7 @@
   - :path: identifier.system
   - :path: identifier.value
   - :path: active
+    :fixed_value: true
   - :path: type
   - :path: name
   - :path: telecom
@@ -198,6 +200,8 @@
   - :path: partOf
     :types:
     - Reference
+    :target_profiles:
+    - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Organization
   - :path: contact
   - :path: contact.name
   - :path: contact.telecom
@@ -206,6 +210,8 @@
   - :path: endpoint
     :types:
     - Reference
+    :target_profiles:
+    - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Endpoint
 :mandatory_elements:
 - Organization.meta.lastUpdated
 - Organization.active

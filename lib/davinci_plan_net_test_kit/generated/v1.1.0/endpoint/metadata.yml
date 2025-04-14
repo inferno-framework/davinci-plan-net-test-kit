@@ -93,6 +93,7 @@
 :must_supports:
   :extensions:
   - :id: Endpoint.extension:endpoint-usecase
+    :path: extension
     :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/endpoint-usecase
   :slices: []
   :elements:
@@ -103,6 +104,8 @@
   - :path: managingOrganization
     :types:
     - Reference
+    :target_profiles:
+    - http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Organization
   - :path: contact
   - :path: contact.system
   - :path: contact.value
