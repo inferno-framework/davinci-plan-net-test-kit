@@ -180,14 +180,7 @@
   - :id: Organization.extension:location-reference
     :path: extension
     :url: http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/location-reference
-  :slices:
-  - :slice_id: Organization.identifier:NPI
-    :slice_name: NPI
-    :path: identifier
-    :discriminator:
-      :type: patternIdentifier
-      :path: ''
-      :system: http://hl7.org/fhir/sid/us-npi
+  :slices: []
   :elements:
   - :path: identifier
   - :path: identifier.type
