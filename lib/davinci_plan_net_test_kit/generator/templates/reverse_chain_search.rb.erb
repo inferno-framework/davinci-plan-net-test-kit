@@ -20,6 +20,9 @@ module DaVinciPlanNetTestKit
       )
       
       id :<%= test_id %>
+
+      verifies_requirements 'hl7.fhir.us.davinci-pdex-plan-net_1.1.0@22'
+
       input :<%= input_name %>,
         title: '\'<%= "#{constraining_param}" %>\' value from <%= "#{a_or_an(source_resource)}" %> instance with \'<%= "#{target_param}" %>\' populated',
         description: 'Single value from the \'<%= constraining_param %>\' element of <%= a_or_an(source_resource) %>

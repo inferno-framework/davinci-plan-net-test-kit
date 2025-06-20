@@ -20,6 +20,9 @@ module DaVinciPlanNetTestKit
       )
       
       id :davinci_plan_net_v110_practitioner_reverse_chain_practitioner_role_practitioner_network_search_test
+
+      verifies_requirements 'hl7.fhir.us.davinci-pdex-plan-net_1.1.0@22'
+
       input :practitioner_role_practitioner_network_input,
         title: '\'network\' value from a PractitionerRole instance with \'practitioner\' populated',
         description: 'Single value from the \'network\' element of a PractitionerRole

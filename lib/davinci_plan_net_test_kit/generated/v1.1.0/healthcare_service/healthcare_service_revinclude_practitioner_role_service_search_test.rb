@@ -18,12 +18,16 @@ module DaVinciPlanNetTestKit
       )
 
       id :davinci_plan_net_v110_revinclude_healthcare_service_practitioner_role_service_search_test
+
+      verifies_requirements 'hl7.fhir.us.davinci-pdex-plan-net_1.1.0@28'
+
       input :practitioner_role_service_input,
         title: 'HealthcareService instance ids referenced in PractitionerRole.service',
         description: %(Comma separated list of HealthcareService instance ids that are referenced by a PractitionerRole
         instance in its service element. Used for test "Server returns PractitionerRole resources from HealthcareService search with _revinclude=PractitionerRole:service"
         when run at the group level.),
         optional: true
+        
         
       def properties
         @properties ||= SearchTestProperties.new(

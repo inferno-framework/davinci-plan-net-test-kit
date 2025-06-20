@@ -19,6 +19,8 @@ module DaVinciPlanNetTestKit
 <%= uscdi_list_string %><% end %>
       )
 
+      verifies_requirements 'hl7.fhir.us.davinci-pdex-plan-net_1.1.0@3'
+
       id :<%= test_id %>
 
       def resource_type

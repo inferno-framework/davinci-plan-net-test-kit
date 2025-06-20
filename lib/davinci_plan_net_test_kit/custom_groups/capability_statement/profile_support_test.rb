@@ -10,6 +10,9 @@ module DaVinciPlanNetTestKit
       1. Support all profiles defined in this Implementation Guide.
       ```
     )
+
+    verifies_requirements 'hl7.fhir.us.davinci-pdex-plan-net_1.1.0@12'
+
     uses_request :capability_statement
 
     run do

@@ -20,6 +20,9 @@ module DaVinciPlanNetTestKit
       )
       
       id :davinci_plan_net_v110_organization_reverse_chain_insurance_plan_owned_by_coverage_area_search_test
+
+      verifies_requirements 'hl7.fhir.us.davinci-pdex-plan-net_1.1.0@22'
+
       input :insurance_plan_owned_by_coverage_area_input,
         title: '\'coverage-area\' value from an InsurancePlan instance with \'owned-by\' populated',
         description: 'Single value from the \'coverage-area\' element of an InsurancePlan

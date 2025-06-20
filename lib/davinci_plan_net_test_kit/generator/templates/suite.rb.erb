@@ -144,6 +144,14 @@ module DaVinciPlanNetTestKit
 
       id :<%= suite_id %>
 
+      requirement_sets(
+        {
+          identifier: 'hl7.fhir.us.davinci-pdex-plan-net_1.1.0',
+          title: 'DaVinci PDEX Plan Net',
+          actor: 'Server'
+        }
+      )
+
       fhir_resource_validator do
         igs '<%= ig_identifier %>'
 

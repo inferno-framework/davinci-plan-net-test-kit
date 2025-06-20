@@ -17,6 +17,8 @@ none are returned, the test is skipped.
 
       )
 
+      verifies_requirements 'hl7.fhir.us.davinci-pdex-plan-net_1.1.0@19'
+
       id :davinci_plan_net_v110_insurance_plan__id_search_test
       def self.properties
         @properties ||= SearchTestProperties.new(

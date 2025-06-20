@@ -44,6 +44,8 @@ module DaVinciPlanNetTestKit
         * Location.type
       )
 
+      verifies_requirements 'hl7.fhir.us.davinci-pdex-plan-net_1.1.0@3'
+
       id :davinci_plan_net_v110_location_must_support_test
 
       def resource_type

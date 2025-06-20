@@ -197,6 +197,7 @@ read succeeds.
 
       id :davinci_plan_net_v110_healthcare_service
       run_as_group
+      verifies_requirements 'hl7.fhir.us.davinci-pdex-plan-net_1.1.0@12'
 
       def self.metadata
         @metadata ||= Generator::GroupMetadata.new(YAML.load_file(File.join(__dir__, 'healthcare_service', 'metadata.yml'), aliases: true))

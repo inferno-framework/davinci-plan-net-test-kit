@@ -10,6 +10,8 @@ module DaVinciPlanNetTestKit
 
       id :davinci_plan_net_v110_practitioner_role_read_test
 
+      verifies_requirements 'hl7.fhir.us.davinci-pdex-plan-net_1.1.0@25'
+
       def resource_type
         'PractitionerRole'
       end

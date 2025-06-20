@@ -18,12 +18,16 @@ module DaVinciPlanNetTestKit
       )
 
       id :<%= test_id %>
+
+      verifies_requirements 'hl7.fhir.us.davinci-pdex-plan-net_1.1.0@28'
+
       input :<%= input_name %>,
         title: '<%= resource_type %> instance ids referenced in <%= "#{revinclude_param_resource}.#{rev_param_sp}" %>',
         description: %(Comma separated list of <%= resource_type %> instance ids that are referenced by <%= "#{a_or_an(revinclude_param_resource)}" %>
         instance in its <%= "#{rev_param_sp}" %> element. Used for test "Server returns <%= revinclude_param_resource %> resources from <%= resource_type %> search with <%= revinclude_param_string %>"
         when run at the group level.),
         optional: true
+        
         
       def properties
         @properties ||= SearchTestProperties.new(

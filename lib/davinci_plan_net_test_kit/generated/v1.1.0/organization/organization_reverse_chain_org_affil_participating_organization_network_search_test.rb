@@ -20,6 +20,9 @@ module DaVinciPlanNetTestKit
       )
       
       id :davinci_plan_net_v110_organization_reverse_chain_org_affil_participating_organization_network_search_test
+
+      verifies_requirements 'hl7.fhir.us.davinci-pdex-plan-net_1.1.0@22'
+
       input :org_affil_participating_organization_network_input,
         title: '\'network\' value from an OrganizationAffiliation instance with \'participating-organization\' populated',
         description: 'Single value from the \'network\' element of an OrganizationAffiliation

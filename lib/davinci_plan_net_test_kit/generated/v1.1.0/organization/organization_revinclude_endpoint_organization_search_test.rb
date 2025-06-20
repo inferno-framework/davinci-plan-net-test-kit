@@ -18,12 +18,16 @@ module DaVinciPlanNetTestKit
       )
 
       id :davinci_plan_net_v110_revinclude_organization_endpoint_organization_search_test
+
+      verifies_requirements 'hl7.fhir.us.davinci-pdex-plan-net_1.1.0@28'
+
       input :endpoint_organization_input,
         title: 'Organization instance ids referenced in Endpoint.organization',
         description: %(Comma separated list of Organization instance ids that are referenced by an Endpoint
         instance in its organization element. Used for test "Server returns Endpoint resources from Organization search with _revinclude=Endpoint:organization"
         when run at the group level.),
         optional: true
+        
         
       def properties
         @properties ||= SearchTestProperties.new(

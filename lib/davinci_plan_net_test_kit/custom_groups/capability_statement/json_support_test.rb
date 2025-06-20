@@ -24,6 +24,9 @@ module DaVinciPlanNetTestKit
       * application/json
       * application/fhir+json
     )
+
+    verifies_requirements 'hl7.fhir.us.davinci-pdex-plan-net_1.1.0@10'
+
     uses_request :capability_statement
 
     run do
