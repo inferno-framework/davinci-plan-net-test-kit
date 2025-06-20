@@ -1,0 +1,65 @@
+﻿Req Set,ID,URL,Requirement,Conformance,Actors,Sub-Requirement(s),Conditionality,Not Tested Reason,Not Tested Details
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,1,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/implementation.html#privacy-considerations-1,A conformant Plan-Net service SHALL NOT require a directory mobile application to send consumer identifying information in order to query content.,SHALL NOT,Server,,,Not Verifiable,
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,2,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/implementation.html#privacy-considerations-1,A directory mobile application SHALL NOT send consumer identifiable information when querying a Plan-Net service.,SHALL NOT,Client,,,Not Verifiable,
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,3,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/implementation.html#health-plan-api-requirements,Health Plan API actors SHALL be capable of populating all Must Support data elements as part of the query results.,SHALL,Server,,,,
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,4,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/implementation.html#health-plan-api-requirements,"In situations where information on a particular Must Support data element is not present and the minimum cardinality is 0 , the Health Plan API actors SHALL NOT include the data elements in the resource instance returned as part of the query results.",SHALL NOT,Server,,,Not Verifiable,
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,5,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/implementation.html#health-plan-api-requirements,In situations where information on a particular data element is not present and the minimum cardinality is >0 SHALL send the reason for the missing information using values (such as nullFlavors) from the value set where they exist or use the dataAbsentReason extension.,SHALL,Server,,,Not Verifiable,
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,6,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/implementation.html#application-requirements,Application actors SHALL be capable of processing resource instances containing the Must Support data elements without generating an error or causing the application to fail.,SHALL,Client,,,Not Tested,Client testing currently out of scope
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,7,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/implementation.html#application-requirements,Application actors SHOULD be capable of displaying the data elements for human use or storing the information for other purposes.,SHOULD,Client,,,Not Tested,Client testing currently out of scope
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,8,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/implementation.html#application-requirements,"When querying Health Plan API actors, Application actors SHALL interpret missing Must Support data elements within resource instances as data not present in the Health Plan API actors system.",SHALL,Client,,,Not Tested,Client testing currently out of scope
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,9,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/implementation.html#application-requirements,Consumer App actors SHALL be able to process resource instances containing Must Support data elements asserting missing information.,SHALL,Client,,,Not Tested,Client testing currently out of scope
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,10,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/CapabilityStatement-plan-net.html#behavior,Support json source formats for all Plan-Net interactions.,SHALL,Server,,,,
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,11,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/CapabilityStatement-plan-net.html#behavior,Implement the RESTful behavior according to the FHIR specification.,SHALL,Server,,,Not Verifiable,
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,12,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/CapabilityStatement-plan-net.html#behavior,Support all profiles defined in this Implementation Guide.,SHALL,Server,,,,
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,13,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/CapabilityStatement-plan-net.html#behavior,Return the following response classes: (Status 401/4xx): unauthorized request,SHALL,Server,,,Not Verifiable,
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,14,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/CapabilityStatement-plan-net.html#behavior,Return the following response classes: (Status 403): insufficient scope,SHALL,Server,,,Not Verifiable,
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,15,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/CapabilityStatement-plan-net.html#behavior,Return the following response classes: (Status 400): invalid parameter,SHALL,Server,,,Not Verifiable,
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,16,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/CapabilityStatement-plan-net.html#behavior,Return the following response classes: (Status 404): unknown resource,SHALL,Server,,,Not Verifiable,
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,17,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/CapabilityStatement-plan-net.html#behavior,Return the following response classes: (Status 410): deleted resource.,SHALL,Server,,,Not Verifiable,
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,18,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/CapabilityStatement-plan-net.html#behavior,Identify the Plan-Net profiles supported as part of the FHIR meta.profile attribute for each instance.,SHALL,Server,,,Not Tested,Not intended by IG authors
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,19,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/CapabilityStatement-plan-net.html#behavior,Support the searchParameters on each profile individually,SHALL,Server,,,,
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,20,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/CapabilityStatement-plan-net.html#behavior,Support the searchParameters on each profile...in combination.,SHALL,Server,,,Not Tested,Caveat: partial because full scope prohibitively expensive
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,21,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/CapabilityStatement-plan-net.html#behavior,Support forward...chaining on all search parameters that specify the 'chain' property,SHALL,Server,,,,
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,22,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/CapabilityStatement-plan-net.html#behavior,Support...reverse chaining on all search parameters that specify the 'chain' property,SHALL,Server,,,,
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,23,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/CapabilityStatement-plan-net.html#behavior,Support xml source formats for all Plan-Net interactions.,SHOULD,Server,,,Not Tested,XML format not supported by Inferno
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,24,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/CapabilityStatement-plan-net.html#behavior,A server SHALL reject any unauthorized requests by returning an HTTP 401 unauthorized response code.,SHALL,Server,,,Not Verifiable,
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,25,https://hl7.org/fhir/us/davinci-pdex-plan-net/CapabilityStatement-plan-net.json,"For each resource type and profile, a Plan Net server SHALL support the read interaction",SHALL,Server,,,,
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,26,https://hl7.org/fhir/us/davinci-pdex-plan-net/CapabilityStatement-plan-net.json,"For each resource type and profile, a Plan Net server SHOULD support the vread interaction",SHOULD,Server,,,Not Tested,Low priority
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,27,http://hl7.org/fhir/us/davinci-pdex-plan-net/CapabilityStatement-plan-net.html#resource--details,[For each resource] A Server SHALL be capable of supporting the following _includes [list],SHALL,Server,,,,
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,28,http://hl7.org/fhir/us/davinci-pdex-plan-net/CapabilityStatement-plan-net.html#resource--details,[For each resource] A Server SHALL be capable of supporting the following _revincludes: [list],SHALL,Server,,,,
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,29,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/index.html#relation-to-us-core-and-other-igs,"The Network profile is based on USCore Organization, since there was no contradiction between the USCore profile and the Plan-Net requirements. However, the NPI and CLIA identifier types, which are Must-Support, are clearly intended for provider organizations only and are not expected to be populated for other organization types.",None,Server,,,,
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,30,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/implementation.html#client-detection-of-updates-directory-content,Each profile in this guide requires that the lastUpdate timestamp be provided as part of the profile's data content.,None,Server,,,Not Tested,
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,31,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/implementation.html#client-detection-of-updates-directory-content,Clients that cache query results can track additions or modifications to directory content through queries that filter content using the _lastUpdated search parameter.,None,Server,,,Not Verifiable,
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,32,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/implementation.html#representing-and-searching-provider-directory-data,"The Plan-Net design is based around the following types of searches….
+- Search: General Search
+- Example: Pharmacy
+- Focal Resource and Field: HealthcareService.category, HealthcareService.specialty
+- Qualifications of Search: Location, network",None,Server,,,Not Verifiable,
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,33,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/implementation.html#representing-and-searching-provider-directory-data,"The Plan-Net design is based around the following types of searches….
+- Search: Provider by Name
+- Example: Joe Smith
+- Focal Resource and Field: Practitioner.name
+- Qualifications of Search: Location, network, specialty, role/priviledges",None,Server,,,Not Verifiable,
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,34,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/implementation.html#representing-and-searching-provider-directory-data,"The Plan-Net design is based around the following types of searches….
+- Search: Organization by Name
+- Example: Montgomery Cardiology or CVS
+- Focal Resource and Field: Organization.name
+- Qualifications of Search: Location, network, specialty",None,Server,,,Not Verifiable,
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,35,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/implementation.html#representing-and-searching-provider-directory-data,"The Plan-Net design is based around the following types of searches….
+- Search: Provider by Specialty
+- Example: Cardiologist
+- Focal Resource and Field: PractitionerRole.specialty
+- Qualifications of Search: Location, network, name",None,Server,,,Not Verifiable,
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,36,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/implementation.html#representing-and-searching-provider-directory-data,"The Plan-Net design is based around the following types of searches….
+- Search: Organization by specialty
+- Example: Compounding Pharmacy
+- Focal Resource and Field: OrganizationAffiliation.specialty
+- Qualifications of Search: Location, network, name",None,Server,,,Not Verifiable,
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,37,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/implementation.html#searching-for-active-practictioners-and-organizations,"Sample query to search for currently active Practitioners (replace date in query with current date):
+http://davinci-plan-net-ri.logicahealth.org/fhir/PractitionerRole?_include=PractitionerRole:date=ge2021-10-25
+
+Sample query to search for currently active Organizations (replace date in query with current date):
+http://davinci-plan-net-ri.logicahealth.org/fhir/OrganizationAffiliation?_include=OrganizationAffiliation:date=ge2021-10-25",None,Server,,,Not Verifiable,
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,38,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/StructureDefinition-plannet-Network.html#implementation-guidance,"When the contact is a department name, rather than a human (e.g., patient help line), include a blank family and given name, and provide the department name in contact.name.text.",None,Server,,,Not Verifiable,
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,39,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/StructureDefinition-plannet-Organization.html#implementation-guidance,"When the contact is a department name, rather than a human (e.g., patient help line), include a blank family and given name, and provide the department name in contact.name.text.",None,Server,,,Not Verifiable,
+hl7.fhir.us.davinci-pdex-plan-net_1.1.0,40,http://hl7.org/fhir/us/davinci-pdex-plan-net/STU1.1/StructureDefinition-plannet-Practitioner.html#implementation-guidance,"When the value set for the coded concept in qualification is insufficient, the qualification can be provided in the text field of the codeableConcept.",None,Server,,,Not Verifiable,
