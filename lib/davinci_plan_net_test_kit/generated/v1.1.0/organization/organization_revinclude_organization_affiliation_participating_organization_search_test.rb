@@ -18,12 +18,16 @@ module DaVinciPlanNetTestKit
       )
 
       id :davinci_plan_net_v110_revinclude_organization_organization_affiliation_participating_organization_search_test
+
+      verifies_requirements 'hl7.fhir.us.davinci-pdex-plan-net_1.1.0@28'
+
       input :organization_affiliation_participating_organization_input,
         title: 'Organization instance ids referenced in OrganizationAffiliation.participating-organization',
         description: %(Comma separated list of Organization instance ids that are referenced by an OrganizationAffiliation
         instance in its participating-organization element. Used for test "Server returns OrganizationAffiliation resources from Organization search with _revinclude=OrganizationAffiliation:participating-organization"
         when run at the group level.),
         optional: true
+        
         
       def properties
         @properties ||= SearchTestProperties.new(

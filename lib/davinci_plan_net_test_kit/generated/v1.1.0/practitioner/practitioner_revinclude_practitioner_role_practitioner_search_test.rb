@@ -18,12 +18,16 @@ module DaVinciPlanNetTestKit
       )
 
       id :davinci_plan_net_v110_revinclude_practitioner_practitioner_role_practitioner_search_test
+
+      verifies_requirements 'hl7.fhir.us.davinci-pdex-plan-net_1.1.0@28'
+
       input :practitioner_role_practitioner_input,
         title: 'Practitioner instance ids referenced in PractitionerRole.practitioner',
         description: %(Comma separated list of Practitioner instance ids that are referenced by a PractitionerRole
         instance in its practitioner element. Used for test "Server returns PractitionerRole resources from Practitioner search with _revinclude=PractitionerRole:practitioner"
         when run at the group level.),
         optional: true
+        
         
       def properties
         @properties ||= SearchTestProperties.new(

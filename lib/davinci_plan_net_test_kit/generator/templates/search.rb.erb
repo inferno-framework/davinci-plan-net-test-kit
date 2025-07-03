@@ -11,6 +11,8 @@ module DaVinciPlanNetTestKit
 <%= description %>
       )
 
+      verifies_requirements 'hl7.fhir.us.davinci-pdex-plan-net_1.1.0@19'
+
       id :<%= test_id %><% if optional? %>
       optional
   <% end %><% if needs_resource_id? %>

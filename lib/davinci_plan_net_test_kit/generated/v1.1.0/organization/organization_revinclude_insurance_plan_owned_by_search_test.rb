@@ -18,12 +18,16 @@ module DaVinciPlanNetTestKit
       )
 
       id :davinci_plan_net_v110_revinclude_organization_insurance_plan_owned_by_search_test
+
+      verifies_requirements 'hl7.fhir.us.davinci-pdex-plan-net_1.1.0@28'
+
       input :insurance_plan_owned_by_input,
         title: 'Organization instance ids referenced in InsurancePlan.owned-by',
         description: %(Comma separated list of Organization instance ids that are referenced by an InsurancePlan
         instance in its owned-by element. Used for test "Server returns InsurancePlan resources from Organization search with _revinclude=InsurancePlan:owned-by"
         when run at the group level.),
         optional: true
+        
         
       def properties
         @properties ||= SearchTestProperties.new(

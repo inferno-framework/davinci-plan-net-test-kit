@@ -18,12 +18,16 @@ module DaVinciPlanNetTestKit
       )
 
       id :davinci_plan_net_v110_revinclude_network_practitioner_role_network_search_test
+
+      verifies_requirements 'hl7.fhir.us.davinci-pdex-plan-net_1.1.0@28'
+
       input :practitioner_role_network_input,
         title: 'Organization instance ids referenced in PractitionerRole.network',
         description: %(Comma separated list of Organization instance ids that are referenced by a PractitionerRole
         instance in its network element. Used for test "Server returns PractitionerRole resources from Organization search with _revinclude=PractitionerRole:network"
         when run at the group level.),
         optional: true
+        
         
       def properties
         @properties ||= SearchTestProperties.new(

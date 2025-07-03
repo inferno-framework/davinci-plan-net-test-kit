@@ -17,6 +17,8 @@ none are returned, the test is skipped.
 
       )
 
+      verifies_requirements 'hl7.fhir.us.davinci-pdex-plan-net_1.1.0@19'
+
       id :davinci_plan_net_v110_org_affil__lastUpdated_search_test
       optional
   

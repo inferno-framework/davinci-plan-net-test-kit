@@ -10,6 +10,8 @@ module DaVinciPlanNetTestKit
 
       id :<%= test_id %>
 
+      verifies_requirements 'hl7.fhir.us.davinci-pdex-plan-net_1.1.0@25'
+
       def resource_type
         '<%= resource_type %>'
       end

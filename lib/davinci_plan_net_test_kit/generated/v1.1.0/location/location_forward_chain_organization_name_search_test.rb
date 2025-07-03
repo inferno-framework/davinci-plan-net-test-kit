@@ -21,6 +21,8 @@ module DaVinciPlanNetTestKit
 
       id :davinci_plan_net_v110_forward_chain_location_organization_name_search_test
 
+      verifies_requirements 'hl7.fhir.us.davinci-pdex-plan-net_1.1.0@21'
+
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'Location',

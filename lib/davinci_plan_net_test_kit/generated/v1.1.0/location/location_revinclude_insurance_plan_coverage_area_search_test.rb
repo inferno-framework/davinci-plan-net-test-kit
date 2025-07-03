@@ -18,12 +18,16 @@ module DaVinciPlanNetTestKit
       )
 
       id :davinci_plan_net_v110_revinclude_location_insurance_plan_coverage_area_search_test
+
+      verifies_requirements 'hl7.fhir.us.davinci-pdex-plan-net_1.1.0@28'
+
       input :insurance_plan_coverage_area_input,
         title: 'Location instance ids referenced in InsurancePlan.coverage-area',
         description: %(Comma separated list of Location instance ids that are referenced by an InsurancePlan
         instance in its coverage-area element. Used for test "Server returns InsurancePlan resources from Location search with _revinclude=InsurancePlan:coverage-area"
         when run at the group level.),
         optional: true
+        
         
       def properties
         @properties ||= SearchTestProperties.new(

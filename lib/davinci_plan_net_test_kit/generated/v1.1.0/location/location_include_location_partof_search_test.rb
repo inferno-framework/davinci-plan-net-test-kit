@@ -18,6 +18,8 @@ module DaVinciPlanNetTestKit
 
       id :davinci_plan_net_v110_include_location_location_partof_search_test
 
+      verifies_requirements 'hl7.fhir.us.davinci-pdex-plan-net_1.1.0@27'
+
       def properties
         @properties ||= SearchTestProperties.new(
             resource_type: 'Location',
