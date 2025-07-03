@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.description   = 'DaVinci Plan Net Test Kit'
   spec.homepage      = 'https://github.com/inferno-framework/davinci-plan-net-test-kit'
   spec.license       = 'Apache-2.0'
-  spec.add_runtime_dependency 'inferno_core', '>= 0.6.14'
+  spec.add_runtime_dependency 'inferno_core', '>= 0.6.16'
   spec.add_runtime_dependency 'tls_test_kit', '>= 0.3.0'
   spec.add_development_dependency 'database_cleaner-sequel', '~> 1.8'
   spec.add_development_dependency 'factory_bot', '~> 6.1'
