@@ -1,3 +1,8 @@
+# 0.12.1
+* FI-3813: Migrate to core MustSupport metadata extraction and assertion by @dehall in https://github.com/inferno-framework/davinci-plan-net-test-kit/pull/19
+* FI-3815: Update Test Kit with new RSpec features by @Shaumik-Ashraf in https://github.com/inferno-framework/davinci-plan-net-test-kit/pull/20
+* FI-4157: Requirements Conversion by @karlnaden in https://github.com/inferno-framework/davinci-plan-net-test-kit/pull/21
+
 # 0.12.0
 ##Breaking Change
 This release updates the Da Vinci Plan Net Test Kit to use AuthInfo rather than
