@@ -4,7 +4,6 @@ Gem::Specification.new do |spec|
   spec.name          = 'davinci_plan_net_test_kit'
   spec.version       = DaVinciPlanNetTestKit::VERSION
   spec.authors       = ['Karl Naden']
-  spec.email         = ['inferno@groups.mitre.org']
   spec.summary       = 'DaVinci Plan Net Test Kit'
   spec.description   = 'DaVinci Plan Net Test Kit'
   spec.homepage      = 'https://github.com/inferno-framework/davinci-plan-net-test-kit'
