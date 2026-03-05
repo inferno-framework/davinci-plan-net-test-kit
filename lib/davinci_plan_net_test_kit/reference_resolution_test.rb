@@ -164,7 +164,7 @@ module DaVinciPlanNetTestKit
       # Use the DSL's resource_is_valid? method with add_messages_to_runnable: false
       # to validate silently without adding messages to the test output
       resource_is_valid?(
-        resource: resource,
+        resource:,
         profile_url: target_profile_with_version,
         add_messages_to_runnable: false
       )
