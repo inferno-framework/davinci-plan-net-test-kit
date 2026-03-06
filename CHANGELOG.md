@@ -1,3 +1,6 @@
+# 0.13.1
+* Use Inferno Validator Public Functions only
+
 # 0.13.0
 * FI-4182: Remove inferno@groups.mitre.org email from gemspec by @arscan in https://github.com/inferno-framework/davinci-plan-net-test-kit/pull/23
 
