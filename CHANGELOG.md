@@ -1,3 +1,9 @@
+# 0.13.2
+* ID-134 gemspec updates to new releases of inferno-core (1.2.2) and tls-test-kit (1.0.2) in: 
+https://github.com/inferno-framework/davinci-plan-net-test-kit/pull/30
+* ID-107 check types of values returned from resolve_path in: 
+https://github.com/inferno-framework/davinci-plan-net-test-kit/pull/30 
+
 # 0.13.1
 * Use Inferno Validator Public Functions only
 
